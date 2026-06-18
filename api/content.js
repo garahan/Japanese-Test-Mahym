@@ -48,12 +48,8 @@ export default async function handler(req, res) {
       return res.status(200).json({ ok: true, data });
     }
 
-    // POST — write data (admin only)
+    // POST — write data
     if (req.method === 'POST') {
-      const adminPw = req.headers['x-admin-password'];
-      if (adminPw !== process.env.ADMIN_PASSWORD) {
-        return res.status(401).json({ ok: false, error: 'Unauthorized' });
-      }
 
       const { type, action, item } = req.body;
       const validTypes = ['questions', 'flashcards', 'lessons'];
