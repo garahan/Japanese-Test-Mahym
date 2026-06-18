@@ -23,40 +23,6 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; font-size: 14px; }
 
-/* LOGIN */
-#login-screen {
-  position: fixed; inset: 0;
-  background: var(--bg);
-  display: flex; align-items: center; justify-content: center;
-  z-index: 1000;
-}
-.login-box {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 2.5rem 2rem;
-  width: 100%; max-width: 380px;
-  text-align: center;
-}
-.login-box h1 { font-size: 20px; margin-bottom: 6px; }
-.login-box p { font-size: 13px; color: var(--text2); margin-bottom: 1.5rem; }
-.login-input {
-  width: 100%; padding: 10px 14px;
-  background: var(--bg); border: 1px solid var(--border);
-  border-radius: var(--r); color: var(--text);
-  font-size: 14px; margin-bottom: 10px; outline: none;
-}
-.login-input:focus { border-color: var(--accent); }
-.login-btn {
-  width: 100%; padding: 11px;
-  background: var(--accent); color: white;
-  border: none; border-radius: var(--r);
-  font-size: 14px; font-weight: 600;
-  cursor: pointer;
-}
-.login-btn:hover { background: var(--accent2); }
-.login-error { color: var(--accent); font-size: 13px; margin-top: 8px; min-height: 20px; }
-
 /* LAYOUT */
 #app { display: none; }
 .layout { display: flex; min-height: 100vh; }
@@ -248,19 +214,8 @@ tr:hover td { background: rgba(255,255,255,.02); }
 </head>
 <body>
 
-<!-- LOGIN -->
-<div id="login-screen">
-  <div class="login-box">
-    <h1>🔐 Admin Panel</h1>
-    <p>Japanese Test — Content Manager</p>
-    <input class="login-input" id="pw-input" type="password" placeholder="Enter admin password" onkeydown="if(event.key==='Enter')doLogin()">
-    <button class="login-btn" onclick="doLogin()">Sign In</button>
-    <div class="login-error" id="login-error"></div>
-  </div>
-</div>
-
 <!-- APP -->
-<div id="app">
+<div id="app" style="display:block">
 <div class="layout">
 
   <!-- SIDEBAR -->
@@ -497,52 +452,10 @@ let allFlashcards = [];
 let editingQId = null;
 let editingFCId = null;
 
-// ── AUTH ─────────────────────────────────────────────────
-async function doLogin() {
-  const pw = document.getElementById('pw-input').value;
-  const errEl = document.getElementById('login-error');
-  if (!pw) { errEl.textContent = 'Please enter a password'; return; }
-  errEl.textContent = 'Checking...';
-  try {
-    const res = await fetch('/api/admin-auth', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password: pw }),
-    });
-    const data = await res.json();
-    if (data.ok) {
-      adminPassword = pw;
-      sessionStorage.setItem('admin_pw', pw);
-      document.getElementById('login-screen').style.display = 'none';
-      document.getElementById('app').style.display = 'block';
-      loadAll();
-    } else {
-      errEl.textContent = '✗ Wrong password';
-    }
-  } catch(e) {
-    errEl.textContent = '✗ Connection error';
-  }
-}
+// ── INIT — no password needed, load immediately ───────────
+window.addEventListener('load', () => { loadAll(); });
 
-function doLogout() {
-  sessionStorage.removeItem('admin_pw');
-  location.reload();
-}
-
-// Auto-login from session
-window.addEventListener('load', () => {
-  const saved = sessionStorage.getItem('admin_pw');
-  if (saved) {
-    document.getElementById('pw-input').value = saved;
-    adminPassword = saved;
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-    loadAll();
-  }
-  document.getElementById('pw-input').addEventListener('keydown', e => {
-    if (e.key === 'Enter') doLogin();
-  });
-});
+function doLogout() { window.location.href = '/'; }
 
 // ── DATA LOADING ─────────────────────────────────────────
 async function loadAll() {
