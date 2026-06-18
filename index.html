@@ -756,9 +756,9 @@ function renderResults() {
   }
 
   html += `<div class="send-panel">
-    <h3>📤 結果を送る — Send results</h3>
+    <h3>📤 ベガに結果を送る — Send results to Bega</h3>
     <p>Send full analysis to Telegram</p>
-    <input class="name-input" id="taker-name" type="text" placeholder="Your name (e.g. Yuki)" />
+    <input class="name-input" id="taker-name" type="text" placeholder="Your name (e.g. Mahym)" />
     <button class="btn btn-primary" onclick="sendResults(${pct}, ${totalCorrect}, ${total}, '${timeStr}', ${struggles.length}, ${slowQ.length})">Send to Telegram →</button>
     <div class="send-status" id="send-status"></div>
   </div>`;
@@ -771,7 +771,7 @@ function renderResults() {
 }
 
 async function sendResults(pct, correct, total, timeStr, mistakeCount, slowCount) {
-  const name = document.getElementById('taker-name').value.trim() || 'Yuki';
+  const name = document.getElementById('taker-name').value.trim() || 'Mahym';
   const statusEl = document.getElementById('send-status');
   statusEl.textContent = 'Sending…';
   statusEl.style.color = 'var(--ink3)';
