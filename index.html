@@ -15,7 +15,11 @@ body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:va
 .dash-greeting{font-size:12px;color:rgba(255,255,255,.4);margin-bottom:3px;letter-spacing:.05em;text-transform:uppercase}
 .dash-name{font-size:26px;font-weight:700;color:white;margin-bottom:2px}
 .dash-level{font-size:13px;color:rgba(255,255,255,.45)}
-.streak-pill{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:4px 12px;font-size:13px;font-weight:600;color:#ffc84a;margin-top:10px}
+.streak-pill{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:4px 12px;font-size:13px;font-weight:600;color:#ffc84a;margin-top:10px;cursor:default;user-select:none;-webkit-user-select:none}
+.admin-toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:#1c1c2e;color:white;padding:10px 20px;border-radius:20px;font-size:13px;font-weight:500;z-index:9999;display:none;animation:fadeUp .2s ease}
+.admin-toast.show{display:block}
+.lp-ring{position:fixed;pointer-events:none;border-radius:50%;border:3px solid #ffc84a;z-index:9999;display:none;animation:lpGrow 2s linear forwards}
+@keyframes lpGrow{from{opacity:1;width:0;height:0;margin-left:0;margin-top:0}to{opacity:0;width:80px;height:80px;margin-left:-40px;margin-top:-40px}}
 .dash-body{max-width:640px;margin:0 auto;padding:1.25rem 1rem 4rem}
 .mastery-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;margin-bottom:.875rem;box-shadow:var(--shadow)}
 .mastery-card h3{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--ink3);margin-bottom:1rem}
@@ -135,8 +139,10 @@ body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:va
     <div class="dash-greeting">おかえり — Welcome back</div>
     <div class="dash-name" id="dash-name">Mahym</div>
     <div class="dash-level">みんなの日本語 · Lessons 26–28</div>
-    <div class="streak-pill">🔥 <span id="streak-count">0</span> day streak</div>
+    <div class="streak-pill" id="streak-pill" onmousedown="lpStart(event)" onmouseup="lpEnd()" onmouseleave="lpEnd()" ontouchstart="lpStart(event)" ontouchend="lpEnd()">🔥 <span id="streak-count">0</span> day streak</div>
   </div>
+  <div class="admin-toast" id="admin-toast">🔐 Opening admin panel...</div>
+  <div class="lp-ring" id="lp-ring"></div>
   <div class="dash-body">
     <div id="review-banner" class="review-banner" onclick="startTest('review')" style="display:none">
       <div><div class="review-banner-text">📚 復習タイム — Review due</div><div class="review-banner-sub">Questions you got wrong, ready to retry</div></div>
@@ -252,6 +258,36 @@ function renderSpeaking(){document.getElementById('speaking-body').innerHTML=SPE
 function showView(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0)}
 async function init(){document.getElementById('fc-due-label').textContent='Loading...';await loadData();renderDash();renderSpeaking()}
 init();
+
+// ── HIDDEN ADMIN BUTTON (long press streak pill 3 seconds) ──
+let lpTimer=null;
+let lpStartTime=0;
+function lpStart(e){
+  lpStartTime=Date.now();
+  const ring=document.getElementById('lp-ring');
+  // Position ring near the streak pill
+  const pill=document.getElementById('streak-pill');
+  const rect=pill.getBoundingClientRect();
+  ring.style.left=(rect.left+rect.width/2)+'px';
+  ring.style.top=(rect.top+rect.height/2)+'px';
+  ring.style.display='block';
+  // Reset animation
+  ring.style.animation='none';
+  ring.offsetHeight; // reflow
+  ring.style.animation='lpGrow 3s linear forwards';
+  lpTimer=setTimeout(()=>{
+    ring.style.display='none';
+    const toast=document.getElementById('admin-toast');
+    toast.classList.add('show');
+    setTimeout(()=>{toast.classList.remove('show');window.location.href='/admin.html'},800);
+  },3000);
+}
+function lpEnd(){
+  if(lpTimer){clearTimeout(lpTimer);lpTimer=null}
+  const ring=document.getElementById('lp-ring');
+  ring.style.display='none';
+  ring.style.animation='none';
+}
 </script>
   <div style="text-align: center; padding: 40px 0 20px 0;">
   <a href="/admin.html" style="text-decoration: none; opacity: 0.15; font-size: 14px; transition: opacity 0.3s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.15'">🌸</a>
