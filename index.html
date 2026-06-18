@@ -3,840 +3,739 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>日本語テスト — Lessons 26・27・28</title>
+<title>日本語学習 — Minna no Nihongo</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="data/questions.js"></script>
 <style>
-:root {
-  --ink: #1a1a2e;
-  --ink2: #4a4a6a;
-  --ink3: #8888aa;
-  --surface: #f7f6f2;
-  --card: #ffffff;
-  --accent: #c84b2f;
-  --accent2: #e8734a;
-  --green: #2d7a4f;
-  --green-bg: #edf7f1;
-  --red-bg: #fdf0ed;
-  --border: #e8e6e0;
-  --shadow: 0 1px 3px rgba(26,26,46,.08), 0 4px 16px rgba(26,26,46,.06);
-  --r: 12px;
+:root{
+  --ink:#1a1a2e;--ink2:#3d3d5c;--ink3:#7a7a9a;
+  --bg:#f5f4f0;--card:#ffffff;--border:#e6e4de;
+  --red:#c84b2f;--red2:#e8734a;--red-bg:#fdeee9;
+  --green:#2d7a4f;--green-bg:#edf7f1;
+  --blue:#1a5fa8;--blue-bg:#e8f0fb;
+  --amber:#b87400;--amber-bg:#fef6e4;
+  --shadow:0 1px 4px rgba(26,26,46,.07),0 4px 20px rgba(26,26,46,.05);
+  --r:12px;--r-sm:8px;
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: 'Inter', 'Noto Sans JP', sans-serif;
-  background: var(--surface);
-  color: var(--ink);
-  min-height: 100vh;
-  line-height: 1.6;
-}
-/* HEADER */
-.site-header {
-  background: var(--ink);
-  color: white;
-  padding: 2rem 1.5rem 1.5rem;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-.site-header::before {
-  content: '';
-  position: absolute;
-  top: -40px; right: -40px;
-  width: 200px; height: 200px;
-  background: var(--accent);
-  border-radius: 50%;
-  opacity: .12;
-}
-.header-eyebrow {
-  font-size: 11px;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,.5);
-  margin-bottom: 8px;
-}
-.header-title {
-  font-family: 'Noto Sans JP', sans-serif;
-  font-size: clamp(22px, 5vw, 32px);
-  font-weight: 700;
-  color: white;
-  margin-bottom: 6px;
-}
-.header-sub {
-  font-size: 14px;
-  color: rgba(255,255,255,.55);
-}
-/* PROGRESS STRIP */
-.progress-strip {
-  background: var(--card);
-  border-bottom: 1px solid var(--border);
-  padding: .75rem 1.5rem;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-.progress-bar-wrap {
-  flex: 1;
-  height: 4px;
-  background: var(--border);
-  border-radius: 2px;
-  overflow: hidden;
-}
-.progress-bar-fill {
-  height: 100%;
-  background: var(--accent);
-  border-radius: 2px;
-  transition: width .4s ease;
-}
-.progress-label {
-  font-size: 12px;
-  color: var(--ink3);
-  white-space: nowrap;
-}
-.timer-badge {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--accent);
-  font-variant-numeric: tabular-nums;
-  min-width: 52px;
-  text-align: right;
-}
-/* TABS */
-.tabs {
-  display: flex;
-  gap: 0;
-  background: var(--card);
-  border-bottom: 1px solid var(--border);
-  overflow-x: auto;
-  padding: 0 1rem;
-}
-.tab-btn {
-  padding: 14px 20px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--ink3);
-  background: none;
-  border: none;
-  border-bottom: 2.5px solid transparent;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: all .15s;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.tab-btn.active {
-  color: var(--accent);
-  border-bottom-color: var(--accent);
-}
-.tab-count {
-  font-size: 11px;
-  background: var(--surface);
-  color: var(--ink3);
-  padding: 1px 7px;
-  border-radius: 20px;
-}
-.tab-btn.active .tab-count {
-  background: #fdeee9;
-  color: var(--accent);
-}
-/* MAIN */
-.main { max-width: 720px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
-.section { display: none; }
-.section.active { display: block; }
-/* QUESTION CARD */
-.q-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 1.5rem;
-  margin-bottom: 1rem;
-  box-shadow: var(--shadow);
-  transition: opacity .2s;
-}
-.q-meta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-.q-num-badge {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  color: var(--ink3);
-}
-.q-time-badge {
-  font-size: 11px;
-  color: var(--ink3);
-}
-.q-sentence {
-  font-family: 'Noto Sans JP', sans-serif;
-  font-size: 17px;
-  color: var(--ink);
-  margin-bottom: 6px;
-  line-height: 1.7;
-}
-.q-ask {
-  font-size: 13px;
-  color: var(--ink2);
-  margin-bottom: 14px;
-  font-weight: 500;
-}
-.options {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-}
-.opt-btn {
-  padding: 10px 14px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--surface);
-  color: var(--ink);
-  font-size: 14px;
-  font-family: 'Noto Sans JP', sans-serif;
-  cursor: pointer;
-  text-align: left;
-  transition: all .15s;
-  line-height: 1.4;
-}
-.opt-btn:hover:not(:disabled) {
-  border-color: var(--accent2);
-  background: var(--card);
-}
-.opt-btn.correct {
-  background: var(--green-bg);
-  border-color: var(--green);
-  color: var(--green);
-  font-weight: 500;
-}
-.opt-btn.wrong {
-  background: var(--red-bg);
-  border-color: var(--accent);
-  color: var(--accent);
-}
-.opt-btn:disabled { cursor: default; }
-.feedback {
-  margin-top: 12px;
-  font-size: 13px;
-  color: var(--ink2);
-  padding: 8px 12px;
-  border-radius: 6px;
-  background: var(--surface);
-  border-left: 3px solid var(--border);
-}
-.feedback.ok { border-left-color: var(--green); color: var(--green); }
-.feedback.err { border-left-color: var(--accent); }
-/* SCORE BOARD */
-.score-hero {
-  background: var(--ink);
-  color: white;
-  border-radius: var(--r);
-  padding: 2rem;
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
-.score-big { font-size: 56px; font-weight: 700; line-height: 1; }
-.score-label { font-size: 14px; color: rgba(255,255,255,.55); margin-top: 6px; }
-.stat-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-bottom: 1.5rem;
-}
-.stat-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 1rem;
-  text-align: center;
-}
-.stat-val { font-size: 22px; font-weight: 600; color: var(--ink); }
-.stat-lbl { font-size: 11px; color: var(--ink3); margin-top: 3px; text-transform: uppercase; letter-spacing: .06em; }
-.struggles-section {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 1.25rem;
-  margin-bottom: 1.5rem;
-}
-.struggles-title {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--ink2);
-  text-transform: uppercase;
-  letter-spacing: .08em;
-  margin-bottom: 12px;
-}
-.struggle-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 8px 0;
-  border-bottom: 1px solid var(--border);
-  font-size: 14px;
-}
-.struggle-item:last-child { border-bottom: none; }
-.struggle-q { flex: 1; color: var(--ink2); font-family: 'Noto Sans JP', sans-serif; }
-.struggle-ans { color: var(--accent); font-size: 12px; }
-.struggle-correct { color: var(--green); font-size: 12px; }
-/* SPEAKING */
-.speaking-intro {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 1.25rem 1.5rem;
-  margin-bottom: 1.5rem;
-  font-size: 14px;
-  color: var(--ink2);
-  line-height: 1.7;
-}
-.speaking-intro strong { color: var(--ink); }
-.sp-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 1.25rem 1.5rem;
-  margin-bottom: .75rem;
-  box-shadow: var(--shadow);
-}
-.sp-tag {
-  display: inline-block;
-  font-size: 11px;
-  font-weight: 600;
-  padding: 3px 10px;
-  border-radius: 20px;
-  background: #fdeee9;
-  color: var(--accent);
-  margin-bottom: 10px;
-  letter-spacing: .04em;
-}
-.sp-q {
-  font-family: 'Noto Sans JP', sans-serif;
-  font-size: 16px;
-  color: var(--ink);
-  margin-bottom: 10px;
-  line-height: 1.6;
-}
-.sp-hint-btn {
-  font-size: 12px;
-  color: var(--ink3);
-  background: none;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 4px 12px;
-  cursor: pointer;
-  transition: all .15s;
-}
-.sp-hint-btn:hover { border-color: var(--accent2); color: var(--accent); }
-.sp-hint {
-  font-size: 13px;
-  color: var(--ink2);
-  margin-top: 8px;
-  padding: 8px 12px;
-  background: var(--surface);
-  border-radius: 6px;
-  display: none;
-  font-family: 'Noto Sans JP', sans-serif;
-}
-/* BUTTONS */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 10px 22px;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  border: 1px solid var(--border);
-  background: var(--card);
-  color: var(--ink);
-  transition: all .15s;
-  text-decoration: none;
-}
-.btn:hover { background: var(--surface); }
-.btn-primary {
-  background: var(--accent);
-  color: white;
-  border-color: var(--accent);
-}
-.btn-primary:hover { background: var(--accent2); border-color: var(--accent2); }
-.btn-group { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 1.5rem; }
-/* SEND RESULT */
-.send-panel {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 1.5rem;
-  margin-top: 1.5rem;
-  text-align: center;
-}
-.send-panel h3 { font-size: 16px; margin-bottom: 6px; }
-.send-panel p { font-size: 13px; color: var(--ink3); margin-bottom: 1.25rem; }
-.name-input {
-  width: 100%;
-  max-width: 280px;
-  padding: 9px 14px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  font-size: 14px;
-  margin-bottom: 12px;
-  outline: none;
-  font-family: 'Noto Sans JP', sans-serif;
-  display: block;
-  margin: 0 auto 12px;
-}
-.name-input:focus { border-color: var(--accent); }
-.send-status {
-  font-size: 13px;
-  margin-top: 10px;
-  min-height: 20px;
-}
-/* RESPONSIVE */
-@media (max-width: 480px) {
-  .options { grid-template-columns: 1fr; }
-  .stat-grid { grid-template-columns: 1fr 1fr; }
-  .tab-btn { padding: 12px 14px; font-size: 12px; }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+
+/* ── SCREENS ── */
+.screen{display:none;min-height:100vh}
+.screen.active{display:block}
+
+/* ── DASHBOARD ── */
+#dash-header{background:var(--ink);color:#fff;padding:2rem 1.5rem 3rem;position:relative;overflow:hidden}
+#dash-header::after{content:'';position:absolute;bottom:-40px;right:-30px;width:180px;height:180px;border-radius:50%;background:var(--red);opacity:.12}
+.dash-eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:8px}
+.dash-greeting{font-size:26px;font-weight:600;margin-bottom:4px}
+.dash-subtitle{font-size:13px;color:rgba(255,255,255,.5)}
+.streak-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.1);border-radius:20px;padding:5px 12px;font-size:13px;margin-top:12px}
+
+.dash-body{max-width:680px;margin:-1.5rem auto 0;padding:0 1rem 4rem;position:relative}
+
+.mastery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.25rem}
+.mastery-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1rem;box-shadow:var(--shadow)}
+.mastery-label{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink3);margin-bottom:6px}
+.mastery-val{font-size:22px;font-weight:600;color:var(--ink)}
+.mastery-bar{height:3px;background:var(--border);border-radius:2px;margin-top:8px;overflow:hidden}
+.mastery-fill{height:100%;border-radius:2px;transition:width .5s}
+
+.action-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.5rem}
+.action-btn{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem 1rem;cursor:pointer;text-align:left;box-shadow:var(--shadow);transition:all .15s}
+.action-btn:hover{border-color:var(--red2);transform:translateY(-1px)}
+.action-btn.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+.action-btn.primary:hover{background:var(--ink2)}
+.action-icon{font-size:22px;margin-bottom:8px;display:block}
+.action-title{font-size:14px;font-weight:600;margin-bottom:2px}
+.action-sub{font-size:12px;opacity:.6}
+
+.section-heading{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.09em;color:var(--ink3);margin:1.5rem 0 .75rem}
+
+.weakness-list{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);margin-bottom:1.25rem}
+.weakness-row{display:flex;align-items:center;padding:.75rem 1rem;border-bottom:1px solid var(--border);gap:12px;font-size:13px}
+.weakness-row:last-child{border-bottom:none}
+.w-rank{font-size:11px;font-weight:600;color:var(--ink3);min-width:20px}
+.w-tag{flex:1;font-weight:500}
+.w-bar-wrap{width:80px;height:4px;background:var(--border);border-radius:2px;overflow:hidden}
+.w-bar{height:100%;border-radius:2px}
+.w-pct{font-size:12px;color:var(--ink3);min-width:32px;text-align:right}
+
+.progress-map{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:1.5rem}
+.lesson-dot{background:var(--card);border:1px solid var(--border);border-radius:var(--r-sm);padding:.6rem .4rem;text-align:center;font-size:11px;cursor:pointer;transition:all .15s}
+.lesson-dot.done{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+.lesson-dot.current{background:var(--red-bg);border-color:var(--red);color:var(--red);font-weight:600}
+.lesson-dot.locked{background:var(--bg);color:var(--ink3)}
+.lesson-dot-num{font-size:13px;font-weight:600}
+.lesson-dot-status{font-size:10px;margin-top:2px}
+
+.history-list{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow)}
+.history-row{display:flex;align-items:center;padding:.8rem 1rem;border-bottom:1px solid var(--border);gap:10px;font-size:13px}
+.history-row:last-child{border-bottom:none}
+.h-score{font-weight:600;min-width:36px}
+.h-info{flex:1;color:var(--ink2)}
+.h-time{font-size:11px;color:var(--ink3)}
+
+/* ── TEST SCREEN ── */
+#test-header{background:var(--ink);padding:1rem 1.5rem;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100}
+.test-back{background:none;border:none;color:rgba(255,255,255,.6);cursor:pointer;font-size:20px;padding:0;line-height:1}
+.test-title{color:#fff;font-size:15px;font-weight:500;flex:1}
+.test-timer{font-size:14px;font-weight:600;color:var(--red2);font-variant-numeric:tabular-nums}
+.test-progress-bar{height:3px;background:rgba(255,255,255,.15)}
+.test-progress-fill{height:100%;background:var(--red2);transition:width .3s}
+
+.test-body{max-width:680px;margin:0 auto;padding:1.5rem 1rem 4rem}
+
+.test-score-strip{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:.75rem 1rem;margin-bottom:1rem;display:flex;gap:16px;font-size:13px;box-shadow:var(--shadow)}
+.score-live{font-weight:600;color:var(--green)}
+.score-miss{color:var(--red)}
+
+.q-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;margin-bottom:1rem;box-shadow:var(--shadow)}
+.q-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.q-badge{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--ink3)}
+.q-diff{font-size:11px;padding:2px 8px;border-radius:12px}
+.q-diff.d1{background:#e8f5e9;color:#2e7d32}
+.q-diff.d2{background:var(--blue-bg);color:var(--blue)}
+.q-diff.d3{background:var(--amber-bg);color:var(--amber)}
+.q-diff.d4{background:var(--red-bg);color:var(--red)}
+.q-sentence{font-family:'Noto Sans JP',sans-serif;font-size:17px;color:var(--ink);margin-bottom:6px;line-height:1.7}
+.q-ask{font-size:13px;font-weight:500;color:var(--ink2);margin-bottom:14px}
+.q-time{font-size:12px;color:var(--ink3);margin-top:-10px;margin-bottom:14px}
+.options{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.opt{padding:11px 14px;border:1px solid var(--border);border-radius:var(--r-sm);background:var(--bg);color:var(--ink);font-size:14px;font-family:'Noto Sans JP',sans-serif;cursor:pointer;text-align:left;transition:all .15s;line-height:1.4}
+.opt:hover:not(:disabled){border-color:var(--red2);background:var(--card)}
+.opt.correct{background:var(--green-bg);border-color:var(--green);color:var(--green);font-weight:500}
+.opt.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red)}
+.opt:disabled{cursor:default}
+.feedback{margin-top:12px;font-size:13px;padding:9px 12px;border-radius:var(--r-sm);background:var(--bg);border-left:3px solid var(--border);color:var(--ink2)}
+.feedback.ok{border-left-color:var(--green);color:var(--green)}
+.feedback.err{border-left-color:var(--red)}
+
+/* ── RESULTS SCREEN ── */
+.results-hero{background:var(--ink);color:#fff;padding:2.5rem 1.5rem;text-align:center}
+.results-pct{font-size:64px;font-weight:700;line-height:1}
+.results-grade{font-size:18px;font-weight:600;margin-top:4px;opacity:.7}
+.results-label{font-size:13px;opacity:.45;margin-top:6px}
+
+.results-body{max-width:680px;margin:-1.5rem auto 0;padding:0 1rem 4rem;position:relative}
+
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.25rem}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1rem;text-align:center;box-shadow:var(--shadow)}
+.stat-v{font-size:22px;font-weight:600;color:var(--ink)}
+.stat-l{font-size:11px;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em;margin-top:3px}
+
+.mistake-list{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);margin-bottom:1.25rem}
+.mistake-row{padding:.9rem 1rem;border-bottom:1px solid var(--border);font-size:13px}
+.mistake-row:last-child{border-bottom:none}
+.mistake-q{font-family:'Noto Sans JP',sans-serif;color:var(--ink);margin-bottom:4px;font-size:14px}
+.mistake-ans{display:flex;gap:12px;font-size:12px}
+.miss-wrong{color:var(--red)}
+.miss-right{color:var(--green)}
+.miss-exp{color:var(--ink3);margin-top:3px;font-size:12px}
+
+.send-panel{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;text-align:center;box-shadow:var(--shadow)}
+.send-panel h3{font-size:16px;font-weight:600;margin-bottom:4px}
+.send-panel p{font-size:13px;color:var(--ink3);margin-bottom:1rem}
+.name-input{display:block;margin:0 auto 12px;width:100%;max-width:260px;padding:9px 14px;border:1px solid var(--border);border-radius:var(--r-sm);font-size:14px;font-family:'Noto Sans JP',sans-serif;outline:none;text-align:center}
+.name-input:focus{border-color:var(--red)}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 22px;border-radius:var(--r-sm);font-size:14px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:var(--card);color:var(--ink);transition:all .15s}
+.btn:hover{background:var(--bg)}
+.btn-primary{background:var(--red);color:#fff;border-color:var(--red)}
+.btn-primary:hover{background:var(--red2);border-color:var(--red2)}
+.send-status{font-size:13px;margin-top:10px;min-height:18px}
+
+/* ── SPEAKING ── */
+.sp-body{max-width:680px;margin:0 auto;padding:1.5rem 1rem 4rem}
+.sp-intro{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;margin-bottom:1.25rem;font-size:14px;color:var(--ink2);line-height:1.7}
+.sp-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;margin-bottom:.75rem;box-shadow:var(--shadow)}
+.sp-tag{display:inline-block;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:var(--red-bg);color:var(--red);margin-bottom:8px}
+.sp-q{font-family:'Noto Sans JP',sans-serif;font-size:16px;color:var(--ink);margin-bottom:10px;line-height:1.6}
+.sp-hint-btn{font-size:12px;color:var(--ink3);background:none;border:1px solid var(--border);border-radius:6px;padding:4px 12px;cursor:pointer;transition:all .15s}
+.sp-hint-btn:hover{border-color:var(--red2);color:var(--red)}
+.sp-hint{font-size:13px;color:var(--ink2);margin-top:8px;padding:8px 12px;background:var(--bg);border-radius:6px;display:none;font-family:'Noto Sans JP',sans-serif}
+
+/* ── RESPONSIVE ── */
+@media(max-width:480px){
+  .options{grid-template-columns:1fr}
+  .stat-row,.mastery-grid{grid-template-columns:1fr 1fr}
+  .action-grid{grid-template-columns:1fr}
+  .progress-map{grid-template-columns:repeat(4,1fr)}
 }
 </style>
 </head>
 <body>
 
-<div class="site-header">
-  <div class="header-eyebrow">みんなの日本語</div>
-  <div class="header-title">日本語テスト</div>
-  <div class="header-sub">Lessons 26 · 27 · 28 — Kanji, Vocabulary &amp; Speaking</div>
-</div>
-
-<div class="progress-strip">
-  <div class="progress-bar-wrap">
-    <div class="progress-bar-fill" id="globalProgress" style="width:0%"></div>
+<!-- ══════════ DASHBOARD ══════════ -->
+<div class="screen active" id="screen-dash">
+  <div id="dash-header">
+    <div class="dash-eyebrow">みんなの日本語</div>
+    <div class="dash-greeting" id="dash-greeting">こんにちは！</div>
+    <div class="dash-subtitle">Lessons 26 · 27 · 28 · N5 Track</div>
+    <div class="streak-badge" id="streak-badge">🔥 <span id="streak-count">0</span> day streak</div>
   </div>
-  <div class="progress-label" id="progressLabel">0 / 40</div>
-  <div class="timer-badge" id="globalTimer">0:00</div>
-</div>
 
-<div class="tabs">
-  <button class="tab-btn active" onclick="switchTab('kanji',this)">
-    漢字 <span class="tab-count" id="tc-kanji">30</span>
-  </button>
-  <button class="tab-btn" onclick="switchTab('vocab',this)">
-    語彙 <span class="tab-count" id="tc-vocab">10</span>
-  </button>
-  <button class="tab-btn" onclick="switchTab('speaking',this)">
-    会話 <span class="tab-count">11</span>
-  </button>
-  <button class="tab-btn" onclick="switchTab('results',this)">
-    結果 <span class="tab-count" id="tc-results">—</span>
-  </button>
-</div>
+  <div class="dash-body">
+    <div class="section-heading">Mastery</div>
+    <div class="mastery-grid">
+      <div class="mastery-card">
+        <div class="mastery-label">漢字</div>
+        <div class="mastery-val" id="m-kanji">—</div>
+        <div class="mastery-bar"><div class="mastery-fill" id="mf-kanji" style="width:0%;background:var(--red)"></div></div>
+      </div>
+      <div class="mastery-card">
+        <div class="mastery-label">語彙</div>
+        <div class="mastery-val" id="m-vocab">—</div>
+        <div class="mastery-bar"><div class="mastery-fill" id="mf-vocab" style="width:0%;background:var(--blue)"></div></div>
+      </div>
+      <div class="mastery-card">
+        <div class="mastery-label">文法</div>
+        <div class="mastery-val" id="m-grammar">—</div>
+        <div class="mastery-bar"><div class="mastery-fill" id="mf-grammar" style="width:0%;background:var(--green)"></div></div>
+      </div>
+    </div>
 
-<div class="main">
+    <div class="section-heading">Today</div>
+    <div class="action-grid">
+      <button class="action-btn primary" onclick="startTest('short')">
+        <span class="action-icon">⚡</span>
+        <div class="action-title">Quick Test</div>
+        <div class="action-sub">30 questions · ~10 min</div>
+      </button>
+      <button class="action-btn" onclick="startTest('full')">
+        <span class="action-icon">📋</span>
+        <div class="action-title">Full Test</div>
+        <div class="action-sub">60 questions · ~25 min</div>
+      </button>
+      <button class="action-btn" onclick="showScreen('screen-speaking')">
+        <span class="action-icon">💬</span>
+        <div class="action-title">Speaking</div>
+        <div class="action-sub">11 conversation prompts</div>
+      </button>
+      <button class="action-btn" onclick="startTest('weak')">
+        <span class="action-icon">🎯</span>
+        <div class="action-title">Weak Areas</div>
+        <div class="action-sub">Focus on mistakes</div>
+      </button>
+    </div>
 
-<!-- KANJI SECTION -->
-<div class="section active" id="sec-kanji"></div>
+    <div class="section-heading">Weak Grammar Points</div>
+    <div class="weakness-list" id="weakness-list">
+      <div class="weakness-row" style="color:var(--ink3);font-size:13px;justify-content:center;padding:1.25rem">
+        Complete a test to see your weak areas
+      </div>
+    </div>
 
-<!-- VOCAB SECTION -->
-<div class="section" id="sec-vocab"></div>
+    <div class="section-heading">Lesson Progress</div>
+    <div class="progress-map" id="progress-map"></div>
 
-<!-- SPEAKING SECTION -->
-<div class="section" id="sec-speaking">
-  <div class="speaking-intro">
-    <strong>会話テスト — Speaking Test (約20分)</strong><br>
-    質問を読んで、できるだけ詳しく答えてください。文法のポイントを意識して話しましょう。<br>
-    <em style="font-size:12px;color:var(--ink3)">Read each question and answer in full sentences. Focus on the grammar point shown.</em>
+    <div class="section-heading">Recent Tests</div>
+    <div class="history-list" id="history-list">
+      <div class="history-row" style="color:var(--ink3);font-size:13px;justify-content:center">No tests yet</div>
+    </div>
   </div>
-  <div id="speaking-cards"></div>
 </div>
 
-<!-- RESULTS SECTION -->
-<div class="section" id="sec-results">
-  <div id="results-content">
-    <p style="color:var(--ink3);font-size:14px;padding:2rem 0;text-align:center">Complete the kanji and vocabulary sections first to see your results.</p>
+<!-- ══════════ TEST ══════════ -->
+<div class="screen" id="screen-test">
+  <div id="test-header">
+    <button class="test-back" onclick="confirmBack()">←</button>
+    <div class="test-title" id="test-header-title">Quick Test</div>
+    <div class="test-timer" id="test-timer">0:00</div>
+  </div>
+  <div class="test-progress-bar"><div class="test-progress-fill" id="test-prog-fill" style="width:0%"></div></div>
+  <div class="test-body">
+    <div class="test-score-strip">
+      <span>✓ <span class="score-live" id="live-correct">0</span></span>
+      <span>✗ <span class="score-miss" id="live-wrong">0</span></span>
+      <span style="flex:1;text-align:right;color:var(--ink3);font-size:12px" id="live-remain">—</span>
+    </div>
+    <div id="questions-container"></div>
   </div>
 </div>
 
-</div><!-- /main -->
+<!-- ══════════ RESULTS ══════════ -->
+<div class="screen" id="screen-results">
+  <div class="results-hero">
+    <div class="results-pct" id="res-pct">—</div>
+    <div class="results-grade" id="res-grade">—</div>
+    <div class="results-label" id="res-label">—</div>
+  </div>
+  <div class="results-body">
+    <div class="stat-row">
+      <div class="stat-card"><div class="stat-v" id="res-kanji">—</div><div class="stat-l">漢字</div></div>
+      <div class="stat-card"><div class="stat-v" id="res-vocab">—</div><div class="stat-l">語彙</div></div>
+      <div class="stat-card"><div class="stat-v" id="res-grammar">—</div><div class="stat-l">文法</div></div>
+    </div>
+
+    <div class="section-heading">Mistakes</div>
+    <div class="mistake-list" id="res-mistakes"></div>
+
+    <div class="section-heading" id="slow-heading">Slow Questions</div>
+    <div class="mistake-list" id="res-slow"></div>
+
+    <div class="send-panel">
+      <h3>📤 結果を送る</h3>
+      <p>Send full analysis to Telegram</p>
+      <input class="name-input" id="taker-name" type="text" placeholder="Name (e.g. Mahym)" />
+      <button class="btn btn-primary" onclick="sendTelegram()">Send to Telegram →</button>
+      <div class="send-status" id="send-status"></div>
+    </div>
+
+    <div style="margin-top:1rem;display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn btn-primary" onclick="startTest(lastTestType)">🔄 Retake Test</button>
+      <button class="btn" onclick="showScreen('screen-dash')">← Dashboard</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ SPEAKING ══════════ -->
+<div class="screen" id="screen-speaking">
+  <div id="test-header" style="position:sticky;top:0;z-index:100">
+    <button class="test-back" onclick="showScreen('screen-dash')">←</button>
+    <div class="test-title">会話テスト — Speaking</div>
+  </div>
+  <div class="sp-body">
+    <div class="sp-intro">
+      <strong>約20分の会話テスト</strong><br>
+      Each question targets a grammar point from lessons 26–28. Answer out loud in complete sentences.
+      Use the hint button if you need a nudge.
+    </div>
+    <div id="speaking-cards"></div>
+  </div>
+</div>
 
 <script>
-const KANJI_Q = [
-  {s:"自分で旅行を計画するのは楽しいです。",a:"自分 の読み方は？",o:["じぶん","ちっぷん","じっぷん","ちぶん"],c:0},
-  {s:"自分で旅行を計画するのは楽しいです。",a:"旅行 の読み方は？",o:["りゅうこ","りょうこ","りょこう","りゅこう"],c:2},
-  {s:"自分で旅行を計画するのは楽しいです。",a:"計画 の読み方は？",o:["けいかく","けいが","げいかく","けが"],c:0},
-  {s:"自分で旅行を計画するのは楽しいです。",a:"楽しい の読み方は？",o:["うれしい","うつくしい","たのしい","いそがしい"],c:2},
-  {s:"この学生は毎日地下鉄で大学に通っています。",a:"地下鉄 の読み方は？",o:["じげてつ","じがてつ","ちげてつ","ちかてつ"],c:3},
-  {s:"この学生は毎日地下鉄で大学に通っています。",a:"大学 の読み方は？",o:["たいがく","だいかく","たいかく","だいがく"],c:3},
-  {s:"この学生は毎日地下鉄で大学に通っています。",a:"通って の読み方は？",o:["かえって","かよって","かおって","いって"],c:1},
-  {s:"姉がいつも食事の用意をしてくれます。",a:"姉 の読み方は？",o:["いもうと","おとうと","あね","あに"],c:2},
-  {s:"姉がいつも食事の用意をしてくれます。",a:"食事 の読み方は？",o:["しょくじ","しょうじ","そうじ","そくじ"],c:0},
-  {s:"姉がいつも食事の用意をしてくれます。",a:"用意 の読み方は？",o:["よい","ようい","よじ","ようじ"],c:1},
-  {s:"彼女はこうちょくしたようにうごかない。",a:"うごかない の漢字は？",o:["動かない","働かない","重かない","衝かない"],c:0,exp:"こうちょく = stiff/rigid; 動く = to move"},
-  {s:"奈良と京都は日本の古い都です。",a:"都 の読み方は？",o:["みなと","ふるさと","みやこ","いなか"],c:2,exp:"都 (みやこ) = capital city"},
-  {s:"趣味としてじゅうどうを習うつもりです。",a:"趣味 の読み方は？",o:["しゅみ","きょうみ","ちゅみ","ちょうみ"],c:0,exp:"趣味 (しゅみ) = hobby"},
-  {s:"きゅうに空が暗くなりました。",a:"きゅうに の漢字は？",o:["早に","速に","突に","急に"],c:3,exp:"急に = suddenly"},
-  {s:"兄が入院したので、花を持ってお見舞いに行った。",a:"お見舞い の読み方は？",o:["おみあい","おみまい","おけんまい","おけんあい"],c:1,exp:"お見舞い = visiting someone in hospital"},
-  {s:"のどがかわいています。水が飲みたいです。",a:"かわいて の漢字は？",o:["乾いて","変いて","掛いて","渇いて"],c:3,exp:"渇く = to be thirsty; 乾く = to dry"},
-  {s:"先生の奥さんはとても優しいです。",a:"優しい の読み方は？",o:["きびしい","やさしい","たのしい","したしい"],c:1,exp:"優しい (やさしい) = kind, gentle"},
-  {s:"ディズニーランドで姉に人形を買ってやった。",a:"人形 の読み方は？",o:["にんけい","じんけい","にんぎょう","じんぎょう"],c:2,exp:"人形 (にんぎょう) = doll"},
-  {s:"おばあさんが昔のいろんな物語を話してくれた。",a:"物語 の読み方は？",o:["ものはなし","ものばなし","ものかたり","ものがたり"],c:3,exp:"物語 (ものがたり) = story, tale"},
-  {s:"友達がいなくて、さびしいです。",a:"さびしい の漢字は？",o:["悲しい","厳しい","美しい","寂しい"],c:3,exp:"寂しい (さびしい) = lonely"},
-  {s:"海から強い風がふいてきた。",a:"海 の読み方は？",o:["うみ","あめ","かぜ","うた"],c:0},
-  {s:"海から強い風がふいてきた。",a:"強い の読み方は？",o:["おもい","あまい","すごい","つよい"],c:3},
-  {s:"海から強い風がふいてきた。",a:"風 の読み方は？",o:["かべ","かばん","かぜ","かぎ"],c:2},
-  {s:"川で魚をとりました。今日の夕飯はその魚を使った料理にします。",a:"魚 の読み方は？",o:["こめ","さかな","にく","やさい"],c:1},
-  {s:"川で魚をとりました。今日の夕飯はその魚を使った料理にします。",a:"夕飯 の読み方は？",o:["ちゅうはん","ゆうはん","ちゅうしょく","ゆうしょく"],c:1},
-  {s:"川で魚をとりました。今日の夕飯はその魚を使った料理にします。",a:"使った の読み方は？",o:["つかった","つくった","はって","きった"],c:0},
-  {s:"川で魚をとりました。今日の夕飯はその魚を使った料理にします。",a:"料理 の読み方は？",o:["りょり","りょいり","りょうり","りょおい"],c:2},
-  {s:"となりの教室から歌が聞こえるので、まどを閉めてください。",a:"教室 の読み方は？",o:["きょうじつ","きゅうしつ","きゅうじつ","きょうしつ"],c:3},
-  {s:"となりの教室から歌が聞こえるので、まどを閉めてください。",a:"歌 の読み方は？",o:["うた","おた","きえ","こえ"],c:0},
-  {s:"となりの教室から歌が聞こえるので、まどを閉めてください。",a:"閉めて の読み方は？",o:["あめて","とめて","しめて","やめて"],c:2},
-];
-
-const VOCAB_Q = [
-  {q:"日本では、はる·なつ·あき·ふゆの四つの ＿＿ があります。",o:["てんき","きぶん","きおん","きせつ"],c:3,exp:"きせつ (季節) = seasons"},
-  {q:"きのうならったことをもう ＿＿ しまいました。",o:["わすれて","すてて","なくして","とって"],c:0,exp:"わすれてしまいました = accidentally forgot (〜てしまう)"},
-  {q:"シャツのうりばは、このうえの３がいです。あの ＿＿ でいってください。",o:["ドア","タクシー","サンダル","エスカレーター"],c:3,exp:"エスカレーター = escalator"},
-  {q:"あまり勉強しなかったので、テストのてんが ＿＿ です。",o:["しんぱい","きけん","あんぜん","あんしん"],c:0,exp:"しんぱい (心配) = worried"},
-  {q:"おもしろいえいがだと聞いたので、＿＿ みたいです。",o:["たぶん","そんなに","ぜひ","きゅうに"],c:2,exp:"ぜひ = by all means / definitely"},
-  {q:"たかださんは ＿＿ をしながらだいがくにかよっています。",o:["オートバイ","デパート","アルバイト","カレンダー"],c:2,exp:"アルバイト = part-time job"},
-  {q:"はなこさんは白いスカートと ＿＿ をはいています。",o:["セーター","ハンカチ","サンダル","オーバー"],c:2,exp:"サンダル = sandals (はく = wear on feet)"},
-  {q:"父はとうきょうへ行くと、いつも ＿＿ をかってきてくれます。",o:["おまつり","おれい","おみやげ","おいわい"],c:2,exp:"おみやげ (お土産) = souvenir/gift from trip"},
-  {q:"あのあたらしい ＿＿ はデパートです。",o:["アパート","ホテル","プール","ビル"],c:3,exp:"ビル = building"},
-  {q:"じゅぎょうがおわってから、まいにち、ピンポンの ＿＿ をします。",o:["しゅみ","うんどう","れんしゅう","しゅうかん"],c:2,exp:"れんしゅう (練習) = practice"},
-];
-
-const SPEAKING_Q = [
-  {tag:"〜てあげる/くれる",q:"ご家族やともだちに最近何かしてあげましたか？",hint:"友達に日本語を教えてあげました。/ 夫にコーヒーを作ってあげました。"},
-  {tag:"〜てもらう",q:"最近、だれかに何かしてもらいましたか？",hint:"夫にごはんを作ってもらいました。/ 友達に道を教えてもらいました。"},
-  {tag:"〜てしまう",q:"最近、困ったこと、うっかりしたことを話してください。",hint:"財布を忘れてしまいました。/ 宿題をなくしてしまいました。"},
-  {tag:"〜たばかり",q:"最近始めたこと、または終わったことは何ですか？",hint:"日本語のレッスンを始めたばかりです。/ ごはんを食べたばかりです。"},
-  {tag:"〜ているところ",q:"今日の午後、何をしているところでしたか？",hint:"勉強しているところでした。/ テレビを見ているところでした。"},
-  {tag:"〜ておく",q:"旅行の前に何を準備しておきますか？",hint:"ホテルを予約しておきます。/ パスポートを確認しておきます。"},
-  {tag:"〜てみる",q:"食べてみたい、行ってみたい、やってみたいことは何ですか？",hint:"北海道に行ってみたいです。/ 新しい料理を作ってみたいです。"},
-  {tag:"〜まま",q:"最近、何かそのままにしておいたことはありますか？",hint:"窓を開けたまま寝てしまいました。/ テレビをつけたまま出かけました。"},
-  {tag:"季節・天気の語彙",q:"好きな季節はいつですか？その理由を教えてください。",hint:"Use: 風、海、山、暑い、涼しい、きせつ、たのしい"},
-  {tag:"日常の語彙",q:"毎日のルーティンを説明してください。",hint:"Use: 地下鉄、大学、アルバイト、食事、れんしゅう"},
-  {tag:"フリートーク",q:"好きな料理は何ですか？料理を自分でしますか？",hint:"Use: 料理、作る、食事、おいしい、魚、野菜"},
-];
-
-// State
-let kanjiAnswers = new Array(KANJI_Q.length).fill(null);
-let vocabAnswers = new Array(VOCAB_Q.length).fill(null);
-let kanjiTimes = new Array(KANJI_Q.length).fill(null);
-let vocabTimes = new Array(VOCAB_Q.length).fill(null);
-let questionStartTime = Date.now();
-let testStartTime = Date.now();
+// ══════════ STATE ══════════
+const STUDENT_NAME = "Mahym";
+let testQuestions = [];
+let answers = [];
+let questionTimes = [];
+let questionStartTime = 0;
+let testStartTime = 0;
 let timerInterval = null;
+let lastTestType = 'short';
+let currentResults = null;
 
-// Timer
-function startTimer() {
-  timerInterval = setInterval(() => {
-    const elapsed = Math.floor((Date.now() - testStartTime) / 1000);
-    const m = Math.floor(elapsed / 60);
-    const s = elapsed % 60;
-    document.getElementById('globalTimer').textContent = m + ':' + String(s).padStart(2,'0');
-  }, 1000);
+// ══════════ STORAGE ══════════
+function load(key, def) {
+  try { const v = localStorage.getItem('jtest_'+key); return v ? JSON.parse(v) : def; } catch { return def; }
+}
+function save(key, val) {
+  try { localStorage.setItem('jtest_'+key, JSON.stringify(val)); } catch {}
 }
 
-function updateProgress() {
-  const total = KANJI_Q.length + VOCAB_Q.length;
-  const done = kanjiAnswers.filter(a=>a!==null).length + vocabAnswers.filter(a=>a!==null).length;
-  document.getElementById('globalProgress').style.width = (done/total*100)+'%';
-  document.getElementById('progressLabel').textContent = done + ' / ' + total;
-  document.getElementById('tc-kanji').textContent = kanjiAnswers.filter(a=>a!==null).length+'/'+KANJI_Q.length;
-  document.getElementById('tc-vocab').textContent = vocabAnswers.filter(a=>a!==null).length+'/'+VOCAB_Q.length;
-  if (done === total) {
-    document.getElementById('tc-results').textContent = '✓ Ready';
-    renderResults();
+// masteryData: { kanji: {correct, total}, vocab: {correct, total}, grammar: {correct, total} }
+// grammarMastery: { "〜てしまう": {correct, total}, ... }
+// history: [ {date, pct, correct, total, type, timeStr, mistakes} ]
+// streak: { lastDate, count }
+
+function getMastery() { return load('mastery', {kanji:{correct:0,total:0}, vocab:{correct:0,total:0}, grammar:{correct:0,total:0}}); }
+function getGrammarMastery() { return load('grammarMastery', {}); }
+function getHistory() { return load('history', []); }
+function getStreak() { return load('streak', {lastDate:'', count:0}); }
+
+function updateStreak() {
+  const today = new Date().toDateString();
+  let streak = getStreak();
+  if (streak.lastDate === today) return;
+  const yesterday = new Date(Date.now() - 86400000).toDateString();
+  if (streak.lastDate === yesterday) {
+    streak.count += 1;
+  } else if (streak.lastDate !== today) {
+    streak.count = 1;
   }
+  streak.lastDate = today;
+  save('streak', streak);
 }
 
-// Render Kanji
-function renderKanji() {
-  let html = '';
-  KANJI_Q.forEach((q, qi) => {
-    const answered = kanjiAnswers[qi] !== null;
-    html += `<div class="q-card" id="kq-${qi}">`;
-    html += `<div class="q-meta"><span class="q-num-badge">漢字 ${qi+1} / ${KANJI_Q.length}</span>`;
-    if (kanjiTimes[qi]) html += `<span class="q-time-badge">⏱ ${kanjiTimes[qi]}s</span>`;
-    html += `</div>`;
-    html += `<div class="q-sentence">${q.s}</div>`;
-    html += `<div class="q-ask">${q.a}</div>`;
-    html += `<div class="options">`;
-    q.o.forEach((opt, oi) => {
-      let cls = 'opt-btn';
-      let dis = '';
-      if (answered) {
-        dis = 'disabled';
-        if (oi === q.c) cls += ' correct';
-        else if (oi === kanjiAnswers[qi]) cls += ' wrong';
-      }
-      html += `<button class="${cls}" ${dis} onclick="answerKanji(${qi},${oi})">${oi+1}. ${opt}</button>`;
-    });
-    html += `</div>`;
-    if (answered) {
-      const ok = kanjiAnswers[qi] === q.c;
-      html += `<div class="feedback ${ok?'ok':'err'}">${ok ? '✓ 正解！' : '✗ 不正解。正解: ' + q.o[q.c]}${q.exp ? ' — ' + q.exp : ''}</div>`;
-    }
-    html += `</div>`;
+function recordResults(qs, ans, times, testType) {
+  const mastery = getMastery();
+  const grammarMastery = getGrammarMastery();
+
+  qs.forEach((q, i) => {
+    if (ans[i] === null) return;
+    const correct = ans[i] === q.correct;
+    mastery[q.type].total++;
+    if (correct) mastery[q.type].correct++;
+    // grammar mastery
+    const tag = q.grammarTag;
+    if (!grammarMastery[tag]) grammarMastery[tag] = {correct:0, total:0, name:tag};
+    grammarMastery[tag].total++;
+    if (correct) grammarMastery[tag].correct++;
   });
-  if (kanjiAnswers.filter(a=>a!==null).length === KANJI_Q.length) {
-    html += `<div class="btn-group"><button class="btn" onclick="resetKanji()">🔄 もう一度 Try again</button></div>`;
-  }
-  document.getElementById('sec-kanji').innerHTML = html;
-}
 
-function answerKanji(qi, oi) {
-  if (kanjiAnswers[qi] !== null) return;
-  kanjiTimes[qi] = Math.round((Date.now() - questionStartTime) / 1000);
-  questionStartTime = Date.now();
-  kanjiAnswers[qi] = oi;
-  renderKanji();
-  updateProgress();
-  setTimeout(() => {
-    const next = document.getElementById('kq-'+(qi+1));
-    if (next) next.scrollIntoView({behavior:'smooth', block:'nearest'});
-  }, 300);
-}
+  save('mastery', mastery);
+  save('grammarMastery', grammarMastery);
 
-function resetKanji() {
-  kanjiAnswers = new Array(KANJI_Q.length).fill(null);
-  kanjiTimes = new Array(KANJI_Q.length).fill(null);
-  questionStartTime = Date.now();
-  renderKanji();
-  updateProgress();
-}
-
-// Render Vocab
-function renderVocab() {
-  let html = '';
-  VOCAB_Q.forEach((q, qi) => {
-    const answered = vocabAnswers[qi] !== null;
-    html += `<div class="q-card" id="vq-${qi}">`;
-    html += `<div class="q-meta"><span class="q-num-badge">語彙 ${qi+1} / ${VOCAB_Q.length}</span>`;
-    if (vocabTimes[qi]) html += `<span class="q-time-badge">⏱ ${vocabTimes[qi]}s</span>`;
-    html += `</div>`;
-    html += `<div class="q-sentence" style="font-size:15px">${q.q}</div>`;
-    html += `<div class="options" style="margin-top:12px">`;
-    q.o.forEach((opt, oi) => {
-      let cls = 'opt-btn';
-      let dis = '';
-      if (answered) {
-        dis = 'disabled';
-        if (oi === q.c) cls += ' correct';
-        else if (oi === vocabAnswers[qi]) cls += ' wrong';
-      }
-      html += `<button class="${cls}" ${dis} onclick="answerVocab(${qi},${oi})">${oi+1}. ${opt}</button>`;
-    });
-    html += `</div>`;
-    if (answered) {
-      const ok = vocabAnswers[qi] === q.c;
-      html += `<div class="feedback ${ok?'ok':'err'}">${ok ? '✓ 正解！' : '✗ 不正解。正解: ' + q.o[q.c]} — ${q.exp}</div>`;
+  const totalAns = ans.filter(a=>a!==null).length;
+  const totalCorrect = ans.filter((a,i)=>a!==null && a===qs[i].correct).length;
+  const pct = totalAns ? Math.round(totalCorrect/totalAns*100) : 0;
+  const elapsed = Math.floor((Date.now()-testStartTime)/1000);
+  const m = Math.floor(elapsed/60), s = elapsed%60;
+  const timeStr = m+'m '+s+'s';
+  const mistakes = [];
+  qs.forEach((q,i)=>{
+    if(ans[i]!==null && ans[i]!==q.correct){
+      mistakes.push({ask:q.ask, sentence:q.sentence, wrong:q.options[ans[i]], right:q.options[q.correct], exp:q.explanation, tag:q.grammarTag, t:times[i]});
     }
-    html += `</div>`;
   });
-  if (vocabAnswers.filter(a=>a!==null).length === VOCAB_Q.length) {
-    html += `<div class="btn-group"><button class="btn" onclick="resetVocab()">🔄 もう一度 Try again</button></div>`;
+
+  const history = getHistory();
+  history.unshift({date:new Date().toLocaleString('ja-JP',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}), pct, correct:totalCorrect, total:totalAns, type:testType, timeStr, mistakes});
+  if (history.length > 20) history.pop();
+  save('history', history);
+  updateStreak();
+
+  return {pct, correct:totalCorrect, total:totalAns, timeStr, mistakes, mastery, grammarMastery, testType};
+}
+
+// ══════════ SCREENS ══════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+  if (id === 'screen-dash') renderDash();
+}
+
+// ══════════ DASHBOARD ══════════
+function renderDash() {
+  const hour = new Date().getHours();
+  const greeting = hour < 12 ? 'おはようございます！' : hour < 17 ? 'こんにちは！' : 'こんばんは！';
+  document.getElementById('dash-greeting').textContent = greeting + ' ' + STUDENT_NAME;
+
+  const streak = getStreak();
+  document.getElementById('streak-count').textContent = streak.count;
+
+  const mastery = getMastery();
+  ['kanji','vocab','grammar'].forEach(type => {
+    const {correct, total} = mastery[type];
+    const pct = total ? Math.round(correct/total*100) : 0;
+    document.getElementById('m-'+type).textContent = total ? pct+'%' : '—';
+    document.getElementById('mf-'+type).style.width = pct+'%';
+  });
+
+  renderWeakness();
+  renderProgressMap();
+  renderHistory();
+}
+
+function renderWeakness() {
+  const gm = getGrammarMastery();
+  const items = Object.entries(gm)
+    .filter(([,v])=>v.total>=2)
+    .map(([k,v])=>({tag:k, pct:Math.round(v.correct/v.total*100), total:v.total}))
+    .sort((a,b)=>a.pct-b.pct)
+    .slice(0,5);
+
+  const el = document.getElementById('weakness-list');
+  if (!items.length) {
+    el.innerHTML='<div class="weakness-row" style="color:var(--ink3);font-size:13px;justify-content:center;padding:1.25rem">Complete a test to see your weak areas</div>';
+    return;
   }
-  document.getElementById('sec-vocab').innerHTML = html;
+  el.innerHTML = items.map((it,i)=>`
+    <div class="weakness-row">
+      <span class="w-rank">${i+1}</span>
+      <span class="w-tag">${it.tag}</span>
+      <div class="w-bar-wrap"><div class="w-bar" style="width:${it.pct}%;background:${it.pct<50?'var(--red)':it.pct<75?'var(--amber)':'var(--green)'}"></div></div>
+      <span class="w-pct">${it.pct}%</span>
+    </div>`).join('');
 }
 
-function answerVocab(qi, oi) {
-  if (vocabAnswers[qi] !== null) return;
-  vocabTimes[qi] = Math.round((Date.now() - questionStartTime) / 1000);
-  questionStartTime = Date.now();
-  vocabAnswers[qi] = oi;
-  renderVocab();
-  updateProgress();
-  setTimeout(() => {
-    const next = document.getElementById('vq-'+(qi+1));
-    if (next) next.scrollIntoView({behavior:'smooth', block:'nearest'});
-  }, 300);
-}
-
-function resetVocab() {
-  vocabAnswers = new Array(VOCAB_Q.length).fill(null);
-  vocabTimes = new Array(VOCAB_Q.length).fill(null);
-  questionStartTime = Date.now();
-  renderVocab();
-  updateProgress();
-}
-
-// Render Speaking
-function renderSpeaking() {
+function renderProgressMap() {
+  const history = getHistory();
+  const doneSet = new Set(history.map(h=>h.type).filter(Boolean));
   let html = '';
-  SPEAKING_Q.forEach((q, qi) => {
-    html += `<div class="sp-card">
-      <div class="q-num-badge" style="margin-bottom:6px">質問 ${qi+1} / ${SPEAKING_Q.length}</div>
-      <div class="sp-tag">${q.tag}</div>
-      <div class="sp-q">${q.q}</div>
-      <button class="sp-hint-btn" onclick="toggleHint(${qi})">💡 ヒントを見る</button>
-      <div class="sp-hint" id="sp-hint-${qi}">例: ${q.hint}</div>
+  for (let i = 26; i <= 28; i++) {
+    const done = history.some(h=>h.pct>=70);
+    html += `<div class="lesson-dot ${done?'done':'current'}">
+      <div class="lesson-dot-num">${i}</div>
+      <div class="lesson-dot-status">${done?'✅':'📖'}</div>
     </div>`;
-  });
-  document.getElementById('speaking-cards').innerHTML = html;
+  }
+  // Future locked lessons
+  for (let i = 29; i <= 35; i++) {
+    html += `<div class="lesson-dot locked">
+      <div class="lesson-dot-num">${i}</div>
+      <div class="lesson-dot-status">🔒</div>
+    </div>`;
+  }
+  document.getElementById('progress-map').innerHTML = html;
 }
 
-function toggleHint(qi) {
-  const el = document.getElementById('sp-hint-'+qi);
-  el.style.display = el.style.display === 'block' ? 'none' : 'block';
+function renderHistory() {
+  const history = getHistory();
+  const el = document.getElementById('history-list');
+  if (!history.length) {
+    el.innerHTML='<div class="history-row" style="color:var(--ink3);justify-content:center">No tests yet</div>';
+    return;
+  }
+  el.innerHTML = history.slice(0,5).map(h=>`
+    <div class="history-row">
+      <span class="h-score" style="color:${h.pct>=80?'var(--green)':h.pct>=60?'var(--amber)':'var(--red)'}">${h.pct}%</span>
+      <span class="h-info">${h.correct}/${h.total} · ${h.type==='short'?'Quick':h.type==='full'?'Full':'Weak Area'} Test</span>
+      <span class="h-time">${h.date} · ${h.timeStr}</span>
+    </div>`).join('');
 }
 
-// Render Results
-function renderResults() {
-  const kCorrect = kanjiAnswers.filter((a,i) => a === KANJI_Q[i].c).length;
-  const vCorrect = vocabAnswers.filter((a,i) => a === VOCAB_Q[i].c).length;
-  const total = KANJI_Q.length + VOCAB_Q.length;
-  const totalCorrect = kCorrect + vCorrect;
-  const pct = Math.round(totalCorrect / total * 100);
-  const elapsed = Math.floor((Date.now() - testStartTime) / 1000);
-  const m = Math.floor(elapsed / 60);
-  const s = elapsed % 60;
-  const timeStr = m + '分' + s + '秒';
+// ══════════ TEST ══════════
+function startTest(type) {
+  lastTestType = type;
+  const gm = getGrammarMastery();
 
-  // Find struggles
-  const struggles = [];
-  KANJI_Q.forEach((q, i) => {
-    if (kanjiAnswers[i] !== null && kanjiAnswers[i] !== q.c) {
-      struggles.push({q: q.a, wrong: q.o[kanjiAnswers[i]], right: q.o[q.c], t: kanjiTimes[i], type:'漢字'});
+  let qs;
+  if (type === 'weak') {
+    // Get worst grammar tags, pull questions on those
+    const weakTags = Object.entries(gm)
+      .filter(([,v])=>v.total>=1)
+      .sort((a,b)=>(a[1].correct/a[1].total)-(b[1].correct/b[1].total))
+      .slice(0,5)
+      .map(([k])=>k);
+    if (weakTags.length) {
+      let pool = QUESTION_POOL.filter(q=>weakTags.includes(q.grammarTag));
+      // shuffle pool
+      for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}
+      qs = pool.slice(0,30).map(q=>shuffleOptions(q));
+    } else {
+      qs = getQuestions({count:30}).map(q=>shuffleOptions(q));
     }
-  });
-  VOCAB_Q.forEach((q, i) => {
-    if (vocabAnswers[i] !== null && vocabAnswers[i] !== q.c) {
-      struggles.push({q: q.q.substring(0,30)+'…', wrong: q.o[vocabAnswers[i]], right: q.o[q.c], t: vocabTimes[i], type:'語彙'});
-    }
-  });
-
-  // Slow questions (>30s)
-  const slowQ = [];
-  kanjiTimes.forEach((t,i) => { if (t && t > 30 && kanjiAnswers[i] !== null) slowQ.push({q: KANJI_Q[i].a, t, type:'漢字'}); });
-  vocabTimes.forEach((t,i) => { if (t && t > 30 && vocabAnswers[i] !== null) slowQ.push({q: VOCAB_Q[i].q.substring(0,30)+'…', t, type:'語彙'}); });
-
-  let html = `
-  <div class="score-hero">
-    <div class="score-big">${pct}%</div>
-    <div class="score-label">${totalCorrect} / ${total} correct · ${timeStr}</div>
-  </div>
-  <div class="stat-grid">
-    <div class="stat-card"><div class="stat-val">${kCorrect}/${KANJI_Q.length}</div><div class="stat-lbl">漢字</div></div>
-    <div class="stat-card"><div class="stat-val">${vCorrect}/${VOCAB_Q.length}</div><div class="stat-lbl">語彙</div></div>
-    <div class="stat-card"><div class="stat-val">${pct >= 80 ? '😊' : pct >= 60 ? '🙂' : '😅'}</div><div class="stat-lbl">${pct >= 80 ? 'Great!' : pct >= 60 ? 'Good' : 'Keep going'}</div></div>
-  </div>`;
-
-  if (struggles.length > 0) {
-    html += `<div class="struggles-section">
-      <div class="struggles-title">⚠️ 間違えた問題 — Mistakes (${struggles.length})</div>`;
-    struggles.forEach(st => {
-      html += `<div class="struggle-item">
-        <span style="font-size:11px;background:#f0eeea;padding:2px 6px;border-radius:4px;color:var(--ink3)">${st.type}</span>
-        <span class="struggle-q">${st.q}</span>
-        <span class="struggle-ans">✗ ${st.wrong}</span>
-        <span class="struggle-correct">✓ ${st.right}</span>
-      </div>`;
-    });
-    html += `</div>`;
+  } else {
+    const count = type === 'full' ? 60 : 30;
+    qs = getQuestions({count}).map(q=>shuffleOptions(q));
   }
 
-  if (slowQ.length > 0) {
-    html += `<div class="struggles-section">
-      <div class="struggles-title">🐢 時間がかかった問題 — Slow questions</div>`;
-    slowQ.forEach(st => {
-      html += `<div class="struggle-item">
-        <span style="font-size:11px;background:#f0eeea;padding:2px 6px;border-radius:4px;color:var(--ink3)">${st.type}</span>
-        <span class="struggle-q">${st.q}</span>
-        <span class="struggle-ans">${st.t}秒</span>
-      </div>`;
-    });
-    html += `</div>`;
-  }
+  testQuestions = qs;
+  answers = new Array(qs.length).fill(null);
+  questionTimes = new Array(qs.length).fill(null);
+  testStartTime = Date.now();
+  questionStartTime = Date.now();
 
-  html += `<div class="send-panel">
-    <h3>📤 ベガに結果を送る — Send results to Bega</h3>
-    <p>Send full analysis to Telegram</p>
-    <input class="name-input" id="taker-name" type="text" placeholder="Write your name (e.g. Mahym)" />
-    <button class="btn btn-primary" onclick="sendResults(${pct}, ${totalCorrect}, ${total}, '${timeStr}', ${struggles.length}, ${slowQ.length})">Send to Telegram →</button>
-    <div class="send-status" id="send-status"></div>
-  </div>`;
+  document.getElementById('test-header-title').textContent =
+    type==='short' ? 'Quick Test (30 q)' : type==='full' ? 'Full Test (60 q)' : 'Weak Areas Test';
 
-  document.getElementById('results-content').innerHTML = html;
-  window._struggles = struggles;
-  window._slowQ = slowQ;
-  window._kanjiAnswers = kanjiAnswers;
-  window._vocabAnswers = vocabAnswers;
+  clearInterval(timerInterval);
+  timerInterval = setInterval(()=>{
+    const e = Math.floor((Date.now()-testStartTime)/1000);
+    document.getElementById('test-timer').textContent = Math.floor(e/60)+':'+ String(e%60).padStart(2,'0');
+  }, 1000);
+
+  showScreen('screen-test');
+  renderTestQuestions();
 }
 
-async function sendResults(pct, correct, total, timeStr, mistakeCount, slowCount) {
-  const name = document.getElementById('taker-name').value.trim() || 'Mahym';
+function renderTestQuestions() {
+  const answered = answers.filter(a=>a!==null).length;
+  const correct = answers.filter((a,i)=>a!==null && a===testQuestions[i].correct).length;
+  const wrong = answered - correct;
+
+  document.getElementById('test-prog-fill').style.width = (answered/testQuestions.length*100)+'%';
+  document.getElementById('live-correct').textContent = correct;
+  document.getElementById('live-wrong').textContent = wrong;
+  document.getElementById('live-remain').textContent = (testQuestions.length-answered)+' remaining';
+
+  const diffLabels = ['','Easy','Medium','Hard','⭐ Challenge'];
+  const typeLabels = {kanji:'漢字',vocab:'語彙',grammar:'文法'};
+
+  let html = '';
+  testQuestions.forEach((q,qi)=>{
+    const ans = answers[qi];
+    html += `<div class="q-card" id="qq-${qi}">
+      <div class="q-top">
+        <span class="q-badge">${typeLabels[q.type]} ${qi+1}/${testQuestions.length}</span>
+        <span class="q-diff d${q.difficulty}">${diffLabels[q.difficulty]}</span>
+      </div>
+      <div class="q-sentence">${q.sentence}</div>
+      <div class="q-ask">${q.ask}</div>
+      ${questionTimes[qi]?`<div class="q-time">⏱ ${questionTimes[qi]}s</div>`:''}
+      <div class="options">`;
+    q.options.forEach((opt,oi)=>{
+      let cls='opt', dis='';
+      if(ans!==null){
+        dis='disabled';
+        if(oi===q.correct) cls+=' correct';
+        else if(oi===ans) cls+=' wrong';
+      }
+      html+=`<button class="${cls}" ${dis} onclick="answer(${qi},${oi})">${['A','B','C','D'][oi]}. ${opt}</button>`;
+    });
+    html += `</div>`;
+    if(ans!==null){
+      const ok=ans===q.correct;
+      html+=`<div class="feedback ${ok?'ok':'err'}">${ok?'✓ 正解！':'✗ 不正解。正解: '+q.options[q.correct]}${q.explanation?' — '+q.explanation:''}</div>`;
+    }
+    html+=`</div>`;
+  });
+
+  // If all done show finish button
+  if(answered===testQuestions.length){
+    html+=`<button class="btn btn-primary" style="width:100%;padding:14px;font-size:15px;border-radius:var(--r)" onclick="finishTest()">見る結果 — See Results →</button>`;
+  }
+
+  document.getElementById('questions-container').innerHTML = html;
+}
+
+function answer(qi, oi) {
+  if(answers[qi]!==null) return;
+  questionTimes[qi] = Math.round((Date.now()-questionStartTime)/1000);
+  questionStartTime = Date.now();
+  answers[qi] = oi;
+  renderTestQuestions();
+  setTimeout(()=>{
+    const next = document.getElementById('qq-'+(qi+1));
+    if(next) next.scrollIntoView({behavior:'smooth',block:'nearest'});
+    else {
+      const btn = document.querySelector('#screen-test .btn-primary');
+      if(btn) btn.scrollIntoView({behavior:'smooth',block:'nearest'});
+    }
+  }, 250);
+}
+
+function finishTest() {
+  clearInterval(timerInterval);
+  currentResults = recordResults(testQuestions, answers, questionTimes, lastTestType);
+  renderResults(currentResults);
+  showScreen('screen-results');
+}
+
+function confirmBack() {
+  const answered = answers.filter(a=>a!==null).length;
+  if(answered>0 && !confirm('テストを終了しますか？（進捗は保存されません）')) return;
+  clearInterval(timerInterval);
+  showScreen('screen-dash');
+}
+
+// ══════════ RESULTS ══════════
+function renderResults(r) {
+  const grade = r.pct>=90?'S':r.pct>=80?'A':r.pct>=70?'B':r.pct>=60?'C':'D';
+  document.getElementById('res-pct').textContent = r.pct+'%';
+  document.getElementById('res-grade').textContent = 'Grade '+grade;
+  document.getElementById('res-label').textContent = r.correct+'/'+r.total+' correct · '+r.timeStr;
+
+  // By type
+  ['kanji','vocab','grammar'].forEach(type=>{
+    const qs = testQuestions.filter(q=>q.type===type);
+    const correct = qs.filter((q,_)=>{
+      const idx = testQuestions.indexOf(q);
+      return answers[idx]===q.correct;
+    }).length;
+    document.getElementById('res-'+type).textContent = correct+'/'+qs.length;
+  });
+
+  // Mistakes
+  const mistakeEl = document.getElementById('res-mistakes');
+  if(!r.mistakes.length){
+    mistakeEl.innerHTML='<div class="mistake-row" style="color:var(--green);text-align:center">🎉 間違えなし！No mistakes!</div>';
+  } else {
+    mistakeEl.innerHTML = r.mistakes.map(m=>`
+      <div class="mistake-row">
+        <div class="mistake-q">${m.ask}</div>
+        <div class="mistake-ans">
+          <span class="miss-wrong">✗ ${m.wrong}</span>
+          <span class="miss-right">✓ ${m.right}</span>
+        </div>
+        ${m.exp?`<div class="miss-exp">${m.exp}</div>`:''}
+      </div>`).join('');
+  }
+
+  // Slow questions (>25s)
+  const slowQs = testQuestions.map((q,i)=>({q,t:questionTimes[i],i})).filter(x=>x.t&&x.t>25);
+  const slowEl = document.getElementById('res-slow');
+  document.getElementById('slow-heading').style.display = slowQs.length?'block':'none';
+  slowEl.style.display = slowQs.length?'block':'none';
+  if(slowQs.length){
+    slowEl.innerHTML = slowQs.map(x=>`
+      <div class="mistake-row">
+        <div class="mistake-q">${x.q.ask}</div>
+        <div class="mistake-ans"><span class="miss-wrong">⏱ ${x.t}秒 — slow</span></div>
+      </div>`).join('');
+  }
+}
+
+async function sendTelegram() {
+  const name = document.getElementById('taker-name').value.trim() || STUDENT_NAME;
   const statusEl = document.getElementById('send-status');
   statusEl.textContent = 'Sending…';
   statusEl.style.color = 'var(--ink3)';
+  if (!currentResults) { statusEl.textContent = 'No results yet.'; return; }
 
-  const struggles = window._struggles || [];
-  const slowQ = window._slowQ || [];
+  const r = currentResults;
+  const gm = getGrammarMastery();
+  const weakItems = Object.entries(gm)
+    .filter(([,v])=>v.total>=2)
+    .sort((a,b)=>(a[1].correct/a[1].total)-(b[1].correct/b[1].total))
+    .slice(0,3)
+    .map(([k,v])=>`  • ${k}: ${Math.round(v.correct/v.total*100)}%`);
 
-  const kCorrect = _kanjiAnswers.filter((a,i) => a === KANJI_Q[i].c).length;
-  const vCorrect = _vocabAnswers.filter((a,i) => a === VOCAB_Q[i].c).length;
+  const mistakeLines = r.mistakes.slice(0,5).map(m=>`  • ${m.ask}\n    ✗ ${m.wrong} → ✓ ${m.right}`).join('\n') || '  なし 🎉';
 
-  let mistakeList = '';
-  struggles.forEach(st => {
-    mistakeList += `  • [${st.type}] ${st.q}\n    ✗ ${st.wrong} → ✓ ${st.right}\n`;
-  });
-
-  let slowList = '';
-  slowQ.forEach(st => {
-    slowList += `  • [${st.type}] ${st.q} (${st.t}秒)\n`;
-  });
-
-  const now = new Date();
-  const dateStr = now.toLocaleDateString('ja-JP') + ' ' + now.toLocaleTimeString('ja-JP', {hour:'2-digit',minute:'2-digit'});
+  const mastery = getMastery();
+  const kPct = mastery.kanji.total?Math.round(mastery.kanji.correct/mastery.kanji.total*100):0;
+  const vPct = mastery.vocab.total?Math.round(mastery.vocab.correct/mastery.vocab.total*100):0;
+  const gPct = mastery.grammar.total?Math.round(mastery.grammar.correct/mastery.grammar.total*100):0;
 
   const payload = {
-    name, pct, correct, total, timeStr, dateStr,
-    kanjiScore: kCorrect + '/' + KANJI_Q.length,
-    vocabScore: vCorrect + '/' + VOCAB_Q.length,
-    mistakeList: mistakeList || '  なし (no mistakes!) 🎉',
-    slowList: slowList || '  なし (all fast!)',
-    mistakeCount, slowCount
+    name,
+    pct: r.pct,
+    correct: r.correct,
+    total: r.total,
+    timeStr: r.timeStr,
+    dateStr: new Date().toLocaleString('ja-JP',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}),
+    kanjiPct: kPct,
+    vocabPct: vPct,
+    grammarPct: gPct,
+    mistakeLines,
+    weakPoints: weakItems.join('\n') || '  データなし',
+    mistakeCount: r.mistakes.length,
+    testType: r.testType==='short'?'Quick (30q)':r.testType==='full'?'Full (60q)':'Weak Areas'
   };
 
   try {
     const res = await fetch('/api/results', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify(payload)
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(payload)
     });
     const data = await res.json();
-    if (data.ok) {
-      statusEl.textContent = '✓ Sent to Telegram!';
-      statusEl.style.color = 'var(--green)';
+    if(data.ok){
+      statusEl.textContent='✓ Sent to Telegram!';
+      statusEl.style.color='var(--green)';
     } else {
-      statusEl.textContent = '✗ Error: ' + (data.error || 'unknown');
-      statusEl.style.color = 'var(--accent)';
+      statusEl.textContent='✗ Error: '+(data.error||'unknown');
+      statusEl.style.color='var(--red)';
     }
-  } catch(e) {
-    statusEl.textContent = '✗ Could not connect. Check API setup.';
-    statusEl.style.color = 'var(--accent)';
+  } catch(e){
+    statusEl.textContent='✗ Connection error — check Vercel setup.';
+    statusEl.style.color='var(--red)';
   }
 }
 
-function switchTab(name, btn) {
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.getElementById('sec-'+name).classList.add('active');
-  if (name === 'results') renderResults();
+// ══════════ SPEAKING ══════════
+const SPEAKING_Q = [
+  {tag:"〜てあげる/くれる",q:"ご家族やともだちに最近何かしてあげましたか？",hint:"友達に日本語を教えてあげました。夫にコーヒーを作ってあげました。"},
+  {tag:"〜てもらう",q:"最近、だれかに何かしてもらいましたか？",hint:"夫にごはんを作ってもらいました。友達に道を教えてもらいました。"},
+  {tag:"〜てしまう",q:"最近、困ったこと、うっかりしたことを話してください。",hint:"財布を忘れてしまいました。宿題をなくしてしまいました。"},
+  {tag:"〜たばかり",q:"最近始めたこと、または終わったことは何ですか？",hint:"日本語のレッスンを始めたばかりです。ごはんを食べたばかりです。"},
+  {tag:"〜ているところ",q:"今日の午後、何をしているところでしたか？",hint:"勉強しているところでした。テレビを見ているところでした。"},
+  {tag:"〜ておく",q:"旅行の前に何を準備しておきますか？",hint:"ホテルを予約しておきます。パスポートを確認しておきます。"},
+  {tag:"〜てみる",q:"食べてみたい、行ってみたい、やってみたいことは？",hint:"北海道に行ってみたいです。新しい料理を作ってみたいです。"},
+  {tag:"〜まま",q:"最近、何かそのままにしておいたことはありますか？",hint:"窓を開けたまま寝てしまいました。テレビをつけたまま出かけました。"},
+  {tag:"季節・天気",q:"好きな季節はいつですか？その理由を教えてください。",hint:"Use: 風、海、山、暑い、涼しい、きせつ、たのしい"},
+  {tag:"日常の語彙",q:"毎日のルーティンを説明してください。",hint:"Use: 地下鉄、大学、アルバイト、食事、れんしゅう"},
+  {tag:"フリートーク",q:"好きな料理は何ですか？料理を自分でしますか？",hint:"Use: 料理、作る、食事、おいしい、魚、野菜"},
+];
+
+function renderSpeaking(){
+  document.getElementById('speaking-cards').innerHTML = SPEAKING_Q.map((q,i)=>`
+    <div class="sp-card">
+      <div class="q-badge" style="margin-bottom:6px">質問 ${i+1} / ${SPEAKING_Q.length}</div>
+      <div class="sp-tag">${q.tag}</div>
+      <div class="sp-q">${q.q}</div>
+      <button class="sp-hint-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">💡 ヒントを見る</button>
+      <div class="sp-hint">例: ${q.hint}</div>
+    </div>`).join('');
 }
 
-// Init
-renderKanji();
-renderVocab();
+// ══════════ INIT ══════════
+renderDash();
 renderSpeaking();
-startTimer();
 </script>
 </body>
 </html>
