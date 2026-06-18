@@ -338,11 +338,40 @@ tr:hover td { background: rgba(255,255,255,.02); }
     </div>
 
     <!-- LESSONS PAGE -->
-    <div class="page" id="page-lessons">
+      <div class="page" id="page-lessons">
       <div class="page-title">Lessons</div>
       <div class="page-sub">Overview of all lessons</div>
       <div id="lessons-content" class="loading">Loading...</div>
     </div>
+
+    <div class="page" id="page-settings">
+      <div class="page-title">🛠 System Settings</div>
+      <div class="page-sub">Import data in bulk or reset local progress.</div>
+      
+      <div class="card" style="background: var(--card); border: 1px solid var(--border); border-radius: var(--r); padding: 1.5rem; margin-bottom: 24px;">
+        <h3 style="margin-bottom: 8px;">📥 Bulk Import (JSON)</h3>
+        <p style="color: var(--text2); margin-bottom: 16px;">Paste an array of JSON objects. The system will automatically clean the data and assign unique IDs.</p>
+        
+        <select id="bulk-type" class="toolbar-select" style="margin-bottom: 12px; width: 200px; padding: 10px;">
+          <option value="questions">Questions</option>
+          <option value="flashcards">Flashcards</option>
+        </select>
+        
+        <textarea id="bulk-data" rows="10" style="width: 100%; padding: 12px; border-radius: var(--r); background: var(--bg); color: var(--text); border: 1px solid var(--border); font-family: monospace; resize: vertical;" placeholder='[
+  { "lesson": 28, "type": "grammar", "front": "...", "reading": "...", "meaning": "..." }
+]'></textarea>
+        
+        <button onclick="handleBulkUpload()" class="btn btn-primary" style="margin-top: 16px; padding: 10px 20px;">Upload Batch</button>
+      </div>
+
+      <div class="card" style="background: var(--bg); border: 1px solid var(--accent); border-radius: var(--r); padding: 1.5rem;">
+        <h3 style="color: var(--accent); margin-bottom: 8px;">⚠️ Danger Zone: Progress Reset</h3>
+        <p style="color: var(--text2); margin-bottom: 16px;">This will completely wipe local study history, streaks, and tracked weak points, returning the dashboard to a clean slate.</p>
+        <button onclick="resetStudentProgress()" class="btn btn-danger" style="padding: 10px 20px; border-width: 2px;">Reset All Progress</button>
+      </div>
+    </div>
+
+  </div>
 
   </div>
 </div>
@@ -848,6 +877,43 @@ function showToast(msg, type='ok') {
   t.textContent = (type==='ok'?'✓ ':'✗ ') + msg;
   t.className = 'toast show ' + type;
   setTimeout(() => t.className = 'toast', 3000);
+}
+
+// ── BULK UPLOAD LOGIC ──────────────────────────────────────
+async function handleBulkUpload() {
+  const type = document.getElementById('bulk-type').value;
+  const rawData = document.getElementById('bulk-data').value.trim();
+
+  if (!rawData) return showToast('Please paste some JSON data first.', 'err');
+
+  try {
+    const parsedData = JSON.parse(rawData);
+    if (!Array.isArray(parsedData)) throw new Error("Data must be enclosed in brackets [...]");
+
+    // Pass the parsed array directly to your API write function
+    const result = await apiWrite(type, 'bulk_add', null, parsedData);
+
+    if (result.ok) {
+      showToast(`Successfully imported ${parsedData.length} items!`, 'ok');
+      document.getElementById('bulk-data').value = ''; 
+      if(type === 'questions') loadQuestions();
+      if(type === 'flashcards') loadFlashcards();
+    } else {
+      showToast('Server Error: ' + result.error, 'err');
+    }
+  } catch (e) {
+    showToast('JSON Format Error: ' + e.message, 'err');
+  }
+}
+
+// ── PROGRESS RESET LOGIC ───────────────────────────────────
+function resetStudentProgress() {
+  const isSure = confirm("⚠️ ARE YOU ABSOLUTELY SURE?\n\nThis will delete all local browser streaks, scores, and memory data. It cannot be undone.");
+  
+  if (isSure) {
+    localStorage.clear();
+    showToast('Progress has been successfully reset to zero.', 'ok');
+  }
 }
 </script>
 </body>
