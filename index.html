@@ -16,10 +16,8 @@ body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:va
 .dash-name{font-size:26px;font-weight:700;color:white;margin-bottom:2px}
 .dash-level{font-size:13px;color:rgba(255,255,255,.45)}
 .streak-pill{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:4px 12px;font-size:13px;font-weight:600;color:#ffc84a;margin-top:10px;cursor:default;user-select:none;-webkit-user-select:none}
-.admin-toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:#1c1c2e;color:white;padding:10px 20px;border-radius:20px;font-size:13px;font-weight:500;z-index:9999;display:none;animation:fadeUp .2s ease}
+.admin-toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:#1c1c2e;color:white;padding:10px 20px;border-radius:20px;font-size:13px;font-weight:500;z-index:9999;display:none}
 .admin-toast.show{display:block}
-.lp-ring{position:fixed;pointer-events:none;border-radius:50%;border:3px solid #ffc84a;z-index:9999;display:none;animation:lpGrow 2s linear forwards}
-@keyframes lpGrow{from{opacity:1;width:0;height:0;margin-left:0;margin-top:0}to{opacity:0;width:80px;height:80px;margin-left:-40px;margin-top:-40px}}
 .dash-body{max-width:640px;margin:0 auto;padding:1.25rem 1rem 4rem}
 .mastery-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;margin-bottom:.875rem;box-shadow:var(--shadow)}
 .mastery-card h3{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--ink3);margin-bottom:1rem}
@@ -130,10 +128,58 @@ body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:va
 .btn:hover{background:var(--bg)}.btn-primary{background:var(--red);color:white;border-color:var(--red)}.btn-primary:hover{background:#b83020}
 .btn-ghost{background:var(--bg);color:var(--ink);border:1px solid var(--border)}.btn-ghost:hover{background:var(--border)}
 .btn-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:1rem}
+
+/* ── DAILY MISSION ─────────────────────────────────── */
+.mission-hero{background:linear-gradient(135deg,#1c1c2e 0%,#2a1f4e 100%);border-radius:var(--r);padding:1.5rem;margin-bottom:.875rem;box-shadow:var(--shadow);cursor:pointer;transition:transform .15s;position:relative;overflow:hidden}
+.mission-hero::before{content:'今日';position:absolute;right:-8px;top:-12px;font-family:'Noto Sans JP';font-size:90px;font-weight:700;color:rgba(255,255,255,.04);pointer-events:none}
+.mission-hero:hover{transform:translateY(-2px)}
+.mission-hero.done{background:linear-gradient(135deg,#1a3a28 0%,#1e4430 100%);cursor:default}
+.mission-hero.done:hover{transform:none}
+.mission-label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:6px}
+.mission-title{font-size:20px;font-weight:700;color:white;margin-bottom:4px}
+.mission-sub{font-size:13px;color:rgba(255,255,255,.5);margin-bottom:1rem}
+.mission-steps{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem}
+.mission-step-pill{font-size:11px;padding:3px 10px;border-radius:20px;font-weight:600}
+.mission-step-pill.fc{background:rgba(107,79,187,.3);color:#c4aff8}
+.mission-step-pill.q{background:rgba(42,122,82,.3);color:#7ee8a8}
+.mission-step-pill.sp{background:rgba(38,86,168,.3);color:#8ab8f8}
+.mission-step-pill.done{background:rgba(255,255,255,.1);color:rgba(255,255,255,.4);text-decoration:line-through}
+.mission-cta{background:white;color:var(--ink);border:none;border-radius:var(--r-sm);padding:10px 22px;font-size:14px;font-weight:700;cursor:pointer;transition:all .15s}
+.mission-cta:hover{background:#f0ede8}
+.mission-done-badge{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:600;color:rgba(255,255,255,.85)}
+.mission-bonus-btn{background:rgba(255,255,255,.12);color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.2);border-radius:var(--r-sm);padding:8px 16px;font-size:13px;font-weight:500;cursor:pointer;margin-left:8px;transition:all .15s}
+.mission-bonus-btn:hover{background:rgba(255,255,255,.2)}
+.mission-progress-bar{height:3px;background:rgba(255,255,255,.1);border-radius:2px;margin-bottom:1rem;overflow:hidden}
+.mission-progress-fill{height:100%;background:rgba(255,255,255,.6);border-radius:2px;transition:width .4s}
+
+/* mission view */
+.mission-body{max-width:640px;margin:0 auto;padding:1.25rem 1rem 4rem}
+.mission-phase-header{background:var(--ink);color:white;border-radius:var(--r);padding:1.25rem 1.5rem;margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between}
+.mission-phase-label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:3px}
+.mission-phase-name{font-size:16px;font-weight:700;color:white}
+.mission-phase-steps{display:flex;gap:6px}
+.phase-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2);transition:background .3s}
+.phase-dot.active{background:white}
+.phase-dot.done{background:var(--green)}
+.speaking-prompt-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;box-shadow:var(--shadow)}
+.speaking-timer{font-size:42px;font-weight:700;color:var(--ink);text-align:center;margin:1rem 0;font-variant-numeric:tabular-nums}
+.speaking-timer.running{color:var(--red)}
+.speaking-btn-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:1rem}
+.speaking-start-btn{background:var(--green);color:white;border:none;border-radius:var(--r-sm);padding:12px 28px;font-size:15px;font-weight:700;cursor:pointer;transition:all .15s}
+.speaking-start-btn:hover{background:#1e5e3c}
+.mission-celebration{text-align:center;padding:2.5rem 1rem}
+.celebration-emoji{font-size:64px;margin-bottom:12px;animation:popIn .4s cubic-bezier(.34,1.56,.64,1)}
+@keyframes popIn{from{transform:scale(0)}to{transform:scale(1)}}
+.celebration-title{font-size:24px;font-weight:700;margin-bottom:6px}
+.celebration-sub{font-size:14px;color:var(--ink2);margin-bottom:1.5rem}
+.xp-badge{display:inline-block;background:var(--gold-soft);color:var(--gold);font-size:15px;font-weight:700;padding:6px 18px;border-radius:20px;margin-bottom:1.5rem}
+
 @media(max-width:480px){.opts{grid-template-columns:1fr}.stat-row{grid-template-columns:1fr 1fr}.mode-grid{grid-template-columns:1fr}.mode-card.wide{grid-column:auto}.rating-row{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
+
+<!-- ═══ DASHBOARD ════════════════════════════════════ -->
 <div class="view active" id="view-dash">
   <div class="dash-header">
     <div class="dash-greeting">おかえり — Welcome back</div>
@@ -142,8 +188,11 @@ body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:va
     <div class="streak-pill" id="streak-pill" onmousedown="lpStart(event)" onmouseup="lpEnd()" onmouseleave="lpEnd()" ontouchstart="lpStart(event)" ontouchend="lpEnd()">🔥 <span id="streak-count">0</span> day streak</div>
   </div>
   <div class="admin-toast" id="admin-toast">🔐 Opening admin panel...</div>
-  <div class="lp-ring" id="lp-ring"></div>
+
   <div class="dash-body">
+    <!-- DAILY MISSION HERO -->
+    <div id="mission-hero-wrap"></div>
+
     <div id="review-banner" class="review-banner" onclick="startTest('review')" style="display:none">
       <div><div class="review-banner-text">📚 復習タイム — Review due</div><div class="review-banner-sub">Questions you got wrong, ready to retry</div></div>
       <div class="review-banner-count" id="review-count">0</div>
@@ -155,7 +204,7 @@ body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:va
       <div class="mastery-row"><div class="mastery-label"><span>文法 Grammar</span><span class="mastery-pct" id="mp-grammar">—</span></div><div class="bar-track"><div class="bar-fill bar-grammar" id="bar-grammar" style="width:0%"></div></div></div>
       <div class="mastery-row"><div class="mastery-label"><span>🃏 Flashcard Memory</span><span class="mastery-pct" id="mp-flash">—</span></div><div class="bar-track"><div class="bar-fill bar-flash" id="bar-flash" style="width:0%"></div></div></div>
     </div>
-    <div class="section-title">今日の練習 — Study now</div>
+    <div class="section-title">その他の練習 — More practice</div>
     <div class="mode-grid">
       <div class="mode-card flash-card wide" onclick="startFlashcards()">
         <div class="mode-icon">🃏</div>
@@ -163,8 +212,9 @@ body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:va
       </div>
       <div class="mode-card" onclick="startTest('quick')"><div class="mode-icon">⚡</div><div class="mode-name">Quick Test</div><div class="mode-sub">20 questions · ~5 min</div></div>
       <div class="mode-card" onclick="startTest('full')"><div class="mode-icon">📖</div><div class="mode-name">Full Test</div><div class="mode-sub">40 questions · ~15 min</div></div>
-      <div class="mode-card wide" onclick="startTest('mock')"><div class="mode-icon">🎯</div><div><div class="mode-name">Mock Exam</div><div class="mode-sub">52 questions including challenges · ~25 min</div></div></div>
+      <div class="mode-card wide" onclick="startTest('mock')"><div class="mode-icon">🎯</div><div><div class="mode-name">Mock Exam</div><div class="mode-sub">52 questions · ~25 min</div></div></div>
       <div class="mode-card wide" onclick="showView('view-speaking')"><div class="mode-icon">🗣️</div><div><div class="mode-name">Speaking Practice</div><div class="mode-sub">11 conversation prompts · Grammar focus</div></div></div>
+      <div class="mode-card wide" onclick="window.location.href='/roadmap.html'" style="border-color:#c4b8e8;background:var(--purple-soft)"><div class="mode-icon" style="font-size:22px;margin:0">🗺️</div><div><div class="mode-name" style="color:var(--purple)">My Journey</div><div class="mode-sub">N4 roadmap · milestones · heatmap</div></div></div>
     </div>
     <div id="weak-section" style="display:none">
       <div class="section-title">弱いポイント — Weak areas</div>
@@ -177,6 +227,20 @@ body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:va
   </div>
 </div>
 
+<!-- ═══ DAILY MISSION ═════════════════════════════════ -->
+<div class="view" id="view-mission">
+  <div class="test-header">
+    <button class="test-back" onclick="exitMission()">✕</button>
+    <div class="test-progress-wrap">
+      <div class="test-prog-bar"><div class="test-prog-fill" id="mission-prog-fill" style="width:0%"></div></div>
+      <div class="test-prog-label" id="mission-prog-label">今日のミッション</div>
+    </div>
+    <div class="test-timer" id="mission-timer">0:00</div>
+  </div>
+  <div class="mission-body" id="mission-body"></div>
+</div>
+
+<!-- ═══ TEST ══════════════════════════════════════════ -->
 <div class="view" id="view-test">
   <div class="test-header">
     <button class="test-back" onclick="confirmBack()">✕</button>
@@ -189,6 +253,7 @@ body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:va
   <div class="test-body" id="test-body"></div>
 </div>
 
+<!-- ═══ FLASHCARDS ════════════════════════════════════ -->
 <div class="view" id="view-flashcards">
   <div class="test-header">
     <button class="test-back" onclick="showView('view-dash');renderDash()">✕</button>
@@ -201,10 +266,12 @@ body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:va
   <div class="fc-body" id="fc-body"></div>
 </div>
 
+<!-- ═══ RESULTS ═══════════════════════════════════════ -->
 <div class="view" id="view-results">
   <div class="results-body" id="results-body"></div>
 </div>
 
+<!-- ═══ SPEAKING ══════════════════════════════════════ -->
 <div class="view" id="view-speaking">
   <div class="test-header">
     <button class="test-back" onclick="showView('view-dash')">✕</button>
@@ -214,6 +281,7 @@ body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:va
 </div>
 
 <script>
+// ── STORAGE ───────────────────────────────────────────
 const DB={get(k){try{return JSON.parse(localStorage.getItem('mnn_'+k))}catch(e){return null}},set(k,v){localStorage.setItem('mnn_'+k,JSON.stringify(v))}};
 function getProgress(){return DB.get('progress')||{kanji:{},vocab:{},grammar:{}}}
 function saveProgress(p){DB.set('progress',p)}
@@ -222,13 +290,54 @@ function addHistory(e){const h=getHistory();h.unshift(e);DB.set('history',h.slic
 function getFlashProgress(){return DB.get('flash_progress')||{}}
 function saveFlashProgress(p){DB.set('flash_progress',p)}
 function getStreak(){return DB.get('streak')||{count:0,lastDate:null}}
-function updateStreak(){const s=getStreak();const today=new Date().toDateString();if(s.lastDate===today)return s.count;const yesterday=new Date(Date.now()-86400000).toDateString();const c=s.lastDate===yesterday?s.count+1:1;DB.set('streak',{count:c,lastDate:today});return c}
+function getActivityLog(){return DB.get('activity_log')||{}}
+function logActivity(type,questions,minutes){const log=getActivityLog();const key=new Date().toISOString().slice(0,10);if(!log[key])log[key]={questions:0,minutes:0,types:[]};log[key].questions+=questions||0;log[key].minutes+=minutes||0;if(type&&!log[key].types.includes(type))log[key].types.push(type);DB.set('activity_log',log)}
+
+// Ashgabat time (UTC+5) — get today's date string in Ashgabat timezone
+function getAshgabatDateKey(){
+  const now=new Date();
+  const utc=now.getTime()+now.getTimezoneOffset()*60000;
+  const ash=new Date(utc+5*3600000);
+  return ash.getFullYear()+'-'+String(ash.getMonth()+1).padStart(2,'0')+'-'+String(ash.getDate()).padStart(2,'0');
+}
+
+function updateStreak(){
+  const s=getStreak();
+  const todayKey=getAshgabatDateKey();
+  if(s.lastDate===todayKey)return s.count;
+  // check yesterday in Ashgabat time
+  const ash=new Date(new Date().getTime()+new Date().getTimezoneOffset()*60000+5*3600000);
+  ash.setDate(ash.getDate()-1);
+  const yKey=ash.getFullYear()+'-'+String(ash.getMonth()+1).padStart(2,'0')+'-'+String(ash.getDate()).padStart(2,'0');
+  const c=s.lastDate===yKey?s.count+1:1;
+  DB.set('streak',{count:c,lastDate:todayKey});
+  return c;
+}
+
+// ── MISSION STATE ─────────────────────────────────────
+function getMissionState(){return DB.get('mission_state')||{}}
+function saveMissionState(s){DB.set('mission_state',s)}
+
+function isMissionDoneToday(){
+  const s=getMissionState();
+  return s.completedDate===getAshgabatDateKey()&&s.required===true;
+}
+function isBonusDoneToday(){
+  const s=getMissionState();
+  return s.completedDate===getAshgabatDateKey()&&s.bonus===true;
+}
+
+// ── DATA ──────────────────────────────────────────────
 let ALL_QUESTIONS=[],ALL_FLASHCARDS=[],dataLoaded=false;
 async function loadData(){try{const[qR,fR]=await Promise.all([fetch('/api/content?type=questions'),fetch('/api/content?type=flashcards')]);const qD=await qR.json();const fD=await fR.json();ALL_QUESTIONS=qD.data||[];ALL_FLASHCARDS=fD.data||[];dataLoaded=true}catch(e){console.error('Load failed:',e);dataLoaded=true}}
+
+// ── FLASHCARD HELPERS ─────────────────────────────────
 function getFlashCard(id){const p=getFlashProgress();return p[id]||{interval:1,repetition:0,easeFactor:2.5,nextReview:0,memoryStrength:0}}
 function rateFlashCard(id,rating){const p=getFlashProgress();const c=getFlashCard(id);let{interval,repetition,easeFactor}=c;if(rating>=3){if(repetition===0)interval=1;else if(repetition===1)interval=3;else interval=Math.round(interval*easeFactor);repetition++;easeFactor=Math.max(1.3,easeFactor+(0.1-(4-rating)*(0.08+(4-rating)*0.02)))}else{interval=1;repetition=0;if(rating===2)easeFactor=Math.max(1.3,easeFactor-0.15)}const memoryStrength=Math.min(100,Math.round((interval/30)*100));p[id]={interval,repetition,easeFactor,nextReview:Date.now()+(interval*86400000),memoryStrength};saveFlashProgress(p);return memoryStrength}
 function getDueFlashcards(){const now=Date.now();return ALL_FLASHCARDS.filter(f=>getFlashCard(f.id).nextReview<=now)}
 function getAvgMemoryStrength(){if(!ALL_FLASHCARDS.length)return null;const p=getFlashProgress();return Math.round(ALL_FLASHCARDS.map(f=>(p[f.id]||{memoryStrength:0}).memoryStrength).reduce((a,b)=>a+b,0)/ALL_FLASHCARDS.length)}
+
+// ── QUESTION HELPERS ──────────────────────────────────
 function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 function shuffledQuestion(q){const cv=q.o[q.c];const so=shuffle(q.o);return{...q,o:so,c:so.indexOf(cv)}}
 function getTestQuestions(mode){const k=shuffle(ALL_QUESTIONS.filter(q=>q.type==='kanji'));const v=shuffle(ALL_QUESTIONS.filter(q=>q.type==='vocab'));const g=shuffle(ALL_QUESTIONS.filter(q=>q.type==='grammar'));const c=shuffle(ALL_QUESTIONS.filter(q=>q.difficulty==='challenge'));let p=[];if(mode==='quick')p=[...k.slice(0,7),...v.slice(0,7),...g.slice(0,6)];else if(mode==='full')p=[...k.slice(0,12),...v.slice(0,12),...g.slice(0,12),...c.slice(0,4)];else p=[...k.slice(0,15),...v.slice(0,15),...g.slice(0,18),...c.slice(0,4)];return shuffle(p).map(shuffledQuestion)}
@@ -236,61 +345,377 @@ function getReviewQueue(){const prog=getProgress();const now=Date.now();const du
 function scheduleReview(id,correct){const prog=getProgress();const q=ALL_QUESTIONS.find(q=>q.id===id);if(!q)return;const cat=q.type==='kanji'?'kanji':q.type==='vocab'?'vocab':'grammar';if(!prog[cat])prog[cat]={};const ex=prog[cat][id]||{attempts:0,correct:0,streak:0,nextReview:null};ex.attempts++;if(correct){ex.correct++;ex.streak=(ex.streak||0)+1;const days=[1,3,7,14,30][Math.min(ex.streak-1,4)];ex.nextReview=Date.now()+days*86400000}else{ex.streak=0;ex.nextReview=Date.now()+86400000}prog[cat][id]=ex;saveProgress(prog)}
 function calcMastery(){const prog=getProgress();const result={};for(const cat of['kanji','vocab','grammar']){const entries=Object.values(prog[cat]||{}).filter(d=>d.attempts>0);if(!entries.length){result[cat]=null;continue}result[cat]=Math.round(entries.reduce((s,d)=>s+d.correct,0)/entries.reduce((s,d)=>s+d.attempts,0)*100)}return result}
 function calcWeakAreas(){const prog=getProgress();const gpStats={};for(const cat of['kanji','vocab','grammar']){for(const[id,data]of Object.entries(prog[cat]||{})){if(data.attempts<2)continue;const q=ALL_QUESTIONS.find(q=>q.id===id);if(!q||!q.gp)continue;if(!gpStats[q.gp])gpStats[q.gp]={correct:0,attempts:0};gpStats[q.gp].correct+=data.correct;gpStats[q.gp].attempts+=data.attempts}}return Object.entries(gpStats).map(([gp,d])=>({gp,pct:Math.round(d.correct/d.attempts*100),attempts:d.attempts})).filter(d=>d.attempts>=2).sort((a,b)=>a.pct-b.pct)}
-function renderDash(){const name=DB.get('studentName')||'Mahym';document.getElementById('dash-name').textContent=name;document.getElementById('streak-count').textContent=updateStreak();const mastery=calcMastery();for(const cat of['kanji','vocab','grammar']){const v=mastery[cat];document.getElementById('mp-'+cat).textContent=v!==null?v+'%':'—';document.getElementById('bar-'+cat).style.width=(v||0)+'%'}const af=getAvgMemoryStrength();document.getElementById('mp-flash').textContent=af!==null?af+'%':'—';document.getElementById('bar-flash').style.width=(af||0)+'%';const dfc=getDueFlashcards();document.getElementById('fc-due-label').textContent=dfc.length>0?dfc.length+' cards due for review today':'All cards reviewed! Study new cards';const rq=getReviewQueue();if(rq.length>0){document.getElementById('review-banner').style.display='flex';document.getElementById('review-count').textContent=rq.length}else document.getElementById('review-banner').style.display='none';const weak=calcWeakAreas();if(weak.length>0){document.getElementById('weak-section').style.display='block';document.getElementById('weak-list').innerHTML=weak.slice(0,6).map(w=>{const cls=w.pct<50?'bad':w.pct<75?'ok':'good';return'<div class="weak-item"><span class="weak-gp">'+w.gp+'</span><span class="weak-rate '+cls+'">'+w.pct+'%</span></div>'}).join('')}const history=getHistory();if(history.length>0){document.getElementById('history-section').style.display='block';document.getElementById('history-list').innerHTML=history.slice(0,5).map(h=>'<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px"><span style="color:var(--ink2)">'+h.mode+' · '+h.date+'</span><span style="font-weight:600;color:'+(h.pct>=80?'var(--green)':h.pct>=60?'var(--gold)':'var(--red)')+'">'+h.pct+'%</span></div>').join('')+(history.length>5?'<div style="font-size:12px;color:var(--ink3);text-align:center;padding-top:8px">'+history.length+' tests total</div>':'')}}
+
+// ── MISSION BUILDER ───────────────────────────────────
+function buildMission(isBonus){
+  // Step 1: 5 flashcards (due ones first, else random)
+  let due=getDueFlashcards();
+  const fcCards=shuffle(due.length>=5?due:[...due,...ALL_FLASHCARDS.filter(f=>!due.find(d=>d.id===f.id))]).slice(0,5);
+  // Step 2: 5 questions weighted toward weak grammar
+  const weak=calcWeakAreas();
+  let qPool=[];
+  if(weak.length>0){
+    const worstGp=weak[0].gp;
+    const weakQs=shuffle(ALL_QUESTIONS.filter(q=>q.gp===worstGp));
+    const otherQs=shuffle(ALL_QUESTIONS.filter(q=>q.gp!==worstGp));
+    qPool=[...weakQs.slice(0,3),...otherQs.slice(0,2)];
+  }else{
+    qPool=shuffle(ALL_QUESTIONS).slice(0,5);
+  }
+  const questions=qPool.map(shuffledQuestion);
+  // Step 3: 1 speaking prompt
+  const spIdx=Math.floor(Math.random()*SPEAKING_Q.length);
+  const speaking=SPEAKING_Q[spIdx];
+  return{fcCards,questions,speaking,isBonus,startTime:Date.now()};
+}
+
+// ── MISSION ENGINE ────────────────────────────────────
+let missionState=null;
+let missionTimerInterval=null;
+
+const MISSION_PHASES=['flashcards','questions','speaking'];
+
+function startMission(isBonus=false){
+  if(!dataLoaded){alert('Still loading, please wait.');return}
+  if(!ALL_FLASHCARDS.length&&!ALL_QUESTIONS.length){alert('No content loaded. Run /api/seed?secret=seed_nihongo_2024 first.');return}
+  const mission=buildMission(isBonus);
+  missionState={
+    ...mission,
+    phase:0,           // 0=flashcards 1=questions 2=speaking
+    fcIndex:0,
+    fcCorrect:0,
+    qIndex:0,
+    qAnswers:[],
+    fcFlipped:false,
+    speakingStarted:false,
+    speakingSeconds:0,
+    speakingInterval:null,
+    timerStart:Date.now(),
+  };
+  showView('view-mission');
+  startMissionTimer();
+  renderMissionPhase();
+}
+
+function startMissionTimer(){
+  if(missionTimerInterval)clearInterval(missionTimerInterval);
+  missionTimerInterval=setInterval(()=>{
+    const s=Math.floor((Date.now()-missionState.timerStart)/1000);
+    document.getElementById('mission-timer').textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
+  },1000);
+}
+
+function updateMissionProgress(){
+  const{phase,fcIndex,qIndex,fcCards,questions}=missionState;
+  const totalSteps=fcCards.length+questions.length+1;
+  let done=0;
+  if(phase>0)done+=fcCards.length;
+  else done+=fcIndex;
+  if(phase>1)done+=questions.length;
+  else if(phase===1)done+=qIndex;
+  if(phase>=2)done+=missionState.speakingStarted?1:0;
+  const pct=Math.round(done/totalSteps*100);
+  document.getElementById('mission-prog-fill').style.width=pct+'%';
+  const phaseNames=['Flashcards','Quiz','Speaking'];
+  document.getElementById('mission-prog-label').textContent=phaseNames[phase]||'Complete';
+}
+
+function renderMissionPhase(){
+  updateMissionProgress();
+  const ph=missionState.phase;
+  // Phase dots
+  const dots=MISSION_PHASES.map((_,i)=>`<div class="phase-dot${i<ph?' done':i===ph?' active':''}"></div>`).join('');
+  const phaseNames=['🃏 Flashcards','✏️ Quiz','🗣️ Speaking'];
+  const header=`<div class="mission-phase-header">
+    <div><div class="mission-phase-label">Step ${ph+1} of 3</div><div class="mission-phase-name">${phaseNames[ph]}</div></div>
+    <div class="mission-phase-steps">${dots}</div>
+  </div>`;
+
+  if(ph===0)renderMissionFlashcard(header);
+  else if(ph===1)renderMissionQuestion(header);
+  else if(ph===2)renderMissionSpeaking(header);
+}
+
+// ── MISSION: FLASHCARDS ───────────────────────────────
+function renderMissionFlashcard(header){
+  const{fcCards,fcIndex,fcFlipped}=missionState;
+  if(fcIndex>=fcCards.length){missionState.phase=1;renderMissionPhase();return}
+  const f=fcCards[fcIndex];
+  const strength=(getFlashCard(f.id)).memoryStrength||0;
+  const ct=['recognition','production','cloze','reading'][fcIndex%4];
+  let front='';
+  if(ct==='recognition')front=`<div class="fc-main-text">${f.front}</div>`;
+  else if(ct==='production')front=`<div class="fc-main-text" style="font-size:24px">${f.meaning}</div><div class="fc-sub-text">What is this in Japanese?</div>`;
+  else if(ct==='cloze'&&f.example)front=`<div class="fc-main-text" style="font-size:20px">${f.example.replace(f.front,'＿＿＿')}</div>`;
+  else front=`<div class="fc-main-text">${f.reading}</div><div class="fc-sub-text">What kanji is this?</div>`;
+  const typeLabels=['Read it','Recall Japanese','Fill the blank','Write the kanji'];
+  const typeLabel=typeLabels[fcIndex%4];
+  const back=`<div class="fc-main-text">${f.front}</div><div class="fc-sub-text">${f.reading}</div><div class="fc-meaning-text">${f.meaning}</div>${f.example?`<div class="fc-example">${f.example}<br><span style="color:var(--ink3);font-size:12px">${f.exampleMeaning||''}</span></div>`:''}`;
+  document.getElementById('mission-body').innerHTML=header+`
+    <div class="fc-scene" onclick="missionFlipCard()">
+      <div class="fc-card-inner${missionState.fcFlipped?' flipped':''}" id="mfc-inner">
+        <div class="fc-front-face"><div class="fc-type-badge">${typeLabel}</div>${front}<div class="fc-tap-hint">tap to reveal ↓</div><div class="fc-memory-bar"><div class="fc-memory-fill" style="width:${strength}%"></div></div></div>
+        <div class="fc-back-face">${back}<div class="fc-memory-bar"><div class="fc-memory-fill" style="width:${strength}%"></div></div></div>
+      </div>
+    </div>
+    <div id="mfc-rating" style="display:${missionState.fcFlipped?'block':'none'}">
+      <div style="font-size:12px;color:var(--ink3);text-align:center;margin-bottom:8px">${fcIndex+1} / ${fcCards.length} — How well did you know this?</div>
+      <div class="rating-row">
+        <button class="rate-btn rate-again" onclick="missionRateCard(1)">Again<span class="rate-label">didn't know</span></button>
+        <button class="rate-btn rate-hard" onclick="missionRateCard(2)">Hard<span class="rate-label">struggled</span></button>
+        <button class="rate-btn rate-good" onclick="missionRateCard(3)">Good<span class="rate-label">knew it</span></button>
+        <button class="rate-btn rate-easy" onclick="missionRateCard(4)">Easy<span class="rate-label">too easy</span></button>
+      </div>
+    </div>`;
+}
+function missionFlipCard(){if(missionState.fcFlipped)return;missionState.fcFlipped=true;const inner=document.getElementById('mfc-inner');if(inner)inner.classList.add('flipped');setTimeout(()=>{const r=document.getElementById('mfc-rating');if(r)r.style.display='block'},300)}
+function missionRateCard(rating){const f=missionState.fcCards[missionState.fcIndex];rateFlashCard(f.id,rating);if(rating>=3)missionState.fcCorrect++;missionState.fcIndex++;missionState.fcFlipped=false;renderMissionPhase()}
+
+// ── MISSION: QUESTIONS ────────────────────────────────
+function renderMissionQuestion(header){
+  const{questions,qIndex}=missionState;
+  if(qIndex>=questions.length){missionState.phase=2;renderMissionPhase();return}
+  const q=questions[qIndex];
+  const answered=missionState.qAnswers[qIndex]!==undefined;
+  let opts='';
+  q.o.forEach((o,i)=>{
+    let cls='opt';let dis='';
+    if(answered){dis='disabled';if(i===q.c)cls+=' correct';else if(i===missionState.qAnswers[qIndex])cls+=' wrong';}
+    opts+=`<button class="${cls}" ${dis} onclick="missionAnswerQ(${i})">${o}</button>`;
+  });
+  let fb='';
+  if(answered){
+    const ok=missionState.qAnswers[qIndex]===q.c;
+    const gpTag=q.gp?`<span class="gp-tag">${q.gp}</span>`:'';
+    fb=`<div class="feedback ${ok?'ok':'err'}">${ok?'✓ 正解！ ':('✗ 正解: '+q.o[q.c]+' ')}${gpTag}${q.exp?'<br>'+q.exp:''}</div>`;
+  }
+  const nextLabel=qIndex===questions.length-1?'次のステップ →':'次へ →';
+  document.getElementById('mission-body').innerHTML=header+`
+    <div class="q-card">
+      <div class="q-meta"><span class="q-badge ${q.category}">${q.category}</span><span class="q-diff">${qIndex+1} / ${questions.length}</span></div>
+      <div class="q-sentence">${q.s}</div>
+      <div class="q-ask">${q.a}</div>
+      <div class="opts">${opts}</div>
+      ${fb}
+      ${answered?`<button class="next-btn visible" onclick="missionNextQ()">${nextLabel}</button>`:''}
+    </div>`;
+}
+function missionAnswerQ(sel){if(missionState.qAnswers[missionState.qIndex]!==undefined)return;const q=missionState.questions[missionState.qIndex];const correct=sel===q.c;missionState.qAnswers[missionState.qIndex]=sel;scheduleReview(q.id,correct);renderMissionQuestion(buildMissionHeader())}
+function missionNextQ(){missionState.qIndex++;renderMissionPhase()}
+function buildMissionHeader(){const ph=missionState.phase;const dots=MISSION_PHASES.map((_,i)=>`<div class="phase-dot${i<ph?' done':i===ph?' active':''}"></div>`).join('');const phaseNames=['🃏 Flashcards','✏️ Quiz','🗣️ Speaking'];return`<div class="mission-phase-header"><div><div class="mission-phase-label">Step ${ph+1} of 3</div><div class="mission-phase-name">${phaseNames[ph]}</div></div><div class="mission-phase-steps">${dots}</div></div>`}
+
+// ── MISSION: SPEAKING ─────────────────────────────────
+function renderMissionSpeaking(header){
+  const{speaking}=missionState;
+  const secs=missionState.speakingSeconds||0;
+  const m=Math.floor(secs/60);const s=secs%60;
+  const started=missionState.speakingStarted;
+  const finished=secs>=60;
+  document.getElementById('mission-body').innerHTML=header+`
+    <div class="speaking-prompt-card">
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--ink3);margin-bottom:8px">Speaking prompt</div>
+      <div class="sp-tag">${speaking.tag}</div>
+      <div class="sp-q" style="margin-top:8px">${speaking.q}</div>
+      <div class="speaking-timer${started&&!finished?' running':''}">${m}:${String(s).padStart(2,'0')}</div>
+      ${!started?`<div class="speaking-btn-row"><button class="speaking-start-btn" onclick="startSpeakingTimer()">▶ Start talking</button></div>`:
+        finished?`<div class="speaking-btn-row"><button class="btn btn-primary" onclick="completeMission()">Mission complete! 🎉</button></div>`:
+        `<div class="speaking-btn-row"><button class="btn btn-ghost" onclick="completeMission()">Skip speaking</button></div>`}
+      <div style="margin-top:12px"><button class="sp-hint-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">💡 ヒントを見る</button><div class="sp-hint" style="display:none">例: ${speaking.hint}</div></div>
+    </div>`;
+}
+function startSpeakingTimer(){
+  missionState.speakingStarted=true;
+  missionState.speakingSeconds=0;
+  if(missionState.speakingInterval)clearInterval(missionState.speakingInterval);
+  missionState.speakingInterval=setInterval(()=>{
+    missionState.speakingSeconds++;
+    renderMissionSpeaking(buildMissionHeader());
+    updateMissionProgress();
+    if(missionState.speakingSeconds>=60){clearInterval(missionState.speakingInterval)}
+  },1000);
+}
+
+// ── MISSION: COMPLETE ─────────────────────────────────
+function completeMission(){
+  if(missionState.speakingInterval)clearInterval(missionState.speakingInterval);
+  if(missionTimerInterval)clearInterval(missionTimerInterval);
+  const elapsed=Math.floor((Date.now()-missionState.timerStart)/1000);
+  const qCorrect=missionState.qAnswers.filter((a,i)=>a===missionState.questions[i].c).length;
+  const qTotal=missionState.questions.length;
+  const pct=Math.round(qCorrect/qTotal*100);
+
+  // Save mission state
+  const ms=getMissionState();
+  const today=getAshgabatDateKey();
+  if(missionState.isBonus){
+    saveMissionState({...ms,completedDate:today,required:true,bonus:true,bonusScore:pct});
+  }else{
+    saveMissionState({completedDate:today,required:true,bonus:false,score:pct,elapsed,fcCorrect:missionState.fcCorrect,fcTotal:missionState.fcCards.length});
+  }
+
+  // Log activity
+  logActivity('mission',qTotal+missionState.fcCards.length,Math.round(elapsed/60));
+  updateStreak();
+
+  // Send Telegram
+  sendMissionTelegram(pct,qCorrect,qTotal,elapsed,missionState.isBonus);
+
+  // Celebration screen
+  const timeStr=Math.floor(elapsed/60)+'m '+elapsed%60+'s';
+  const xp=missionState.isBonus?50:100;
+  const emoji=pct>=80?'🌟':pct>=60?'✨':'💪';
+  document.getElementById('mission-body').innerHTML=`
+    <div class="mission-celebration">
+      <div class="celebration-emoji">${emoji}</div>
+      <div class="celebration-title">${missionState.isBonus?'Bonus round done!':'今日のミッション完了！'}</div>
+      <div class="celebration-sub">${missionState.fcCorrect}/${missionState.fcCards.length} flashcards · ${qCorrect}/${qTotal} quiz · ${timeStr}</div>
+      <div class="xp-badge">+${xp} XP</div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="exitMission()">← Dashboard</button>
+        ${!missionState.isBonus?`<button class="btn btn-primary" onclick="startMission(true)">⚡ Bonus round</button>`:''}
+      </div>
+    </div>`;
+  document.getElementById('mission-prog-fill').style.width='100%';
+}
+
+function exitMission(){
+  if(missionTimerInterval)clearInterval(missionTimerInterval);
+  if(missionState?.speakingInterval)clearInterval(missionState.speakingInterval);
+  showView('view-dash');
+  renderDash();
+}
+
+async function sendMissionTelegram(pct,correct,total,elapsed,isBonus){
+  const name=DB.get('studentName')||'Mahym';
+  const streak=getStreak();
+  const timeStr=Math.floor(elapsed/60)+'m '+elapsed%60+'s';
+  const now=new Date();
+  const dateStr=now.toLocaleDateString('en-GB',{weekday:'short',day:'2-digit',month:'short'})+' · '+now.toLocaleTimeString('ja-JP',{hour:'2-digit',minute:'2-digit'});
+  try{
+    await fetch('/api/results',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        name,pct,correct,total,timeStr,dateStr,
+        modeLabel:isBonus?'Daily Mission (Bonus)':'Daily Mission',
+        grade:pct>=90?'S':pct>=80?'A':pct>=70?'B':pct>=60?'C':'D',
+        catLines:`  Flashcards: ${missionState.fcCorrect}/${missionState.fcCards.length}\n  Quiz: ${correct}/${total}`,
+        mistakeLines:missionState.qAnswers.filter((a,i)=>a!==missionState.questions[i].c).map((_,i)=>{const q=missionState.questions[i];const a=missionState.qAnswers[i];return`  • ${q.a}\n    ✗ ${q.o[a]} → ✓ ${q.o[q.c]}`}).join('\n')||'  なし 🎉',
+        slowLines:'  —',
+        weakLines:calcWeakAreas().slice(0,3).map(w=>`  ⚠️ ${w.gp}: ${w.pct}%`).join('\n')||'  Keep going!',
+        streakCount:streak.count,mistakeCount:missionState.qAnswers.filter((a,i)=>a!==missionState.questions[i].c).length,slowCount:0,
+        flashMemory:getAvgMemoryStrength()!==null?getAvgMemoryStrength()+'%':'—',
+      }),
+    });
+  }catch(e){console.log('Telegram send failed',e)}
+}
+
+// ── DASHBOARD ─────────────────────────────────────────
+function renderMissionHero(){
+  const done=isMissionDoneToday();
+  const bonusDone=isBonusDoneToday();
+  const dueFC=getDueFlashcards();
+  const weak=calcWeakAreas();
+  const weakLabel=weak.length>0?`Focus: ${weak[0].gp}`:'Balanced practice';
+  if(done){
+    const ms=getMissionState();
+    const bonus=bonusDone?'<span style="color:rgba(255,255,255,.5);font-size:13px">+ bonus ✓</span>':'';
+    document.getElementById('mission-hero-wrap').innerHTML=`
+      <div class="mission-hero done" style="cursor:default">
+        <div class="mission-label">今日のミッション</div>
+        <div class="mission-done-badge">✅ Mission complete! ${bonus}
+          ${!bonusDone?`<button class="mission-bonus-btn" onclick="startMission(true)">⚡ Bonus round</button>`:''}
+        </div>
+        <div style="font-size:13px;color:rgba(255,255,255,.4);margin-top:8px">Score: ${ms.score||'—'}% · ${ms.fcCorrect||0}/${ms.fcTotal||5} flashcards</div>
+      </div>`;
+  }else{
+    const fcCount=Math.min(5,Math.max(dueFC.length,5));
+    document.getElementById('mission-hero-wrap').innerHTML=`
+      <div class="mission-hero" onclick="startMission(false)">
+        <div class="mission-label">今日のミッション — Daily Mission</div>
+        <div class="mission-title">Start today's session</div>
+        <div class="mission-sub">${weakLabel} · ~10 min</div>
+        <div class="mission-steps">
+          <span class="mission-step-pill fc">🃏 ${fcCount} flashcards</span>
+          <span class="mission-step-pill q">✏️ 5 quiz questions</span>
+          <span class="mission-step-pill sp">🗣️ 1 speaking prompt</span>
+        </div>
+        <button class="mission-cta">今日のミッションを始める →</button>
+      </div>`;
+  }
+}
+
+function renderDash(){
+  const name=DB.get('studentName')||'Mahym';
+  document.getElementById('dash-name').textContent=name;
+  document.getElementById('streak-count').textContent=updateStreak();
+  const mastery=calcMastery();
+  for(const cat of['kanji','vocab','grammar']){const v=mastery[cat];document.getElementById('mp-'+cat).textContent=v!==null?v+'%':'—';document.getElementById('bar-'+cat).style.width=(v||0)+'%'}
+  const af=getAvgMemoryStrength();
+  document.getElementById('mp-flash').textContent=af!==null?af+'%':'—';
+  document.getElementById('bar-flash').style.width=(af||0)+'%';
+  const dfc=getDueFlashcards();
+  document.getElementById('fc-due-label').textContent=dfc.length>0?dfc.length+' cards due for review today':'All cards reviewed! Study new cards';
+  const rq=getReviewQueue();
+  if(rq.length>0){document.getElementById('review-banner').style.display='flex';document.getElementById('review-count').textContent=rq.length}
+  else document.getElementById('review-banner').style.display='none';
+  const weak=calcWeakAreas();
+  if(weak.length>0){document.getElementById('weak-section').style.display='block';document.getElementById('weak-list').innerHTML=weak.slice(0,6).map(w=>{const cls=w.pct<50?'bad':w.pct<75?'ok':'good';return`<div class="weak-item"><span class="weak-gp">${w.gp}</span><span class="weak-rate ${cls}">${w.pct}%</span></div>`}).join('')}
+  const history=getHistory();
+  if(history.length>0){document.getElementById('history-section').style.display='block';document.getElementById('history-list').innerHTML=history.slice(0,5).map(h=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px"><span style="color:var(--ink2)">${h.mode} · ${h.date}</span><span style="font-weight:600;color:${h.pct>=80?'var(--green)':h.pct>=60?'var(--gold)':'var(--red)'}">${h.pct}%</span></div>`).join('')+(history.length>5?`<div style="font-size:12px;color:var(--ink3);text-align:center;padding-top:8px">${history.length} tests total</div>`:'')}
+  renderMissionHero();
+}
+
+// ── TEST ENGINE ───────────────────────────────────────
 let testState=null;
-function startTest(mode){if(!dataLoaded){alert('Still loading, please wait.');return}let questions;if(mode==='review'){questions=shuffle(getReviewQueue().map(shuffledQuestion));if(!questions.length){alert('No reviews due!');return}}else questions=getTestQuestions(mode);if(!questions.length){alert('No questions found. Please run: /api/seed?secret=seed_nihongo_2024');return}testState={mode,questions,current:0,answers:[],startTime:Date.now(),questionStartTime:Date.now(),timerInterval:null};showView('view-test');testState.timerInterval=setInterval(()=>{const s=Math.floor((Date.now()-testState.startTime)/1000);document.getElementById('test-timer').textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0')},1000);renderQuestion()}
-function renderQuestion(){const{questions,current}=testState;const q=questions[current];document.getElementById('test-prog-fill').style.width=(current/questions.length*100)+'%';document.getElementById('test-prog-label').textContent=(current+1)+' / '+questions.length;const dL=q.difficulty==='challenge'?'<span class="q-diff challenge">⭐ Challenge</span>':'<span class="q-diff">'+q.difficulty+'</span>';let html='<div class="q-card"><div class="q-meta"><span class="q-badge '+q.category+'">'+q.category+'</span>'+dL+'</div><div class="q-sentence">'+q.s+'</div><div class="q-ask">'+q.a+'</div><div class="opts">';q.o.forEach((o,i)=>{html+='<button class="opt" id="opt-'+i+'" onclick="answerQ('+i+')">'+o+'</button>'});html+='</div><div id="q-feedback"></div><button class="next-btn" id="next-btn" onclick="nextQ()">'+( current===questions.length-1?'結果を見る → See Results':'次へ → Next')+'</button></div>';document.getElementById('test-body').innerHTML=html;testState.questionStartTime=Date.now()}
-function answerQ(sel){const{questions,current}=testState;const q=questions[current];const correct=sel===q.c;const timeTaken=Math.round((Date.now()-testState.questionStartTime)/1000);testState.answers.push({id:q.id,correct,selected:sel,timeTaken,q});scheduleReview(q.id,correct);q.o.forEach((_,i)=>{const b=document.getElementById('opt-'+i);if(b){b.disabled=true;if(i===q.c)b.classList.add('correct');else if(i===sel)b.classList.add('wrong')}});const fb=document.getElementById('q-feedback');const gpTag=q.gp?'<span class="gp-tag">'+q.gp+'</span>':'';fb.className='feedback '+(correct?'ok':'err');fb.innerHTML=correct?'✓ 正解！ '+gpTag+' '+(q.exp||''):'✗ 不正解。正解: <strong>'+q.o[q.c]+'</strong> '+gpTag+'<br>'+(q.exp||'');const nb=document.getElementById('next-btn');nb.classList.add('visible');setTimeout(()=>nb.scrollIntoView({behavior:'smooth',block:'nearest'}),150)}
+function startTest(mode){if(!dataLoaded){alert('Still loading.');return}let questions;if(mode==='review'){questions=shuffle(getReviewQueue().map(shuffledQuestion));if(!questions.length){alert('No reviews due!');return}}else questions=getTestQuestions(mode);if(!questions.length){alert('No questions found. Run /api/seed?secret=seed_nihongo_2024');return}testState={mode,questions,current:0,answers:[],startTime:Date.now(),questionStartTime:Date.now(),timerInterval:null};showView('view-test');testState.timerInterval=setInterval(()=>{const s=Math.floor((Date.now()-testState.startTime)/1000);document.getElementById('test-timer').textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0')},1000);renderQuestion()}
+function renderQuestion(){const{questions,current}=testState;const q=questions[current];document.getElementById('test-prog-fill').style.width=(current/questions.length*100)+'%';document.getElementById('test-prog-label').textContent=(current+1)+' / '+questions.length;const dL=q.difficulty==='challenge'?'<span class="q-diff challenge">⭐ Challenge</span>':`<span class="q-diff">${q.difficulty}</span>`;let html=`<div class="q-card"><div class="q-meta"><span class="q-badge ${q.category}">${q.category}</span>${dL}</div><div class="q-sentence">${q.s}</div><div class="q-ask">${q.a}</div><div class="opts">`;q.o.forEach((o,i)=>{html+=`<button class="opt" id="opt-${i}" onclick="answerQ(${i})">${o}</button>`});html+=`</div><div id="q-feedback"></div><button class="next-btn" id="next-btn" onclick="nextQ()">${current===questions.length-1?'結果を見る → See Results':'次へ → Next'}</button></div>`;document.getElementById('test-body').innerHTML=html;testState.questionStartTime=Date.now()}
+function answerQ(sel){const{questions,current}=testState;const q=questions[current];const correct=sel===q.c;const timeTaken=Math.round((Date.now()-testState.questionStartTime)/1000);testState.answers.push({id:q.id,correct,selected:sel,timeTaken,q});scheduleReview(q.id,correct);q.o.forEach((_,i)=>{const b=document.getElementById('opt-'+i);if(b){b.disabled=true;if(i===q.c)b.classList.add('correct');else if(i===sel)b.classList.add('wrong')}});const fb=document.getElementById('q-feedback');const gpTag=q.gp?`<span class="gp-tag">${q.gp}</span>`:'';fb.className='feedback '+(correct?'ok':'err');fb.innerHTML=correct?`✓ 正解！ ${gpTag} ${q.exp||''}`:`✗ 不正解。正解: <strong>${q.o[q.c]}</strong> ${gpTag}<br>${q.exp||''}`;const nb=document.getElementById('next-btn');nb.classList.add('visible');setTimeout(()=>nb.scrollIntoView({behavior:'smooth',block:'nearest'}),150)}
 function nextQ(){testState.current++;if(testState.current>=testState.questions.length)finishTest();else{renderQuestion();document.querySelector('.test-header').scrollIntoView({behavior:'smooth'})}}
-function finishTest(){clearInterval(testState.timerInterval);const{questions,answers,startTime,mode}=testState;const elapsed=Math.floor((Date.now()-startTime)/1000);const timeStr=Math.floor(elapsed/60)+'分'+elapsed%60+'秒';const correct=answers.filter(a=>a.correct).length;const total=answers.length;const pct=Math.round(correct/total*100);const bycat={};answers.forEach(a=>{const cat=a.q.type;if(!bycat[cat])bycat[cat]={c:0,t:0};bycat[cat].t++;if(a.correct)bycat[cat].c++});const mistakes=answers.filter(a=>!a.correct);const slowItems=answers.filter(a=>a.timeTaken>30);const modeLabel={quick:'Quick',full:'Full',mock:'Mock Exam',review:'Review'}[mode]||mode;addHistory({mode:modeLabel,pct,date:new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short'}),correct,total});renderResults({pct,correct,total,timeStr,bycat,mistakes,slowItems,modeLabel,elapsed,answers});showView('view-results');renderDash()}
+function finishTest(){clearInterval(testState.timerInterval);const{questions,answers,startTime,mode}=testState;const elapsed=Math.floor((Date.now()-startTime)/1000);const timeStr=Math.floor(elapsed/60)+'分'+elapsed%60+'秒';const correct=answers.filter(a=>a.correct).length;const total=answers.length;const pct=Math.round(correct/total*100);const bycat={};answers.forEach(a=>{const cat=a.q.type;if(!bycat[cat])bycat[cat]={c:0,t:0};bycat[cat].t++;if(a.correct)bycat[cat].c++});const mistakes=answers.filter(a=>!a.correct);const slowItems=answers.filter(a=>a.timeTaken>30);const modeLabel={quick:'Quick',full:'Full',mock:'Mock Exam',review:'Review'}[mode]||mode;addHistory({mode:modeLabel,pct,date:new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short'}),correct,total});logActivity('test',total,Math.round(elapsed/60));renderResults({pct,correct,total,timeStr,bycat,mistakes,slowItems,modeLabel,elapsed,answers});showView('view-results');renderDash()}
 function confirmBack(){if(confirm('テストを終わりますか？ Exit test?')){clearInterval(testState?.timerInterval);showView('view-dash');renderDash()}}
-function renderResults({pct,correct,total,timeStr,bycat,mistakes,slowItems,modeLabel,elapsed,answers}){const grade=pct>=90?'S · Excellent':pct>=80?'A · Great':pct>=70?'B · Good':pct>=60?'C · Keep going':'D · Keep studying';const emoji=pct>=80?'🌟':pct>=60?'👍':'💪';let html='<div class="results-hero"><div class="results-pct">'+pct+'%</div><div class="results-grade">'+emoji+' '+grade+'</div><div class="results-sub">'+correct+' / '+total+' correct · '+timeStr+' · '+modeLabel+'</div></div><div class="stat-row">';for(const[cat,d]of Object.entries(bycat)){const label={kanji:'漢字',vocab:'語彙',grammar:'文法'}[cat]||cat;html+='<div class="stat-box"><div class="stat-val">'+d.c+'/'+d.t+'</div><div class="stat-lbl">'+label+'</div></div>'}if(Object.keys(bycat).length<3)html+='<div class="stat-box"><div class="stat-val">'+Math.round(elapsed/total)+'s</div><div class="stat-lbl">avg/q</div></div>';html+='</div>';if(mistakes.length){html+='<div class="section-card"><h3>❌ 間違え — Mistakes ('+mistakes.length+')</h3>';mistakes.forEach(a=>{html+='<div class="mistake-item"><div class="mistake-q">'+a.q.s+'</div><div class="mistake-q" style="font-size:12px;color:var(--ink2)">'+a.q.a+'</div><div class="mistake-ans"><span class="m-wrong">✗ '+a.q.o[a.selected]+'</span><span class="m-arrow">→</span><span class="m-right">✓ '+a.q.o[a.q.c]+'</span></div></div>'});html+='</div>'}if(slowItems.length){html+='<div class="section-card"><h3>🐢 時間がかかった (>30s)</h3>';slowItems.forEach(a=>{html+='<div class="mistake-item"><div class="mistake-q">'+a.q.a+'</div><div class="mistake-ans"><span style="color:var(--gold)">'+a.timeTaken+'秒</span>'+(a.correct?'<span style="color:var(--green)">✓</span>':'<span style="color:var(--red)">✗</span>')+'</div></div>'});html+='</div>'}html+='<div class="section-card" style="font-size:13px;color:var(--ink2);line-height:1.7"><h3>📅 次の復習スケジュール</h3>Wrong answers → review tomorrow · Correct → review based on streak.</div>';html+='<div class="send-panel"><h3>📤 結果を送る</h3><p>Send full analysis to Telegram</p><input class="name-input" id="taker-name" type="text" placeholder="Your name" value="'+(DB.get('studentName')||'Mahym')+'"><button class="btn btn-primary" onclick="sendToTelegram()">Send to Telegram →</button><div class="send-status" id="send-status"></div></div>';html+='<div class="btn-row"><button class="btn btn-ghost" onclick="showView(\'view-dash\');renderDash()">← Dashboard</button><button class="btn btn-primary" onclick="startTest(\''+testState.mode+'\')">Try again 🔄</button></div>';document.getElementById('results-body').innerHTML=html;window._lastResult={pct,correct,total,timeStr,bycat,mistakes,slowItems,modeLabel}}
-async function sendToTelegram(){const name=document.getElementById('taker-name').value.trim()||'Mahym';DB.set('studentName',name);const statusEl=document.getElementById('send-status');statusEl.textContent='Sending…';statusEl.style.color='var(--ink3)';const r=window._lastResult;const grade=r.pct>=90?'S':r.pct>=80?'A':r.pct>=70?'B':r.pct>=60?'C':'D';const catLines=Object.entries(r.bycat).map(([cat,d])=>'  '+({kanji:'漢字 Kanji',vocab:'語彙 Vocab',grammar:'文法 Grammar'}[cat]||cat)+': '+d.c+'/'+d.t+' ('+Math.round(d.c/d.t*100)+'%)').join('\n');const mistakeLines=r.mistakes.length?r.mistakes.map(a=>'  • '+a.q.a+'\n    ✗ '+a.q.o[a.selected]+' → ✓ '+a.q.o[a.q.c]).join('\n'):'  なし 🎉';const slowLines=r.slowItems.length?r.slowItems.map(a=>'  • '+a.q.a+' ('+a.timeTaken+'秒) '+(a.correct?'✓':'✗')).join('\n'):'  All fast! ⚡';const weak=calcWeakAreas().slice(0,3);const weakLines=weak.length?weak.map(w=>'  ⚠️ '+w.gp+': '+w.pct+'%').join('\n'):'  Keep studying!';const streak=getStreak();const now=new Date();const dateStr=now.toLocaleDateString('en-GB',{weekday:'short',day:'2-digit',month:'short'})+' · '+now.toLocaleTimeString('ja-JP',{hour:'2-digit',minute:'2-digit'});const flashStrength=getAvgMemoryStrength();try{const res=await fetch('/api/results',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,pct:r.pct,correct:r.correct,total:r.total,timeStr:r.timeStr,dateStr,modeLabel:r.modeLabel,grade,catLines,mistakeLines,slowLines,weakLines,streakCount:streak.count,mistakeCount:r.mistakes.length,slowCount:r.slowItems.length,flashMemory:flashStrength!==null?flashStrength+'%':'—'})});const data=await res.json();if(data.ok){statusEl.textContent='✓ Sent!';statusEl.style.color='var(--green)'}else{statusEl.textContent='✗ '+( data.error||'unknown');statusEl.style.color='var(--red)'}}catch(e){statusEl.textContent='✗ Could not connect.';statusEl.style.color='var(--red)'}}
+function renderResults({pct,correct,total,timeStr,bycat,mistakes,slowItems,modeLabel,elapsed,answers}){const grade=pct>=90?'S · Excellent':pct>=80?'A · Great':pct>=70?'B · Good':pct>=60?'C · Keep going':'D · Keep studying';const emoji=pct>=80?'🌟':pct>=60?'👍':'💪';let html=`<div class="results-hero"><div class="results-pct">${pct}%</div><div class="results-grade">${emoji} ${grade}</div><div class="results-sub">${correct} / ${total} correct · ${timeStr} · ${modeLabel}</div></div><div class="stat-row">`;for(const[cat,d]of Object.entries(bycat)){const label={kanji:'漢字',vocab:'語彙',grammar:'文法'}[cat]||cat;html+=`<div class="stat-box"><div class="stat-val">${d.c}/${d.t}</div><div class="stat-lbl">${label}</div></div>`}if(Object.keys(bycat).length<3)html+=`<div class="stat-box"><div class="stat-val">${Math.round(elapsed/total)}s</div><div class="stat-lbl">avg/q</div></div>`;html+='</div>';if(mistakes.length){html+=`<div class="section-card"><h3>❌ 間違え — Mistakes (${mistakes.length})</h3>`;mistakes.forEach(a=>{html+=`<div class="mistake-item"><div class="mistake-q">${a.q.s}</div><div class="mistake-q" style="font-size:12px;color:var(--ink2)">${a.q.a}</div><div class="mistake-ans"><span class="m-wrong">✗ ${a.q.o[a.selected]}</span><span class="m-arrow">→</span><span class="m-right">✓ ${a.q.o[a.q.c]}</span></div></div>`});html+='</div>'}if(slowItems.length){html+=`<div class="section-card"><h3>🐢 時間がかかった (>30s)</h3>`;slowItems.forEach(a=>{html+=`<div class="mistake-item"><div class="mistake-q">${a.q.a}</div><div class="mistake-ans"><span style="color:var(--gold)">${a.timeTaken}秒</span>${a.correct?'<span style="color:var(--green)">✓</span>':'<span style="color:var(--red)">✗</span>'}</div></div>`});html+='</div>'}html+=`<div class="section-card" style="font-size:13px;color:var(--ink2);line-height:1.7"><h3>📅 次の復習スケジュール</h3>Wrong answers → review tomorrow · Correct → review based on streak.</div>`;html+=`<div class="send-panel"><h3>📤 結果を送る</h3><p>Send full analysis to Telegram</p><input class="name-input" id="taker-name" type="text" placeholder="Your name" value="${DB.get('studentName')||'Mahym'}"><button class="btn btn-primary" onclick="sendToTelegram()">Send to Telegram →</button><div class="send-status" id="send-status"></div></div>`;html+=`<div class="btn-row"><button class="btn btn-ghost" onclick="showView('view-dash');renderDash()">← Dashboard</button><button class="btn btn-primary" onclick="startTest('${testState.mode}')">Try again 🔄</button></div>`;document.getElementById('results-body').innerHTML=html;window._lastResult={pct,correct,total,timeStr,bycat,mistakes,slowItems,modeLabel}}
+async function sendToTelegram(){const name=document.getElementById('taker-name').value.trim()||'Mahym';DB.set('studentName',name);const statusEl=document.getElementById('send-status');statusEl.textContent='Sending…';statusEl.style.color='var(--ink3)';const r=window._lastResult;const grade=r.pct>=90?'S':r.pct>=80?'A':r.pct>=70?'B':r.pct>=60?'C':'D';const catLines=Object.entries(r.bycat).map(([cat,d])=>'  '+({kanji:'漢字 Kanji',vocab:'語彙 Vocab',grammar:'文法 Grammar'}[cat]||cat)+': '+d.c+'/'+d.t+' ('+Math.round(d.c/d.t*100)+'%)').join('\n');const mistakeLines=r.mistakes.length?r.mistakes.map(a=>'  • '+a.q.a+'\n    ✗ '+a.q.o[a.selected]+' → ✓ '+a.q.o[a.q.c]).join('\n'):'  なし 🎉';const slowLines=r.slowItems.length?r.slowItems.map(a=>'  • '+a.q.a+' ('+a.timeTaken+'秒) '+(a.correct?'✓':'✗')).join('\n'):'  All fast! ⚡';const weak=calcWeakAreas().slice(0,3);const weakLines=weak.length?weak.map(w=>'  ⚠️ '+w.gp+': '+w.pct+'%').join('\n'):'  Keep studying!';const streak=getStreak();const now=new Date();const dateStr=now.toLocaleDateString('en-GB',{weekday:'short',day:'2-digit',month:'short'})+' · '+now.toLocaleTimeString('ja-JP',{hour:'2-digit',minute:'2-digit'});const flashStrength=getAvgMemoryStrength();try{const res=await fetch('/api/results',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,pct:r.pct,correct:r.correct,total:r.total,timeStr:r.timeStr,dateStr,modeLabel:r.modeLabel,grade,catLines,mistakeLines,slowLines,weakLines,streakCount:streak.count,mistakeCount:r.mistakes.length,slowCount:r.slowItems.length,flashMemory:flashStrength!==null?flashStrength+'%':'—'})});const data=await res.json();if(data.ok){statusEl.textContent='✓ Sent!';statusEl.style.color='var(--green)'}else{statusEl.textContent='✗ '+(data.error||'unknown');statusEl.style.color='var(--red)'}}catch(e){statusEl.textContent='✗ Could not connect.';statusEl.style.color='var(--red)'}}
+
+// ── FLASHCARDS ────────────────────────────────────────
 let fcState=null;
 const FC_TYPES=['recognition','production','cloze','reading'];
 function startFlashcards(){if(!dataLoaded){alert('Still loading.');return}let due=getDueFlashcards();if(!due.length)due=[...ALL_FLASHCARDS];if(!due.length){alert('No flashcards found. Run /api/seed?secret=seed_nihongo_2024');return}fcState={cards:shuffle(due),current:0,flipped:false,sessionCorrect:0,sessionTotal:0,startTime:Date.now()};showView('view-flashcards');renderFC()}
 function renderFC(){if(!fcState||fcState.current>=fcState.cards.length){renderFCComplete();return}const f=fcState.cards[fcState.current];const total=fcState.cards.length;const current=fcState.current;document.getElementById('fc-prog-fill').style.width=(current/total*100)+'%';document.getElementById('fc-prog-label').textContent=(current+1)+' / '+total;document.getElementById('fc-counter').textContent=fcState.sessionCorrect+'✓';const ct=FC_TYPES[current%FC_TYPES.length];const strength=(getFlashCard(f.id)).memoryStrength||0;let front='',typeLabel='';if(ct==='recognition'){typeLabel='Read it';front='<div class="fc-main-text">'+f.front+'</div>'}else if(ct==='production'){typeLabel='Recall Japanese';front='<div class="fc-main-text" style="font-size:24px">'+f.meaning+'</div><div class="fc-sub-text">What is this in Japanese?</div>'}else if(ct==='cloze'&&f.example){typeLabel='Fill the blank';front='<div class="fc-main-text" style="font-size:20px">'+f.example.replace(f.front,'＿＿＿')+'</div>'}else{typeLabel='Write the kanji';front='<div class="fc-main-text">'+f.reading+'</div><div class="fc-sub-text">What kanji/word is this?</div>'}const back='<div class="fc-main-text">'+f.front+'</div><div class="fc-sub-text">'+f.reading+'</div><div class="fc-meaning-text">'+f.meaning+'</div>'+(f.example?'<div class="fc-example">'+f.example+'<br><span style="color:var(--ink3);font-size:12px">'+(f.exampleMeaning||'')+'</span></div>':'');document.getElementById('fc-body').innerHTML='<div class="fc-scene" onclick="flipCard()"><div class="fc-card-inner" id="fc-inner"><div class="fc-front-face"><div class="fc-type-badge">'+typeLabel+'</div>'+front+'<div class="fc-tap-hint">tap to reveal ↓</div><div class="fc-memory-bar"><div class="fc-memory-fill" style="width:'+strength+'%"></div></div></div><div class="fc-back-face">'+back+'<div class="fc-memory-bar"><div class="fc-memory-fill" style="width:'+strength+'%"></div></div></div></div></div><div id="rating-area" style="display:none"><div style="font-size:12px;color:var(--ink3);text-align:center;margin-bottom:8px">How well did you know this?</div><div class="rating-row"><button class="rate-btn rate-again" onclick="rateCard(1)">Again<span class="rate-label">didn\'t know</span></button><button class="rate-btn rate-hard" onclick="rateCard(2)">Hard<span class="rate-label">struggled</span></button><button class="rate-btn rate-good" onclick="rateCard(3)">Good<span class="rate-label">knew it</span></button><button class="rate-btn rate-easy" onclick="rateCard(4)">Easy<span class="rate-label">too easy</span></button></div></div>';fcState.flipped=false}
 function flipCard(){if(fcState.flipped)return;fcState.flipped=true;document.getElementById('fc-inner').classList.add('flipped');setTimeout(()=>{document.getElementById('rating-area').style.display='block'},300)}
 function rateCard(rating){const f=fcState.cards[fcState.current];rateFlashCard(f.id,rating);if(rating>=3)fcState.sessionCorrect++;fcState.sessionTotal++;fcState.current++;setTimeout(()=>renderFC(),150)}
-function renderFCComplete(){const elapsed=Math.floor((Date.now()-fcState.startTime)/1000);const timeStr=Math.floor(elapsed/60)+'m '+elapsed%60+'s';const avg=getAvgMemoryStrength();document.getElementById('fc-body').innerHTML='<div class="fc-complete"><div class="fc-complete-emoji">🎊</div><h2>Session Complete!</h2><p>'+fcState.sessionTotal+' cards reviewed · '+fcState.sessionCorrect+' known · '+timeStr+'</p>'+(avg!==null?'<div style="margin-top:1rem;font-size:14px;color:var(--ink2)">Average memory strength: <strong style="color:var(--purple)">'+avg+'%</strong></div>':'')+'</div><div class="btn-row"><button class="btn btn-ghost" onclick="showView(\'view-dash\');renderDash()">← Dashboard</button><button class="btn btn-primary" onclick="startFlashcards()">Study more 🔄</button></div>';renderDash()}
+function renderFCComplete(){const elapsed=Math.floor((Date.now()-fcState.startTime)/1000);const timeStr=Math.floor(elapsed/60)+'m '+elapsed%60+'s';const avg=getAvgMemoryStrength();logActivity('flashcards',fcState.sessionTotal,Math.round(elapsed/60));document.getElementById('fc-body').innerHTML='<div class="fc-complete"><div class="fc-complete-emoji">🎊</div><h2>Session Complete!</h2><p>'+fcState.sessionTotal+' cards reviewed · '+fcState.sessionCorrect+' known · '+timeStr+'</p>'+(avg!==null?'<div style="margin-top:1rem;font-size:14px;color:var(--ink2)">Average memory strength: <strong style="color:var(--purple)">'+avg+'%</strong></div>':'')+'</div><div class="btn-row"><button class="btn btn-ghost" onclick="showView(\'view-dash\');renderDash()">← Dashboard</button><button class="btn btn-primary" onclick="startFlashcards()">Study more 🔄</button></div>';renderDash()}
+
+// ── SPEAKING ──────────────────────────────────────────
 const SPEAKING_Q=[{tag:'〜てあげる/くれる',q:'ご家族やともだちに最近何かしてあげましたか？',hint:'友達に日本語を教えてあげました。'},{tag:'〜てもらう',q:'最近、だれかに何かしてもらいましたか？',hint:'夫にごはんを作ってもらいました。'},{tag:'〜てしまう',q:'最近、困ったこと、うっかりしたことを話してください。',hint:'財布を忘れてしまいました。'},{tag:'〜たばかり',q:'最近始めたこと、または終わったことは何ですか？',hint:'日本語のレッスンを始めたばかりです。'},{tag:'〜ているところ',q:'今日の午後、何をしているところでしたか？',hint:'勉強しているところでした。'},{tag:'〜ておく',q:'旅行の前に何を準備しておきますか？',hint:'ホテルを予約しておきます。'},{tag:'〜てみる',q:'食べてみたい、行ってみたい、やってみたいことは？',hint:'北海道に行ってみたいです。'},{tag:'〜まま',q:'最近、何かそのままにしておいたことはありますか？',hint:'窓を開けたまま寝てしまいました。'},{tag:'potential form',q:'日本語の勉強で、何ができるようになりましたか？',hint:'ひらがなが読めるようになりました。'},{tag:'季節・天気',q:'好きな季節はいつですか？その理由を教えてください。',hint:'Use: 風、海、山、暑い、涼しい'},{tag:'フリートーク',q:'みんなの日本語の中で一番むずかしかった文法は何ですか？',hint:'Give an example sentence.'}];
 function renderSpeaking(){document.getElementById('speaking-body').innerHTML=SPEAKING_Q.map((q,i)=>'<div class="sp-card"><div style="font-size:11px;color:var(--ink3);margin-bottom:4px">質問 '+(i+1)+' / '+SPEAKING_Q.length+'</div><div class="sp-tag">'+q.tag+'</div><div class="sp-q">'+q.q+'</div><button class="sp-hint-btn" onclick="this.nextElementSibling.style.display=\'block\';this.style.display=\'none\'">💡 ヒントを見る</button><div class="sp-hint">例: '+q.hint+'</div></div>').join('')}
-function showView(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0)}
-async function init(){document.getElementById('fc-due-label').textContent='Loading...';await loadData();renderDash();renderSpeaking()}
-init();
 
-// ── HIDDEN ADMIN BUTTON (long press streak pill 3 seconds) ──
+// ── UTILS ─────────────────────────────────────────────
+function showView(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0)}
+
+// ── HIDDEN ADMIN (long press streak pill 3s) ──────────
 let lpTimer=null;
-let lpStartTime=0;
 function lpStart(e){
-  lpStartTime=Date.now();
-  const ring=document.getElementById('lp-ring');
-  // Position ring near the streak pill
-  const pill=document.getElementById('streak-pill');
-  const rect=pill.getBoundingClientRect();
-  ring.style.left=(rect.left+rect.width/2)+'px';
-  ring.style.top=(rect.top+rect.height/2)+'px';
-  ring.style.display='block';
-  // Reset animation
-  ring.style.animation='none';
-  ring.offsetHeight; // reflow
-  ring.style.animation='lpGrow 3s linear forwards';
+  const ring=document.getElementById('streak-pill');
   lpTimer=setTimeout(()=>{
-    ring.style.display='none';
     const toast=document.getElementById('admin-toast');
     toast.classList.add('show');
     setTimeout(()=>{toast.classList.remove('show');window.location.href='/admin.html'},800);
   },3000);
 }
-function lpEnd(){
-  if(lpTimer){clearTimeout(lpTimer);lpTimer=null}
-  const ring=document.getElementById('lp-ring');
-  ring.style.display='none';
-  ring.style.animation='none';
+function lpEnd(){if(lpTimer){clearTimeout(lpTimer);lpTimer=null}}
+
+// ── INIT ──────────────────────────────────────────────
+async function init(){
+  document.getElementById('fc-due-label').textContent='Loading...';
+  await loadData();
+  renderDash();
+  renderSpeaking();
 }
+init();
 </script>
-  <div style="text-align: center; padding: 40px 0 20px 0;">
-  <a href="/admin.html" style="text-decoration: none; opacity: 0.15; font-size: 14px; transition: opacity 0.3s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.15'">🌸</a>
+
+<div style="text-align:center;padding:40px 0 20px 0">
+  <a href="/admin.html" style="text-decoration:none;opacity:.15;font-size:14px;transition:opacity .3s" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.15'">🌸</a>
 </div>
 </body>
 </html>
