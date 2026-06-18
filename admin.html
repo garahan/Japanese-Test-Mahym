@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Japanese Test</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f1117;
+  --sidebar: #16181f;
+  --card: #1e2029;
+  --border: #2e3040;
+  --text: #e8e8f0;
+  --text2: #8888aa;
+  --accent: #d44030;
+  --accent2: #e8734a;
+  --green: #2db36e;
+  --blue: #4a90d9;
+  --gold: #e8a030;
+  --r: 8px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; font-size: 14px; }
+
+/* LOGIN */
+#login-screen {
+  position: fixed; inset: 0;
+  background: var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1000;
+}
+.login-box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2.5rem 2rem;
+  width: 100%; max-width: 380px;
+  text-align: center;
+}
+.login-box h1 { font-size: 20px; margin-bottom: 6px; }
+.login-box p { font-size: 13px; color: var(--text2); margin-bottom: 1.5rem; }
+.login-input {
+  width: 100%; padding: 10px 14px;
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: var(--r); color: var(--text);
+  font-size: 14px; margin-bottom: 10px; outline: none;
+}
+.login-input:focus { border-color: var(--accent); }
+.login-btn {
+  width: 100%; padding: 11px;
+  background: var(--accent); color: white;
+  border: none; border-radius: var(--r);
+  font-size: 14px; font-weight: 600;
+  cursor: pointer;
+}
+.login-btn:hover { background: var(--accent2); }
+.login-error { color: var(--accent); font-size: 13px; margin-top: 8px; min-height: 20px; }
+
+/* LAYOUT */
+#app { display: none; }
+.layout { display: flex; min-height: 100vh; }
+.sidebar {
+  width: 220px; background: var(--sidebar);
+  border-right: 1px solid var(--border);
+  padding: 1.5rem 0;
+  flex-shrink: 0;
+  position: sticky; top: 0; height: 100vh;
+  overflow-y: auto;
+}
+.sidebar-logo {
+  padding: 0 1.25rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1rem;
+}
+.sidebar-logo h2 { font-size: 15px; font-weight: 700; }
+.sidebar-logo p { font-size: 12px; color: var(--text2); margin-top: 2px; }
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 1.25rem;
+  font-size: 13px; font-weight: 500;
+  color: var(--text2);
+  cursor: pointer;
+  border-left: 3px solid transparent;
+  transition: all .15s;
+}
+.nav-item:hover { color: var(--text); background: rgba(255,255,255,.03); }
+.nav-item.active { color: var(--text); border-left-color: var(--accent); background: rgba(212,64,48,.08); }
+.nav-icon { font-size: 16px; width: 20px; text-align: center; }
+.main { flex: 1; padding: 2rem; overflow-x: auto; }
+.page { display: none; }
+.page.active { display: block; }
+.page-title {
+  font-size: 20px; font-weight: 700;
+  margin-bottom: 4px;
+}
+.page-sub { font-size: 13px; color: var(--text2); margin-bottom: 1.5rem; }
+
+/* STATS ROW */
+.stats-row { display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.stat-box {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 1rem 1.25rem;
+  min-width: 120px;
+}
+.stat-val { font-size: 26px; font-weight: 700; }
+.stat-lbl { font-size: 12px; color: var(--text2); margin-top: 2px; }
+
+/* TOOLBAR */
+.toolbar {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 1rem; flex-wrap: wrap;
+}
+.toolbar-search {
+  flex: 1; min-width: 200px;
+  padding: 8px 12px;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--r); color: var(--text);
+  font-size: 13px; outline: none;
+}
+.toolbar-search:focus { border-color: var(--accent); }
+.toolbar-select {
+  padding: 8px 12px;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--r); color: var(--text);
+  font-size: 13px; outline: none; cursor: pointer;
+}
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 16px; border-radius: var(--r);
+  font-size: 13px; font-weight: 500;
+  cursor: pointer; border: none; transition: all .15s;
+  white-space: nowrap;
+}
+.btn-primary { background: var(--accent); color: white; }
+.btn-primary:hover { background: var(--accent2); }
+.btn-ghost { background: var(--card); color: var(--text); border: 1px solid var(--border); }
+.btn-ghost:hover { background: var(--border); }
+.btn-danger { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+.btn-danger:hover { background: var(--accent); color: white; }
+.btn-sm { padding: 5px 10px; font-size: 12px; }
+.btn-success { background: var(--green); color: white; }
+.btn-success:hover { opacity: .85; }
+
+/* TABLE */
+.table-wrap { overflow-x: auto; border-radius: var(--r); border: 1px solid var(--border); }
+table { width: 100%; border-collapse: collapse; }
+th {
+  text-align: left; padding: 10px 14px;
+  font-size: 11px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .06em;
+  color: var(--text2);
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+td {
+  padding: 10px 14px;
+  font-size: 13px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+  vertical-align: middle;
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(255,255,255,.02); }
+.td-actions { display: flex; gap: 6px; }
+.badge {
+  display: inline-block; font-size: 11px; font-weight: 600;
+  padding: 2px 8px; border-radius: 20px;
+}
+.badge-kanji { background: rgba(212,64,48,.2); color: #ff8870; }
+.badge-vocab { background: rgba(74,144,217,.2); color: #7ab4e8; }
+.badge-grammar { background: rgba(45,179,110,.2); color: #5ee09a; }
+.badge-easy { background: rgba(45,179,110,.15); color: var(--green); }
+.badge-medium { background: rgba(232,160,48,.15); color: var(--gold); }
+.badge-hard { background: rgba(212,64,48,.15); color: var(--accent); }
+.badge-challenge { background: rgba(232,160,48,.3); color: var(--gold); }
+.td-sentence { max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: 'Noto Sans JP', sans-serif; }
+
+/* MODAL */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.7);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 500; padding: 1rem;
+  display: none;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  width: 100%; max-width: 620px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 1.75rem;
+}
+.modal-title { font-size: 16px; font-weight: 700; margin-bottom: 1.25rem; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-group { display: flex; flex-direction: column; gap: 5px; }
+.form-group.full { grid-column: 1 / -1; }
+.form-label { font-size: 11px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: .06em; }
+.form-input, .form-select, .form-textarea {
+  padding: 8px 12px;
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: var(--r); color: var(--text);
+  font-size: 13px; outline: none;
+  font-family: 'Inter', sans-serif;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--accent); }
+.form-textarea { resize: vertical; min-height: 60px; }
+.options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.option-row { display: flex; align-items: center; gap: 6px; }
+.option-radio { accent-color: var(--green); width: 16px; height: 16px; cursor: pointer; }
+.modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 1.25rem; border-top: 1px solid var(--border); padding-top: 1.25rem; }
+.form-note { font-size: 12px; color: var(--text2); margin-top: 4px; }
+
+/* FLASHCARD PREVIEW */
+.fc-preview {
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 12px; padding: 1.5rem;
+  text-align: center; margin-bottom: 1rem;
+}
+.fc-front { font-size: 36px; font-weight: 700; margin-bottom: 8px; }
+.fc-reading { font-size: 16px; color: var(--text2); margin-bottom: 4px; }
+.fc-meaning { font-size: 14px; color: var(--accent2); }
+.fc-example { font-size: 13px; color: var(--text2); margin-top: 10px; font-style: italic; }
+
+/* TOAST */
+.toast {
+  position: fixed; bottom: 1.5rem; right: 1.5rem;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 12px 18px;
+  font-size: 13px; font-weight: 500;
+  z-index: 999; display: none;
+  animation: slideUp .2s ease;
+}
+.toast.show { display: block; }
+.toast.ok { border-left: 3px solid var(--green); }
+.toast.err { border-left: 3px solid var(--accent); }
+@keyframes slideUp { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform: translateY(0); } }
+
+/* LOADING */
+.loading { text-align: center; padding: 3rem; color: var(--text2); }
+.empty { text-align: center; padding: 3rem; color: var(--text2); }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <h1>🔐 Admin Panel</h1>
+    <p>Japanese Test — Content Manager</p>
+    <input class="login-input" id="pw-input" type="password" placeholder="Enter admin password" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">Sign In</button>
+    <div class="login-error" id="login-error"></div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-logo">
+      <h2>🌸 Admin Panel</h2>
+      <p>Japanese Test Manager</p>
+    </div>
+    <div class="nav-item active" onclick="showPage('questions',this)">
+      <span class="nav-icon">❓</span> Questions
+    </div>
+    <div class="nav-item" onclick="showPage('flashcards',this)">
+      <span class="nav-icon">🃏</span> Flashcards
+    </div>
+    <div class="nav-item" onclick="showPage('lessons',this)">
+      <span class="nav-icon">📚</span> Lessons
+    </div>
+    <div class="nav-item" style="margin-top:auto;border-top:1px solid var(--border);padding-top:10px" onclick="doLogout()">
+      <span class="nav-icon">🚪</span> Logout
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- QUESTIONS PAGE -->
+    <div class="page active" id="page-questions">
+      <div class="page-title">Questions</div>
+      <div class="page-sub">Manage all quiz questions</div>
+      <div class="stats-row" id="q-stats"></div>
+      <div class="toolbar">
+        <input class="toolbar-search" id="q-search" placeholder="Search questions..." oninput="filterQuestions()">
+        <select class="toolbar-select" id="q-filter-type" onchange="filterQuestions()">
+          <option value="">All types</option>
+          <option value="kanji">漢字 Kanji</option>
+          <option value="vocab">語彙 Vocab</option>
+          <option value="grammar">文法 Grammar</option>
+        </select>
+        <select class="toolbar-select" id="q-filter-diff" onchange="filterQuestions()">
+          <option value="">All difficulties</option>
+          <option value="easy">Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
+          <option value="challenge">Challenge</option>
+        </select>
+        <button class="btn btn-primary" onclick="openQModal()">+ Add Question</button>
+      </div>
+      <div id="q-table-wrap" class="loading">Loading questions...</div>
+    </div>
+
+    <!-- FLASHCARDS PAGE -->
+    <div class="page" id="page-flashcards">
+      <div class="page-title">Flashcards</div>
+      <div class="page-sub">Manage vocabulary and grammar flashcards</div>
+      <div class="stats-row" id="fc-stats"></div>
+      <div class="toolbar">
+        <input class="toolbar-search" id="fc-search" placeholder="Search flashcards..." oninput="filterFlashcards()">
+        <select class="toolbar-select" id="fc-filter-type" onchange="filterFlashcards()">
+          <option value="">All types</option>
+          <option value="vocab">Vocabulary</option>
+          <option value="grammar">Grammar</option>
+          <option value="kanji">Kanji</option>
+        </select>
+        <select class="toolbar-select" id="fc-filter-lesson" onchange="filterFlashcards()">
+          <option value="">All lessons</option>
+          <option value="26">Lesson 26</option>
+          <option value="27">Lesson 27</option>
+          <option value="28">Lesson 28</option>
+        </select>
+        <button class="btn btn-primary" onclick="openFCModal()">+ Add Flashcard</button>
+      </div>
+      <div id="fc-table-wrap" class="loading">Loading flashcards...</div>
+    </div>
+
+    <!-- LESSONS PAGE -->
+    <div class="page" id="page-lessons">
+      <div class="page-title">Lessons</div>
+      <div class="page-sub">Overview of all lessons</div>
+      <div id="lessons-content" class="loading">Loading...</div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- QUESTION MODAL -->
+<div class="modal-overlay" id="q-modal">
+  <div class="modal">
+    <div class="modal-title" id="q-modal-title">Add Question</div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label">Type</label>
+        <select class="form-select" id="qf-type">
+          <option value="kanji">漢字 Kanji</option>
+          <option value="vocab">語彙 Vocab</option>
+          <option value="grammar">文法 Grammar</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Difficulty</label>
+        <select class="form-select" id="qf-difficulty">
+          <option value="easy">Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
+          <option value="challenge">⭐ Challenge</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Lesson Number</label>
+        <input class="form-input" id="qf-lesson" type="number" placeholder="26" min="1" max="50">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Grammar Point (gp)</label>
+        <input class="form-input" id="qf-gp" placeholder="e.g. 〜てしまう">
+      </div>
+      <div class="form-group full">
+        <label class="form-label">Sentence (Japanese context)</label>
+        <input class="form-input" id="qf-sentence" placeholder="Full sentence in Japanese">
+      </div>
+      <div class="form-group full">
+        <label class="form-label">Question / Ask</label>
+        <input class="form-input" id="qf-ask" placeholder="e.g. 「旅行」の読み方は？">
+      </div>
+      <div class="form-group full">
+        <label class="form-label">Options (4 choices) — click the circle to mark correct answer</label>
+        <div class="options-grid">
+          <div class="option-row"><input type="radio" name="correct" class="option-radio" value="0" id="opt-r0"><input class="form-input" id="qf-opt0" placeholder="Option 1"></div>
+          <div class="option-row"><input type="radio" name="correct" class="option-radio" value="1" id="opt-r1"><input class="form-input" id="qf-opt1" placeholder="Option 2"></div>
+          <div class="option-row"><input type="radio" name="correct" class="option-radio" value="2" id="opt-r2"><input class="form-input" id="qf-opt2" placeholder="Option 3"></div>
+          <div class="option-row"><input type="radio" name="correct" class="option-radio" value="3" id="opt-r3"><input class="form-input" id="qf-opt3" placeholder="Option 4"></div>
+        </div>
+        <div class="form-note">Click the circle (○) next to the correct answer</div>
+      </div>
+      <div class="form-group full">
+        <label class="form-label">Explanation (shown after answering)</label>
+        <input class="form-input" id="qf-exp" placeholder="e.g. 旅行 = りょこう (travel)">
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('q-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveQuestion()">Save Question</button>
+    </div>
+  </div>
+</div>
+
+<!-- FLASHCARD MODAL -->
+<div class="modal-overlay" id="fc-modal">
+  <div class="modal">
+    <div class="modal-title" id="fc-modal-title">Add Flashcard</div>
+    <div id="fc-preview-wrap"></div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label">Type</label>
+        <select class="form-select" id="fcf-type">
+          <option value="vocab">Vocabulary</option>
+          <option value="grammar">Grammar</option>
+          <option value="kanji">Kanji</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Lesson Number</label>
+        <input class="form-input" id="fcf-lesson" type="number" placeholder="26" min="1" max="50">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Front (Kanji / Grammar pattern)</label>
+        <input class="form-input" id="fcf-front" placeholder="e.g. 旅行 or 〜てしまう" oninput="updateFCPreview()">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Reading (Hiragana)</label>
+        <input class="form-input" id="fcf-reading" placeholder="e.g. りょこう" oninput="updateFCPreview()">
+      </div>
+      <div class="form-group full">
+        <label class="form-label">Meaning (English)</label>
+        <input class="form-input" id="fcf-meaning" placeholder="e.g. travel, trip" oninput="updateFCPreview()">
+      </div>
+      <div class="form-group full">
+        <label class="form-label">Example Sentence (Japanese)</label>
+        <input class="form-input" id="fcf-example" placeholder="e.g. 旅行に行きたいです。">
+      </div>
+      <div class="form-group full">
+        <label class="form-label">Example Reading (Hiragana)</label>
+        <input class="form-input" id="fcf-exreading" placeholder="e.g. りょこうにいきたいです。">
+      </div>
+      <div class="form-group full">
+        <label class="form-label">Example Meaning (English)</label>
+        <input class="form-input" id="fcf-exmeaning" placeholder="e.g. I want to go on a trip.">
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('fc-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveFlashcard()">Save Flashcard</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+let adminPassword = '';
+let allQuestions = [];
+let allFlashcards = [];
+let editingQId = null;
+let editingFCId = null;
+
+// ── AUTH ─────────────────────────────────────────────────
+async function doLogin() {
+  const pw = document.getElementById('pw-input').value;
+  const errEl = document.getElementById('login-error');
+  if (!pw) { errEl.textContent = 'Please enter a password'; return; }
+  errEl.textContent = 'Checking...';
+  try {
+    const res = await fetch('/api/admin-auth', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: pw }),
+    });
+    const data = await res.json();
+    if (data.ok) {
+      adminPassword = pw;
+      sessionStorage.setItem('admin_pw', pw);
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('app').style.display = 'block';
+      loadAll();
+    } else {
+      errEl.textContent = '✗ Wrong password';
+    }
+  } catch(e) {
+    errEl.textContent = '✗ Connection error';
+  }
+}
+
+function doLogout() {
+  sessionStorage.removeItem('admin_pw');
+  location.reload();
+}
+
+// Auto-login from session
+window.addEventListener('load', () => {
+  const saved = sessionStorage.getItem('admin_pw');
+  if (saved) {
+    document.getElementById('pw-input').value = saved;
+    adminPassword = saved;
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    loadAll();
+  }
+  document.getElementById('pw-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') doLogin();
+  });
+});
+
+// ── DATA LOADING ─────────────────────────────────────────
+async function loadAll() {
+  await Promise.all([loadQuestions(), loadFlashcards(), loadLessons()]);
+}
+
+async function apiFetch(url) {
+  const res = await fetch(url);
+  const data = await res.json();
+  return data.data || [];
+}
+
+async function apiWrite(type, action, item, items) {
+  const body = items ? { type, action, items } : { type, action, item };
+  const res = await fetch('/api/content', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'x-admin-password': adminPassword },
+    body: JSON.stringify(body),
+  });
+  return res.json();
+}
+
+async function loadQuestions() {
+  document.getElementById('q-table-wrap').innerHTML = '<div class="loading">Loading...</div>';
+  allQuestions = await apiFetch('/api/content?type=questions');
+  renderQStats();
+  renderQTable(allQuestions);
+}
+
+async function loadFlashcards() {
+  document.getElementById('fc-table-wrap').innerHTML = '<div class="loading">Loading...</div>';
+  allFlashcards = await apiFetch('/api/content?type=flashcards');
+  renderFCStats();
+  renderFCTable(allFlashcards);
+}
+
+async function loadLessons() {
+  const lessons = await apiFetch('/api/content?type=lessons');
+  const el = document.getElementById('lessons-content');
+  if (!lessons.length) { el.innerHTML = '<div class="empty">No lessons yet.</div>'; return; }
+  el.innerHTML = `<div class="table-wrap"><table>
+    <thead><tr><th>Number</th><th>Title</th><th>Questions</th><th>Flashcards</th></tr></thead>
+    <tbody>${lessons.map(l => {
+      const qCount = allQuestions.filter(q => q.lesson == l.number).length;
+      const fCount = allFlashcards.filter(f => f.lesson == l.number).length;
+      return `<tr>
+        <td><strong>Lesson ${l.number}</strong></td>
+        <td>${l.title||'—'}</td>
+        <td>${qCount}</td>
+        <td>${fCount}</td>
+      </tr>`;
+    }).join('')}</tbody>
+  </table></div>`;
+}
+
+// ── QUESTIONS RENDER ─────────────────────────────────────
+function renderQStats() {
+  const kanji = allQuestions.filter(q => q.type==='kanji').length;
+  const vocab = allQuestions.filter(q => q.type==='vocab').length;
+  const grammar = allQuestions.filter(q => q.type==='grammar').length;
+  document.getElementById('q-stats').innerHTML = `
+    <div class="stat-box"><div class="stat-val">${allQuestions.length}</div><div class="stat-lbl">Total</div></div>
+    <div class="stat-box"><div class="stat-val" style="color:#ff8870">${kanji}</div><div class="stat-lbl">漢字 Kanji</div></div>
+    <div class="stat-box"><div class="stat-val" style="color:#7ab4e8">${vocab}</div><div class="stat-lbl">語彙 Vocab</div></div>
+    <div class="stat-box"><div class="stat-val" style="color:#5ee09a">${grammar}</div><div class="stat-lbl">文法 Grammar</div></div>`;
+}
+
+function renderQTable(qs) {
+  if (!qs.length) {
+    document.getElementById('q-table-wrap').innerHTML = '<div class="empty">No questions found. Add some or run the seed endpoint.</div>';
+    return;
+  }
+  document.getElementById('q-table-wrap').innerHTML = `
+    <div class="table-wrap"><table>
+      <thead><tr><th>ID</th><th>Type</th><th>Diff</th><th>L</th><th>Sentence</th><th>Ask</th><th>Actions</th></tr></thead>
+      <tbody>${qs.map(q => `
+        <tr>
+          <td style="color:var(--text2);font-size:12px">${q.id}</td>
+          <td><span class="badge badge-${q.type}">${q.category||q.type}</span></td>
+          <td><span class="badge badge-${q.difficulty}">${q.difficulty}</span></td>
+          <td style="color:var(--text2)">${q.lesson||'—'}</td>
+          <td class="td-sentence">${q.s||'—'}</td>
+          <td class="td-sentence">${q.a||'—'}</td>
+          <td><div class="td-actions">
+            <button class="btn btn-ghost btn-sm" onclick='editQuestion(${JSON.stringify(q).replace(/'/g,"&#39;")})'>Edit</button>
+            <button class="btn btn-danger btn-sm" onclick="deleteQuestion('${q.id}')">Delete</button>
+          </div></td>
+        </tr>`).join('')}
+      </tbody>
+    </table></div>`;
+}
+
+function filterQuestions() {
+  const search = document.getElementById('q-search').value.toLowerCase();
+  const type = document.getElementById('q-filter-type').value;
+  const diff = document.getElementById('q-filter-diff').value;
+  const filtered = allQuestions.filter(q => {
+    const matchSearch = !search || (q.s||'').toLowerCase().includes(search) || (q.a||'').toLowerCase().includes(search) || (q.gp||'').toLowerCase().includes(search);
+    const matchType = !type || q.type === type;
+    const matchDiff = !diff || q.difficulty === diff;
+    return matchSearch && matchType && matchDiff;
+  });
+  renderQTable(filtered);
+}
+
+// ── FLASHCARDS RENDER ────────────────────────────────────
+function renderFCStats() {
+  const vocab = allFlashcards.filter(f => f.type==='vocab').length;
+  const grammar = allFlashcards.filter(f => f.type==='grammar').length;
+  document.getElementById('fc-stats').innerHTML = `
+    <div class="stat-box"><div class="stat-val">${allFlashcards.length}</div><div class="stat-lbl">Total</div></div>
+    <div class="stat-box"><div class="stat-val" style="color:#7ab4e8">${vocab}</div><div class="stat-lbl">Vocabulary</div></div>
+    <div class="stat-box"><div class="stat-val" style="color:#5ee09a">${grammar}</div><div class="stat-lbl">Grammar</div></div>`;
+}
+
+function renderFCTable(fcs) {
+  if (!fcs.length) {
+    document.getElementById('fc-table-wrap').innerHTML = '<div class="empty">No flashcards found.</div>';
+    return;
+  }
+  document.getElementById('fc-table-wrap').innerHTML = `
+    <div class="table-wrap"><table>
+      <thead><tr><th>ID</th><th>Front</th><th>Reading</th><th>Meaning</th><th>Type</th><th>L</th><th>Actions</th></tr></thead>
+      <tbody>${fcs.map(f => `
+        <tr>
+          <td style="color:var(--text2);font-size:12px">${f.id}</td>
+          <td style="font-size:18px;font-family:'Noto Sans JP'">${f.front||'—'}</td>
+          <td style="color:var(--text2)">${f.reading||'—'}</td>
+          <td>${f.meaning||'—'}</td>
+          <td><span class="badge badge-${f.type}">${f.type||'—'}</span></td>
+          <td style="color:var(--text2)">${f.lesson||'—'}</td>
+          <td><div class="td-actions">
+            <button class="btn btn-ghost btn-sm" onclick='editFlashcard(${JSON.stringify(f).replace(/'/g,"&#39;")})'>Edit</button>
+            <button class="btn btn-danger btn-sm" onclick="deleteFlashcard('${f.id}')">Delete</button>
+          </div></td>
+        </tr>`).join('')}
+      </tbody>
+    </table></div>`;
+}
+
+function filterFlashcards() {
+  const search = document.getElementById('fc-search').value.toLowerCase();
+  const type = document.getElementById('fc-filter-type').value;
+  const lesson = document.getElementById('fc-filter-lesson').value;
+  const filtered = allFlashcards.filter(f => {
+    const matchSearch = !search || (f.front||'').toLowerCase().includes(search) || (f.reading||'').toLowerCase().includes(search) || (f.meaning||'').toLowerCase().includes(search);
+    const matchType = !type || f.type === type;
+    const matchLesson = !lesson || String(f.lesson) === lesson;
+    return matchSearch && matchType && matchLesson;
+  });
+  renderFCTable(filtered);
+}
+
+// ── QUESTION MODAL ───────────────────────────────────────
+function openQModal(q) {
+  editingQId = null;
+  document.getElementById('q-modal-title').textContent = 'Add Question';
+  document.getElementById('qf-type').value = 'kanji';
+  document.getElementById('qf-difficulty').value = 'easy';
+  document.getElementById('qf-lesson').value = '26';
+  document.getElementById('qf-gp').value = '';
+  document.getElementById('qf-sentence').value = '';
+  document.getElementById('qf-ask').value = '';
+  document.getElementById('qf-opt0').value = '';
+  document.getElementById('qf-opt1').value = '';
+  document.getElementById('qf-opt2').value = '';
+  document.getElementById('qf-opt3').value = '';
+  document.getElementById('qf-exp').value = '';
+  document.getElementById('opt-r0').checked = true;
+  document.getElementById('q-modal').classList.add('open');
+}
+
+function editQuestion(q) {
+  editingQId = q.id;
+  document.getElementById('q-modal-title').textContent = 'Edit Question';
+  document.getElementById('qf-type').value = q.type || 'kanji';
+  document.getElementById('qf-difficulty').value = q.difficulty || 'easy';
+  document.getElementById('qf-lesson').value = q.lesson || 26;
+  document.getElementById('qf-gp').value = q.gp || '';
+  document.getElementById('qf-sentence').value = q.s || '';
+  document.getElementById('qf-ask').value = q.a || '';
+  const opts = q.o || ['','','',''];
+  document.getElementById('qf-opt0').value = opts[0]||'';
+  document.getElementById('qf-opt1').value = opts[1]||'';
+  document.getElementById('qf-opt2').value = opts[2]||'';
+  document.getElementById('qf-opt3').value = opts[3]||'';
+  document.getElementById('qf-exp').value = q.exp || '';
+  const ri = document.getElementById('opt-r'+(q.c||0));
+  if (ri) ri.checked = true;
+  document.getElementById('q-modal').classList.add('open');
+}
+
+async function saveQuestion() {
+  const type = document.getElementById('qf-type').value;
+  const catMap = {kanji:'漢字',vocab:'語彙',grammar:'文法'};
+  const correctIdx = parseInt(document.querySelector('input[name="correct"]:checked')?.value || '0');
+  const item = {
+    id: editingQId || null,
+    type,
+    category: catMap[type],
+    difficulty: document.getElementById('qf-difficulty').value,
+    lesson: parseInt(document.getElementById('qf-lesson').value) || 26,
+    gp: document.getElementById('qf-gp').value.trim(),
+    s: document.getElementById('qf-sentence').value.trim(),
+    a: document.getElementById('qf-ask').value.trim(),
+    o: [
+      document.getElementById('qf-opt0').value.trim(),
+      document.getElementById('qf-opt1').value.trim(),
+      document.getElementById('qf-opt2').value.trim(),
+      document.getElementById('qf-opt3').value.trim(),
+    ],
+    c: correctIdx,
+    exp: document.getElementById('qf-exp').value.trim(),
+  };
+  if (!item.s || !item.a || item.o.some(o => !o)) {
+    showToast('Please fill in sentence, question, and all 4 options', 'err'); return;
+  }
+  const action = editingQId ? 'update' : 'add';
+  const result = await apiWrite('questions', action, item);
+  if (result.ok) {
+    showToast(editingQId ? 'Question updated!' : 'Question added!', 'ok');
+    closeModal('q-modal');
+    loadQuestions();
+  } else {
+    showToast('Error: ' + result.error, 'err');
+  }
+}
+
+async function deleteQuestion(id) {
+  if (!confirm('Delete this question?')) return;
+  const result = await apiWrite('questions', 'delete', { id });
+  if (result.ok) { showToast('Deleted', 'ok'); loadQuestions(); }
+  else showToast('Error: ' + result.error, 'err');
+}
+
+// ── FLASHCARD MODAL ──────────────────────────────────────
+function openFCModal() {
+  editingFCId = null;
+  document.getElementById('fc-modal-title').textContent = 'Add Flashcard';
+  ['fcf-type','fcf-lesson','fcf-front','fcf-reading','fcf-meaning','fcf-example','fcf-exreading','fcf-exmeaning'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el.tagName === 'SELECT') el.value = 'vocab';
+    else if (id === 'fcf-lesson') el.value = '26';
+    else el.value = '';
+  });
+  updateFCPreview();
+  document.getElementById('fc-modal').classList.add('open');
+}
+
+function editFlashcard(f) {
+  editingFCId = f.id;
+  document.getElementById('fc-modal-title').textContent = 'Edit Flashcard';
+  document.getElementById('fcf-type').value = f.type || 'vocab';
+  document.getElementById('fcf-lesson').value = f.lesson || 26;
+  document.getElementById('fcf-front').value = f.front || '';
+  document.getElementById('fcf-reading').value = f.reading || '';
+  document.getElementById('fcf-meaning').value = f.meaning || '';
+  document.getElementById('fcf-example').value = f.example || '';
+  document.getElementById('fcf-exreading').value = f.exampleReading || '';
+  document.getElementById('fcf-exmeaning').value = f.exampleMeaning || '';
+  updateFCPreview();
+  document.getElementById('fc-modal').classList.add('open');
+}
+
+function updateFCPreview() {
+  const front = document.getElementById('fcf-front')?.value || '—';
+  const reading = document.getElementById('fcf-reading')?.value || '';
+  const meaning = document.getElementById('fcf-meaning')?.value || '';
+  document.getElementById('fc-preview-wrap').innerHTML = `
+    <div class="fc-preview">
+      <div class="fc-front">${front}</div>
+      ${reading ? `<div class="fc-reading">${reading}</div>` : ''}
+      ${meaning ? `<div class="fc-meaning">${meaning}</div>` : ''}
+    </div>`;
+}
+
+async function saveFlashcard() {
+  const item = {
+    id: editingFCId || null,
+    type: document.getElementById('fcf-type').value,
+    lesson: parseInt(document.getElementById('fcf-lesson').value) || 26,
+    front: document.getElementById('fcf-front').value.trim(),
+    reading: document.getElementById('fcf-reading').value.trim(),
+    meaning: document.getElementById('fcf-meaning').value.trim(),
+    example: document.getElementById('fcf-example').value.trim(),
+    exampleReading: document.getElementById('fcf-exreading').value.trim(),
+    exampleMeaning: document.getElementById('fcf-exmeaning').value.trim(),
+  };
+  if (!item.front || !item.reading || !item.meaning) {
+    showToast('Please fill in front, reading, and meaning', 'err'); return;
+  }
+  const action = editingFCId ? 'update' : 'add';
+  const result = await apiWrite('flashcards', action, item);
+  if (result.ok) {
+    showToast(editingFCId ? 'Flashcard updated!' : 'Flashcard added!', 'ok');
+    closeModal('fc-modal');
+    loadFlashcards();
+  } else {
+    showToast('Error: ' + result.error, 'err');
+  }
+}
+
+async function deleteFlashcard(id) {
+  if (!confirm('Delete this flashcard?')) return;
+  const result = await apiWrite('flashcards', 'delete', { id });
+  if (result.ok) { showToast('Deleted', 'ok'); loadFlashcards(); }
+  else showToast('Error: ' + result.error, 'err');
+}
+
+// ── UTILS ─────────────────────────────────────────────────
+function showPage(name, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  el.classList.add('active');
+  if (name === 'lessons') loadLessons();
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+// Close modal on overlay click
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) overlay.classList.remove('open');
+  });
+});
+
+function showToast(msg, type='ok') {
+  const t = document.getElementById('toast');
+  t.textContent = (type==='ok'?'✓ ':'✗ ') + msg;
+  t.className = 'toast show ' + type;
+  setTimeout(() => t.className = 'toast', 3000);
+}
+</script>
+</body>
+</html>
