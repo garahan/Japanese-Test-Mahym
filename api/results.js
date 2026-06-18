@@ -1,48 +1,63 @@
 export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ ok: false, error: 'Method not allowed' });
-  }
+  // Allow CORS for local testing
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method !== 'POST') return res.status(405).json({ ok: false, error: 'Method not allowed' });
 
   const TOKEN = process.env.TELEGRAM_TOKEN;
   const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
   if (!TOKEN || !CHAT_ID) {
-    return res.status(500).json({ ok: false, error: 'Telegram credentials not configured' });
+    return res.status(500).json({ ok: false, error: 'Telegram env vars not set in Vercel' });
   }
 
   const {
     name, pct, correct, total, timeStr, dateStr,
-    kanjiScore, vocabScore,
-    mistakeList, slowList,
-    mistakeCount, slowCount
+    modeLabel, grade,
+    catLines, mistakeLines, slowLines, weakLines,
+    streakCount, mistakeCount, slowCount,
   } = req.body;
 
-  const grade = pct >= 90 ? 'S' : pct >= 80 ? 'A' : pct >= 70 ? 'B' : pct >= 60 ? 'C' : 'D';
-  const emoji = pct >= 80 ? '🌟' : pct >= 60 ? '👍' : '💪';
+  const gradeEmoji = pct >= 90 ? '🏆' : pct >= 80 ? '🌟' : pct >= 70 ? '👍' : pct >= 60 ? '📖' : '💪';
+  const streakEmoji = streakCount >= 30 ? '🔥🔥🔥' : streakCount >= 7 ? '🔥🔥' : streakCount >= 1 ? '🔥' : '';
 
   const message = `
-${emoji} *日本語テスト結果 — ${name}*
-📅 ${dateStr}
+${gradeEmoji} *日本語テスト結果*
+👤 ${name}　📅 ${dateStr}
+${streakEmoji} Streak: ${streakCount} day${streakCount !== 1 ? 's' : ''}
 
-━━━━━━━━━━━━━━
-📊 *スコア (Score)*
-Total: *${correct}/${total} (${pct}%)* — Grade ${grade}
-漢字:  ${kanjiScore}
-語彙:  ${vocabScore}
-⏱ Time: ${timeStr}
+━━━━━━━━━━━━━━━━━
+📊 *スコア — Score*
+Total: *${correct}/${total} = ${pct}%* (Grade ${grade})
+Mode: ${modeLabel} · Time: ${timeStr}
 
-━━━━━━━━━━━━━━
-${mistakeCount > 0 ? `❌ *間違え (Mistakes) — ${mistakeCount} questions*\n${mistakeList}` : '✅ *間違えなし！No mistakes!*'}
+${catLines}
 
-━━━━━━━━━━━━━━
-${slowCount > 0 ? `🐢 *時間がかかった問題 — ${slowCount} slow questions*\n${slowList}` : '⚡ *All answers fast!*'}
+━━━━━━━━━━━━━━━━━
+${mistakeCount > 0
+  ? `❌ *間違え — Mistakes (${mistakeCount})*\n${mistakeLines}`
+  : '✅ *間違えなし！ Perfect score!*'}
 
-━━━━━━━━━━━━━━
-${pct >= 80
-  ? '🎊 Excellent work! Ready for next lessons.'
-  : pct >= 60
-  ? '📖 Good effort. Review the mistakes above.'
-  : '📝 Keep practicing! Focus on the mistakes above.'}
+━━━━━━━━━━━━━━━━━
+${slowCount > 0
+  ? `🐢 *時間がかかった (>30s) — ${slowCount} questions*\n${slowLines}`
+  : '⚡ *全部速い！ All answered quickly!*'}
+
+━━━━━━━━━━━━━━━━━
+📉 *弱いポイント — Weak areas (all-time)*
+${weakLines}
+
+━━━━━━━━━━━━━━━━━
+${pct >= 85
+  ? '🎊 Excellent! Strong performance — push to the next lesson!'
+  : pct >= 70
+  ? '📖 Good work. Review the mistakes above before the next test.'
+  : '📝 Keep practicing! Focus on weak grammar points.'}
+
+_Wrong answers scheduled for review tomorrow via spaced repetition._
 `.trim();
 
   try {
@@ -52,18 +67,18 @@ ${pct >= 80
       body: JSON.stringify({
         chat_id: CHAT_ID,
         text: message,
-        parse_mode: 'Markdown'
-      })
+        parse_mode: 'Markdown',
+      }),
     });
-
-    const tgData = await tgRes.json();
-
-    if (tgData.ok) {
+    const data = await tgRes.json();
+    if (data.ok) {
       return res.status(200).json({ ok: true });
     } else {
-      return res.status(500).json({ ok: false, error: tgData.description || 'Telegram error' });
+      console.error('Telegram error:', data);
+      return res.status(500).json({ ok: false, error: data.description || 'Telegram API error' });
     }
   } catch (err) {
+    console.error('Fetch error:', err);
     return res.status(500).json({ ok: false, error: err.message });
   }
 }
