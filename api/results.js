@@ -54,8 +54,8 @@ ${weakLines}
 ${pct >= 85
   ? '🎊 Excellent! Strong performance — push to the next lesson!'
   : pct >= 70
-  ? '📖 Good work. Review the mistakes above before the next test.'
-  : '📝 Keep practicing! Focus on weak grammar points.'}
+  ? '📖 Good work Mahym. Review the mistakes above before the next test.'
+  : '📝 Keep practicing, Mahym-chan! Focus on weak grammar points.'}
 
 _Wrong answers scheduled for review tomorrow via spaced repetition._
 `.trim();
