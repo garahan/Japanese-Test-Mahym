@@ -821,7 +821,7 @@ async function handleBulkUpload() {
 
 // ── PROGRESS RESET LOGIC ───────────────────────────────────
 function resetStudentProgress() {
-  const isSure = confirm("⚠️ ARE YOU ABSOLUTELY SURE?\n\nThis will delete all local browser streaks, scores, and memory data. It cannot be undone.");
+  const isSure = confirm("⚠️ ARE YOU SURE?\n\nThis will reset all local streaks.");
   
   if (isSure) {
     localStorage.clear();
