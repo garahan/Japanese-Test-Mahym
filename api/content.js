@@ -1,5 +1,6 @@
 const UPSTASH_URL = process.env.KV_REST_API_URL;
 const UPSTASH_TOKEN = process.env.KV_REST_API_TOKEN;
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 
 async function redis(command, ...args) {
   const body = JSON.stringify([command, ...args]);
@@ -37,7 +38,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    // GET — read data
+    // GET — read data (Publicly accessible for the student dashboard)
     if (req.method === 'GET') {
       const type = req.query.type || 'questions';
       const validTypes = ['questions', 'flashcards', 'lessons'];
@@ -48,8 +49,14 @@ export default async function handler(req, res) {
       return res.status(200).json({ ok: true, data });
     }
 
-    // POST — write data
+    // POST — write data (Strictly protected by Admin Password)
     if (req.method === 'POST') {
+      const providedPassword = req.headers['x-admin-password'];
+      
+      // Security Check
+      if (!ADMIN_PASSWORD || providedPassword !== ADMIN_PASSWORD) {
+        return res.status(401).json({ ok: false, error: 'Unauthorized: Invalid or missing admin password.' });
+      }
 
       const { type, action, item } = req.body;
       const validTypes = ['questions', 'flashcards', 'lessons'];
@@ -60,7 +67,6 @@ export default async function handler(req, res) {
       let items = await redisGet(type) || [];
 
       if (action === 'add') {
-        // Generate ID if missing
         if (!item.id) {
           const prefix = type === 'questions' ? 'q' : type === 'flashcards' ? 'f' : 'l';
           item.id = prefix + Date.now();
@@ -73,14 +79,12 @@ export default async function handler(req, res) {
       } else if (action === 'delete') {
         items = items.filter(i => i.id !== item.id);
       } else if (action === 'bulk_add') {
-        // Add multiple items at once (for seed/import)
         const newItems = req.body.items || [];
         for (const ni of newItems) {
           if (!ni.id) {
             const prefix = type === 'questions' ? 'q' : type === 'flashcards' ? 'f' : 'l';
             ni.id = prefix + Date.now() + Math.random().toString(36).substr(2, 5);
           }
-          // Avoid duplicates by id
           if (!items.find(i => i.id === ni.id)) {
             items.push(ni);
           }
