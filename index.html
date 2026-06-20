@@ -479,26 +479,62 @@ function rateFC(r){ haptic('light'); rateFlashCard(fcState.cards[fcState.current
 // ── UTILS ──
 function showView(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0)}
 
-let lpTimer=null;
-function lpStart(){
-  const ring=document.getElementById('streak-pill');
-  ring.style.transform = 'scale(0.9)';
-  lpTimer=setTimeout(()=>{
-    haptic('heavy');
-    document.getElementById('admin-toast').classList.add('show');
-    setTimeout(()=>{window.location.href='/admin.html'},600);
-  },2000); // 2 second long press
-}
-function lpEnd(){
-  document.getElementById('streak-pill').style.transform = 'scale(1)';
-  if(lpTimer){clearTimeout(lpTimer);lpTimer=null;}
+// ── BLAZING FAST DATA LOADING (Stale-While-Revalidate) ──
+let ALL_QUESTIONS=[], ALL_FLASHCARDS=[], dataLoaded=false;
+
+async function loadData() {
+  // 1. INSTANT LOAD: Grab the last known database from local storage
+  const cachedQs = DB.get('cache_questions');
+  const cachedFCs = DB.get('cache_flashcards');
+  
+  if (cachedQs && cachedFCs && cachedQs.length > 0) {
+    ALL_QUESTIONS = cachedQs;
+    ALL_FLASHCARDS = cachedFCs;
+    dataLoaded = true;
+    renderDash(); // Render immediately so there is zero wait time
+  }
+
+  // 2. BACKGROUND SYNC: Fetch fresh data from the server silently
+  try {
+    const [qR, fR] = await Promise.all([
+      fetch('/api/content?type=questions'),
+      fetch('/api/content?type=flashcards')
+    ]);
+    
+    const freshQs = (await qR.json()).data || []; 
+    const freshFCs = (await fR.json()).data || [];
+    
+    // If the server actually returned data, update the memory and the cache
+    if (freshQs.length > 0) {
+      ALL_QUESTIONS = freshQs;
+      DB.set('cache_questions', freshQs); // Save for next time
+    }
+    if (freshFCs.length > 0) {
+      ALL_FLASHCARDS = freshFCs;
+      DB.set('cache_flashcards', freshFCs); // Save for next time
+    }
+
+    dataLoaded = true;
+    renderDash(); // Silently update the dashboard with the latest counts
+    
+  } catch(e) {
+    console.warn('Background sync failed (Offline mode active):', e);
+    // If she is completely offline, the app will still work using the cached data!
+    dataLoaded = true; 
+  }
 }
 
+// ── INIT ──────────────────────────────────────────────
 async function init(){
-  document.getElementById('fc-due-label').textContent='Loading data...';
-  await loadData();
+  document.getElementById('fc-due-label').textContent = 'Loading...';
+  
+  // Kick off the loading process. It will render instantly if cached.
+  await loadData(); 
+  
+  // Render the initial dashboard state
   renderDash();
 }
+
 init();
 </script>
 
