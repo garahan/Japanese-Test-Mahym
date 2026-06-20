@@ -7,18 +7,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0f1117;
-  --sidebar: #16181f;
-  --card: #1e2029;
-  --border: #2e3040;
-  --text: #e8e8f0;
-  --text2: #8888aa;
-  --accent: #d44030;
-  --accent2: #e8734a;
-  --green: #2db36e;
-  --blue: #4a90d9;
-  --gold: #e8a030;
-  --r: 8px;
+  --bg: #0f1117; --sidebar: #16181f; --card: #1e2029; --border: #2e3040;
+  --text: #e8e8f0; --text2: #8888aa; --accent: #d44030; --accent2: #e8734a;
+  --green: #2db36e; --blue: #4a90d9; --gold: #e8a030; --r: 8px;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; font-size: 14px; }
@@ -26,78 +17,32 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
 /* LAYOUT */
 #app { display: none; }
 .layout { display: flex; min-height: 100vh; }
-.sidebar {
-  width: 220px; background: var(--sidebar);
-  border-right: 1px solid var(--border);
-  padding: 1.5rem 0;
-  flex-shrink: 0;
-  position: sticky; top: 0; height: 100vh;
-  overflow-y: auto;
-}
-.sidebar-logo {
-  padding: 0 1.25rem 1.25rem;
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 1rem;
-}
+.sidebar { width: 220px; background: var(--sidebar); border-right: 1px solid var(--border); padding: 1.5rem 0; flex-shrink: 0; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+.sidebar-logo { padding: 0 1.25rem 1.25rem; border-bottom: 1px solid var(--border); margin-bottom: 1rem; }
 .sidebar-logo h2 { font-size: 15px; font-weight: 700; }
 .sidebar-logo p { font-size: 12px; color: var(--text2); margin-top: 2px; }
-.nav-item {
-  display: flex; align-items: center; gap: 10px;
-  padding: 9px 1.25rem;
-  font-size: 13px; font-weight: 500;
-  color: var(--text2);
-  cursor: pointer;
-  border-left: 3px solid transparent;
-  transition: all .15s;
-}
+.nav-item { display: flex; align-items: center; gap: 10px; padding: 9px 1.25rem; font-size: 13px; font-weight: 500; color: var(--text2); cursor: pointer; border-left: 3px solid transparent; transition: all .15s; }
 .nav-item:hover { color: var(--text); background: rgba(255,255,255,.03); }
 .nav-item.active { color: var(--text); border-left-color: var(--accent); background: rgba(212,64,48,.08); }
 .nav-icon { font-size: 16px; width: 20px; text-align: center; }
 .main { flex: 1; padding: 2rem; overflow-x: auto; }
 .page { display: none; }
 .page.active { display: block; }
-.page-title {
-  font-size: 20px; font-weight: 700;
-  margin-bottom: 4px;
-}
+.page-title { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
 .page-sub { font-size: 13px; color: var(--text2); margin-bottom: 1.5rem; }
 
 /* STATS ROW */
 .stats-row { display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
-.stat-box {
-  background: var(--card); border: 1px solid var(--border);
-  border-radius: var(--r); padding: 1rem 1.25rem;
-  min-width: 120px;
-}
+.stat-box { background: var(--card); border: 1px solid var(--border); border-radius: var(--r); padding: 1rem 1.25rem; min-width: 120px; }
 .stat-val { font-size: 26px; font-weight: 700; }
 .stat-lbl { font-size: 12px; color: var(--text2); margin-top: 2px; }
 
 /* TOOLBAR */
-.toolbar {
-  display: flex; align-items: center; gap: 10px;
-  margin-bottom: 1rem; flex-wrap: wrap;
-}
-.toolbar-search {
-  flex: 1; min-width: 200px;
-  padding: 8px 12px;
-  background: var(--card); border: 1px solid var(--border);
-  border-radius: var(--r); color: var(--text);
-  font-size: 13px; outline: none;
-}
+.toolbar { display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; flex-wrap: wrap; }
+.toolbar-search { flex: 1; min-width: 200px; padding: 8px 12px; background: var(--card); border: 1px solid var(--border); border-radius: var(--r); color: var(--text); font-size: 13px; outline: none; }
 .toolbar-search:focus { border-color: var(--accent); }
-.toolbar-select {
-  padding: 8px 12px;
-  background: var(--card); border: 1px solid var(--border);
-  border-radius: var(--r); color: var(--text);
-  font-size: 13px; outline: none; cursor: pointer;
-}
-.btn {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 8px 16px; border-radius: var(--r);
-  font-size: 13px; font-weight: 500;
-  cursor: pointer; border: none; transition: all .15s;
-  white-space: nowrap;
-}
+.toolbar-select { padding: 8px 12px; background: var(--card); border: 1px solid var(--border); border-radius: var(--r); color: var(--text); font-size: 13px; outline: none; cursor: pointer; }
+.btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: var(--r); font-size: 13px; font-weight: 500; cursor: pointer; border: none; transition: all .15s; white-space: nowrap; }
 .btn-primary { background: var(--accent); color: white; }
 .btn-primary:hover { background: var(--accent2); }
 .btn-ghost { background: var(--card); color: var(--text); border: 1px solid var(--border); }
@@ -106,34 +51,16 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
 .btn-danger:hover { background: var(--accent); color: white; }
 .btn-sm { padding: 5px 10px; font-size: 12px; }
 .btn-success { background: var(--green); color: white; }
-.btn-success:hover { opacity: .85; }
 
 /* TABLE */
 .table-wrap { overflow-x: auto; border-radius: var(--r); border: 1px solid var(--border); }
 table { width: 100%; border-collapse: collapse; }
-th {
-  text-align: left; padding: 10px 14px;
-  font-size: 11px; font-weight: 600;
-  text-transform: uppercase; letter-spacing: .06em;
-  color: var(--text2);
-  background: var(--card);
-  border-bottom: 1px solid var(--border);
-  white-space: nowrap;
-}
-td {
-  padding: 10px 14px;
-  font-size: 13px;
-  border-bottom: 1px solid var(--border);
-  background: var(--bg);
-  vertical-align: middle;
-}
+th { text-align: left; padding: 10px 14px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--text2); background: var(--card); border-bottom: 1px solid var(--border); white-space: nowrap; }
+td { padding: 10px 14px; font-size: 13px; border-bottom: 1px solid var(--border); background: var(--bg); vertical-align: middle; }
 tr:last-child td { border-bottom: none; }
 tr:hover td { background: rgba(255,255,255,.02); }
 .td-actions { display: flex; gap: 6px; }
-.badge {
-  display: inline-block; font-size: 11px; font-weight: 600;
-  padding: 2px 8px; border-radius: 20px;
-}
+.badge { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px; }
 .badge-kanji { background: rgba(212,64,48,.2); color: #ff8870; }
 .badge-vocab { background: rgba(74,144,217,.2); color: #7ab4e8; }
 .badge-grammar { background: rgba(45,179,110,.2); color: #5ee09a; }
@@ -144,35 +71,15 @@ tr:hover td { background: rgba(255,255,255,.02); }
 .td-sentence { max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: 'Noto Sans JP', sans-serif; }
 
 /* MODAL */
-.modal-overlay {
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,.7);
-  display: flex; align-items: center; justify-content: center;
-  z-index: 500; padding: 1rem;
-  display: none;
-}
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); display: flex; align-items: center; justify-content: center; z-index: 500; padding: 1rem; display: none; }
 .modal-overlay.open { display: flex; }
-.modal {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  width: 100%; max-width: 620px;
-  max-height: 90vh;
-  overflow-y: auto;
-  padding: 1.75rem;
-}
+.modal { background: var(--card); border: 1px solid var(--border); border-radius: 12px; width: 100%; max-width: 620px; max-height: 90vh; overflow-y: auto; padding: 1.75rem; }
 .modal-title { font-size: 16px; font-weight: 700; margin-bottom: 1.25rem; }
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .form-group { display: flex; flex-direction: column; gap: 5px; }
 .form-group.full { grid-column: 1 / -1; }
 .form-label { font-size: 11px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: .06em; }
-.form-input, .form-select, .form-textarea {
-  padding: 8px 12px;
-  background: var(--bg); border: 1px solid var(--border);
-  border-radius: var(--r); color: var(--text);
-  font-size: 13px; outline: none;
-  font-family: 'Inter', sans-serif;
-}
+.form-input, .form-select, .form-textarea { padding: 8px 12px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--r); color: var(--text); font-size: 13px; outline: none; font-family: 'Inter', sans-serif; }
 .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--accent); }
 .form-textarea { resize: vertical; min-height: 60px; }
 .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
@@ -182,25 +89,14 @@ tr:hover td { background: rgba(255,255,255,.02); }
 .form-note { font-size: 12px; color: var(--text2); margin-top: 4px; }
 
 /* FLASHCARD PREVIEW */
-.fc-preview {
-  background: var(--bg); border: 1px solid var(--border);
-  border-radius: 12px; padding: 1.5rem;
-  text-align: center; margin-bottom: 1rem;
-}
+.fc-preview { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; text-align: center; margin-bottom: 1rem; }
 .fc-front { font-size: 36px; font-weight: 700; margin-bottom: 8px; }
 .fc-reading { font-size: 16px; color: var(--text2); margin-bottom: 4px; }
 .fc-meaning { font-size: 14px; color: var(--accent2); }
 .fc-example { font-size: 13px; color: var(--text2); margin-top: 10px; font-style: italic; }
 
 /* TOAST */
-.toast {
-  position: fixed; bottom: 1.5rem; right: 1.5rem;
-  background: var(--card); border: 1px solid var(--border);
-  border-radius: var(--r); padding: 12px 18px;
-  font-size: 13px; font-weight: 500;
-  z-index: 999; display: none;
-  animation: slideUp .2s ease;
-}
+.toast { position: fixed; bottom: 1.5rem; right: 1.5rem; background: var(--card); border: 1px solid var(--border); border-radius: var(--r); padding: 12px 18px; font-size: 13px; font-weight: 500; z-index: 999; display: none; animation: slideUp .2s ease; }
 .toast.show { display: block; }
 .toast.ok { border-left: 3px solid var(--green); }
 .toast.err { border-left: 3px solid var(--accent); }
@@ -214,36 +110,30 @@ tr:hover td { background: rgba(255,255,255,.02); }
 </head>
 <body>
 
-<!-- APP -->
+<div class="modal-overlay open" id="login-modal" style="z-index: 1000; background: var(--bg);">
+  <div class="modal" style="max-width: 400px; text-align: center;">
+    <h2 style="margin-bottom: 1rem;">🔐 Admin Login</h2>
+    <input type="password" id="admin-pwd" class="form-input" style="width: 100%; margin-bottom: 1rem; text-align: center;" placeholder="Enter admin password" onkeydown="if(event.key==='Enter') attemptLogin()">
+    <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="attemptLogin()">Login</button>
+    <div id="login-err" style="color: var(--accent); margin-top: 10px; font-size: 13px;"></div>
+  </div>
+</div>
+
 <div id="app" style="display:block">
 <div class="layout">
-
-  <!-- SIDEBAR -->
   <div class="sidebar">
     <div class="sidebar-logo">
       <h2>🌸 Admin Panel</h2>
       <p>Japanese Test Manager</p>
     </div>
-    <div class="nav-item active" onclick="showPage('questions',this)">
-      <span class="nav-icon">❓</span> Questions
-    </div>
-    <div class="nav-item" onclick="showPage('flashcards',this)">
-      <span class="nav-icon">🃏</span> Flashcards
-    </div>
-    <div class="nav-item" onclick="showPage('lessons',this)">
-      <span class="nav-icon">📚</span> Lessons
-    </div>
-    <div class="nav-item" style="margin-top:auto;border-top:1px solid var(--border);padding-top:10px" onclick="doLogout()">
-      <span class="nav-icon">🚪</span> Logout
-    </div>
-    <div class="nav-item" onclick="showPage('settings', this)">🛠 Settings & Import
-    </div>
+    <div class="nav-item active" onclick="showPage('questions',this)"><span class="nav-icon">❓</span> Questions</div>
+    <div class="nav-item" onclick="showPage('flashcards',this)"><span class="nav-icon">🃏</span> Flashcards</div>
+    <div class="nav-item" onclick="showPage('lessons',this)"><span class="nav-icon">📚</span> Lessons</div>
+    <div class="nav-item" style="margin-top:auto;border-top:1px solid var(--border);padding-top:10px" onclick="doLogout()"><span class="nav-icon">🚪</span> Logout</div>
+    <div class="nav-item" onclick="showPage('settings', this)"><span class="nav-icon">🛠</span> Settings & Import</div>
   </div>
 
-  <!-- MAIN -->
   <div class="main">
-
-    <!-- QUESTIONS PAGE -->
     <div class="page active" id="page-questions">
       <div class="page-title">Questions</div>
       <div class="page-sub">Manage all quiz questions</div>
@@ -268,7 +158,6 @@ tr:hover td { background: rgba(255,255,255,.02); }
       <div id="q-table-wrap" class="loading">Loading questions...</div>
     </div>
 
-    <!-- FLASHCARDS PAGE -->
     <div class="page" id="page-flashcards">
       <div class="page-title">Flashcards</div>
       <div class="page-sub">Manage vocabulary and grammar flashcards</div>
@@ -292,8 +181,7 @@ tr:hover td { background: rgba(255,255,255,.02); }
       <div id="fc-table-wrap" class="loading">Loading flashcards...</div>
     </div>
 
-    <!-- LESSONS PAGE -->
-      <div class="page" id="page-lessons">
+    <div class="page" id="page-lessons">
       <div class="page-title">Lessons</div>
       <div class="page-sub">Overview of all lessons</div>
       <div id="lessons-content" class="loading">Loading...</div>
@@ -306,16 +194,11 @@ tr:hover td { background: rgba(255,255,255,.02); }
       <div class="card" style="background: var(--card); border: 1px solid var(--border); border-radius: var(--r); padding: 1.5rem; margin-bottom: 24px;">
         <h3 style="margin-bottom: 8px;">📥 Bulk Import (JSON)</h3>
         <p style="color: var(--text2); margin-bottom: 16px;">Paste an array of JSON objects. The system will automatically clean the data and assign unique IDs.</p>
-        
         <select id="bulk-type" class="toolbar-select" style="margin-bottom: 12px; width: 200px; padding: 10px;">
           <option value="questions">Questions</option>
           <option value="flashcards">Flashcards</option>
         </select>
-        
-        <textarea id="bulk-data" rows="10" style="width: 100%; padding: 12px; border-radius: var(--r); background: var(--bg); color: var(--text); border: 1px solid var(--border); font-family: monospace; resize: vertical;" placeholder='[
-  { "lesson": 28, "type": "grammar", "front": "...", "reading": "...", "meaning": "..." }
-]'></textarea>
-        
+        <textarea id="bulk-data" rows="10" style="width: 100%; padding: 12px; border-radius: var(--r); background: var(--bg); color: var(--text); border: 1px solid var(--border); font-family: monospace; resize: vertical;" placeholder='[ { "lesson": 28, "type": "grammar", "front": "...", "reading": "...", "meaning": "..." } ]'></textarea>
         <button onclick="handleBulkUpload()" class="btn btn-primary" style="margin-top: 16px; padding: 10px 20px;">Upload Batch</button>
       </div>
 
@@ -325,14 +208,10 @@ tr:hover td { background: rgba(255,255,255,.02); }
         <button onclick="resetStudentProgress()" class="btn btn-danger" style="padding: 10px 20px; border-width: 2px;">Reset All Progress</button>
       </div>
     </div>
-
-  </div>
-
   </div>
 </div>
 </div>
 
-<!-- QUESTION MODAL -->
 <div class="modal-overlay" id="q-modal">
   <div class="modal">
     <div class="modal-title" id="q-modal-title">Add Question</div>
@@ -392,48 +271,19 @@ tr:hover td { background: rgba(255,255,255,.02); }
   </div>
 </div>
 
-<!-- FLASHCARD MODAL -->
 <div class="modal-overlay" id="fc-modal">
   <div class="modal">
     <div class="modal-title" id="fc-modal-title">Add Flashcard</div>
     <div id="fc-preview-wrap"></div>
     <div class="form-grid">
-      <div class="form-group">
-        <label class="form-label">Type</label>
-        <select class="form-select" id="fcf-type">
-          <option value="vocab">Vocabulary</option>
-          <option value="grammar">Grammar</option>
-          <option value="kanji">Kanji</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Lesson Number</label>
-        <input class="form-input" id="fcf-lesson" type="number" placeholder="26" min="1" max="50">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Front (Kanji / Grammar pattern)</label>
-        <input class="form-input" id="fcf-front" placeholder="e.g. 旅行 or 〜てしまう" oninput="updateFCPreview()">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Reading (Hiragana)</label>
-        <input class="form-input" id="fcf-reading" placeholder="e.g. りょこう" oninput="updateFCPreview()">
-      </div>
-      <div class="form-group full">
-        <label class="form-label">Meaning (English)</label>
-        <input class="form-input" id="fcf-meaning" placeholder="e.g. travel, trip" oninput="updateFCPreview()">
-      </div>
-      <div class="form-group full">
-        <label class="form-label">Example Sentence (Japanese)</label>
-        <input class="form-input" id="fcf-example" placeholder="e.g. 旅行に行きたいです。">
-      </div>
-      <div class="form-group full">
-        <label class="form-label">Example Reading (Hiragana)</label>
-        <input class="form-input" id="fcf-exreading" placeholder="e.g. りょこうにいきたいです。">
-      </div>
-      <div class="form-group full">
-        <label class="form-label">Example Meaning (English)</label>
-        <input class="form-input" id="fcf-exmeaning" placeholder="e.g. I want to go on a trip.">
-      </div>
+      <div class="form-group"><label class="form-label">Type</label><select class="form-select" id="fcf-type"><option value="vocab">Vocabulary</option><option value="grammar">Grammar</option><option value="kanji">Kanji</option></select></div>
+      <div class="form-group"><label class="form-label">Lesson Number</label><input class="form-input" id="fcf-lesson" type="number" placeholder="26" min="1" max="50"></div>
+      <div class="form-group"><label class="form-label">Front (Kanji / Grammar pattern)</label><input class="form-input" id="fcf-front" placeholder="e.g. 旅行 or 〜てしまう" oninput="updateFCPreview()"></div>
+      <div class="form-group"><label class="form-label">Reading (Hiragana)</label><input class="form-input" id="fcf-reading" placeholder="e.g. りょこう" oninput="updateFCPreview()"></div>
+      <div class="form-group full"><label class="form-label">Meaning (English)</label><input class="form-input" id="fcf-meaning" placeholder="e.g. travel, trip" oninput="updateFCPreview()"></div>
+      <div class="form-group full"><label class="form-label">Example Sentence (Japanese)</label><input class="form-input" id="fcf-example" placeholder="e.g. 旅行に行きたいです。"></div>
+      <div class="form-group full"><label class="form-label">Example Reading (Hiragana)</label><input class="form-input" id="fcf-exreading" placeholder="e.g. りょこうにいきたいです。"></div>
+      <div class="form-group full"><label class="form-label">Example Meaning (English)</label><input class="form-input" id="fcf-exmeaning" placeholder="e.g. I want to go on a trip."></div>
     </div>
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeModal('fc-modal')">Cancel</button>
@@ -442,7 +292,6 @@ tr:hover td { background: rgba(255,255,255,.02); }
   </div>
 </div>
 
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script>
@@ -452,8 +301,28 @@ let allFlashcards = [];
 let editingQId = null;
 let editingFCId = null;
 
-// ── INIT — no password needed, load immediately ───────────
-window.addEventListener('load', () => { loadAll(); });
+// ── AUTH LOGIC ───────────────────────────────────────────
+async function attemptLogin() {
+  const pwd = document.getElementById('admin-pwd').value;
+  document.getElementById('login-err').textContent = 'Checking...';
+  try {
+    const res = await fetch('/api/admin-auth', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: pwd })
+    });
+    const data = await res.json();
+    if (data.ok) {
+      adminPassword = pwd;
+      document.getElementById('login-modal').classList.remove('open');
+      loadAll();
+    } else {
+      document.getElementById('login-err').textContent = 'Incorrect password.';
+    }
+  } catch (err) {
+    document.getElementById('login-err').textContent = 'Server error. Check your connection.';
+  }
+}
 
 function doLogout() { window.location.href = '/'; }
 
@@ -475,7 +344,11 @@ async function apiWrite(type, action, item, items) {
     headers: { 'Content-Type': 'application/json', 'x-admin-password': adminPassword },
     body: JSON.stringify(body),
   });
-  return res.json();
+  const data = await res.json();
+  if (!data.ok && data.error === 'Unauthorized: Invalid or missing admin password.') {
+    alert('Session expired or unauthorized. Please refresh and login again.');
+  }
+  return data;
 }
 
 async function loadQuestions() {
@@ -609,21 +482,14 @@ function filterFlashcards() {
   renderFCTable(filtered);
 }
 
-// ── QUESTION MODAL ───────────────────────────────────────
-function openQModal(q) {
+// ── MODALS & CRUD ─────────────────────────────────────────
+function openQModal() {
   editingQId = null;
   document.getElementById('q-modal-title').textContent = 'Add Question';
+  ['qf-type','qf-difficulty','qf-gp','qf-sentence','qf-ask','qf-opt0','qf-opt1','qf-opt2','qf-opt3','qf-exp'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('qf-type').value = 'kanji';
   document.getElementById('qf-difficulty').value = 'easy';
   document.getElementById('qf-lesson').value = '26';
-  document.getElementById('qf-gp').value = '';
-  document.getElementById('qf-sentence').value = '';
-  document.getElementById('qf-ask').value = '';
-  document.getElementById('qf-opt0').value = '';
-  document.getElementById('qf-opt1').value = '';
-  document.getElementById('qf-opt2').value = '';
-  document.getElementById('qf-opt3').value = '';
-  document.getElementById('qf-exp').value = '';
   document.getElementById('opt-r0').checked = true;
   document.getElementById('q-modal').classList.add('open');
 }
@@ -677,11 +543,8 @@ async function saveQuestion() {
   const result = await apiWrite('questions', action, item);
   if (result.ok) {
     showToast(editingQId ? 'Question updated!' : 'Question added!', 'ok');
-    closeModal('q-modal');
-    loadQuestions();
-  } else {
-    showToast('Error: ' + result.error, 'err');
-  }
+    closeModal('q-modal'); loadQuestions();
+  } else { showToast('Error: ' + result.error, 'err'); }
 }
 
 async function deleteQuestion(id) {
@@ -691,7 +554,6 @@ async function deleteQuestion(id) {
   else showToast('Error: ' + result.error, 'err');
 }
 
-// ── FLASHCARD MODAL ──────────────────────────────────────
 function openFCModal() {
   editingFCId = null;
   document.getElementById('fc-modal-title').textContent = 'Add Flashcard';
@@ -744,18 +606,13 @@ async function saveFlashcard() {
     exampleReading: document.getElementById('fcf-exreading').value.trim(),
     exampleMeaning: document.getElementById('fcf-exmeaning').value.trim(),
   };
-  if (!item.front || !item.reading || !item.meaning) {
-    showToast('Please fill in front, reading, and meaning', 'err'); return;
-  }
+  if (!item.front || !item.reading || !item.meaning) { showToast('Please fill in front, reading, and meaning', 'err'); return; }
   const action = editingFCId ? 'update' : 'add';
   const result = await apiWrite('flashcards', action, item);
   if (result.ok) {
     showToast(editingFCId ? 'Flashcard updated!' : 'Flashcard added!', 'ok');
-    closeModal('fc-modal');
-    loadFlashcards();
-  } else {
-    showToast('Error: ' + result.error, 'err');
-  }
+    closeModal('fc-modal'); loadFlashcards();
+  } else { showToast('Error: ' + result.error, 'err'); }
 }
 
 async function deleteFlashcard(id) {
@@ -774,15 +631,9 @@ function showPage(name, el) {
   if (name === 'lessons') loadLessons();
 }
 
-function closeModal(id) {
-  document.getElementById(id).classList.remove('open');
-}
-
-// Close modal on overlay click
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 document.querySelectorAll('.modal-overlay').forEach(overlay => {
-  overlay.addEventListener('click', e => {
-    if (e.target === overlay) overlay.classList.remove('open');
-  });
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('open'); });
 });
 
 function showToast(msg, type='ok') {
@@ -796,34 +647,22 @@ function showToast(msg, type='ok') {
 async function handleBulkUpload() {
   const type = document.getElementById('bulk-type').value;
   const rawData = document.getElementById('bulk-data').value.trim();
-
   if (!rawData) return showToast('Please paste some JSON data first.', 'err');
-
   try {
     const parsedData = JSON.parse(rawData);
     if (!Array.isArray(parsedData)) throw new Error("Data must be enclosed in brackets [...]");
-
-    // Pass the parsed array directly to your API write function
     const result = await apiWrite(type, 'bulk_add', null, parsedData);
-
     if (result.ok) {
       showToast(`Successfully imported ${parsedData.length} items!`, 'ok');
       document.getElementById('bulk-data').value = ''; 
       if(type === 'questions') loadQuestions();
       if(type === 'flashcards') loadFlashcards();
-    } else {
-      showToast('Server Error: ' + result.error, 'err');
-    }
-  } catch (e) {
-    showToast('JSON Format Error: ' + e.message, 'err');
-  }
+    } else { showToast('Server Error: ' + result.error, 'err'); }
+  } catch (e) { showToast('JSON Format Error: ' + e.message, 'err'); }
 }
 
-// ── PROGRESS RESET LOGIC ───────────────────────────────────
 function resetStudentProgress() {
-  const isSure = confirm("⚠️ ARE YOU SURE?\n\nThis will reset all local streaks.");
-  
-  if (isSure) {
+  if (confirm("⚠️ ARE YOU SURE?\n\nThis will reset all local streaks.")) {
     localStorage.clear();
     showToast('Progress has been successfully reset to zero.', 'ok');
   }
