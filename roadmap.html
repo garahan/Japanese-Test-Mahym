@@ -4,127 +4,150 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>🗺️ My Journey — Mahym's Japanese</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#f7f5f0;--card:#fff;--ink:#1c1c2e;--ink2:#52526e;--ink3:#9898b0;
-  --red:#d44030;--red-soft:#fcecea;--green:#2a7a52;--green-soft:#eaf5ee;
-  --blue:#2656a8;--blue-soft:#edf1fc;--gold:#b87c1a;--gold-soft:#fdf4e3;
-  --purple:#6b4fbb;--purple-soft:#f0ecfb;--teal:#1a7a72;--teal-soft:#e6f5f4;
-  --border:#e4e0d8;--shadow:0 1px 4px rgba(28,28,46,.07),0 2px 12px rgba(28,28,46,.05);
-  --r:14px;--r-sm:8px;
+  --bg:#f0ede8;--card:#ffffff;--ink:#1c1c2e;--ink2:#52526e;--ink3:#9898b0;
+  --red:#ff4b4b;--red-soft:#ffeeee;--green:#00c853;--green-soft:#eafaf1;
+  --blue:#2979ff;--blue-soft:#eff4ff;--gold:#ffb300;--gold-soft:#fff8e1;
+  --purple:#8e24aa;--purple-soft:#f3e5f5;--teal:#1a7a72;--teal-soft:#e6f5f4;
+  --border:#e4e0d8;
+  --shadow:0 4px 12px rgba(28,28,46,.06), 0 1px 3px rgba(28,28,46,.04);
+  --r:20px;--r-sm:12px;
+  --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-*{box-sizing:border-box;margin:0;padding:0}
+*{box-sizing:border-box;margin:0;padding:0; -webkit-tap-highlight-color: transparent;}
 body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;font-size:15px; -webkit-text-size-adjust: 100%;}
 
-.page-header{background:var(--ink);color:white;padding:1.5rem 1.25rem 1.25rem;display:flex;align-items:center;gap:14px}
-.back-btn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:white;border-radius:var(--r-sm);padding:6px 14px;font-size:13px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:background .15s}
-.back-btn:hover{background:rgba(255,255,255,.18)}
+/* ── ANIMATIONS ── */
+.anim-pop { animation: popIn 0.6s var(--spring) backwards; }
+@keyframes popIn { 0% { opacity: 0; transform: translateY(20px) scale(0.95); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+.d-1 { animation-delay: 0.05s; } .d-2 { animation-delay: 0.1s; } .d-3 { animation-delay: 0.15s; } .d-4 { animation-delay: 0.2s; } .d-5 { animation-delay: 0.25s; } .d-6 { animation-delay: 0.3s; }
+
+/* ── HEADER ── */
+.page-header{background:var(--ink);color:white;padding:1.5rem 1.25rem 1.5rem;display:flex;align-items:center;gap:14px; border-radius: 0 0 30px 30px; box-shadow: var(--shadow); position: relative; z-index: 10;}
+.back-btn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:white;border-radius:18px;padding:8px 16px;font-size:14px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;transition:transform 0.2s var(--spring);}
+.back-btn:active { transform: scale(0.9); }
 .header-text{flex:1}
-.header-title{font-size:20px;font-weight:700;color:white}
-.header-sub{font-size:13px;color:rgba(255,255,255,.45);margin-top:2px}
-.n1-badge{background:var(--purple-soft);border:1px solid #c4b8e8;border-radius:20px;padding:4px 14px;font-size:12px;font-weight:600;color:var(--purple)}
+.header-title{font-size:22px;font-weight:800;color:white; letter-spacing: -0.01em;}
+.header-sub{font-size:13px;color:rgba(255,255,255,.6);margin-top:2px; font-weight: 500;}
+.n1-badge{background:rgba(142,36,170,.2);border:1px solid rgba(142,36,170,.4);border-radius:20px;padding:4px 12px;font-size:12px;font-weight:700;color:#e1bee7;}
 
 .main{max-width:680px;margin:0 auto;padding:1.5rem 1rem 4rem}
 
-.hero-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;margin-bottom:1rem;box-shadow:var(--shadow)}
-.hero-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:1.25rem;flex-wrap:wrap}
-.hero-label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--ink3);margin-bottom:4px}
-.hero-level{font-size:28px;font-weight:700;color:var(--ink);line-height:1}
-.hero-sub{font-size:13px;color:var(--ink2);margin-top:3px}
+/* ── CARDS ── */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;margin-bottom:1rem;box-shadow:var(--shadow)}
+.card-title{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);margin-bottom:1rem}
+
+/* ── HERO ── */
+.hero-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:1.5rem;flex-wrap:wrap}
+.hero-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink3);margin-bottom:4px}
+.hero-level{font-size:32px;font-weight:800;color:var(--ink);line-height:1; letter-spacing: -0.02em;}
+.hero-sub{font-size:14px;color:var(--ink2);margin-top:6px}
 .journey-bar-wrap{margin-bottom:6px}
-.journey-bar-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--ink3);margin-bottom:6px}
-.journey-bar{height:10px;background:var(--border);border-radius:5px;overflow:hidden;position:relative}
-.journey-fill{height:100%;border-radius:5px;background:linear-gradient(90deg,#2a7a52,#2656a8);transition:width 1s ease;position:relative}
-.journey-marker{position:absolute;top:-3px;width:16px;height:16px;background:var(--ink);border:2px solid white;border-radius:50%;transform:translateX(-50%);box-shadow:0 1px 4px rgba(0,0,0,.2);transition:left 1s ease}
-.journey-pct{font-size:13px;color:var(--ink2);margin-top:6px;text-align:right}
+.journey-bar-labels{display:flex;justify-content:space-between;font-size:12px;font-weight:600;color:var(--ink3);margin-bottom:8px}
+.journey-bar{height:12px;background:var(--bg);border-radius:6px;overflow:hidden;position:relative; border: 1px solid var(--border);}
+.journey-fill{height:100%;border-radius:6px;background:linear-gradient(90deg, #00c853, #2979ff);width:0%;transition:width 1.5s cubic-bezier(0.22, 1, 0.36, 1);position:relative}
+.journey-pct{font-size:13px;font-weight:600;color:var(--ink2);margin-top:10px;text-align:right}
 
-.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:1rem}
-.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-sm);padding:.875rem .5rem;text-align:center;box-shadow:var(--shadow)}
-.stat-val{font-size:20px;font-weight:700;color:var(--ink)}
-.stat-lbl{font-size:11px;color:var(--ink3);margin-top:2px;text-transform:uppercase;letter-spacing:.05em}
+/* ── STATS ── */
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1rem}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-sm);padding:1rem .5rem;text-align:center;box-shadow:var(--shadow)}
+.stat-val{font-size:22px;font-weight:800;color:var(--ink)}
+.stat-lbl{font-size:11px;font-weight:700;color:var(--ink3);margin-top:4px;text-transform:uppercase;letter-spacing:.05em}
 
-.skills-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;margin-bottom:1rem;box-shadow:var(--shadow)}
-.card-title{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--ink3);margin-bottom:1rem}
-.skill-row{margin-bottom:12px}
-.skill-row:last-child{margin-bottom:0}
-.skill-label{display:flex;justify-content:space-between;align-items:center;font-size:13px;margin-bottom:5px}
-.skill-name{color:var(--ink2);font-weight:500}
-.skill-pct{font-weight:600;color:var(--ink);font-size:13px}
-.skill-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
-.skill-fill{height:100%;border-radius:3px;transition:width .8s ease}
-
-.heatmap-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;margin-bottom:1rem;box-shadow:var(--shadow)}
+/* ── HEATMAP ── */
 .heatmap-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:8px}
-/* Fixed Heatmap container for mobile */
 .heatmap-scroll-wrap { overflow-x: auto; padding-bottom: 10px; -webkit-overflow-scrolling: touch; }
 .heatmap-inner { display: flex; flex-direction: column; min-width: max-content; }
 .heatmap-months{display:flex;gap:0;margin-bottom:4px;padding-left:28px}
-.heatmap-month-label{font-size:10px;color:var(--ink3);text-align:left}
+.heatmap-month-label{font-size:11px;font-weight:600;color:var(--ink3);text-align:left}
 .heatmap-body{display:flex;gap:6px}
-.heatmap-days-col{display:flex;flex-direction:column;gap:3px;justify-content:center}
-.heatmap-day-label{font-size:10px;color:var(--ink3);height:12px;line-height:12px;text-align:right;width:22px}
-.heatmap-grid{display:flex;gap:3px;flex:1;}
-.heatmap-week{display:flex;flex-direction:column;gap:3px}
-.heatmap-cell{width:12px;height:12px;border-radius:2px;cursor:pointer;}
-.heatmap-legend{display:flex;align-items:center;gap:6px;margin-top:.75rem;justify-content:flex-end}
-.heatmap-legend-label{font-size:11px;color:var(--ink3)}
-.heatmap-legend-cell{width:11px;height:11px;border-radius:2px}
-.hm-0{background:var(--border)} .hm-1{background:#c6e6c8} .hm-2{background:#7ac87e} .hm-3{background:#2a9e40} .hm-4{background:#1a6e2c}
-.heatmap-summary{display:flex;gap:12px;flex-wrap:wrap;margin-top:.75rem; border-top: 1px solid var(--border); padding-top: .75rem;}
-.hm-sum-item{font-size:12px;color:var(--ink3)}
+.heatmap-days-col{display:flex;flex-direction:column;gap:4px;justify-content:center}
+.heatmap-day-label{font-size:11px;font-weight:600;color:var(--ink3);height:14px;line-height:14px;text-align:right;width:24px}
+.heatmap-grid{display:flex;gap:4px;flex:1;}
+.heatmap-week{display:flex;flex-direction:column;gap:4px}
+.heatmap-cell{width:14px;height:14px;border-radius:4px;cursor:pointer;transition:transform 0.1s; border: 1px solid rgba(0,0,0,0.05);}
+.heatmap-cell:active{transform:scale(1.5);}
+.heatmap-legend{display:flex;align-items:center;gap:6px;margin-top:1rem;justify-content:flex-end}
+.heatmap-legend-label{font-size:11px;font-weight:600;color:var(--ink3)}
+.heatmap-legend-cell{width:12px;height:12px;border-radius:3px}
+.hm-0{background:var(--bg)} .hm-1{background:#c8e6c9} .hm-2{background:#81c784} .hm-3{background:#4caf50} .hm-4{background:#2e7d32}
+.heatmap-summary{display:flex;gap:12px;flex-wrap:wrap;margin-top:1rem; border-top: 1px solid var(--border); padding-top: 1rem;}
+.hm-sum-item{font-size:13px;font-weight:500;color:var(--ink2)}
+.tooltip{position:fixed;background:var(--ink);color:white;font-size:13px;font-weight:600;padding:8px 12px;border-radius:8px;pointer-events:none;opacity:0;transition:opacity 0.2s;z-index:200;white-space:nowrap; box-shadow: 0 4px 12px rgba(0,0,0,0.2);}
 
-.units-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;margin-bottom:1rem;box-shadow:var(--shadow)}
-.units-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.875rem}
-.units-progress-text{font-size:13px;color:var(--ink2)}
-.units-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
-.unit-cell{border-radius:var(--r-sm);padding:8px 4px;text-align:center;cursor:pointer;transition:all .15s;border:1px solid transparent;}
-.unit-num{font-size:12px;font-weight:600}
-.unit-bar{height:3px;border-radius:2px;margin-top:4px;background:var(--border)}
-.unit-bar-fill{height:100%;border-radius:2px;background:var(--green);transition:width .5s}
-.unit-cell.done{background:var(--green-soft);border-color:#b8dfc8}
-.unit-cell.done .unit-num{color:var(--green)}
-.unit-cell.current{background:var(--gold-soft);border-color:#e8d080}
-.unit-cell.current .unit-num{color:var(--gold)}
-.unit-cell.locked{background:var(--bg);border-color:var(--border)}
-.unit-cell.locked .unit-num{color:var(--ink3)}
+/* ── SKILLS ── */
+.skill-row{margin-bottom:14px}.skill-row:last-child{margin-bottom:0}
+.skill-label{display:flex;justify-content:space-between;align-items:center;font-size:14px;margin-bottom:6px}
+.skill-name{color:var(--ink);font-weight:600}
+.skill-pct{font-weight:700;color:var(--ink)}
+.skill-bar{height:8px;background:var(--bg);border-radius:4px;overflow:hidden; border: 1px solid var(--border);}
+.skill-fill{height:100%;border-radius:4px;width:0%;transition:width 1s cubic-bezier(0.22, 1, 0.36, 1);}
 
-.milestones-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;margin-bottom:1rem;box-shadow:var(--shadow)}
-.milestone-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
-.milestone-item:last-child{border-bottom:none}
-.ms-icon{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;margin-top:1px}
-.ms-icon.done{background:var(--green-soft);color:var(--green)} .ms-icon.next{background:var(--gold-soft);color:var(--gold)} .ms-icon.future{background:var(--border);color:var(--ink3)}
+/* ── UNITS ── */
+.units-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.units-progress-text{font-size:14px;color:var(--ink2)}
+.units-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.unit-cell{border-radius:14px;padding:12px 4px;text-align:center;cursor:pointer;transition:transform 0.2s var(--spring);border:2px solid transparent;}
+.unit-cell:active{transform:scale(0.85);}
+.unit-num{font-size:14px;font-weight:800}
+.unit-bar{height:4px;border-radius:2px;margin-top:6px;background:rgba(0,0,0,0.05)}
+.unit-bar-fill{height:100%;border-radius:2px;background:var(--green);width:0%;transition:width 1s ease}
+.unit-cell.done{background:var(--green-soft);border-color:#a5d6a7} .unit-cell.done .unit-num{color:#2e7d32}
+.unit-cell.current{background:var(--gold-soft);border-color:#ffe082} .unit-cell.current .unit-num{color:#f57f17}
+.unit-cell.locked{background:var(--bg);border-color:var(--border)} .unit-cell.locked .unit-num{color:var(--ink3)}
+
+/* ── MILESTONES ── */
+.milestone-item{display:flex;align-items:flex-start;gap:14px;padding:12px 0;border-bottom:1px solid var(--border)}
+.milestone-item:last-child{border-bottom:none; padding-bottom:0;}
+.ms-icon{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0;}
+.ms-icon.done{background:var(--green);color:white} .ms-icon.next{background:var(--gold);color:white} .ms-icon.future{background:var(--bg);color:var(--ink3); border:1px solid var(--border);}
 .ms-text{flex:1}
-.ms-title{font-size:14px;font-weight:500;color:var(--ink)}
-.ms-sub{font-size:12px;color:var(--ink3);margin-top:2px}
-.ms-tag{font-size:11px;padding:3px 8px;border-radius:10px;font-weight:600;margin-left:auto;flex-shrink:0; margin-top:2px}
-.ms-tag.done{background:var(--green-soft);color:var(--green)} .ms-tag.next{background:var(--gold-soft);color:var(--gold)} .ms-tag.future{background:var(--border);color:var(--ink3)}
+.ms-title{font-size:15px;font-weight:700;color:var(--ink)} .ms-title.done{color:var(--ink3);text-decoration:line-through;}
+.ms-sub{font-size:13px;color:var(--ink2);margin-top:2px}
+.ms-tag{font-size:11px;padding:4px 10px;border-radius:12px;font-weight:800;margin-left:auto;flex-shrink:0;}
+.ms-tag.done{background:var(--green-soft);color:var(--green)} .ms-tag.next{background:var(--gold-soft);color:#f57f17} .ms-tag.future{background:var(--bg);color:var(--ink3)}
 
+/* ── FOCUS & RESOURCES ── */
+.focus-card{background:var(--ink);border-radius:var(--r);padding:1.5rem;margin-bottom:1rem;box-shadow:var(--shadow)}
+.focus-title{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.5);margin-bottom:1rem}
+.focus-routine-item{display:flex;align-items:center;gap:12px;padding:10px 0;font-size:14px;color:rgba(255,255,255,.8);border-bottom:1px solid rgba(255,255,255,.1)}
+.focus-routine-item:last-child{border-bottom:none; padding-bottom:0;}
+.focus-time{font-weight:800;color:white;min-width:48px}
+
+.resource-item{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)}
+.resource-item:last-child{border-bottom:none; padding-bottom:0;}
+.resource-icon{width:42px;height:42px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.resource-name{font-size:15px;font-weight:700;color:var(--ink)}
+.resource-desc{font-size:13px;color:var(--ink2);margin-top:4px;line-height:1.5}
+.resource-tag{display:inline-block;font-size:11px;padding:3px 10px;border-radius:12px;font-weight:700;margin-top:8px}
+
+/* ── MODAL ── */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:flex-end;justify-content:center;z-index:500;}
 .modal-overlay.open{display:flex; animation: fadeIn .2s;}
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-.modal-sheet{background:var(--card);border-radius:16px 16px 0 0;width:100%;max-width:680px;padding:1.5rem;max-height:80vh;overflow-y:auto;animation:slideUp .25s cubic-bezier(0.4,0,0.2,1);}
+.modal-sheet{background:var(--card);border-radius:24px 24px 0 0;width:100%;max-width:680px;padding:1.75rem;max-height:80vh;overflow-y:auto;animation:slideUp .3s var(--spring);}
 @keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
-.modal-title{font-size:18px;font-weight:700;margin-bottom:4px}
-.modal-sub{font-size:13px;color:var(--ink2);margin-bottom:1.25rem}
-.modal-row{display:flex;gap:10px;margin-bottom:1.25rem;}
-.modal-stat{flex:1;background:var(--bg);border-radius:var(--r-sm);padding:1rem;text-align:center;}
-.modal-stat-val{font-size:20px;font-weight:700;color:var(--ink)}
-.modal-stat-lbl{font-size:11px;color:var(--ink3);margin-top:4px}
-.grammar-pill{display:inline-block;background:var(--green-soft);color:var(--green);font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;margin:4px 4px 4px 0;font-family:'Noto Sans JP',sans-serif}
-.modal-actions{display:flex;flex-direction:column;gap:10px;margin-top:1.5rem}
-.btn{display:inline-flex;align-items:center;justify-content:center;padding:14px;border-radius:var(--r-sm);font-size:15px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--card);color:var(--ink);width:100%;}
-.btn-primary{background:var(--red);color:white;border-color:var(--red)}
+.modal-title{font-size:22px;font-weight:800;margin-bottom:4px; letter-spacing: -0.01em;}
+.modal-sub{font-size:14px;font-weight:500;color:var(--ink2);margin-bottom:1.5rem}
+.modal-row{display:flex;gap:10px;margin-bottom:1.5rem;}
+.modal-stat{flex:1;background:var(--bg);border-radius:16px;padding:1.25rem;text-align:center;}
+.modal-stat-val{font-size:24px;font-weight:800;color:var(--ink)}
+.modal-stat-lbl{font-size:12px;font-weight:700;color:var(--ink3);margin-top:6px;text-transform:uppercase;letter-spacing:.05em;}
+.grammar-pill{display:inline-block;background:var(--green-soft);color:#2e7d32;font-size:13px;font-weight:700;padding:6px 14px;border-radius:20px;margin:4px 4px 4px 0;font-family:'Noto Sans JP',sans-serif}
+.modal-actions{display:flex;flex-direction:column;gap:12px;margin-top:2rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:16px;border-radius:16px;font-size:16px;font-weight:800;cursor:pointer;transition:transform 0.2s var(--spring);width:100%;border:none;}
+.btn:active{transform:scale(0.95);}
+.btn-primary{background:var(--ink);color:white;}
 
-/* Responsive adjustments */
 @media(max-width:480px){
   .stat-row{grid-template-columns:repeat(2,1fr)}
   .units-grid{grid-template-columns:repeat(4,1fr)}
   .hero-top { flex-direction: column; align-items: flex-start; }
   .hero-top > div:last-child { text-align: left; margin-top: 10px; }
-  /* Ensure stats in modal stack nicely on very tiny phones */
   .modal-row { flex-direction: column; gap: 8px; }
-  .modal-stat { padding: .75rem; display: flex; justify-content: space-between; align-items: center; }
+  .modal-stat { padding: 1rem; display: flex; justify-content: space-between; align-items: center; }
   .modal-stat-lbl { margin-top: 0; }
 }
 </style>
@@ -132,7 +155,7 @@ body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:va
 <body>
 
 <div class="page-header">
-  <a href="/" class="back-btn">← Back</a>
+  <a href="/" class="back-btn" onclick="haptic()">← Back</a>
   <div class="header-text">
     <div class="header-title">🗺️ My Journey</div>
     <div class="header-sub">N4 Roadmap</div>
@@ -142,36 +165,36 @@ body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:va
 
 <div class="main">
 
-  <div class="hero-card">
+  <div class="card hero-card anim-pop d-1">
     <div class="hero-top">
       <div>
         <div class="hero-label">Current level</div>
-        <div class="hero-level" id="hero-level">N5 → N4</div>
-        <div class="hero-sub" id="hero-sub">みんなの日本語 Lessons 26–50</div>
+        <div class="hero-level">N5 → N4</div>
+        <div class="hero-sub">みんなの日本語 Lessons 26–50</div>
       </div>
       <div style="text-align:right">
         <div class="hero-label">Overall readiness</div>
-        <div class="hero-level" id="hero-pct" style="color:var(--blue)">—%</div>
+        <div class="hero-level" id="hero-pct" style="color:var(--blue)">0%</div>
       </div>
     </div>
     <div class="journey-bar-wrap">
       <div class="journey-bar-labels"><span>N5 complete</span><span>N4 ready</span></div>
-      <div class="journey-bar"><div class="journey-fill" id="journey-fill" style="width:0%"></div><div class="journey-marker" id="journey-marker" style="left:0%"></div></div>
+      <div class="journey-bar"><div class="journey-fill" id="journey-fill"></div></div>
       <div class="journey-pct" id="journey-pct-label">Calculating...</div>
     </div>
   </div>
 
-  <div class="stat-row">
+  <div class="stat-row anim-pop d-2">
     <div class="stat-card"><div class="stat-val" id="st-streak">0</div><div class="stat-lbl">🔥 Streak</div></div>
-    <div class="stat-card"><div class="stat-val" id="st-tests">0</div><div class="stat-lbl">Tests taken</div></div>
-    <div class="stat-card"><div class="stat-val" id="st-cards">0</div><div class="stat-lbl">Cards done</div></div>
-    <div class="stat-card"><div class="stat-val" id="st-avg">—</div><div class="stat-lbl">Avg score</div></div>
+    <div class="stat-card"><div class="stat-val" id="st-tests">0</div><div class="stat-lbl">Tests</div></div>
+    <div class="stat-card"><div class="stat-val" id="st-cards">0</div><div class="stat-lbl">Cards</div></div>
+    <div class="stat-card"><div class="stat-val" id="st-avg">—</div><div class="stat-lbl">Avg Score</div></div>
   </div>
 
-  <div class="heatmap-card">
+  <div class="card heatmap-card anim-pop d-3">
     <div class="heatmap-header">
-      <div><div class="card-title" style="margin-bottom:2px">Study activity</div><div style="font-size:13px;color:var(--ink2)">Last 26 weeks</div></div>
-      <div style="text-align:right"><div style="font-size:20px;font-weight:700;color:var(--ink)" id="hm-total-days">0</div><div style="font-size:11px;color:var(--ink3);text-transform:uppercase;">active days</div></div>
+      <div><div class="card-title" style="margin-bottom:2px">Study Activity</div><div style="font-size:13px;color:var(--ink2)">Last 26 weeks</div></div>
+      <div style="text-align:right"><div style="font-size:24px;font-weight:800;color:var(--ink)" id="hm-total-days">0</div><div style="font-size:11px;font-weight:700;color:var(--ink3);text-transform:uppercase;">active days</div></div>
     </div>
     <div class="heatmap-scroll-wrap" id="heatmap-scroll">
       <div class="heatmap-inner">
@@ -198,25 +221,62 @@ body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:va
     </div>
   </div>
 
-  <div class="skills-card">
-    <div class="card-title">Skill mastery</div>
-    <div class="skill-row"><div class="skill-label"><span class="skill-name">漢字 Kanji reading</span><span class="skill-pct" id="sk-kanji">—</span></div><div class="skill-bar"><div class="skill-fill" id="sb-kanji" style="width:0%;background:var(--red)"></div></div></div>
-    <div class="skill-row"><div class="skill-label"><span class="skill-name">語彙 Vocabulary</span><span class="skill-pct" id="sk-vocab">—</span></div><div class="skill-bar"><div class="skill-fill" id="sb-vocab" style="width:0%;background:var(--blue)"></div></div></div>
-    <div class="skill-row"><div class="skill-label"><span class="skill-name">文法 Grammar</span><span class="skill-pct" id="sk-grammar">—</span></div><div class="skill-bar"><div class="skill-fill" id="sb-grammar" style="width:0%;background:var(--green)"></div></div></div>
-    <div class="skill-row"><div class="skill-label"><span class="skill-name">🃏 Flashcard memory</span><span class="skill-pct" id="sk-flash">—</span></div><div class="skill-bar"><div class="skill-fill" id="sb-flash" style="width:0%;background:var(--purple)"></div></div></div>
+  <div class="card skills-card anim-pop d-4">
+    <div class="card-title">Skill Mastery</div>
+    <div class="skill-row"><div class="skill-label"><span class="skill-name">漢字 Kanji reading</span><span class="skill-pct" id="sk-kanji">—</span></div><div class="skill-bar"><div class="skill-fill" id="sb-kanji" style="background:var(--red)"></div></div></div>
+    <div class="skill-row"><div class="skill-label"><span class="skill-name">語彙 Vocabulary</span><span class="skill-pct" id="sk-vocab">—</span></div><div class="skill-bar"><div class="skill-fill" id="sb-vocab" style="background:var(--blue)"></div></div></div>
+    <div class="skill-row"><div class="skill-label"><span class="skill-name">文法 Grammar</span><span class="skill-pct" id="sk-grammar">—</span></div><div class="skill-bar"><div class="skill-fill" id="sb-grammar" style="background:var(--green)"></div></div></div>
+    <div class="skill-row"><div class="skill-label"><span class="skill-name">🃏 Flashcard Memory</span><span class="skill-pct" id="sk-flash">—</span></div><div class="skill-bar"><div class="skill-fill" id="sb-flash" style="background:var(--purple)"></div></div></div>
   </div>
 
-  <div class="units-card">
+  <div class="card units-card anim-pop d-5">
     <div class="units-header">
       <div><div class="card-title" style="margin-bottom:2px">みんなの日本語 Units</div><div class="units-progress-text" id="units-progress-text">Tap a unit to explore</div></div>
-      <div style="font-size:22px;font-weight:700;color:var(--ink)" id="units-fraction">—</div>
+      <div style="font-size:24px;font-weight:800;color:var(--ink)" id="units-fraction">—</div>
     </div>
     <div class="units-grid" id="units-grid"></div>
   </div>
 
-  <div class="milestones-card">
+  <div class="card milestones-card anim-pop d-6">
     <div class="card-title">Milestones</div>
     <div id="milestones-list"></div>
+  </div>
+
+  <div class="focus-card anim-pop d-6">
+    <div class="focus-title">Daily Routine Focus</div>
+    <div class="focus-routine-item"><span class="focus-time">15m</span>Flashcard review (SRS)</div>
+    <div class="focus-routine-item"><span class="focus-time">15m</span>1 MNN lesson grammar + exercises</div>
+    <div class="focus-routine-item"><span class="focus-time">15m</span>Quick test (Kanji/Vocab)</div>
+    <div class="focus-routine-item"><span class="focus-time">10m</span>Comprehensible Japanese (YouTube)</div>
+    <div class="focus-routine-item"><span class="focus-time">5m</span>Speaking prompt out loud</div>
+  </div>
+
+  <div class="card anim-pop d-6">
+    <div class="card-title">Key Resources</div>
+    <div class="resource-item">
+      <div class="resource-icon" style="background:#fff8e1">📗</div>
+      <div>
+        <div class="resource-name">Minna no Nihongo II (Units 26–50)</div>
+        <div class="resource-desc">Core textbook. Complete every workbook exercise.</div>
+        <span class="resource-tag" style="background:var(--green-soft);color:var(--green)">Core</span>
+      </div>
+    </div>
+    <div class="resource-item">
+      <div class="resource-icon" style="background:#f3e5f5">🃏</div>
+      <div>
+        <div class="resource-name">This App — Flashcards + Tests</div>
+        <div class="resource-desc">Daily spaced repetition. Even 10 minutes a day counts.</div>
+        <span class="resource-tag" style="background:var(--purple-soft);color:var(--purple)">Daily SRS</span>
+      </div>
+    </div>
+    <div class="resource-item">
+      <div class="resource-icon" style="background:#eafaf1">▶️</div>
+      <div>
+        <div class="resource-name">Comprehensible Japanese</div>
+        <div class="resource-desc">YouTube immersion. Do NOT use English subtitles.</div>
+        <span class="resource-tag" style="background:var(--teal-soft);color:var(--teal)">Listening</span>
+      </div>
+    </div>
   </div>
 
 </div>
@@ -227,18 +287,22 @@ body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:va
     <div class="modal-sub" id="modal-sub">Loading...</div>
     <div class="modal-row" id="modal-stats"></div>
     <div style="margin-bottom:1.5rem">
-      <div style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);margin-bottom:8px">Grammar points</div>
+      <div style="font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);margin-bottom:10px">Grammar points</div>
       <div id="modal-grammar-pills"></div>
     </div>
     <div class="modal-actions">
       <button class="btn btn-primary" id="modal-test-btn">Practice this unit →</button>
-      <button class="btn" style="background:var(--bg)" onclick="closeModal()">Close</button>
+      <button class="btn" style="background:var(--bg); color:var(--ink)" onclick="closeModal()">Close</button>
     </div>
   </div>
 </div>
 
+<div class="tooltip" id="hm-tooltip"></div>
+
 <script>
-// Logic strictly remains the same
+// ── HAPTICS ──
+function haptic() { if (navigator.vibrate) try { navigator.vibrate(15); } catch(e){} }
+
 const MNN_UNITS = [
   {n:26,title:'てあげる・てくれる・てもらう',grammar:['〜てあげる','〜てくれる','〜てもらう'],vocab:'giving/receiving'},
   {n:27,title:'〜ている (result state)',grammar:['〜ている (state)','〜てしまう'],vocab:'state expressions'},
@@ -294,13 +358,55 @@ function getUnitProgress(n){
   return getHistory().length>0 ? Math.min(100,Math.round(avgMastery)) : 0;
 }
 
+// RESTORED ALGORITHM
+function calcN4Readiness(){
+  const mastery=calcMastery();
+  const flashStr=getAvgFlashStrength()||0;
+  const history=getHistory();
+  const streak=getStreak().count||0;
+  
+  const kanjiScore=(mastery.kanji||0)*0.3;
+  const vocabScore=(mastery.vocab||0)*0.3;
+  const grammarScore=(mastery.grammar||0)*0.25;
+  const flashScore=flashStr*0.1;
+  const streakScore=Math.min(streak,30)/30*100*0.05; // 5% bonus for 30-day streak
+  
+  let total = Math.round(kanjiScore+vocabScore+grammarScore+flashScore+streakScore);
+  if(history.length === 0) total = 0; // if brand new, 0
+  return total;
+}
+
+// RESTORED ALGORITHM
+function getMilestones(){
+  const history=getHistory(); const streak=getStreak().count||0;
+  const mastery=calcMastery(); const masteredCards=getMasteredCardCount();
+  return [
+    { title:'Start Lesson 26', sub:'Begin MNN II', done:true, tag:'Done' },
+    { title:'Complete first test', sub:'Any mode', done:history.length>0, tag:history.length>0?'Done':'Do it now' },
+    { title:'5-day streak 🔥', sub:'Study 5 days in a row', done:streak>=5, tag:streak>=5?'Done':(streak>0?`${streak}/5`:'Not started') },
+    { title:'Score 70%+ on Full Test', sub:'40-question mock', done:history.some(h=>h.pct>=70&&h.mode.includes('Full')), tag:history.some(h=>h.pct>=70&&h.mode.includes('Full'))?'Done':'In progress' },
+    { title:'20 flashcards mastered', sub:'50%+ memory strength', done:masteredCards>=20, tag:masteredCards>=20?'Done':`${masteredCards}/20` },
+    { title:'Grammar mastery ≥ 70%', sub:'Including te-form verbs', done:(mastery.grammar||0)>=70, tag:(mastery.grammar||0)>=70?'Done':`${mastery.grammar||0}%` },
+    { title:'30-day continuous streak', sub:'The ultimate habit builder', done:streak>=30, tag:streak>=30?'Done':`${streak}/30` },
+    { title:'Complete Lessons 26–50', sub:'Finish the N4 textbook', done:false, tag:'Future' },
+  ];
+}
+
 function renderUnits(){
   const grid=document.getElementById('units-grid');
   document.getElementById('units-fraction').textContent = '3/25';
   grid.innerHTML=MNN_UNITS.map(u=>{
     const status=getUnitStatus(u.n); const pct=getUnitProgress(u.n);
-    return`<div class="unit-cell ${status}" onclick="openUnit(${u.n})"><div class="unit-num">${u.n}</div><div class="unit-bar"><div class="unit-bar-fill" style="width:${pct}%"></div></div></div>`;
+    return`<div class="unit-cell ${status}" onclick="haptic(); openUnit(${u.n})"><div class="unit-num">${u.n}</div><div class="unit-bar"><div class="unit-bar-fill" id="ubf-${u.n}"></div></div></div>`;
   }).join('');
+  
+  // Animate unit bars
+  setTimeout(() => {
+    MNN_UNITS.forEach(u => {
+      const el = document.getElementById(`ubf-${u.n}`);
+      if(el) el.style.width = getUnitProgress(u.n) + '%';
+    });
+  }, 100);
 }
 
 function openUnit(num){
@@ -313,11 +419,23 @@ function openUnit(num){
     <div class="modal-stat"><div class="modal-stat-val">${pct>0?pct+'%':'—'}</div><div class="modal-stat-lbl">Score</div></div>`;
   document.getElementById('modal-grammar-pills').innerHTML=u.grammar.map(g=>`<span class="grammar-pill">${g}</span>`).join('');
   const btn=document.getElementById('modal-test-btn');
-  if(status==='locked'){ btn.textContent='Locked'; btn.disabled=true; btn.style.opacity='.5'; btn.onclick=null; }
-  else{ btn.textContent='Practice this unit →'; btn.disabled=false; btn.style.opacity='1'; btn.onclick=()=>window.location.href='/'; }
+  if(status==='locked'){ btn.textContent='Locked'; btn.disabled=true; btn.style.opacity='.3'; btn.onclick=null; }
+  else{ btn.textContent='Practice this unit →'; btn.disabled=false; btn.style.opacity='1'; btn.onclick=()=>{haptic(); window.location.href='/';} }
   document.getElementById('unit-modal').classList.add('open');
 }
-function closeModal(){ document.getElementById('unit-modal').classList.remove('open'); }
+function closeModal(){ haptic(); document.getElementById('unit-modal').classList.remove('open'); }
+
+let tooltipTimeout;
+function showTip(e, text) {
+  const t = document.getElementById('hm-tooltip');
+  t.textContent = text; t.style.opacity = '1';
+  let x = e.clientX || (e.touches && e.touches[0].clientX);
+  let y = e.clientY || (e.touches && e.touches[0].clientY);
+  t.style.left = (x - 20) + 'px'; t.style.top = (y - 40) + 'px';
+  clearTimeout(tooltipTimeout);
+  tooltipTimeout = setTimeout(() => { t.style.opacity = '0'; }, 2000); // Auto hide after 2s for mobile taps
+}
+function hideTip() { document.getElementById('hm-tooltip').style.opacity = '0'; }
 
 function renderHeatmap(){
   const log=getActivityLog(); const today=new Date(); const days=[];
@@ -332,19 +450,26 @@ function renderHeatmap(){
   
   const mRow=document.getElementById('heatmap-months-row'); let lM=-1;
   mRow.innerHTML=weeks.map(w=>{
-    const f=w.find(d=>d!==null); if(!f) return '<div class="heatmap-month-label" style="flex:1;min-width:15px"></div>';
-    const m=f.date.getMonth(); if(m!==lM){ lM=m; return `<div class="heatmap-month-label" style="flex:1;min-width:15px">${f.date.toLocaleDateString('en-GB',{month:'short'})}</div>`; }
-    return '<div class="heatmap-month-label" style="flex:1;min-width:15px"></div>';
+    const f=w.find(d=>d!==null); if(!f) return '<div class="heatmap-month-label" style="flex:1;min-width:16px"></div>';
+    const m=f.date.getMonth(); if(m!==lM){ lM=m; return `<div class="heatmap-month-label" style="flex:1;min-width:16px">${f.date.toLocaleDateString('en-GB',{month:'short'})}</div>`; }
+    return '<div class="heatmap-month-label" style="flex:1;min-width:16px"></div>';
   }).join('');
 
+  let activeDays=0;
   document.getElementById('heatmap-grid').innerHTML=weeks.map(w=>
     `<div class="heatmap-week">${w.map(d=>{
       if(!d) return `<div class="heatmap-cell hm-0" style="opacity:0"></div>`;
-      const s = (d.entry?.questions||0) + (d.entry?.minutes||0)*2;
+      const q = d.entry?.questions||0; const mins = d.entry?.minutes||0;
+      const s = q + mins*2;
+      if(s > 0) activeDays++;
       const lvl = s===0?0:s<15?1:s<30?2:s<60?3:4;
-      return `<div class="heatmap-cell hm-${lvl}"></div>`;
+      const dateStr = d.date.toLocaleDateString('en-GB',{month:'short',day:'numeric'});
+      const tip = s===0 ? `${dateStr}: no activity` : `${dateStr}: ${q} Qs · ${mins} min`;
+      return `<div class="heatmap-cell hm-${lvl}" onpointerdown="showTip(event, '${tip}')" onmouseleave="hideTip()"></div>`;
     }).join('')}</div>`
   ).join('');
+
+  document.getElementById('hm-total-days').textContent = activeDays;
 
   // Auto-scroll to the right (newest data) for mobile
   setTimeout(() => {
@@ -354,14 +479,55 @@ function renderHeatmap(){
 }
 
 function render() {
-  const mastery=calcMastery(); document.getElementById('hero-pct').textContent='15%';
-  document.getElementById('journey-fill').style.width='15%'; document.getElementById('journey-marker').style.left='15%';
-  document.getElementById('st-streak').textContent=getStreak().count||0; document.getElementById('st-tests').textContent=getHistory().length;
-  document.getElementById('sk-kanji').textContent=mastery.kanji?mastery.kanji+'%':'—'; document.getElementById('sb-kanji').style.width=(mastery.kanji||0)+'%';
-  document.getElementById('sk-vocab').textContent=mastery.vocab?mastery.vocab+'%':'—'; document.getElementById('sb-vocab').style.width=(mastery.vocab||0)+'%';
-  document.getElementById('sk-grammar').textContent=mastery.grammar?mastery.grammar+'%':'—'; document.getElementById('sb-grammar').style.width=(mastery.grammar||0)+'%';
-  renderUnits(); renderHeatmap();
+  const mastery=calcMastery(); 
+  const history=getHistory();
+  const n4ready = calcN4Readiness();
+  
+  // Hero Animation
+  document.getElementById('hero-pct').textContent=n4ready+'%';
+  setTimeout(() => { document.getElementById('journey-fill').style.width=n4ready+'%'; }, 100);
+  
+  const label = n4ready<20?'Just beginning — keep it up!' : n4ready<40?'Building foundation.' : n4ready<60?'Solid progress.' : 'Almost ready!';
+  document.getElementById('journey-pct-label').textContent = label;
+
+  document.getElementById('st-streak').textContent=getStreak().count||0; 
+  document.getElementById('st-tests').textContent=history.length;
+  document.getElementById('st-cards').textContent=getMasteredCardCount();
+  const avg = history.length ? Math.round(history.reduce((s,h)=>s+h.pct,0)/history.length) : null;
+  document.getElementById('st-avg').textContent=avg!==null ? avg+'%' : '—';
+
+  // Animate skill bars
+  document.getElementById('sk-kanji').textContent=mastery.kanji?mastery.kanji+'%':'—'; 
+  document.getElementById('sk-vocab').textContent=mastery.vocab?mastery.vocab+'%':'—'; 
+  document.getElementById('sk-grammar').textContent=mastery.grammar?mastery.grammar+'%':'—'; 
+  
+  const fs = getAvgFlashStrength();
+  document.getElementById('sk-flash').textContent=fs!==null?fs+'%':'—'; 
+  
+  setTimeout(() => {
+    document.getElementById('sb-kanji').style.width=(mastery.kanji||0)+'%';
+    document.getElementById('sb-vocab').style.width=(mastery.vocab||0)+'%';
+    document.getElementById('sb-grammar').style.width=(mastery.grammar||0)+'%';
+    document.getElementById('sb-flash').style.width=(fs||0)+'%';
+  }, 200);
+
+  // Milestones
+  const ms = getMilestones();
+  const nextMs = ms.find(m => !m.done);
+  document.getElementById('milestones-list').innerHTML=ms.map(m=>{
+    const cls=m.done?'done':m===nextMs?'next':'future';
+    const icon=m.done?'✓':m===nextMs?'→':'○';
+    return`<div class="milestone-item">
+      <div class="ms-icon ${cls}">${icon}</div>
+      <div class="ms-text"><div class="ms-title${m.done?' done':''}">${m.title}</div><div class="ms-sub">${m.sub}</div></div>
+      <div class="ms-tag ${cls}">${m.tag}</div>
+    </div>`;
+  }).join('');
+
+  renderUnits(); 
+  renderHeatmap();
 }
+
 render();
 </script>
 </body>
