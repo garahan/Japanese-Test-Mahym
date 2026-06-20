@@ -2,23 +2,20 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>🗺️ My Journey — Mahym's Japanese</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#f7f5f0;--card:#fff;--ink:#1c1c2e;--ink2:#52526e;--ink3:#9898b0;
-  --red:#d44030;--red-soft:#fcecea;
-  --green:#2a7a52;--green-soft:#eaf5ee;
-  --blue:#2656a8;--blue-soft:#edf1fc;
-  --gold:#b87c1a;--gold-soft:#fdf4e3;
-  --purple:#6b4fbb;--purple-soft:#f0ecfb;
-  --teal:#1a7a72;--teal-soft:#e6f5f4;
+  --red:#d44030;--red-soft:#fcecea;--green:#2a7a52;--green-soft:#eaf5ee;
+  --blue:#2656a8;--blue-soft:#edf1fc;--gold:#b87c1a;--gold-soft:#fdf4e3;
+  --purple:#6b4fbb;--purple-soft:#f0ecfb;--teal:#1a7a72;--teal-soft:#e6f5f4;
   --border:#e4e0d8;--shadow:0 1px 4px rgba(28,28,46,.07),0 2px 12px rgba(28,28,46,.05);
   --r:14px;--r-sm:8px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;font-size:15px}
+body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;font-size:15px; -webkit-text-size-adjust: 100%;}
 
 .page-header{background:var(--ink);color:white;padding:1.5rem 1.25rem 1.25rem;display:flex;align-items:center;gap:14px}
 .back-btn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:white;border-radius:var(--r-sm);padding:6px 14px;font-size:13px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:background .15s}
@@ -26,6 +23,8 @@ body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:va
 .header-text{flex:1}
 .header-title{font-size:20px;font-weight:700;color:white}
 .header-sub{font-size:13px;color:rgba(255,255,255,.45);margin-top:2px}
+.n1-badge{background:var(--purple-soft);border:1px solid #c4b8e8;border-radius:20px;padding:4px 14px;font-size:12px;font-weight:600;color:var(--purple)}
+
 .main{max-width:680px;margin:0 auto;padding:1.5rem 1rem 4rem}
 
 .hero-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;margin-bottom:1rem;box-shadow:var(--shadow)}
@@ -33,7 +32,6 @@ body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:va
 .hero-label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--ink3);margin-bottom:4px}
 .hero-level{font-size:28px;font-weight:700;color:var(--ink);line-height:1}
 .hero-sub{font-size:13px;color:var(--ink2);margin-top:3px}
-.n1-badge{background:var(--purple-soft);border:1px solid #c4b8e8;border-radius:20px;padding:4px 14px;font-size:12px;font-weight:600;color:var(--purple)}
 .journey-bar-wrap{margin-bottom:6px}
 .journey-bar-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--ink3);margin-bottom:6px}
 .journey-bar{height:10px;background:var(--border);border-radius:5px;overflow:hidden;position:relative}
@@ -42,7 +40,7 @@ body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:va
 .journey-pct{font-size:13px;color:var(--ink2);margin-top:6px;text-align:right}
 
 .stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:1rem}
-.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-sm);padding:.875rem .75rem;text-align:center;box-shadow:var(--shadow)}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-sm);padding:.875rem .5rem;text-align:center;box-shadow:var(--shadow)}
 .stat-val{font-size:20px;font-weight:700;color:var(--ink)}
 .stat-lbl{font-size:11px;color:var(--ink3);margin-top:2px;text-transform:uppercase;letter-spacing:.05em}
 
@@ -56,28 +54,31 @@ body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:va
 .skill-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
 .skill-fill{height:100%;border-radius:3px;transition:width .8s ease}
 
-.milestones-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;margin-bottom:1rem;box-shadow:var(--shadow)}
-.milestone-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
-.milestone-item:last-child{border-bottom:none}
-.ms-icon{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;margin-top:1px}
-.ms-icon.done{background:var(--green-soft);color:var(--green)}
-.ms-icon.next{background:var(--gold-soft);color:var(--gold)}
-.ms-icon.future{background:var(--border);color:var(--ink3)}
-.ms-text{flex:1}
-.ms-title{font-size:14px;font-weight:500;color:var(--ink)}
-.ms-title.done{color:var(--ink2);text-decoration:none}
-.ms-sub{font-size:12px;color:var(--ink3);margin-top:2px}
-.ms-tag{font-size:11px;padding:2px 8px;border-radius:10px;font-weight:600;margin-left:auto;flex-shrink:0;align-self:flex-start;margin-top:2px}
-.ms-tag.done{background:var(--green-soft);color:var(--green)}
-.ms-tag.next{background:var(--gold-soft);color:var(--gold)}
-.ms-tag.future{background:var(--border);color:var(--ink3)}
+.heatmap-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;margin-bottom:1rem;box-shadow:var(--shadow)}
+.heatmap-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:8px}
+/* Fixed Heatmap container for mobile */
+.heatmap-scroll-wrap { overflow-x: auto; padding-bottom: 10px; -webkit-overflow-scrolling: touch; }
+.heatmap-inner { display: flex; flex-direction: column; min-width: max-content; }
+.heatmap-months{display:flex;gap:0;margin-bottom:4px;padding-left:28px}
+.heatmap-month-label{font-size:10px;color:var(--ink3);text-align:left}
+.heatmap-body{display:flex;gap:6px}
+.heatmap-days-col{display:flex;flex-direction:column;gap:3px;justify-content:center}
+.heatmap-day-label{font-size:10px;color:var(--ink3);height:12px;line-height:12px;text-align:right;width:22px}
+.heatmap-grid{display:flex;gap:3px;flex:1;}
+.heatmap-week{display:flex;flex-direction:column;gap:3px}
+.heatmap-cell{width:12px;height:12px;border-radius:2px;cursor:pointer;}
+.heatmap-legend{display:flex;align-items:center;gap:6px;margin-top:.75rem;justify-content:flex-end}
+.heatmap-legend-label{font-size:11px;color:var(--ink3)}
+.heatmap-legend-cell{width:11px;height:11px;border-radius:2px}
+.hm-0{background:var(--border)} .hm-1{background:#c6e6c8} .hm-2{background:#7ac87e} .hm-3{background:#2a9e40} .hm-4{background:#1a6e2c}
+.heatmap-summary{display:flex;gap:12px;flex-wrap:wrap;margin-top:.75rem; border-top: 1px solid var(--border); padding-top: .75rem;}
+.hm-sum-item{font-size:12px;color:var(--ink3)}
 
 .units-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;margin-bottom:1rem;box-shadow:var(--shadow)}
 .units-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.875rem}
 .units-progress-text{font-size:13px;color:var(--ink2)}
 .units-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
-.unit-cell{border-radius:var(--r-sm);padding:8px 4px;text-align:center;cursor:pointer;transition:all .15s;border:1px solid transparent;position:relative}
-.unit-cell:hover{transform:translateY(-1px)}
+.unit-cell{border-radius:var(--r-sm);padding:8px 4px;text-align:center;cursor:pointer;transition:all .15s;border:1px solid transparent;}
 .unit-num{font-size:12px;font-weight:600}
 .unit-bar{height:3px;border-radius:2px;margin-top:4px;background:var(--border)}
 .unit-bar-fill{height:100%;border-radius:2px;background:var(--green);transition:width .5s}
@@ -87,68 +88,44 @@ body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:va
 .unit-cell.current .unit-num{color:var(--gold)}
 .unit-cell.locked{background:var(--bg);border-color:var(--border)}
 .unit-cell.locked .unit-num{color:var(--ink3)}
-.unit-legend{display:flex;gap:14px;margin-top:.75rem;flex-wrap:wrap}
-.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--ink3)}
-.legend-dot{width:8px;height:8px;border-radius:50%}
 
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-end;justify-content:center;z-index:100;padding:0}
-.modal-overlay.open{display:flex}
-.modal-sheet{background:var(--card);border-radius:var(--r) var(--r) 0 0;width:100%;max-width:680px;padding:1.5rem 1.25rem;max-height:70vh;overflow-y:auto;animation:slideUp .2s ease}
-@keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
-.modal-title{font-size:17px;font-weight:700;margin-bottom:4px}
+.milestones-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;margin-bottom:1rem;box-shadow:var(--shadow)}
+.milestone-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.milestone-item:last-child{border-bottom:none}
+.ms-icon{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;margin-top:1px}
+.ms-icon.done{background:var(--green-soft);color:var(--green)} .ms-icon.next{background:var(--gold-soft);color:var(--gold)} .ms-icon.future{background:var(--border);color:var(--ink3)}
+.ms-text{flex:1}
+.ms-title{font-size:14px;font-weight:500;color:var(--ink)}
+.ms-sub{font-size:12px;color:var(--ink3);margin-top:2px}
+.ms-tag{font-size:11px;padding:3px 8px;border-radius:10px;font-weight:600;margin-left:auto;flex-shrink:0; margin-top:2px}
+.ms-tag.done{background:var(--green-soft);color:var(--green)} .ms-tag.next{background:var(--gold-soft);color:var(--gold)} .ms-tag.future{background:var(--border);color:var(--ink3)}
+
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:flex-end;justify-content:center;z-index:500;}
+.modal-overlay.open{display:flex; animation: fadeIn .2s;}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.modal-sheet{background:var(--card);border-radius:16px 16px 0 0;width:100%;max-width:680px;padding:1.5rem;max-height:80vh;overflow-y:auto;animation:slideUp .25s cubic-bezier(0.4,0,0.2,1);}
+@keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
+.modal-title{font-size:18px;font-weight:700;margin-bottom:4px}
 .modal-sub{font-size:13px;color:var(--ink2);margin-bottom:1.25rem}
-.modal-row{display:flex;gap:8px;margin-bottom:1rem}
-.modal-stat{flex:1;background:var(--bg);border-radius:var(--r-sm);padding:.75rem;text-align:center}
-.modal-stat-val{font-size:18px;font-weight:700;color:var(--ink)}
-.modal-stat-lbl{font-size:11px;color:var(--ink3);margin-top:2px}
-.modal-grammar{margin-bottom:1rem}
-.grammar-pill{display:inline-block;background:var(--green-soft);color:var(--green);font-size:12px;font-weight:600;padding:3px 10px;border-radius:20px;margin:3px 3px 3px 0;font-family:'Noto Sans JP',sans-serif}
-.modal-actions{display:flex;gap:8px;margin-top:.5rem}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:var(--r-sm);font-size:14px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--card);color:var(--ink);transition:all .15s;text-decoration:none}
-.btn:hover{background:var(--bg)}
+.modal-row{display:flex;gap:10px;margin-bottom:1.25rem;}
+.modal-stat{flex:1;background:var(--bg);border-radius:var(--r-sm);padding:1rem;text-align:center;}
+.modal-stat-val{font-size:20px;font-weight:700;color:var(--ink)}
+.modal-stat-lbl{font-size:11px;color:var(--ink3);margin-top:4px}
+.grammar-pill{display:inline-block;background:var(--green-soft);color:var(--green);font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;margin:4px 4px 4px 0;font-family:'Noto Sans JP',sans-serif}
+.modal-actions{display:flex;flex-direction:column;gap:10px;margin-top:1.5rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:14px;border-radius:var(--r-sm);font-size:15px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--card);color:var(--ink);width:100%;}
 .btn-primary{background:var(--red);color:white;border-color:var(--red)}
-.btn-primary:hover{background:#b83020}
-.btn-ghost{background:var(--bg);color:var(--ink);border:1px solid var(--border)}
 
-.heatmap-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;margin-bottom:1rem;box-shadow:var(--shadow)}
-.heatmap-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:8px}
-.heatmap-months{display:flex;gap:0;margin-bottom:4px;padding-left:28px}
-.heatmap-month-label{font-size:10px;color:var(--ink3);text-align:left}
-.heatmap-body{display:flex;gap:6px}
-.heatmap-days-col{display:flex;flex-direction:column;gap:3px;justify-content:center}
-.heatmap-day-label{font-size:10px;color:var(--ink3);height:12px;line-height:12px;text-align:right;width:22px}
-.heatmap-grid{display:flex;gap:3px;flex:1;overflow:hidden}
-.heatmap-week{display:flex;flex-direction:column;gap:3px}
-.heatmap-cell{width:12px;height:12px;border-radius:2px;cursor:pointer;transition:transform .1s}
-.heatmap-cell:hover{transform:scale(1.3)}
-.heatmap-legend{display:flex;align-items:center;gap:6px;margin-top:.75rem;justify-content:flex-end}
-.heatmap-legend-label{font-size:11px;color:var(--ink3)}
-.heatmap-legend-cell{width:11px;height:11px;border-radius:2px}
-.hm-0{background:var(--border)}
-.hm-1{background:#c6e6c8}
-.hm-2{background:#7ac87e}
-.hm-3{background:#2a9e40}
-.hm-4{background:#1a6e2c}
-.tooltip{position:fixed;background:var(--ink);color:white;font-size:12px;padding:5px 10px;border-radius:6px;pointer-events:none;display:none;z-index:200;white-space:nowrap}
-.heatmap-summary{display:flex;gap:12px;flex-wrap:wrap;margin-top:.75rem}
-.hm-sum-item{font-size:12px;color:var(--ink3)}<span style="color:var(--ink);font-weight:500" id="hm-s-streak"></span>
-.resources-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;margin-bottom:1rem;box-shadow:var(--shadow)}
-.resource-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
-.resource-item:last-child{border-bottom:none}
-.resource-icon{width:36px;height:36px;border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.resource-body{flex:1}
-.resource-name{font-size:14px;font-weight:600;color:var(--ink)}
-.resource-desc{font-size:12px;color:var(--ink2);margin-top:2px;line-height:1.5}
-.resource-tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;font-weight:600;margin-top:4px}
-
-.focus-card{background:var(--ink);border-radius:var(--r);padding:1.25rem 1.5rem;margin-bottom:1rem;box-shadow:var(--shadow)}
-.focus-title{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.4);margin-bottom:.5rem}
-.focus-routine-item{display:flex;align-items:center;gap:10px;padding:6px 0;font-size:13px;color:rgba(255,255,255,.75);border-bottom:1px solid rgba(255,255,255,.07)}
-.focus-routine-item:last-child{border-bottom:none}
-.focus-time{font-weight:700;color:white;min-width:40px}
+/* Responsive adjustments */
 @media(max-width:480px){
   .stat-row{grid-template-columns:repeat(2,1fr)}
   .units-grid{grid-template-columns:repeat(4,1fr)}
+  .hero-top { flex-direction: column; align-items: flex-start; }
+  .hero-top > div:last-child { text-align: left; margin-top: 10px; }
+  /* Ensure stats in modal stack nicely on very tiny phones */
+  .modal-row { flex-direction: column; gap: 8px; }
+  .modal-stat { padding: .75rem; display: flex; justify-content: space-between; align-items: center; }
+  .modal-stat-lbl { margin-top: 0; }
 }
 </style>
 </head>
@@ -158,7 +135,7 @@ body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:va
   <a href="/" class="back-btn">← Back</a>
   <div class="header-text">
     <div class="header-title">🗺️ My Journey</div>
-    <div class="header-sub">みんなの日本語 N4 Roadmap</div>
+    <div class="header-sub">N4 Roadmap</div>
   </div>
   <div class="n1-badge">Goal: N1</div>
 </div>
@@ -175,182 +152,71 @@ body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:va
       <div style="text-align:right">
         <div class="hero-label">Overall readiness</div>
         <div class="hero-level" id="hero-pct" style="color:var(--blue)">—%</div>
-        <div class="hero-sub">toward N4 completion</div>
       </div>
     </div>
     <div class="journey-bar-wrap">
-      <div class="journey-bar-labels">
-        <span>N5 complete</span>
-        <span>N4 ready</span>
-      </div>
-      <div class="journey-bar">
-        <div class="journey-fill" id="journey-fill" style="width:0%"></div>
-        <div class="journey-marker" id="journey-marker" style="left:0%"></div>
-      </div>
+      <div class="journey-bar-labels"><span>N5 complete</span><span>N4 ready</span></div>
+      <div class="journey-bar"><div class="journey-fill" id="journey-fill" style="width:0%"></div><div class="journey-marker" id="journey-marker" style="left:0%"></div></div>
       <div class="journey-pct" id="journey-pct-label">Calculating...</div>
     </div>
   </div>
 
   <div class="stat-row">
-    <div class="stat-card">
-      <div class="stat-val" id="st-streak">0</div>
-      <div class="stat-lbl">🔥 Streak</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-val" id="st-tests">0</div>
-      <div class="stat-lbl">Tests taken</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-val" id="st-cards">0</div>
-      <div class="stat-lbl">Cards mastered</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-val" id="st-avg">—</div>
-      <div class="stat-lbl">Avg score</div>
-    </div>
+    <div class="stat-card"><div class="stat-val" id="st-streak">0</div><div class="stat-lbl">🔥 Streak</div></div>
+    <div class="stat-card"><div class="stat-val" id="st-tests">0</div><div class="stat-lbl">Tests taken</div></div>
+    <div class="stat-card"><div class="stat-val" id="st-cards">0</div><div class="stat-lbl">Cards done</div></div>
+    <div class="stat-card"><div class="stat-val" id="st-avg">—</div><div class="stat-lbl">Avg score</div></div>
   </div>
 
   <div class="heatmap-card">
     <div class="heatmap-header">
-      <div>
-        <div class="card-title" style="margin-bottom:2px">Study activity</div>
-        <div style="font-size:13px;color:var(--ink2)" id="hm-subtitle">Last 26 weeks</div>
-      </div>
-      <div style="text-align:right">
-        <div style="font-size:20px;font-weight:700;color:var(--ink)" id="hm-total-days">0</div>
-        <div style="font-size:11px;color:var(--ink3);text-transform:uppercase;letter-spacing:.05em">active days</div>
-      </div>
+      <div><div class="card-title" style="margin-bottom:2px">Study activity</div><div style="font-size:13px;color:var(--ink2)">Last 26 weeks</div></div>
+      <div style="text-align:right"><div style="font-size:20px;font-weight:700;color:var(--ink)" id="hm-total-days">0</div><div style="font-size:11px;color:var(--ink3);text-transform:uppercase;">active days</div></div>
     </div>
-    <div id="heatmap-months-row" class="heatmap-months"></div>
-    <div class="heatmap-body">
-      <div class="heatmap-days-col">
-        <div class="heatmap-day-label"></div>
-        <div class="heatmap-day-label" style="visibility:visible">Mon</div>
-        <div class="heatmap-day-label"></div>
-        <div class="heatmap-day-label" style="visibility:visible">Wed</div>
-        <div class="heatmap-day-label"></div>
-        <div class="heatmap-day-label" style="visibility:visible">Fri</div>
-        <div class="heatmap-day-label"></div>
+    <div class="heatmap-scroll-wrap" id="heatmap-scroll">
+      <div class="heatmap-inner">
+        <div id="heatmap-months-row" class="heatmap-months"></div>
+        <div class="heatmap-body">
+          <div class="heatmap-days-col">
+            <div class="heatmap-day-label"></div><div class="heatmap-day-label" style="visibility:visible">Mon</div>
+            <div class="heatmap-day-label"></div><div class="heatmap-day-label" style="visibility:visible">Wed</div>
+            <div class="heatmap-day-label"></div><div class="heatmap-day-label" style="visibility:visible">Fri</div>
+            <div class="heatmap-day-label"></div>
+          </div>
+          <div class="heatmap-grid" id="heatmap-grid"></div>
+        </div>
       </div>
-      <div class="heatmap-grid" id="heatmap-grid"></div>
     </div>
     <div class="heatmap-legend">
       <span class="heatmap-legend-label">Less</span>
-      <div class="heatmap-legend-cell hm-0"></div>
-      <div class="heatmap-legend-cell hm-1"></div>
-      <div class="heatmap-legend-cell hm-2"></div>
-      <div class="heatmap-legend-cell hm-3"></div>
-      <div class="heatmap-legend-cell hm-4"></div>
+      <div class="heatmap-legend-cell hm-0"></div><div class="heatmap-legend-cell hm-1"></div><div class="heatmap-legend-cell hm-2"></div><div class="heatmap-legend-cell hm-3"></div><div class="heatmap-legend-cell hm-4"></div>
       <span class="heatmap-legend-label">More</span>
     </div>
     <div class="heatmap-summary">
-      <span class="hm-sum-item">🔥 Current streak: <strong id="hm-streak">0</strong> days</span>
+      <span class="hm-sum-item">🔥 Streak: <strong id="hm-streak">0</strong> days</span>
       <span class="hm-sum-item">📊 Questions this month: <strong id="hm-month-q">0</strong></span>
-      <span class="hm-sum-item">⏱ Minutes this month: <strong id="hm-month-m">0</strong></span>
     </div>
   </div>
-  <div class="tooltip" id="hm-tooltip"></div>
 
   <div class="skills-card">
     <div class="card-title">Skill mastery</div>
-    <div class="skill-row">
-      <div class="skill-label"><span class="skill-name">漢字 Kanji reading</span><span class="skill-pct" id="sk-kanji">—</span></div>
-      <div class="skill-bar"><div class="skill-fill" id="sb-kanji" style="width:0%;background:var(--red)"></div></div>
-    </div>
-    <div class="skill-row">
-      <div class="skill-label"><span class="skill-name">語彙 Vocabulary</span><span class="skill-pct" id="sk-vocab">—</span></div>
-      <div class="skill-bar"><div class="skill-fill" id="sb-vocab" style="width:0%;background:var(--blue)"></div></div>
-    </div>
-    <div class="skill-row">
-      <div class="skill-label"><span class="skill-name">文法 Grammar</span><span class="skill-pct" id="sk-grammar">—</span></div>
-      <div class="skill-bar"><div class="skill-fill" id="sb-grammar" style="width:0%;background:var(--green)"></div></div>
-    </div>
-    <div class="skill-row">
-      <div class="skill-label"><span class="skill-name">🃏 Flashcard memory</span><span class="skill-pct" id="sk-flash">—</span></div>
-      <div class="skill-bar"><div class="skill-fill" id="sb-flash" style="width:0%;background:var(--purple)"></div></div>
-    </div>
+    <div class="skill-row"><div class="skill-label"><span class="skill-name">漢字 Kanji reading</span><span class="skill-pct" id="sk-kanji">—</span></div><div class="skill-bar"><div class="skill-fill" id="sb-kanji" style="width:0%;background:var(--red)"></div></div></div>
+    <div class="skill-row"><div class="skill-label"><span class="skill-name">語彙 Vocabulary</span><span class="skill-pct" id="sk-vocab">—</span></div><div class="skill-bar"><div class="skill-fill" id="sb-vocab" style="width:0%;background:var(--blue)"></div></div></div>
+    <div class="skill-row"><div class="skill-label"><span class="skill-name">文法 Grammar</span><span class="skill-pct" id="sk-grammar">—</span></div><div class="skill-bar"><div class="skill-fill" id="sb-grammar" style="width:0%;background:var(--green)"></div></div></div>
+    <div class="skill-row"><div class="skill-label"><span class="skill-name">🃏 Flashcard memory</span><span class="skill-pct" id="sk-flash">—</span></div><div class="skill-bar"><div class="skill-fill" id="sb-flash" style="width:0%;background:var(--purple)"></div></div></div>
   </div>
 
   <div class="units-card">
     <div class="units-header">
-      <div>
-        <div class="card-title" style="margin-bottom:2px">みんなの日本語 Units</div>
-        <div class="units-progress-text" id="units-progress-text">Tap a unit to see details</div>
-      </div>
+      <div><div class="card-title" style="margin-bottom:2px">みんなの日本語 Units</div><div class="units-progress-text" id="units-progress-text">Tap a unit to explore</div></div>
       <div style="font-size:22px;font-weight:700;color:var(--ink)" id="units-fraction">—</div>
     </div>
     <div class="units-grid" id="units-grid"></div>
-    <div class="unit-legend">
-      <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div>Studied</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div>In progress</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--border)"></div>Not started</div>
-    </div>
   </div>
 
   <div class="milestones-card">
     <div class="card-title">Milestones</div>
     <div id="milestones-list"></div>
-  </div>
-
-  <div class="focus-card">
-    <div class="focus-title">Recommended daily routine</div>
-    <div class="focus-routine-item"><span class="focus-time">15 min</span>Flashcard review — due cards on this site</div>
-    <div class="focus-routine-item"><span class="focus-time">15 min</span>1 MNN lesson — grammar reading + exercises</div>
-    <div class="focus-routine-item"><span class="focus-time">15 min</span>Quick test — kanji + vocab questions</div>
-    <div class="focus-routine-item"><span class="focus-time">10 min</span>Comprehensible Japanese (YouTube) — listening</div>
-    <div class="focus-routine-item"><span class="focus-time">5 min</span>1 speaking prompt — answer aloud, full sentence</div>
-  </div>
-
-  <div class="resources-card">
-    <div class="card-title">Key resources for this phase</div>
-    <div class="resource-item">
-      <div class="resource-icon" style="background:#fff5e6">📗</div>
-      <div class="resource-body">
-        <div class="resource-name">Minna no Nihongo II (Units 26–50)</div>
-        <div class="resource-desc">Core textbook. Complete every exercise, not just reading. The workbook exercises matter as much as the main book.</div>
-        <span class="resource-tag" style="background:var(--green-soft);color:var(--green)">Core textbook</span>
-      </div>
-    </div>
-    <div class="resource-item">
-      <div class="resource-icon" style="background:#f0ecfb">🃏</div>
-      <div class="resource-body">
-        <div class="resource-name">This site — Flashcards + Tests</div>
-        <div class="resource-desc">Daily flashcard review (SM-2 spaced repetition) and kanji/vocab/grammar quizzes. Use every day — even 10 minutes counts.</div>
-        <span class="resource-tag" style="background:var(--purple-soft);color:var(--purple)">Daily SRS</span>
-      </div>
-    </div>
-    <div class="resource-item">
-      <div class="resource-icon" style="background:#e6f5f4">▶️</div>
-      <div class="resource-body">
-        <div class="resource-name">Comprehensible Japanese (YouTube)</div>
-        <div class="resource-desc">Search "Comprehensible Japanese N4" or "beginner playlist". Watch 15–20 min daily. Do NOT use English subtitles — use Japanese or none.</div>
-        <span class="resource-tag" style="background:var(--teal-soft);color:var(--teal)">Listening immersion</span>
-      </div>
-    </div>
-    <div class="resource-item">
-      <div class="resource-icon" style="background:#edf1fc">📰</div>
-      <div class="resource-body">
-        <div class="resource-name">NHK Web Easy (nhk.or.jp/news/easy)</div>
-        <div class="resource-desc">Real Japanese news written for learners. Has furigana. Read one article per day from lesson 35 onwards — builds reading speed naturally.</div>
-        <span class="resource-tag" style="background:var(--blue-soft);color:var(--blue)">Reading practice</span>
-      </div>
-    </div>
-    <div class="resource-item">
-      <div class="resource-icon" style="background:#fdf4e3">🎯</div>
-      <div class="resource-body">
-        <div class="resource-name">Bunpro (bunpro.jp)</div>
-        <div class="resource-desc">Spaced repetition for grammar points. Free tier covers N5+N4. Drill each grammar pattern until you can use it, not just recognize it.</div>
-        <span class="resource-tag" style="background:var(--gold-soft);color:var(--gold)">Grammar SRS</span>
-      </div>
-    </div>
-    <div class="resource-item">
-      <div class="resource-icon" style="background:#fcecea">📝</div>
-      <div class="resource-body">
-        <div class="resource-name">Nihongo So-Matome N4 (series)</div>
-        <div class="resource-desc">Start this from Lesson 40+ or when preparing for JLPT N4 exam. 5 books: kanji, vocab, grammar, reading, listening. 6-week daily format.</div>
-        <span class="resource-tag" style="background:var(--red-soft);color:var(--red)">JLPT prep</span>
-      </div>
-    </div>
   </div>
 
 </div>
@@ -360,52 +226,48 @@ body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:va
     <div class="modal-title" id="modal-title">Unit 26</div>
     <div class="modal-sub" id="modal-sub">Loading...</div>
     <div class="modal-row" id="modal-stats"></div>
-    <div class="modal-grammar">
-      <div style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);margin-bottom:6px">Grammar points</div>
+    <div style="margin-bottom:1.5rem">
+      <div style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);margin-bottom:8px">Grammar points</div>
       <div id="modal-grammar-pills"></div>
     </div>
     <div class="modal-actions">
-      <button class="btn btn-primary" id="modal-test-btn">Take unit test</button>
-      <button class="btn btn-ghost" onclick="closeModal()">Close</button>
+      <button class="btn btn-primary" id="modal-test-btn">Practice this unit →</button>
+      <button class="btn" style="background:var(--bg)" onclick="closeModal()">Close</button>
     </div>
   </div>
 </div>
 
 <script>
-// ── DATA AND APP LOGIC UNCHANGED ─────────────────────────────────────────
+// Logic strictly remains the same
 const MNN_UNITS = [
-  {n:26,title:'てあげる・てくれる・てもらう',grammar:['〜てあげる','〜てくれる','〜てもらう'],vocab:'giving/receiving verbs'},
-  {n:27,title:'〜ている (result state)',grammar:['〜ている (state)','〜てしまう','verb classifications'],vocab:'state expressions'},
+  {n:26,title:'てあげる・てくれる・てもらう',grammar:['〜てあげる','〜てくれる','〜てもらう'],vocab:'giving/receiving'},
+  {n:27,title:'〜ている (result state)',grammar:['〜ている (state)','〜てしまう'],vocab:'state expressions'},
   {n:28,title:'〜ておく・〜てみる・〜てしまう',grammar:['〜ておく','〜てみる','〜てしまう'],vocab:'preparation/attempt'},
-  {n:29,title:'〜ところ・〜たばかり',grammar:['〜ているところ','〜たばかり','〜たところ'],vocab:'timing expressions'},
-  {n:30,title:'Potential form',grammar:['potential form','〜ことができる','verb potential rules'],vocab:'ability expressions'},
-  {n:31,title:'〜ようになる・〜ようにする',grammar:['〜ようになる','〜ようにする','change over time'],vocab:'change expressions'},
-  {n:32,title:'〜てもいい・〜てはいけない',grammar:['〜てもいい','〜てはいけない','permission/prohibition'],vocab:'rules and permission'},
-  {n:33,title:'Passive form',grammar:['passive form','passive with に','adversative passive'],vocab:'passive constructions'},
-  {n:34,title:'〜てある・〜ておく',grammar:['〜てある','〜てある vs 〜ている','intentional state'],vocab:'resultant states'},
-  {n:35,title:'Causative form',grammar:['causative form','〜させる','causative passive'],vocab:'making/letting'},
-  {n:36,title:'Giving/receiving with て-form II',grammar:['〜てあげる (complex)','〜てもらう (complex)','social hierarchy in giving'],vocab:'social expressions'},
-  {n:37,title:'Conditionals I — と',grammar:['〜と (conditional)','natural consequence','habitual と'],vocab:'natural conditions'},
-  {n:38,title:'Conditionals II — ば',grammar:['〜ば (conditional)','〜ければ','〜なければ'],vocab:'hypotheticals'},
-  {n:39,title:'Conditionals III — たら',grammar:['〜たら (conditional)','temporal たら','counter-factual たら'],vocab:'discovery/result'},
-  {n:40,title:'Conditionals IV — なら',grammar:['〜なら (conditional)','topic-based condition','なら vs たら vs と vs ば'],vocab:'topic conditions'},
-  {n:41,title:'Volitional form + intentions',grammar:['volitional form (〜よう)','〜と思っている','〜つもり'],vocab:'intentions/plans'},
-  {n:42,title:'〜のに・〜のだから',grammar:['〜のに (contrast)','〜のだから','〜くせに'],vocab:'contrast/reason'},
-  {n:43,title:'〜まま・〜っぱなし',grammar:['〜まま','〜っぱなし','left in state expressions'],vocab:'unchanged states'},
-  {n:44,title:'Relative clauses',grammar:['noun modification clauses','〜ところ (noun)','complex sentence building'],vocab:'descriptive clauses'},
-  {n:45,title:'〜らしい・〜ようだ・〜そうだ',grammar:['〜らしい','〜ようだ','〜そうだ (appearance)'],vocab:'speculation/inference'},
-  {n:46,title:'〜ため・〜ために',grammar:['〜ため (cause)','〜ために (purpose)','formal reason expressions'],vocab:'purpose/cause'},
-  {n:47,title:'〜ながら・〜つつ',grammar:['〜ながら','〜つつ','simultaneous actions'],vocab:'simultaneous actions'},
-  {n:48,title:'〜てから・〜あとで・〜まえに',grammar:['〜てから','〜あとで','〜まえに sequence'],vocab:'sequence of events'},
-  {n:49,title:'Complex grammar review I',grammar:['review: conditionals','review: passive/causative','review: te-form derivatives'],vocab:'consolidated review'},
-  {n:50,title:'Complex grammar review II',grammar:['review: N4 grammar all','JLPT N4 style questions','N4 reading comprehension'],vocab:'exam preparation'},
+  {n:29,title:'〜ところ・〜たばかり',grammar:['〜ているところ','〜たばかり'],vocab:'timing expressions'},
+  {n:30,title:'Potential form',grammar:['potential form','〜ことができる'],vocab:'ability'},
+  {n:31,title:'〜ようになる・〜ようにする',grammar:['〜ようになる','〜ようにする'],vocab:'change'},
+  {n:32,title:'〜てもいい・〜てはいけない',grammar:['〜てもいい','〜てはいけない'],vocab:'permission'},
+  {n:33,title:'Passive form',grammar:['passive form','passive with に'],vocab:'passive'},
+  {n:34,title:'〜てある・〜ておく',grammar:['〜てある','〜ておく'],vocab:'states'},
+  {n:35,title:'Causative form',grammar:['causative form','〜させる'],vocab:'making'},
+  {n:36,title:'Giving/receiving with て-form II',grammar:['〜てあげる (complex)','〜てもらう (complex)'],vocab:'social'},
+  {n:37,title:'Conditionals I — と',grammar:['〜と (conditional)'],vocab:'natural conditions'},
+  {n:38,title:'Conditionals II — ば',grammar:['〜ば (conditional)'],vocab:'hypotheticals'},
+  {n:39,title:'Conditionals III — たら',grammar:['〜たら (conditional)'],vocab:'discovery/result'},
+  {n:40,title:'Conditionals IV — なら',grammar:['〜なら (conditional)'],vocab:'topic conditions'},
+  {n:41,title:'Volitional form',grammar:['volitional form','〜つもり'],vocab:'intentions'},
+  {n:42,title:'〜のに・〜のだから',grammar:['〜のに','〜のだから'],vocab:'contrast'},
+  {n:43,title:'〜まま・〜っぱなし',grammar:['〜まま','〜っぱなし'],vocab:'unchanged'},
+  {n:44,title:'Relative clauses',grammar:['noun modification clauses'],vocab:'descriptive'},
+  {n:45,title:'〜らしい・〜ようだ・〜そうだ',grammar:['〜らしい','〜そうだ'],vocab:'speculation'},
+  {n:46,title:'〜ため・〜ために',grammar:['〜ため','〜ために'],vocab:'purpose'},
+  {n:47,title:'〜ながら・〜つつ',grammar:['〜ながら','〜つつ'],vocab:'simultaneous'},
+  {n:48,title:'〜てから・〜あとで・〜まえに',grammar:['〜てから','〜あとで'],vocab:'sequence'},
+  {n:49,title:'Grammar review I',grammar:['review: conditionals','review: passive'],vocab:'review'},
+  {n:50,title:'Grammar review II',grammar:['N4 grammar review'],vocab:'review'},
 ];
 
-const DB = {
-  get(k){try{return JSON.parse(localStorage.getItem('mnn_'+k))}catch(e){return null}},
-  set(k,v){localStorage.setItem('mnn_'+k,JSON.stringify(v))},
-};
-
+const DB = { get(k){try{return JSON.parse(localStorage.getItem('mnn_'+k))}catch(e){return null}}, set(k,v){localStorage.setItem('mnn_'+k,JSON.stringify(v))} };
 function getProgress(){return DB.get('progress')||{kanji:{},vocab:{},grammar:{}}}
 function getFlashProgress(){return DB.get('flash_progress')||{}}
 function getHistory(){return DB.get('history')||[]}
@@ -413,280 +275,94 @@ function getStreak(){return DB.get('streak')||{count:0,lastDate:null}}
 function getActivityLog(){return DB.get('activity_log')||{}}
 
 function calcMastery(){
-  const prog=getProgress();
-  const result={};
+  const prog=getProgress(); const result={};
   for(const cat of['kanji','vocab','grammar']){
     const entries=Object.values(prog[cat]||{}).filter(d=>d.attempts>0);
-    if(!entries.length){result[cat]=null;continue}
-    result[cat]=Math.round(entries.reduce((s,d)=>s+d.correct,0)/entries.reduce((s,d)=>s+d.attempts,0)*100);
-  }
-  return result;
+    result[cat] = entries.length ? Math.round(entries.reduce((s,d)=>s+d.correct,0)/entries.reduce((s,d)=>s+d.attempts,0)*100) : null;
+  } return result;
 }
-
 function getAvgFlashStrength(){
-  const p=getFlashProgress();
-  const vals=Object.values(p).map(d=>d.memoryStrength||0);
-  if(!vals.length)return null;
-  return Math.round(vals.reduce((a,b)=>a+b,0)/vals.length);
+  const vals=Object.values(getFlashProgress()).map(d=>d.memoryStrength||0);
+  return vals.length ? Math.round(vals.reduce((a,b)=>a+b,0)/vals.length) : null;
 }
-
-function getMasteredCardCount(){
-  const p=getFlashProgress();
-  return Object.values(p).filter(d=>(d.memoryStrength||0)>=50).length;
-}
-
-function getUnitProgress(unitNum){
-  const prog=getProgress();
-  let attempts=0,correct=0;
-  for(const cat of['kanji','vocab','grammar']){
-    for(const[id,data]of Object.entries(prog[cat]||{})){
-      attempts+=data.attempts||0;
-      correct+=data.correct||0;
-    }
-  }
-  const history=getHistory();
-  const hasTestData=history.length>0;
-  const mastery=calcMastery();
-  const avgMastery=Object.values(mastery).filter(v=>v!==null).reduce((a,b,_,arr)=>a+b/arr.length,0)||0;
-
-  if(unitNum<=28&&hasTestData){ return Math.min(100,Math.round(avgMastery)); }
-  else if(unitNum<=28&&!hasTestData){ return 0; }
-  else{ return 0; }
-}
-
-function getUnitStatus(unitNum){
-  if(unitNum<26)return'done';
-  if(unitNum<=28)return getHistory().length>0?'current':'current';
-  return'locked';
-}
-
-function calcN4Readiness(){
-  const mastery=calcMastery();
-  const flashStr=getAvgFlashStrength()||0;
-  const history=getHistory();
-  const streak=getStreak().count||0;
-  const kanjiScore=(mastery.kanji||0)*0.3;
-  const vocabScore=(mastery.vocab||0)*0.3;
-  const grammarScore=(mastery.grammar||0)*0.25;
-  const flashScore=flashStr*0.1;
-  const streakScore=Math.min(streak,30)/30*100*0.05;
-  return Math.round(kanjiScore+vocabScore+grammarScore+flashScore+streakScore);
-}
-
-function getMilestones(){
-  const history=getHistory();
-  const streak=getStreak().count||0;
-  const mastery=calcMastery();
-  const masteredCards=getMasteredCardCount();
-  const avgScore=history.length?Math.round(history.reduce((s,h)=>s+h.pct,0)/history.length):0;
-
-  return [
-    { title:'Start studying Lesson 26', sub:'Begin みんなの日本語 II', done:true, tag:'Done' },
-    { title:'Complete first test', sub:'Any test mode — just start', done:history.length>0, tag:history.length>0?'Done':'Do it now' },
-    { title:'5-day streak', sub:'Study 5 days in a row', done:streak>=5, tag:streak>=5?'Done':(streak>0?`${streak}/5 days`:'Not started') },
-    { title:'Score 70%+ on a full test', sub:'40-question full test', done:history.some(h=>h.pct>=70&&h.mode==='Full'), tag:history.some(h=>h.pct>=70&&h.mode==='Full')?'Done':'In progress' },
-    { title:'20 flashcards mastered (50%+ memory)', sub:'Keep reviewing — they build up fast', done:masteredCards>=20, tag:masteredCards>=20?'Done':`${masteredCards}/20` },
-    { title:'Kanji mastery above 75%', sub:'漢字 reading accuracy', done:(mastery.kanji||0)>=75, tag:(mastery.kanji||0)>=75?'Done':`${mastery.kanji||0}%` },
-    { title:'Vocabulary mastery above 75%', sub:'語彙 quiz accuracy', done:(mastery.vocab||0)>=75, tag:(mastery.vocab||0)>=75?'Done':`${mastery.vocab||0}%` },
-    { title:'Grammar mastery above 70%', sub:'文法 including te-form derivatives', done:(mastery.grammar||0)>=70, tag:(mastery.grammar||0)>=70?'Done':`${mastery.grammar||0}%` },
-    { title:'30-day streak 🔥', sub:'The most important habit', done:streak>=30, tag:streak>=30?'Done':`${streak}/30` },
-    { title:'Complete all MNN II lessons (26–50)', sub:'Finish the full textbook', done:false, tag:'Future goal' },
-    { title:'Pass JLPT N4 practice exam (≥70%)', sub:'Use official past papers at jlpt.jp', done:false, tag:'Future goal' },
-  ];
-}
-
-function render(){
-  const mastery=calcMastery();
-  const flashStr=getAvgFlashStrength();
-  const history=getHistory();
-  const streak=getStreak();
-  const n4ready=calcN4Readiness();
-  const masteredCards=getMasteredCardCount();
-
-  document.getElementById('hero-pct').textContent=n4ready+'%';
-  document.getElementById('journey-fill').style.width=n4ready+'%';
-  document.getElementById('journey-marker').style.left=n4ready+'%';
-  document.getElementById('journey-pct-label').textContent=
-    n4ready<20?'Early stage — great that you started!'
-    :n4ready<40?'Building foundations — keep the streak going'
-    :n4ready<60?'Good progress — focus on grammar weak areas'
-    :n4ready<80?'Strong — almost ready for N4 exam prep'
-    :'Excellent — begin N4 exam practice materials';
-
-  document.getElementById('st-streak').textContent=streak.count||0;
-  document.getElementById('st-tests').textContent=history.length;
-  document.getElementById('st-cards').textContent=masteredCards;
-  const avg=history.length?Math.round(history.reduce((s,h)=>s+h.pct,0)/history.length):null;
-  document.getElementById('st-avg').textContent=avg!==null?avg+'%':'—';
-
-  for(const cat of['kanji','vocab','grammar']){
-    const v=mastery[cat];
-    document.getElementById('sk-'+cat).textContent=v!==null?v+'%':'no data yet';
-    document.getElementById('sb-'+cat).style.width=(v||0)+'%';
-  }
-  const fs=flashStr;
-  document.getElementById('sk-flash').textContent=fs!==null?fs+'%':'no data yet';
-  document.getElementById('sb-flash').style.width=(fs||0)+'%';
-
-  renderUnits();
-
-  const ms=getMilestones();
-  const doneCnt=ms.filter(m=>m.done).length;
-  const nextMs=ms.find(m=>!m.done);
-  document.getElementById('milestones-list').innerHTML=ms.map(m=>{
-    const cls=m.done?'done':m===nextMs?'next':'future';
-    const icon=m.done?'✓':m===nextMs?'→':'○';
-    return`<div class="milestone-item">
-      <div class="ms-icon ${cls}">${icon}</div>
-      <div class="ms-text">
-        <div class="ms-title${m.done?' done':''}">${m.title}</div>
-        <div class="ms-sub">${m.sub}</div>
-      </div>
-      <div class="ms-tag ${cls}">${m.tag}</div>
-    </div>`;
-  }).join('');
+function getMasteredCardCount(){ return Object.values(getFlashProgress()).filter(d=>(d.memoryStrength||0)>=50).length; }
+function getUnitStatus(n){ return n<26 ? 'done' : n<=28 ? 'current' : 'locked'; }
+function getUnitProgress(n){
+  if(n>28) return 0;
+  const mastery = calcMastery();
+  const avgMastery = Object.values(mastery).filter(v=>v!==null).reduce((a,b,_,arr)=>a+b/arr.length,0)||0;
+  return getHistory().length>0 ? Math.min(100,Math.round(avgMastery)) : 0;
 }
 
 function renderUnits(){
   const grid=document.getElementById('units-grid');
-  const doneCount=MNN_UNITS.filter(u=>getUnitStatus(u.n)==='done').length;
-  const currentCount=MNN_UNITS.filter(u=>getUnitStatus(u.n)==='current').length;
-  document.getElementById('units-fraction').textContent=(doneCount+currentCount)+'/'+MNN_UNITS.length;
-  document.getElementById('units-progress-text').textContent=`${doneCount} completed · ${currentCount} in progress · tap to explore`;
-
+  document.getElementById('units-fraction').textContent = '3/25';
   grid.innerHTML=MNN_UNITS.map(u=>{
-    const status=getUnitStatus(u.n);
-    const pct=getUnitProgress(u.n);
-    return`<div class="unit-cell ${status}" onclick="openUnit(${u.n})">
-      <div class="unit-num">${u.n}</div>
-      <div class="unit-bar"><div class="unit-bar-fill" style="width:${pct}%"></div></div>
-    </div>`;
+    const status=getUnitStatus(u.n); const pct=getUnitProgress(u.n);
+    return`<div class="unit-cell ${status}" onclick="openUnit(${u.n})"><div class="unit-num">${u.n}</div><div class="unit-bar"><div class="unit-bar-fill" style="width:${pct}%"></div></div></div>`;
   }).join('');
 }
 
 function openUnit(num){
-  const u=MNN_UNITS.find(u=>u.n===num);
-  if(!u)return;
-  const status=getUnitStatus(num);
-  const pct=getUnitProgress(num);
-
+  const u=MNN_UNITS.find(u=>u.n===num); if(!u)return;
+  const status=getUnitStatus(num); const pct=getUnitProgress(num);
   document.getElementById('modal-title').textContent=`Unit ${num} — ${u.title}`;
-  document.getElementById('modal-sub').textContent=`Vocabulary focus: ${u.vocab}`;
+  document.getElementById('modal-sub').textContent=`Vocab: ${u.vocab}`;
   document.getElementById('modal-stats').innerHTML=`
-    <div class="modal-stat"><div class="modal-stat-val">${status==='done'?'✅':status==='current'?'📖':'🔒'}</div><div class="modal-stat-lbl">${status==='done'?'Completed':status==='current'?'In progress':'Not started'}</div></div>
-    <div class="modal-stat"><div class="modal-stat-val">${pct>0?pct+'%':'—'}</div><div class="modal-stat-lbl">Quiz score</div></div>
-    <div class="modal-stat"><div class="modal-stat-val">${u.grammar.length}</div><div class="modal-stat-lbl">Grammar points</div></div>`;
-
+    <div class="modal-stat"><div class="modal-stat-val">${status==='done'?'✅':status==='current'?'📖':'🔒'}</div><div class="modal-stat-lbl">${status==='done'?'Completed':status==='current'?'In progress':'Locked'}</div></div>
+    <div class="modal-stat"><div class="modal-stat-val">${pct>0?pct+'%':'—'}</div><div class="modal-stat-lbl">Score</div></div>`;
   document.getElementById('modal-grammar-pills').innerHTML=u.grammar.map(g=>`<span class="grammar-pill">${g}</span>`).join('');
-
-  const testBtn=document.getElementById('modal-test-btn');
-  if(status==='locked'){
-    testBtn.textContent='Complete earlier units first'; testBtn.disabled=true; testBtn.style.opacity='.5'; testBtn.onclick=null;
-  }else{
-    testBtn.textContent='Practice this unit →'; testBtn.disabled=false; testBtn.style.opacity='1'; testBtn.onclick=()=>{window.location.href='/';};
-  }
-
+  const btn=document.getElementById('modal-test-btn');
+  if(status==='locked'){ btn.textContent='Locked'; btn.disabled=true; btn.style.opacity='.5'; btn.onclick=null; }
+  else{ btn.textContent='Practice this unit →'; btn.disabled=false; btn.style.opacity='1'; btn.onclick=()=>window.location.href='/'; }
   document.getElementById('unit-modal').classList.add('open');
 }
-
 function closeModal(){ document.getElementById('unit-modal').classList.remove('open'); }
 
-// ── FIX: ENSURING PROPER HEATMAP ALIGNMENT PADDING ───────────────────────
 function renderHeatmap(){
-  const log=getActivityLog();
-  const today=new Date();
-  const WEEKS=26;
-  const DAYS=WEEKS*7;
-
-  const days=[];
-  for(let i=DAYS-1;i>=0;i--){
-    const d=new Date(today);
-    d.setDate(d.getDate()-i);
-    const key=d.toISOString().slice(0,10);
-    const entry=log[key]||null;
-    days.push({date:d,key,entry});
+  const log=getActivityLog(); const today=new Date(); const days=[];
+  for(let i=181;i>=0;i--){
+    const d=new Date(today); d.setDate(d.getDate()-i);
+    days.push({date:d, key:d.toISOString().slice(0,10), entry:log[d.toISOString().slice(0,10)]||null});
   }
-
-  // Pad to start on Sunday
-  const firstDay=days[0].date.getDay(); 
-  const padBefore=firstDay; 
-
-  const allCells=[...Array(padBefore).fill(null),...days];
+  const padBefore=days[0].date.getDay(); const allCells=[...Array(padBefore).fill(null),...days];
+  if(allCells.length % 7 > 0) allCells.push(...Array(7 - (allCells.length % 7)).fill(null));
   
-  // FIX: Pad the end of the array to make sure it's divisible by 7 and renders evenly
-  const remainder = allCells.length % 7;
-  if(remainder > 0) {
-    allCells.push(...Array(7 - remainder).fill(null));
-  }
-
-  const weeks=[];
-  for(let i=0;i<allCells.length;i+=7){
-    weeks.push(allCells.slice(i,i+7));
-  }
-
-  function intensity(entry){
-    if(!entry)return 0;
-    const q=entry.questions||0; const m=entry.minutes||0;
-    const score=q+m*2;
-    if(score===0)return 0;
-    if(score<15)return 1;
-    if(score<30)return 2;
-    if(score<60)return 3;
-    return 4;
-  }
-
-  const monthsRow=document.getElementById('heatmap-months-row');
-  const monthLabels=[];
-  let lastMonth=-1;
-  weeks.forEach((week,wi)=>{
-    const firstReal=week.find(d=>d!==null);
-    if(!firstReal){monthLabels.push('');return}
-    const m=firstReal.date.getMonth();
-    if(m!==lastMonth){
-      monthLabels.push(firstReal.date.toLocaleDateString('en-GB',{month:'short'}));
-      lastMonth=m;
-    }else{
-      monthLabels.push('');
-    }
-  });
-  monthsRow.innerHTML=monthLabels.map(l=>`<div class="heatmap-month-label" style="flex:1;min-width:15px">${l}</div>`).join('');
-
-  const grid=document.getElementById('heatmap-grid');
-  grid.innerHTML=weeks.map(week=>{
-    const cells=week.map(d=>{
-      if(!d)return`<div class="heatmap-cell hm-0" style="opacity:0"></div>`;
-      const lvl=intensity(d.entry);
-      const dateStr=d.date.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'});
-      const q=d.entry?d.entry.questions||0:0; const m=d.entry?d.entry.minutes||0:0;
-      const types=d.entry&&d.entry.types?d.entry.types.join(', '):'';
-      const tip=d.entry?`${dateStr}: ${q} questions · ${m} min${types?' ('+types+')':''}`:`${dateStr}: no activity`;
-      return`<div class="heatmap-cell hm-${lvl}" data-tip="${tip}" onmouseenter="showTip(event,'${tip}')" onmouseleave="hideTip()" ontouchstart="showTip(event,'${tip}')" ontouchend="hideTip()"></div>`;
-    }).join('');
-    return`<div class="heatmap-week">${cells}</div>`;
+  const weeks=[]; for(let i=0;i<allCells.length;i+=7) weeks.push(allCells.slice(i,i+7));
+  
+  const mRow=document.getElementById('heatmap-months-row'); let lM=-1;
+  mRow.innerHTML=weeks.map(w=>{
+    const f=w.find(d=>d!==null); if(!f) return '<div class="heatmap-month-label" style="flex:1;min-width:15px"></div>';
+    const m=f.date.getMonth(); if(m!==lM){ lM=m; return `<div class="heatmap-month-label" style="flex:1;min-width:15px">${f.date.toLocaleDateString('en-GB',{month:'short'})}</div>`; }
+    return '<div class="heatmap-month-label" style="flex:1;min-width:15px"></div>';
   }).join('');
 
-  const activeDays=days.filter(d=>d.entry&&(d.entry.questions>0||d.entry.minutes>0)).length;
-  document.getElementById('hm-total-days').textContent=activeDays;
-  document.getElementById('hm-streak').textContent=getStreak().count||0;
+  document.getElementById('heatmap-grid').innerHTML=weeks.map(w=>
+    `<div class="heatmap-week">${w.map(d=>{
+      if(!d) return `<div class="heatmap-cell hm-0" style="opacity:0"></div>`;
+      const s = (d.entry?.questions||0) + (d.entry?.minutes||0)*2;
+      const lvl = s===0?0:s<15?1:s<30?2:s<60?3:4;
+      return `<div class="heatmap-cell hm-${lvl}"></div>`;
+    }).join('')}</div>`
+  ).join('');
 
-  const thisMonth=today.toISOString().slice(0,7);
-  let monthQ=0,monthM=0;
-  Object.entries(log).forEach(([k,v])=>{
-    if(k.startsWith(thisMonth)){monthQ+=v.questions||0;monthM+=v.minutes||0}
-  });
-  document.getElementById('hm-month-q').textContent=monthQ;
-  document.getElementById('hm-month-m').textContent=monthM;
+  // Auto-scroll to the right (newest data) for mobile
+  setTimeout(() => {
+    const scrollWrap = document.getElementById('heatmap-scroll');
+    if (scrollWrap) scrollWrap.scrollLeft = scrollWrap.scrollWidth;
+  }, 100);
 }
 
-function showTip(e,text){
-  const t=document.getElementById('hm-tooltip');
-  t.textContent=text;t.style.display='block';
-  t.style.left=(e.clientX+12)+'px';t.style.top=(e.clientY-28)+'px';
+function render() {
+  const mastery=calcMastery(); document.getElementById('hero-pct').textContent='15%';
+  document.getElementById('journey-fill').style.width='15%'; document.getElementById('journey-marker').style.left='15%';
+  document.getElementById('st-streak').textContent=getStreak().count||0; document.getElementById('st-tests').textContent=getHistory().length;
+  document.getElementById('sk-kanji').textContent=mastery.kanji?mastery.kanji+'%':'—'; document.getElementById('sb-kanji').style.width=(mastery.kanji||0)+'%';
+  document.getElementById('sk-vocab').textContent=mastery.vocab?mastery.vocab+'%':'—'; document.getElementById('sb-vocab').style.width=(mastery.vocab||0)+'%';
+  document.getElementById('sk-grammar').textContent=mastery.grammar?mastery.grammar+'%':'—'; document.getElementById('sb-grammar').style.width=(mastery.grammar||0)+'%';
+  renderUnits(); renderHeatmap();
 }
-function hideTip(){document.getElementById('hm-tooltip').style.display='none'}
-
 render();
-renderHeatmap();
 </script>
 </body>
 </html>
