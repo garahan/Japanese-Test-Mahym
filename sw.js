@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mahym-japanese-v2';
+const CACHE_NAME = 'mahym-japanese-v3';
 
 // The core files to save directly to the iPhone
 const ASSETS = [
