@@ -1,11 +1,12 @@
-const CACHE_NAME = 'mahym-japanese-v1';
+const CACHE_NAME = 'mahym-japanese-v2';
 
 // The core files to save directly to the iPhone
 const ASSETS = [
   '/',
   '/index.html',
   '/roadmap.html',
-  '/admin.html'
+  '/admin.html',
+  '/manifest.json'
 ];
 
 // 1. Install & Cache
