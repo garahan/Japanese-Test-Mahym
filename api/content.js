@@ -46,6 +46,7 @@ export default async function handler(req, res) {
         return res.status(400).json({ ok: false, error: 'Invalid type' });
       }
       const data = await redisGet(type) || [];
+      res.setHeader('Cache-Control', 'public, max-age=30, stale-while-revalidate=300');
       return res.status(200).json({ ok: true, data });
     }
 
