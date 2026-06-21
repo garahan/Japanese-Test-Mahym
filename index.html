@@ -148,6 +148,16 @@ body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:va
 .mastery-label { font-weight: 700; font-size: 14px; color: var(--ink); display: flex; justify-content: space-between; margin-bottom: 4px; }
 .admin-toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #1c1c2e; color: white; padding: 12px 24px; border-radius: 30px; font-weight: 700; z-index: 9999; display: none; }
 .admin-toast.show { display: block; animation: popIn 0.3s var(--spring); }
+
+/* ── EXAM COUNTDOWN ── */
+.exam-cd-card{background:linear-gradient(135deg,#1c1c2e,#2d2d4a);border-radius:var(--r);padding:1.25rem 1.5rem;margin-bottom:1.25rem;cursor:pointer;box-shadow:var(--shadow);position:relative;overflow:hidden;transition:transform 0.2s var(--spring);}
+.exam-cd-card:active{transform:scale(0.97);}
+.exam-cd-card::after{content:'🇯🇵';position:absolute;right:-6px;top:-14px;font-size:90px;opacity:.08;pointer-events:none;}
+.exam-cd-label{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#ffca28;margin-bottom:6px}
+.exam-cd-days{display:flex;align-items:baseline;gap:8px;color:white}
+.exam-cd-days span:first-child{font-size:38px;font-weight:800;letter-spacing:-0.02em}
+.exam-cd-days-unit{font-size:14px;font-weight:600;color:rgba(255,255,255,.6)}
+.exam-cd-date{font-size:13px;color:rgba(255,255,255,.5);margin-top:4px;font-weight:500}
 </style>
 </head>
 <body>
@@ -167,7 +177,13 @@ body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:va
 
   <div class="dash-body">
     <div id="mission-hero-wrap"></div>
-    
+
+    <div class="exam-cd-card" onclick="haptic('light'); window.location.href='/roadmap.html#exam'">
+      <div class="exam-cd-label">🎯 MEXT Exam Countdown</div>
+      <div class="exam-cd-days"><span id="exam-countdown-days">—</span><span class="exam-cd-days-unit">days</span></div>
+      <div class="exam-cd-date" id="exam-countdown-date">Target: —</div>
+    </div>
+
     <div class="section-title">習熟度 — Mastery</div>
     <div class="mastery-card">
       <div style="margin-bottom:16px"><div class="mastery-label"><span>漢字 Kanji</span><span id="mp-kanji">—</span></div><div class="bar-track"><div class="bar-fill" id="bar-kanji" style="background:var(--red);width:0%"></div></div></div>
@@ -289,15 +305,78 @@ function getMissionState(){return DB.get('mission_state')||{}}
 function saveMissionState(s){DB.set('mission_state',s)}
 function isMissionDoneToday(){const s=getMissionState();return s.completedDate===getLocalizeDateKey()&&s.required===true;}
 
+// ── ACTIVITY LOG (drives the roadmap heatmap — was never written before) ──
+function getActivityLog(){return DB.get('activity_log')||{}}
+function saveActivityLog(l){DB.set('activity_log',l)}
+function logActivity(questions, minutes){
+  const log=getActivityLog(); const key=getLocalizeDateKey();
+  const e=log[key]||{questions:0,minutes:0};
+  e.questions+=(questions||0); e.minutes+=(minutes||0);
+  log[key]=e; saveActivityLog(log);
+}
+
+// ── MEXT EXAM COUNTDOWN ──
+function getExamDate(){
+  const custom=DB.get('exam_date');
+  if(custom) return new Date(custom);
+  const now=new Date();
+  return new Date(now.getFullYear()+1, 6, 1); // default: July 1 next year
+}
+function daysUntilExam(){
+  const ms=getExamDate().setHours(0,0,0,0)-new Date().setHours(0,0,0,0);
+  return Math.max(0, Math.round(ms/86400000));
+}
+
 // ── SRS ENGINE ──
-function getFlashCard(id){const p=getFlashProgress();return p[id]||{interval:1,repetition:0,easeFactor:2.5,nextReview:0,memoryStrength:0}}
-function rateFlashCard(id,rating){const p=getFlashProgress();const c=getFlashCard(id);let{interval,repetition,easeFactor}=c;if(rating>=3){if(repetition===0)interval=1;else if(repetition===1)interval=3;else interval=Math.round(interval*easeFactor);repetition++;easeFactor=Math.max(1.3,easeFactor+(0.1-(4-rating)*(0.08+(4-rating)*0.02)))}else{interval=1;repetition=0;if(rating===2)easeFactor=Math.max(1.3,easeFactor-0.15)}const memoryStrength=Math.min(100,Math.round((interval/30)*100));p[id]={interval,repetition,easeFactor,nextReview:Date.now()+(interval*86400000),memoryStrength};saveFlashProgress(p);return memoryStrength}
+function getFlashCard(id){const p=getFlashProgress();return p[id]||{interval:1,repetition:0,easeFactor:2.5,nextReview:0,memoryStrength:0,lastReview:0}}
+function rateFlashCard(id,rating){const p=getFlashProgress();const c=getFlashCard(id);let{interval,repetition,easeFactor}=c;if(rating>=3){if(repetition===0)interval=1;else if(repetition===1)interval=3;else interval=Math.round(interval*easeFactor);repetition++;easeFactor=Math.max(1.3,easeFactor+(0.1-(4-rating)*(0.08+(4-rating)*0.02)))}else{interval=1;repetition=0;if(rating===2)easeFactor=Math.max(1.3,easeFactor-0.15)}const memoryStrength=Math.min(100,Math.round((interval/30)*100));p[id]={interval,repetition,easeFactor,nextReview:Date.now()+(interval*86400000),memoryStrength,lastReview:Date.now()};saveFlashProgress(p);return memoryStrength}
 function getDueFlashcards(){const now=Date.now();return ALL_FLASHCARDS.filter(f=>getFlashCard(f.id).nextReview<=now)}
 
-function scheduleReview(id,correct){const prog=getProgress();const q=ALL_QUESTIONS.find(q=>q.id===id);if(!q)return;const cat=q.type==='kanji'?'kanji':q.type==='vocab'?'vocab':'grammar';if(!prog[cat])prog[cat]={};const ex=prog[cat][id]||{attempts:0,correct:0,streak:0,nextReview:null};ex.attempts++;if(correct){ex.correct++;ex.streak=(ex.streak||0)+1;const days=[1,3,7,14,30][Math.min(ex.streak-1,4)];ex.nextReview=Date.now()+days*86400000}else{ex.streak=0;ex.nextReview=Date.now()+86400000}prog[cat][id]=ex;saveProgress(prog)}
+// Live memory strength decays the longer it's been since you last reviewed a card,
+// relative to that card's own interval — so an "easy" card you haven't touched
+// in 40 days shows as fading, instead of staying frozen at 100% forever.
+function liveMemoryStrength(c){
+  if(!c.repetition || !c.lastReview) return 0;
+  const daysSince=(Date.now()-c.lastReview)/86400000;
+  const decay=Math.exp(-daysSince/Math.max(c.interval,1));
+  return Math.round(Math.min(100,c.memoryStrength)*decay);
+}
+
+function scheduleReview(id,correct){const prog=getProgress();const q=ALL_QUESTIONS.find(q=>q.id===id);if(!q)return;const cat=q.type==='kanji'?'kanji':q.type==='vocab'?'vocab':'grammar';if(!prog[cat])prog[cat]={};const ex=prog[cat][id]||{attempts:0,correct:0,streak:0,nextReview:null,last:0};ex.attempts++;ex.last=Date.now();if(correct){ex.correct++;ex.streak=(ex.streak||0)+1;const days=[1,3,7,14,30][Math.min(ex.streak-1,4)];ex.nextReview=Date.now()+days*86400000}else{ex.streak=0;ex.nextReview=Date.now()+86400000}prog[cat][id]=ex;saveProgress(prog)}
+
+// Per-question "what you'd actually score right now", decaying accuracy toward
+// 0 the longer it's been since you last saw that item (forgetting curve, ~21-day half-life).
+function decayedItemScore(ex){
+  const acc=ex.attempts?ex.correct/ex.attempts:0;
+  const daysSince=ex.last?(Date.now()-ex.last)/86400000:9999;
+  const retention=Math.exp(-daysSince/21);
+  return acc*retention;
+}
+function calcMastery(){
+  const prog=getProgress(); const result={};
+  for(const cat of['kanji','vocab','grammar']){
+    const entries=Object.values(prog[cat]||{}).filter(d=>d.attempts>0);
+    result[cat]=entries.length?Math.round(entries.reduce((s,d)=>s+decayedItemScore(d),0)/entries.length*100):null;
+  }
+  return result;
+}
+function calcFlashMastery(){
+  const p=getFlashProgress(); const vals=Object.values(p).filter(d=>d.repetition>0).map(d=>liveMemoryStrength(d));
+  return vals.length?Math.round(vals.reduce((a,b)=>a+b,0)/vals.length):null;
+}
 
 function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 function shuffledQuestion(q){const cv=q.o[q.c];const so=shuffle(q.o);return{...q,o:so,c:so.indexOf(cv)}}
+
+// ── AUTOMATIC TELEGRAM ACTIVITY REPORT (fire-and-forget, no user action needed) ──
+function sendActivity(type, payload){
+  try{
+    fetch('/api/results', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ type, name: DB.get('name')||'Mahym', streak: getStreak().count||0, ...payload })
+    }).catch(()=>{}); // never block or surface errors to the UI
+  }catch(e){}
+}
 
 // ── DASHBOARD RENDER ──
 function renderDash(){
@@ -306,20 +385,25 @@ function renderDash(){
   const pill = document.getElementById('streak-pill');
   if(sCount >= 3) pill.classList.add('hot'); else pill.classList.remove('hot');
 
-  const prog=getProgress();
+  const mastery=calcMastery();
   for(const cat of['kanji','vocab','grammar']){
-    const entries=Object.values(prog[cat]||{}).filter(d=>d.attempts>0);
-    const pct = entries.length ? Math.round(entries.reduce((s,d)=>s+d.correct,0)/entries.reduce((s,d)=>s+d.attempts,0)*100) : 0;
-    document.getElementById('mp-'+cat).textContent=entries.length?pct+'%':'—';
-    document.getElementById('bar-'+cat).style.width=pct+'%';
+    const pct=mastery[cat];
+    document.getElementById('mp-'+cat).textContent=pct!==null?pct+'%':'—';
+    document.getElementById('bar-'+cat).style.width=(pct||0)+'%';
   }
-  const p=getFlashProgress(); const vals=Object.values(p).map(d=>d.memoryStrength||0);
-  const fcPct = vals.length ? Math.round(vals.reduce((a,b)=>a+b,0)/vals.length) : 0;
-  document.getElementById('mp-flash').textContent=vals.length?fcPct+'%':'—';
-  document.getElementById('bar-flash').style.width=fcPct+'%';
+  const fcPct = calcFlashMastery();
+  document.getElementById('mp-flash').textContent=fcPct!==null?fcPct+'%':'—';
+  document.getElementById('bar-flash').style.width=(fcPct||0)+'%';
 
   const dfc=getDueFlashcards();
   document.getElementById('fc-due-label').textContent=dfc.length>0?dfc.length+' cards due': 'All caught up!';
+
+  // Exam countdown
+  const days=daysUntilExam();
+  const cd=document.getElementById('exam-countdown-days');
+  if(cd) cd.textContent=days;
+  const cdSub=document.getElementById('exam-countdown-date');
+  if(cdSub) cdSub.textContent='Target: '+getExamDate().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
 
   // Render Mission
   const done=isMissionDoneToday();
@@ -361,7 +445,7 @@ function renderQuestion(){
 
 function answerQ(e, sel){
   const{questions,current}=testState; const q=questions[current]; const correct=sel===q.c;
-  testState.answers.push({id:q.id,correct}); scheduleReview(q.id,correct);
+  testState.answers.push({id:q.id,correct,type:q.type,s:q.s,a:q.a,given:q.o[sel],right:q.o[q.c]}); scheduleReview(q.id,correct);
   
   q.o.forEach((_,i)=>{
     const b=document.getElementById('opt-'+i); if(b){ b.disabled=true; if(i===q.c)b.classList.add('correct'); else if(i===sel)b.classList.add('wrong'); }
@@ -399,7 +483,21 @@ function finishTest(){
   const{questions,answers,mode}=testState;
   const correct=answers.filter(a=>a.correct).length; const total=answers.length; const pct=Math.round(correct/total*100);
   addHistory({mode,pct,date:new Date().toLocaleDateString('en-GB')});
-  
+
+  const elapsedMin=Math.round((Date.now()-testState.startTime)/60000);
+  logActivity(total, elapsedMin);
+
+  const byCat={};
+  for(const a of answers){ const c=a.type==='kanji'?'Kanji':a.type==='vocab'?'Vocab':'Grammar'; byCat[c]=byCat[c]||{c:0,t:0}; byCat[c].t++; if(a.correct)byCat[c].c++; }
+  const mistakes=answers.filter(a=>!a.correct).map(a=>`${a.s} — your answer: ${a.given}, correct: ${a.right}`);
+  const modeLabel = mode==='quick'?'Quick Test (20Q)':mode==='full'?'Full Test (40Q)':'Mock Exam (52Q)';
+
+  sendActivity('test', {
+    modeLabel, pct, correct, total, elapsedMin,
+    categories: Object.entries(byCat).map(([k,v])=>`${k}: ${v.c}/${v.t}`),
+    mistakes
+  });
+
   if(pct >= 80) fireConfetti(); else haptic('heavy');
 
   document.getElementById('results-body').innerHTML=`<div class="q-card" style="text-align:center"><div style="font-size:64px;margin-bottom:10px">${pct>=80?'🌟':'💪'}</div><h2 style="font-size:28px;margin-bottom:10px">Score: ${pct}%</h2><p style="color:var(--ink2);margin-bottom:20px;font-size:16px">${correct} out of ${total} correct.</p><button class="mission-cta" style="background:var(--ink);color:white" onclick="showView('view-dash');renderDash()">Back to Dashboard</button></div>`;
@@ -413,7 +511,7 @@ function startMission(){
   let due=getDueFlashcards();
   const fcCards=shuffle(due.length>=5?due:[...due,...ALL_FLASHCARDS.filter(f=>!due.find(d=>d.id===f.id))]).slice(0,5);
   const questions=shuffle(ALL_QUESTIONS).slice(0,5).map(shuffledQuestion);
-  missionState={phase:0,fcCards,fcIndex:0,questions,qIndex:0,qAnswers:[]};
+  missionState={phase:0,fcCards,fcIndex:0,questions,qIndex:0,qAnswers:[],startTime:Date.now()};
   showView('view-mission'); renderMissionPhase();
 }
 
@@ -448,6 +546,7 @@ function renderMissionQ(){
 }
 function ansMissionQ(e, sel){
   const q=missionState.questions[missionState.qIndex]; const correct=sel===q.c;
+  missionState.qAnswers.push({correct,s:q.s,given:q.o[sel],right:q.o[q.c]});
   q.o.forEach((_,i)=>{ const b=document.getElementById('mopt-'+i); b.disabled=true; if(i===q.c)b.classList.add('correct'); else if(i===sel)b.classList.add('wrong'); });
   const fb=document.getElementById('mq-fb');
   if(correct){ haptic('success'); fb.className='feedback ok'; fb.innerHTML='✓ Correct!'; spawnParticle(e,'+1','var(--green)'); }
@@ -458,7 +557,20 @@ function nextMissionQ(){ missionState.qIndex++; renderMissionPhase(); }
 
 function finishMission(){
   saveMissionState({completedDate:getLocalizeDateKey(), required:true});
-  updateStreak(); fireConfetti();
+  const sCount=updateStreak(); fireConfetti();
+
+  const elapsedMin=Math.round((Date.now()-missionState.startTime)/60000);
+  const totalUnits=missionState.fcCards.length+missionState.questions.length;
+  logActivity(totalUnits, elapsedMin);
+
+  const qCorrect=missionState.qAnswers.filter(a=>a.correct).length;
+  const mistakes=missionState.qAnswers.filter(a=>!a.correct).map(a=>`${a.s} — your answer: ${a.given}, correct: ${a.right}`);
+  sendActivity('mission', {
+    flashcards: missionState.fcCards.length,
+    qCorrect, qTotal: missionState.qAnswers.length,
+    elapsedMin, mistakes, streak: sCount
+  });
+
   document.getElementById('mission-body').innerHTML=`<div class="q-card" style="text-align:center"><div style="font-size:72px;margin-bottom:10px;animation: popIn 0.5s var(--spring)">🏆</div><h2 style="font-size:28px;margin-bottom:10px;font-weight:800">Mission Complete!</h2><p style="color:var(--ink2);margin-bottom:24px;font-size:16px">Streak updated. See you tomorrow!</p><button class="mission-cta" style="background:var(--ink);color:white" onclick="exitMission()">Back to Dashboard</button></div>`;
   document.getElementById('mission-prog-fill').style.width='100%';
 }
@@ -469,11 +581,22 @@ let fcState=null;
 function startFlashcards(){
   if(!dataLoaded) return; haptic('light');
   let due=getDueFlashcards(); if(!due.length)due=[...ALL_FLASHCARDS];
-  fcState={cards:shuffle(due),current:0,flipped:false};
+  fcState={cards:shuffle(due),current:0,flipped:false,startTime:Date.now(),ratings:[]};
   showView('view-flashcards'); renderFC();
 }
 function renderFC(){
-  if(fcState.current>=fcState.cards.length){ haptic('celebrate'); showView('view-dash'); renderDash(); return; }
+  if(fcState.current>=fcState.cards.length){
+    haptic('celebrate');
+    if(fcState.ratings.length){
+      const elapsedMin=Math.round((Date.now()-fcState.startTime)/60000);
+      logActivity(fcState.ratings.length, elapsedMin);
+      const counts={again:0,hard:0,good:0,easy:0};
+      const labels=['','again','hard','good','easy'];
+      fcState.ratings.forEach(r=>counts[labels[r]]++);
+      sendActivity('flashcards', { count: fcState.ratings.length, elapsedMin, counts });
+    }
+    showView('view-dash'); renderDash(); return;
+  }
   const f=fcState.cards[fcState.current];
   document.getElementById('fc-prog-fill').style.width=(fcState.current/fcState.cards.length*100)+'%';
   document.getElementById('fc-counter').textContent=fcState.current+'✓';
@@ -482,7 +605,7 @@ function renderFC(){
   fcState.flipped=false;
 }
 function flipFC(){ if(fcState.flipped)return; haptic('light'); fcState.flipped=true; document.getElementById('fc-inner').classList.add('flipped'); document.getElementById('fc-rating').style.display='block'; }
-function rateFC(r){ haptic('light'); rateFlashCard(fcState.cards[fcState.current].id, r); fcState.current++; renderFC(); }
+function rateFC(r){ haptic('light'); fcState.ratings.push(r); rateFlashCard(fcState.cards[fcState.current].id, r); fcState.current++; renderFC(); }
 
 // ── UTILS ──
 function showView(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0)}
