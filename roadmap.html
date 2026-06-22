@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#1c1c2e">
+<title>🗺️ My Journey</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f0ede8;--card:#fff;--ink:#1c1c2e;--ink2:#52526e;--ink3:#9898b0;--red:#ff4b4b;--green:#00c853;--blue:#2979ff;--gold:#ffb300;--purple:#8e24aa;--border:#e4e0d8;--shadow:0 4px 12px rgba(28,28,46,.06);--r:20px;--spring:cubic-bezier(0.34,1.56,0.64,1)}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink);font-size:15px;-webkit-user-select:none;user-select:none}
+.wrap{max-width:640px;margin:0 auto;padding:0 1rem 5rem}
+.top{display:flex;align-items:center;gap:14px;padding:1.3rem 0 .5rem}
+.back{text-decoration:none;background:var(--card);border:1px solid var(--border);color:var(--ink2);font-weight:800;padding:9px 16px;border-radius:24px;font-size:14px}
+.htitle{font-size:20px;font-weight:900}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.4rem;box-shadow:var(--shadow);margin-bottom:1rem;animation:pop .5s var(--spring) both}
+@keyframes pop{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.eyebrow{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:10px}
+.ctitle{font-size:16px;font-weight:900;margin-bottom:4px}
+
+/* hero */
+.hero{background:var(--ink);color:#fff;border-radius:var(--r);padding:1.6rem;margin-bottom:1rem;position:relative;overflow:hidden}
+.hero::after{content:'道';position:absolute;right:-12px;top:-24px;font-family:'Noto Sans JP';font-size:150px;font-weight:900;color:rgba(255,255,255,.05)}
+.hero .num{font-size:50px;font-weight:900;letter-spacing:-.03em}
+.hero .lbl{font-size:12px;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+.hero .ret{font-size:13px;color:#69f0ae;font-weight:800;margin-top:6px}
+
+/* ladder */
+.rung{display:flex;align-items:center;gap:14px;padding:11px 0;border-bottom:1px dashed var(--border)}
+.rung:last-child{border-bottom:none}
+.rung .dot{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;background:var(--bg)}
+.rung.cur .dot{background:linear-gradient(135deg,var(--gold),var(--red));box-shadow:0 4px 12px rgba(255,75,75,.3)}
+.rung.done .dot{background:var(--green)}
+.rung .name{font-weight:800;font-size:15px}
+.rung.locked .name{color:var(--ink3)}
+.rung .sub{font-size:12px;color:var(--ink3);font-weight:600}
+.rung.cur .name{color:var(--ink)}
+
+/* projection */
+.proj-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px dashed var(--border)}
+.proj-row:last-child{border-bottom:none}
+.proj-goal{font-weight:800;font-size:14px}
+.proj-val{font-weight:900;font-size:15px;color:var(--blue)}
+.proj-val.ready{color:var(--green)}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;margin-bottom:1rem}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1rem .4rem;text-align:center;box-shadow:var(--shadow)}
+.stat .v{font-size:24px;font-weight:900}
+.stat .l{font-size:10px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.04em;margin-top:2px}
+
+/* heatmap */
+.hm{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,1fr);gap:3px;overflow-x:auto;padding-bottom:4px}
+.hm i{width:13px;height:13px;border-radius:3px;background:var(--bg)}
+
+/* skill bars */
+.sk{margin-bottom:13px}.sk:last-child{margin-bottom:0}
+.sk-top{display:flex;justify-content:space-between;font-weight:800;font-size:14px;margin-bottom:5px}
+.sk-track{height:9px;background:var(--bg);border-radius:5px;overflow:hidden}
+.sk-fill{height:100%;border-radius:5px;transition:width 1s var(--spring)}
+
+/* modules */
+.mods{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+.mod{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1rem;box-shadow:var(--shadow)}
+.mod .mn{font-weight:800;font-size:14px;font-family:'Noto Sans JP';margin-bottom:8px}
+.mod .mtrack{height:7px;background:var(--bg);border-radius:4px;overflow:hidden;margin-bottom:5px}
+.mod .mfill{height:100%;background:var(--blue);border-radius:4px}
+.mod .mpct{font-size:12px;font-weight:800;color:var(--ink3)}
+
+/* milestones */
+.ms{display:flex;gap:12px;padding:10px 0;border-bottom:1px dashed var(--border)}
+.ms:last-child{border-bottom:none}
+.ms .ic{font-size:20px}
+.ms .mt{font-weight:800;font-size:14px}
+.ms .mt.done{color:var(--green)}
+.ms .msub{font-size:12px;color:var(--ink3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><a class="back" href="/">← Back</a><div class="htitle">🗺️ My Journey</div></div>
+
+  <div class="hero">
+    <div class="lbl">未来の自分への道 — The road to your future self</div>
+    <div style="display:flex;align-items:flex-end;gap:12px;margin-top:10px"><div class="num" id="overall">0%</div><div style="padding-bottom:8px"><div class="lbl">Overall N4 mastery</div><div class="ret" id="ret">🧬 retention —</div></div></div>
+  </div>
+
+  <div class="eyebrow" style="padding-left:4px">段位 — Your rank ladder</div>
+  <div class="card" id="ladder"></div>
+
+  <div class="card">
+    <div class="eyebrow">⏳ At your current pace</div>
+    <div id="projection"></div>
+    <div style="font-size:11px;color:var(--ink3);margin-top:10px;font-weight:600">Projected from your recent daily growth. Keep showing up — the date moves closer every active day.</div>
+  </div>
+
+  <div class="stats" id="stats"></div>
+
+  <div class="card">
+    <div class="ctitle">Study activity</div>
+    <div class="eyebrow" style="margin:2px 0 12px">Last 18 weeks</div>
+    <div class="hm" id="heatmap"></div>
+  </div>
+
+  <div class="card">
+    <div class="ctitle" style="margin-bottom:12px">Skill mastery — 5 pillars</div>
+    <div id="skills"></div>
+  </div>
+
+  <div class="eyebrow" style="padding-left:4px">テーマ — Theme modules</div>
+  <div class="mods" id="modules"></div>
+
+  <div class="card" style="margin-top:1rem">
+    <div class="ctitle" style="margin-bottom:8px">Milestones</div>
+    <div id="milestones"></div>
+  </div>
+</div>
+
+<script src="/seed-data.js"></script>
+<script src="/core.js"></script>
+<script>
+const C=window.Core;
+const DIM_META={vocab:{label:'🧠 Vocabulary',color:'var(--blue)'},grammar:{label:'✍ Grammar',color:'var(--green)'},reading:{label:'📖 Reading',color:'var(--gold)'},listening:{label:'🎧 Listening',color:'var(--purple)'},kanji:{label:'🈶 Kanji',color:'var(--red)'}};
+
+function render(){
+  const overall=C.overallMastery();
+  document.getElementById('overall').textContent=overall+'%';
+  const ret=C.retention();document.getElementById('ret').textContent='🧬 retention '+(ret===null?'—':ret+'%');
+
+  // ladder
+  const rungs=[
+    {n:'N5 Graduate',ic:'✅',state:'done',sub:'Foundation complete'},
+    {n:'N4 Apprentice',ic:'🔥',state:'cur',sub:overall+'% mastered'},
+    {n:'MEXT Candidate',ic:'🎯',state:'locked',sub:'Unlocks at 80% + 70% retention'},
+    {n:'N3 Explorer',ic:'🌱',state:'locked',sub:'Next stage'},
+    {n:'N2 Scholar',ic:'🌳',state:'locked',sub:'Advanced'},
+    {n:'N1 Master',ic:'👑',state:'locked',sub:'The summit'}
+  ];
+  document.getElementById('ladder').innerHTML=rungs.map(r=>`<div class="rung ${r.state}"><div class="dot">${r.ic}</div><div><div class="name">${r.n}</div><div class="sub">${r.sub}</div></div></div>`).join('');
+
+  // projection
+  const targets=[{g:'🎯 MEXT ready',t:80},{g:'🌱 N3 ready',t:90},{g:'🌳 N2 ready',t:95},{g:'👑 N1 ready',t:99}];
+  document.getElementById('projection').innerHTML=targets.map(x=>{
+    const d=C.daysToReady(x.t);
+    const txt=d<=0?'Ready ✓':(d>900?'Keep going':'~'+d+' days');
+    return `<div class="proj-row"><span class="proj-goal">${x.g}</span><span class="proj-val ${d<=0?'ready':''}">${txt}</span></div>`;
+  }).join('');
+
+  // stats
+  const log=C.activityLog();const activeDays=Object.keys(log).length;
+  const srs=C.getSRS();const learned=Object.values(srs).filter(s=>s.reps>0).length;
+  document.getElementById('stats').innerHTML=`
+    <div class="stat"><div class="v" style="color:var(--gold)">${C.getMomentum().value}</div><div class="l">⚡ Momentum</div></div>
+    <div class="stat"><div class="v">${activeDays}</div><div class="l">Active days</div></div>
+    <div class="stat"><div class="v">${learned}</div><div class="l">Items learned</div></div>
+    <div class="stat"><div class="v">${ret===null?'—':ret}</div><div class="l">Retention</div></div>`;
+
+  // heatmap (last 126 days)
+  const hm=document.getElementById('heatmap');hm.innerHTML='';
+  const today=new Date();const start=new Date(today);start.setDate(start.getDate()-125);
+  // pad to start on Sunday
+  start.setDate(start.getDate()-start.getDay());
+  for(let d=new Date(start);d<=today;d.setDate(d.getDate()+1)){
+    const k=C.dateKey(d);const e=log[k];const cell=document.createElement('i');
+    if(e){const items=e.items||0;const lvl=items>=15?'#00701a':items>=8?'#00a040':items>=3?'#69f0ae':'#b9f6ca';cell.style.background=lvl}
+    hm.appendChild(cell);
+  }
+
+  // skills
+  document.getElementById('skills').innerHTML=C.DIMS.map(d=>{const m=C.dimMastery(d);const meta=DIM_META[d];return `<div class="sk"><div class="sk-top"><span>${meta.label}</span><span>${m===null?'—':m+'%'}</span></div><div class="sk-track"><div class="sk-fill" style="width:${m||0}%;background:${meta.color}"></div></div></div>`}).join('');
+
+  // modules
+  const packs=C.PACKS();const byMod={};
+  packs.forEach(p=>{const key=p.module;byMod[key]=byMod[key]||{label:p.moduleLabel||key,ids:[]};
+    ['vocabulary','grammar','kanji'].forEach(t=>(p[t]||[]).forEach(i=>byMod[key].ids.push(i.id)));
+    // reading/listening are rated at the question level, so count those ids
+    if(p.reading)(p.reading.questions||[]).forEach(rq=>byMod[key].ids.push(rq.id));
+    (p.listening||[]).forEach(l=>byMod[key].ids.push('lq_'+l.id));
+  });
+  document.getElementById('modules').innerHTML=Object.values(byMod).map(m=>{
+    const avg=m.ids.length?Math.round(m.ids.reduce((s,id)=>s+C.itemMastery(id),0)/m.ids.length*100):0;
+    return `<div class="mod"><div class="mn">${m.label}</div><div class="mtrack"><div class="mfill" style="width:${avg}%"></div></div><div class="mpct">${avg}% · ${m.ids.length} items</div></div>`;
+  }).join('');
+
+  // milestones
+  const learnedCount=learned;
+  const mss=[
+    {ic:'🌱',t:'First steps',sub:'Learn your first 5 items',done:learnedCount>=5},
+    {ic:'📖',t:'First story read',sub:'Complete a reading passage',done:Object.keys(srs).some(id=>(C.BY_ID[id]||{}).dim==='reading'&&srs[id].reps>0)},
+    {ic:'🔥',t:'Momentum 30',sub:'Reach 30 momentum',done:C.getMomentum().value>=30},
+    {ic:'🎯',t:'N4 halfway',sub:'Reach 50% overall mastery',done:overall>=50},
+    {ic:'🏆',t:'MEXT ready',sub:'80% mastery + 70% retention',done:overall>=80&&(ret||0)>=70}
+  ];
+  document.getElementById('milestones').innerHTML=mss.map(m=>`<div class="ms"><div class="ic">${m.done?'✅':m.ic}</div><div><div class="mt ${m.done?'done':''}">${m.t}</div><div class="msub">${m.sub}</div></div></div>`).join('');
+}
+
+C.loadContent(()=>render());
+</script>
+</body>
+</html>

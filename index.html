@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#1c1c2e">
+<link rel="prefetch" href="/roadmap.html">
+<title>🌸 Mahym's Japanese</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f0ede8;--card:#ffffff;--ink:#1c1c2e;--ink2:#52526e;--ink3:#9898b0;
+  --red:#ff4b4b;--red-soft:#ffeeee;--green:#00c853;--green-soft:#eafaf1;
+  --blue:#2979ff;--blue-soft:#eff4ff;--gold:#ffb300;--gold-soft:#fff8e1;
+  --purple:#8e24aa;--purple-soft:#f3e5f5;--border:#e4e0d8;
+  --shadow:0 4px 12px rgba(28,28,46,.06),0 1px 3px rgba(28,28,46,.04);
+  --r:20px;--spring:cubic-bezier(0.34,1.56,0.64,1);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;font-size:15px;overflow-x:hidden;-webkit-user-select:none;user-select:none}
+.view{display:none;animation:fadeIn .3s ease}.view.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes popIn{0%{opacity:0;transform:translateY(16px) scale(.92)}100%{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes shake{10%,90%{transform:translate3d(-2px,0,0)}20%,80%{transform:translate3d(4px,0,0)}30%,50%,70%{transform:translate3d(-8px,0,0)}40%,60%{transform:translate3d(8px,0,0)}}
+
+/* ── FUTURE-SELF HEADER ── */
+.hero{background:var(--ink);color:#fff;padding:2.4rem 1.25rem 2rem;border-radius:0 0 30px 30px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+.hero::after{content:'道';position:absolute;right:-14px;top:-26px;font-size:170px;font-family:'Noto Sans JP';font-weight:900;color:rgba(255,255,255,.04);line-height:1;pointer-events:none}
+.hero-eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.45);font-weight:700;margin-bottom:10px}
+.identity{display:flex;align-items:center;gap:10px;font-weight:800}
+.id-now{font-size:20px;color:#fff}
+.id-arrow{color:var(--gold);font-size:18px}
+.id-future{font-size:15px;color:rgba(255,255,255,.55)}
+.hero-mastery{display:flex;align-items:flex-end;gap:14px;margin-top:18px}
+.hm-num{font-size:54px;font-weight:900;letter-spacing:-.03em;line-height:.9}
+.hm-side{padding-bottom:6px}
+.hm-label{font-size:12px;color:rgba(255,255,255,.5);font-weight:600;text-transform:uppercase;letter-spacing:.08em}
+.hm-growth{font-size:13px;font-weight:800;color:#69f0ae;margin-top:2px}
+.momentum{display:inline-flex;align-items:center;gap:6px;background:rgba(255,179,0,.15);border:1px solid rgba(255,179,0,.3);border-radius:24px;padding:5px 13px;font-size:13px;font-weight:800;color:#ffca28;margin-top:16px}
+.momentum.hot{animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,179,0,.4)}70%{box-shadow:0 0 0 9px rgba(255,179,0,0)}100%{box-shadow:0 0 0 0 rgba(255,179,0,0)}}
+
+.body{max-width:640px;margin:0 auto;padding:1.4rem 1rem 5rem}
+.sect{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.09em;color:var(--ink3);margin:1.5rem 0 .7rem;padding-left:4px}
+
+/* ── MISSION (story-ring) ── */
+.mission-ring{position:relative;padding:4px;border-radius:24px;background:linear-gradient(45deg,#ffb300,#ff4b4b,#8e24aa,#2979ff);background-size:300% 300%;animation:spin 4s ease infinite;box-shadow:0 8px 24px rgba(255,75,75,.22);transition:transform .2s var(--spring)}
+.mission-ring:active{transform:scale(.97)}
+.mission-ring.done{background:var(--border);animation:none;box-shadow:none;opacity:.85}
+@keyframes spin{0%{background-position:0 50%}50%{background-position:100% 50%}100%{background-position:0 50%}}
+.mission{background:var(--ink);border-radius:20px;padding:1.6rem 1.4rem;cursor:pointer;position:relative;overflow:hidden}
+.mission::before{content:'今日';position:absolute;right:-10px;top:-12px;font-family:'Noto Sans JP';font-size:96px;font-weight:900;color:rgba(255,255,255,.04);pointer-events:none}
+.mission-ring.done .mission{background:var(--card);border:1px solid var(--border)}
+.m-label{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.mission-ring.done .m-label{color:var(--green)}
+.m-title{font-size:22px;font-weight:900;color:#fff;margin-bottom:5px;letter-spacing:-.01em}
+.mission-ring.done .m-title{color:var(--ink)}
+.m-sub{font-size:13.5px;color:rgba(255,255,255,.6);margin-bottom:1.1rem}
+.mission-ring.done .m-sub{color:var(--ink3)}
+.m-pills{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:1.3rem}
+.m-pill{font-size:11px;padding:4px 11px;border-radius:20px;font-weight:800}
+.m-pill.focus{background:rgba(255,179,0,.2);color:#ffe082}
+.m-pill.b{background:rgba(41,121,255,.2);color:#bbdefb}
+.m-cta{background:#fff;color:var(--ink);border:none;border-radius:14px;padding:12px 24px;font-size:15px;font-weight:900;cursor:pointer;width:100%;box-shadow:0 4px 12px rgba(0,0,0,.1)}
+
+/* ── STORY CARD ── */
+.story-card{background:linear-gradient(135deg,#1d3a8a,#2979ff);color:#fff;border-radius:var(--r);padding:1.3rem 1.4rem;margin-top:1rem;cursor:pointer;position:relative;overflow:hidden;box-shadow:var(--shadow);transition:transform .2s var(--spring)}
+.story-card:active{transform:scale(.97)}
+.story-card::after{content:'本';position:absolute;right:-8px;bottom:-22px;font-family:'Noto Sans JP';font-size:96px;font-weight:900;color:rgba(255,255,255,.08)}
+.story-eyebrow{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:6px}
+.story-title{font-size:19px;font-weight:800;font-family:'Noto Sans JP';margin-bottom:8px}
+.story-meta{font-size:12.5px;color:rgba(255,255,255,.75);font-weight:600}
+
+/* ── MASTERY PANEL ── */
+.panel{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.4rem;box-shadow:var(--shadow)}
+.dim-row{margin-bottom:15px}.dim-row:last-child{margin-bottom:0}
+.dim-top{display:flex;justify-content:space-between;font-weight:800;font-size:14px;margin-bottom:5px}
+.track{height:9px;background:var(--bg);border-radius:5px;overflow:hidden}
+.fill{height:100%;border-radius:5px;transition:width 1s var(--spring)}
+.retention-note{font-size:12px;color:var(--ink3);margin-top:12px;text-align:center;font-weight:600}
+
+/* ── PRACTICE GRID ── */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+.tile{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.15rem 1rem;cursor:pointer;text-align:center;box-shadow:var(--shadow);transition:transform .2s var(--spring)}
+.tile:active{transform:scale(.93)}
+.tile.wide{grid-column:1/-1;display:flex;align-items:center;gap:1.1rem;text-align:left}
+.t-icon{font-size:28px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.1))}
+.t-name{font-size:15px;font-weight:800;letter-spacing:-.01em}
+.t-sub{font-size:12px;color:var(--ink3);font-weight:600}
+
+/* ── SESSION HEADER ── */
+.shead{background:rgba(255,255,255,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:1rem 1.2rem;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:50}
+.sback{background:#f0ede8;border:none;cursor:pointer;font-size:16px;color:var(--ink2);width:36px;height:36px;border-radius:18px;font-weight:700}
+.sbar-wrap{flex:1}.sbar{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.sbar-fill{height:100%;background:var(--green);border-radius:3px;transition:width .5s var(--spring)}
+.s-meta{font-size:14px;font-weight:800;color:var(--ink2);min-width:46px;text-align:right}
+
+/* ── QUIZ / CARDS ── */
+.q-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.7rem;margin-bottom:1rem;box-shadow:var(--shadow)}
+.q-sentence{font-family:'Noto Sans JP';font-size:20px;font-weight:500;line-height:1.6;margin-bottom:8px}
+.q-ask{font-size:13.5px;color:var(--ink2);font-weight:700;margin-bottom:18px}
+.opts{display:grid;gap:10px}
+.opt{padding:15px 18px;border:2px solid var(--border);border-radius:16px;background:var(--card);color:var(--ink);font-size:16px;font-weight:700;font-family:'Noto Sans JP';cursor:pointer;text-align:left;transition:transform .15s var(--spring)}
+.opt:active:not(:disabled){transform:scale(.96);background:var(--bg)}
+.opt.correct{background:var(--green);border-color:var(--green);color:#fff}
+.opt.wrong{background:var(--red);border-color:var(--red);color:#fff;animation:shake .4s both}
+.feedback{margin-top:14px;font-size:13.5px;font-weight:600;padding:12px 15px;border-radius:12px;line-height:1.5;animation:fadeIn .3s}
+.feedback.ok{background:var(--green-soft);color:#008738}
+.feedback.err{background:var(--red-soft);color:#d32f2f}
+.next-btn{width:100%;padding:15px;background:var(--ink);color:#fff;border:none;border-radius:16px;font-size:16px;font-weight:900;cursor:pointer;margin-top:14px;display:none}
+.next-btn.show{display:block;animation:popIn .35s var(--spring)}
+
+/* teaching cards */
+.teach{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.7rem;box-shadow:var(--shadow);text-align:center}
+.teach .big{font-family:'Noto Sans JP';font-size:44px;font-weight:900;margin-bottom:6px}
+.teach .read{font-size:18px;color:var(--ink2);font-weight:700;margin-bottom:4px}
+.teach .mean{font-size:18px;color:var(--blue);font-weight:800;margin-bottom:14px}
+.teach .ex{font-family:'Noto Sans JP';font-size:16px;background:var(--bg);border-radius:12px;padding:12px 14px;line-height:1.6;text-align:left}
+.teach .exm{font-size:13px;color:var(--ink3);margin-top:6px;text-align:left}
+.teach ul{text-align:left;margin:10px 0 0;padding-left:1.1rem}
+.teach li{font-family:'Noto Sans JP';font-size:15px;line-height:1.7;margin-bottom:4px}
+.listen-btn{display:inline-flex;align-items:center;gap:8px;background:var(--blue-soft);color:var(--blue);border:none;border-radius:24px;padding:9px 18px;font-weight:800;font-size:14px;cursor:pointer;margin-top:14px}
+.listen-btn:active{transform:scale(.94)}
+
+/* flashcards */
+.fc-scene{perspective:1000px;margin-bottom:1.4rem;cursor:pointer}
+.fc-inner{position:relative;width:100%;min-height:300px;transition:transform .6s var(--spring);transform-style:preserve-3d}
+.fc-inner.flip{transform:rotateY(180deg)}
+.fc-face{position:absolute;inset:0;background:var(--card);border:2px solid var(--border);border-radius:24px;padding:2rem;display:flex;flex-direction:column;align-items:center;justify-content:center;backface-visibility:hidden;box-shadow:var(--shadow);text-align:center}
+.fc-back{transform:rotateY(180deg)}
+.fc-big{font-family:'Noto Sans JP';font-size:46px;font-weight:900;margin-bottom:12px}
+.rate-row{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;animation:popIn .3s}
+.rate{padding:13px 6px;border:none;border-radius:14px;font-size:13px;font-weight:900;cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,.1)}
+.rate:active{transform:translateY(4px);box-shadow:0 0 0 rgba(0,0,0,0)}
+.r1{background:#ffcdd2;color:#c62828}.r2{background:#ffe0b2;color:#ef6c00}.r3{background:#c8e6c9;color:#2e7d32}.r4{background:#bbdefb;color:#1565c0}
+
+/* reading center */
+.passage{font-family:'Noto Sans JP';font-size:19px;line-height:2;background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.6rem;box-shadow:var(--shadow);margin-bottom:1rem}
+.read-tools{display:flex;gap:10px;margin-bottom:1rem}
+.read-tools button{flex:1;padding:13px;border:none;border-radius:14px;font-weight:800;font-size:14px;cursor:pointer}
+.rt-listen{background:var(--blue);color:#fff}.rt-start{background:var(--ink);color:#fff}
+
+.particle{position:absolute;font-weight:900;font-size:24px;pointer-events:none;z-index:100;animation:floatUp .8s var(--spring) forwards;text-shadow:0 2px 8px rgba(0,0,0,.15)}
+@keyframes floatUp{0%{opacity:1;transform:translateY(0) scale(.5)}50%{transform:translateY(-30px) scale(1.2)}100%{opacity:0;transform:translateY(-52px) scale(1)}}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:9999}
+.admin-link{text-align:center;padding:40px 0 30px}
+.admin-link a{text-decoration:none;font-size:14px;opacity:.2;color:var(--ink2);transition:opacity .3s}
+</style>
+</head>
+<body>
+<canvas id="confetti"></canvas>
+
+<!-- ===================== HOME ===================== -->
+<div class="view active" id="view-dash">
+  <div class="hero">
+    <div class="hero-eyebrow">未来の自分 — Your future self</div>
+    <div class="identity">
+      <span class="id-now" id="id-now">N4 Apprentice 🔥</span>
+      <span class="id-arrow">→</span>
+      <span class="id-future">N1 Master 👑</span>
+    </div>
+    <div class="hero-mastery">
+      <div class="hm-num" id="overall">0<span style="font-size:24px">%</span></div>
+      <div class="hm-side">
+        <div class="hm-label">N4 Mastery</div>
+        <div class="hm-growth" id="growth">+0.0% today</div>
+      </div>
+    </div>
+    <div class="momentum" id="momentum">⚡ Momentum <span id="mom-val">0</span></div>
+  </div>
+
+  <div class="body">
+    <div class="sect">今日のミッション — Today's mission</div>
+    <div id="mission-slot"></div>
+    <div id="story-slot"></div>
+
+    <div class="sect">習熟度 — Mastery</div>
+    <div class="panel" id="mastery-panel"></div>
+
+    <div class="sect">練習 — Practice</div>
+    <div class="grid">
+      <div class="tile wide" onclick="App.startReview()" style="background:var(--gold-soft);border-color:#ffe082">
+        <div class="t-icon">🔁</div>
+        <div><div class="t-name" style="color:#b26a00">Review due</div><div class="t-sub" id="due-sub">—</div></div>
+      </div>
+      <div class="tile" onclick="App.openLibrary()"><div class="t-icon">📖</div><div class="t-name">Reading</div><div class="t-sub">Stories</div></div>
+      <div class="tile" onclick="App.startFlashcards()"><div class="t-icon">🃏</div><div class="t-name">Flashcards</div><div class="t-sub" id="fc-sub">—</div></div>
+      <div class="tile wide" onclick="location.href='/roadmap.html'" style="background:var(--ink);border-color:var(--ink)">
+        <div class="t-icon">🗺️</div><div><div class="t-name" style="color:#fff">My Journey</div><div class="t-sub" style="color:rgba(255,255,255,.6)">Roadmap · projection · heatmap</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="admin-link"><a href="/admin.html">🌸</a></div>
+</div>
+
+<!-- ===================== SESSION (mission / practice / reading / flashcards) ===================== -->
+<div class="view" id="view-session">
+  <div class="shead"><button class="sback" onclick="App.exitSession()">✕</button>
+    <div class="sbar-wrap"><div class="sbar"><div class="sbar-fill" id="s-fill" style="width:0%"></div></div></div>
+    <div class="s-meta" id="s-meta"></div></div>
+  <div class="body" id="session-body"></div>
+</div>
+
+<div class="view" id="view-results"><div class="body" id="results-body"></div></div>
+
+<script src="/seed-data.js"></script>
+<script src="/core.js"></script>
+<script>
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}))}
+
+const C = window.Core;
+/* Must match the RESULTS_SECRET env var on the server. This lives in client
+   source so it only deters casual abuse — the endpoint only messages YOUR
+   Telegram, so the worst case of a leak is spam you can stop by rotating it. */
+const RESULTS_SECRET = 'CHANGE_ME_to_match_env';
+const DIM_META = {
+  vocab:{label:'🧠 Vocabulary',color:'var(--blue)'},
+  grammar:{label:'✍ Grammar',color:'var(--green)'},
+  reading:{label:'📖 Reading',color:'var(--gold)'},
+  listening:{label:'🎧 Listening',color:'var(--purple)'},
+  kanji:{label:'🈶 Kanji',color:'var(--red)'}
+};
+const FOCUS_LABEL = {vocab:'Vocabulary',grammar:'Grammar',reading:'Reading',listening:'Listening',kanji:'Kanji'};
+
+/* ── TTS (free listening) ── */
+let jaVoice=null;
+function pickVoice(){ const vs=speechSynthesis.getVoices(); jaVoice=vs.find(v=>v.lang==='ja-JP')||vs.find(v=>v.lang&&v.lang.startsWith('ja'))||null; }
+if('speechSynthesis' in window){ pickVoice(); speechSynthesis.onvoiceschanged=pickVoice; }
+function speak(text){ if(!('speechSynthesis' in window))return; try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='ja-JP';u.rate=.9;if(jaVoice)u.voice=jaVoice;speechSynthesis.speak(u);}catch(e){} }
+/* Speech registry — buttons reference a short key instead of inlining text,
+   so apostrophes / quotes / backslashes in content can never break markup. */
+const _sayReg={}; let _sayN=0;
+function sayRef(t){ const k='s'+(++_sayN); _sayReg[k]=t||''; return k; }
+function sayNow(k){ speak(_sayReg[k]||''); }
+
+/* ── particles & confetti (the juice) ── */
+function particle(e,text,color){const p=document.createElement('div');p.className='particle';p.textContent=text;p.style.color=color||'var(--green)';let x=innerWidth/2,y=innerHeight/2;if(e&&e.touches&&e.touches[0]){x=e.touches[0].clientX;y=e.touches[0].clientY}else if(e&&e.clientX){x=e.clientX;y=e.clientY}p.style.left=(x+(Math.random()-.5)*40)+'px';p.style.top=(y-40)+'px';document.body.appendChild(p);setTimeout(()=>p.remove(),800)}
+function confetti(){C.haptic('celebrate');const cv=document.getElementById('confetti'),ctx=cv.getContext('2d');cv.width=innerWidth;cv.height=innerHeight;const cols=['#ff4b4b','#00c853','#2979ff','#ffb300','#8e24aa'],ps=[];for(let i=0;i<110;i++)ps.push({x:cv.width/2,y:cv.height/2+100,vx:(Math.random()-.5)*20,vy:(Math.random()-1)*20-5,size:Math.random()*10+5,color:cols[i%5],rot:Math.random()*360,rs:(Math.random()-.5)*10});(function d(){ctx.clearRect(0,0,cv.width,cv.height);let on=false;ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.5;p.rot+=p.rs;if(p.y<cv.height)on=true;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot*Math.PI/180);ctx.fillStyle=p.color;ctx.fillRect(-p.size/2,-p.size/2,p.size,p.size);ctx.restore()});if(on)requestAnimationFrame(d);else ctx.clearRect(0,0,cv.width,cv.height)})()}
+
+/* ── Telegram report (fire-and-forget) ── */
+function report(type,payload){try{fetch('/api/results',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type,secret:RESULTS_SECRET,name:'Mahym',momentum:C.getMomentum().value,...payload})}).catch(()=>{})}catch(e){}}
+
+/* ============================ APP ============================ */
+const App = (function(){
+  function showView(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(id).classList.add('active');scrollTo(0,0)}
+
+  /* ---------- DASHBOARD ---------- */
+  function renderDash(){
+    C.snapshotToday();
+    const overall=C.overallMastery();
+    document.getElementById('overall').innerHTML=overall+'<span style="font-size:24px">%</span>';
+    const g=C.growthToday();
+    document.getElementById('growth').textContent=(g>=0?'+':'')+g.toFixed(1)+'% today';
+    const mv=C.getMomentum().value;
+    document.getElementById('mom-val').textContent=mv;
+    document.getElementById('momentum').classList.toggle('hot',mv>=30);
+
+    // mastery panel
+    const panel=document.getElementById('mastery-panel');
+    panel.innerHTML=C.DIMS.map(d=>{const m=C.dimMastery(d);const meta=DIM_META[d];return `<div class="dim-row"><div class="dim-top"><span>${meta.label}</span><span>${m===null?'—':m+'%'}</span></div><div class="track"><div class="fill" style="width:${m||0}%;background:${meta.color}"></div></div></div>`}).join('');
+    const ret=C.retention();
+    panel.innerHTML+=`<div class="retention-note">🧬 Memory retention: <strong>${ret===null?'—':ret+'%'}</strong> · what you've learned that's still alive</div>`;
+
+    // due / fc labels
+    const due=C.dueQuestions().length;
+    document.getElementById('due-sub').textContent=due>0?due+' items ready':'All caught up';
+    document.getElementById('fc-sub').textContent=(C.ITEMS.vocab.length+C.ITEMS.grammar.length+C.ITEMS.kanji.length)+' cards';
+
+    // mission
+    const slot=document.getElementById('mission-slot');
+    if(missionDoneToday()){
+      slot.innerHTML=`<div class="mission-ring done"><div class="mission"><div class="m-label">Complete</div><div class="m-title">Mission done ✅</div><div class="m-sub">You moved the needle today. See you tomorrow.</div></div></div>`;
+    } else {
+      const m=C.buildMission();
+      const newCount=m.newVocab.length+m.newGrammar.length;
+      slot.innerHTML=`<div class="mission-ring" onclick="C.haptic('heavy');App.startMission()"><div class="mission">
+        <div class="m-label">Today's focus · ${FOCUS_LABEL[m.focus]}</div>
+        <div class="m-title">Start training</div>
+        <div class="m-sub">Built from your weakest area · ~${m.estMin} min</div>
+        <div class="m-pills"><span class="m-pill focus">🎯 ${FOCUS_LABEL[m.focus]}</span>${m.due.length?`<span class="m-pill b">🔁 ${m.due.length} review</span>`:''}${newCount?`<span class="m-pill b">✨ ${newCount} new</span>`:''}<span class="m-pill b">📖 1 story</span></div>
+        <button class="m-cta">Let's go →</button></div></div>`;
+    }
+    // story
+    const story=C.pickStory();
+    document.getElementById('story-slot').innerHTML = story
+      ? `<div class="story-card" onclick="App.openReading('${story.id}')"><div class="story-eyebrow">📖 Today's story · 読解</div><div class="story-title">${story.title}</div><div class="story-meta">Read → listen → answer · ${story.questions?story.questions.length:0} questions</div></div>`
+      : '';
+  }
+
+  function missionDoneToday(){return C.DB.get('mission_done')===C.dateKey()}
+
+  /* ---------- generic quiz runner (mission recall, practice, reading Qs, listening) ---------- */
+  let quiz=null;
+  function runQuiz(questions,title,onDone){
+    quiz={questions,i:0,combo:0,correct:0,onDone,title};
+    showView('view-session');
+    document.getElementById('s-meta').textContent='';
+    renderQ();
+  }
+  function renderQ(){
+    if(quiz.i>=quiz.questions.length){return quiz.onDone(quiz)}
+    const q=quiz.questions[quiz.i];
+    document.getElementById('s-fill').style.width=(quiz.i/quiz.questions.length*100)+'%';
+    document.getElementById('s-meta').textContent=(quiz.i+1)+'/'+quiz.questions.length;
+    const isListen=q.type==='listening';
+    let html=`<div class="q-card" id="qc">`;
+    if(isListen){ html+=`<div style="text-align:center;margin-bottom:14px"><button class="listen-btn" onclick="sayNow('${sayRef(q.audioText||'')}')">▶ 聞く Listen</button></div>`; }
+    html+=`<div class="q-sentence">${q.s||''}</div><div class="q-ask">${q.a||''}</div><div class="opts">`;
+    q.o.forEach((o,idx)=>html+=`<button class="opt" id="o${idx}" onclick="App.answer(event,${idx})">${o}</button>`);
+    html+=`</div><div id="fb"></div><button class="next-btn" id="next" onclick="App.nextQ()">Next →</button></div>`;
+    document.getElementById('session-body').innerHTML=html;
+    if(isListen) setTimeout(()=>speak(q.audioText),350);
+  }
+  function answer(e,sel){
+    const q=quiz.questions[quiz.i];const ok=sel===q.c;
+    q.o.forEach((_,idx)=>{const b=document.getElementById('o'+idx);b.disabled=true;if(idx===q.c)b.classList.add('correct');else if(idx===sel)b.classList.add('wrong')});
+    // rate the linked item (unified SRS) — quality 4 correct, 1 wrong
+    C.rate(q.linksTo||q.id, ok?4:1);
+    const fb=document.getElementById('fb');
+    if(ok){ C.haptic('success');quiz.correct++;quiz.combo++;
+      fb.className='feedback ok';fb.innerHTML='✓ '+(q.exp||'Correct!');
+      if(quiz.combo>=3){particle(e,`🔥 ${quiz.combo} combo`,'var(--gold)');if(quiz.combo%3===0)C.haptic('heavy')}else particle(e,'+1','var(--green)');
+    } else { C.haptic('error');quiz.combo=0;document.getElementById('qc').classList.add('shake');
+      fb.className='feedback err';fb.innerHTML=`✗ Answer: <strong>${q.o[q.c]}</strong>. ${q.exp||''}`; }
+    document.getElementById('next').classList.add('show');
+  }
+  function nextQ(){C.haptic('light');quiz.i++;renderQ()}
+
+  /* ---------- SMART MISSION ---------- */
+  let mission=null;
+  function startMission(){
+    const m=C.buildMission();
+    // teach queue: new vocab → grammar → (kanji if it's the weak spot) → story → recall
+    mission={plan:m,teach:[
+      ...m.newVocab.map(v=>({kind:'vocab',item:v})),
+      ...m.newGrammar.map(g=>({kind:'grammar',item:g})),
+      ...(m.newKanji||[]).map(k=>({kind:'kanji',item:k}))
+    ],ti:0,start:Date.now(),startOverall:C.overallMastery()};
+    showView('view-session');
+    if(mission.teach.length) renderTeach(); else gotoStory();
+  }
+  function renderTeach(){
+    if(mission.ti>=mission.teach.length) return gotoStory();
+    const t=mission.teach[mission.ti], it=t.item;
+    document.getElementById('s-fill').style.width=(mission.ti/(mission.teach.length+2)*100)+'%';
+    document.getElementById('s-meta').textContent='Learn';
+    let inner;
+    if(t.kind==='vocab'){
+      inner=`<div class="big">${it.word}</div><div class="read">${it.reading}</div><div class="mean">${it.meaning}</div>
+        <div class="ex">${it.example}</div><div class="exm">${it.exampleMeaning||''}</div>
+        <button class="listen-btn" onclick="sayNow('${sayRef(it.example)}')">▶ 聞く Listen</button>`;
+    } else if(t.kind==='kanji'){
+      inner=`<div class="big">${it.char}</div><div class="read">${it.reading}</div><div class="mean">${it.meaning}</div>
+        <div class="ex">${it.exampleWord||''}</div>
+        <button class="listen-btn" onclick="sayNow('${sayRef(it.exampleWord||it.char)}')">▶ 聞く Listen</button>`;
+    } else {
+      inner=`<div class="big" style="font-size:30px">${it.point}</div><div class="exm" style="text-align:center;font-size:14px;margin:8px 0 4px">${it.explanation}</div>
+        <ul>${it.examples.map(x=>`<li>${x}</li>`).join('')}</ul>
+        <button class="listen-btn" onclick="sayNow('${sayRef(it.listening||'')}')">▶ 聞く Listen</button>`;
+    }
+    document.getElementById('session-body').innerHTML=`<div style="text-align:center;font-size:12px;font-weight:800;color:var(--ink3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:1rem">✨ New ${t.kind}</div>
+      <div class="teach">${inner}</div>
+      <button class="next-btn show" onclick="App.teachNext()">Got it →</button>`;
+  }
+  function teachNext(){ C.haptic('light'); C.rate(mission.teach[mission.ti].item.id,3); mission.ti++; renderTeach(); }
+  function gotoStory(){
+    const s=mission.plan.story;
+    if(!s){return startRecall()}
+    document.getElementById('s-meta').textContent='Read';
+    document.getElementById('s-fill').style.width='66%';
+    document.getElementById('session-body').innerHTML=`<div style="text-align:center;font-size:12px;font-weight:800;color:var(--ink3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:1rem">📖 Today's story</div>
+      <div style="font-family:'Noto Sans JP';font-size:17px;font-weight:800;margin-bottom:10px">${s.title}</div>
+      <div class="passage">${s.passage}</div>
+      <div class="read-tools"><button class="rt-listen" onclick="sayNow('${sayRef(s.passage)}')">🎧 Listen</button><button class="rt-start" onclick="App.startRecall()">Continue →</button></div>`;
+  }
+  function startRecall(){
+    const s=mission.plan.story;
+    const readingQs=(s&&s.questions)?s.questions.map(rq=>({id:rq.id,s:rq.q,a:'読解 — comprehension',o:rq.o,c:rq.c,exp:rq.exp,dim:'reading'})):[];
+    const qs=C.shuffle([...readingQs,...mission.plan.recall]).slice(0,7);
+    runQuiz(qs,'Recall',finishMission);
+  }
+  function finishMission(q){
+    C.DB.set('mission_done',C.dateKey());
+    const mins=Math.max(1,Math.round((Date.now()-mission.start)/60000));
+    const units=mission.teach.length+q.questions.length;
+    C.logActivity(units,mins);
+    C.snapshotToday();
+    const mom=C.bumpMomentum(14);
+    confetti();
+    report('mission',{focus:mission.plan.focus,correct:q.correct,total:q.questions.length,mins,overall:C.overallMastery(),momentum:mom});
+    // true gain from THIS mission (captured at start), not vs. yesterday
+    const gained=Math.max(0,C.overallMastery()-(mission.startOverall||0));
+    document.getElementById('results-body').innerHTML=resultCard('🏆','Mission complete!',
+      `${q.correct}/${q.questions.length} correct · ${mins} min<br><strong style="color:var(--green)">N4 Mastery +${gained.toFixed(1)}%</strong> · Momentum ${mom}`);
+    showView('view-results');
+  }
+
+  /* ---------- PRACTICE: review due ---------- */
+  function startReview(){
+    const due=C.dueQuestions(15);
+    if(!due.length){ const all=C.shuffle(C.ITEMS.question).slice(0,10); if(!all.length)return; return runQuiz(all,'Practice',finishPractice); }
+    runQuiz(due,'Review',finishPractice);
+  }
+  function finishPractice(q){
+    const mins=1;C.logActivity(q.questions.length,mins);C.snapshotToday();const mom=C.bumpMomentum(8);
+    if(q.correct/q.questions.length>=.8)confetti();else C.haptic('heavy');
+    report('practice',{correct:q.correct,total:q.questions.length,overall:C.overallMastery(),momentum:mom});
+    document.getElementById('results-body').innerHTML=resultCard(q.correct/q.questions.length>=.8?'🌟':'💪','Session done',
+      `${q.correct}/${q.questions.length} correct · Momentum ${mom}`);
+    showView('view-results');
+  }
+
+  /* ---------- READING CENTER ---------- */
+  function openLibrary(){
+    showView('view-session');
+    document.getElementById('s-meta').textContent='';document.getElementById('s-fill').style.width='0%';
+    const stories=C.ITEMS.reading;
+    document.getElementById('session-body').innerHTML=`<div style="font-size:18px;font-weight:900;margin-bottom:1rem">📖 Reading library</div>`+
+      stories.map(s=>{const qs=(s.questions||[]);const m=qs.length?Math.round(qs.reduce((a,rq)=>a+C.itemMastery(rq.id),0)/qs.length*100):0;return `<div class="story-card" style="margin-top:0;margin-bottom:.8rem" onclick="App.openReading('${s.id}')"><div class="story-eyebrow">${s.moduleLabel||''}</div><div class="story-title">${s.title}</div><div class="story-meta">${qs.length} questions · mastery ${m}%</div></div>`}).join('');
+  }
+  function openReading(id){
+    const s=C.BY_ID[id]; if(!s)return;
+    showView('view-session');
+    document.getElementById('s-meta').textContent='Read';document.getElementById('s-fill').style.width='30%';
+    document.getElementById('session-body').innerHTML=`<div style="font-family:'Noto Sans JP';font-size:18px;font-weight:800;margin-bottom:4px">${s.title}</div>
+      <div style="font-size:12px;color:var(--ink3);font-weight:600;margin-bottom:12px">${s.moduleLabel||''} · tap a sentence section then ▶ to hear it</div>
+      <div class="passage">${s.passage}</div>
+      <div class="read-tools"><button class="rt-listen" onclick="sayNow('${sayRef(s.passage)}')">🎧 Read while listening</button><button class="rt-start" onclick="App.readingQuiz('${id}')">Questions →</button></div>`;
+  }
+  function readingQuiz(id){
+    const s=C.BY_ID[id];const qs=(s.questions||[]).map(rq=>({id:rq.id,s:rq.q,a:'読解 — comprehension',o:rq.o,c:rq.c,exp:rq.exp,dim:'reading'}));
+    if(!qs.length)return exitSession();
+    runQuiz(qs,'Reading',function(q){
+      C.logActivity(q.questions.length,3);C.snapshotToday();const mom=C.bumpMomentum(10);
+      if(q.correct/q.questions.length>=.8)confetti();
+      report('reading',{title:s.title,correct:q.correct,total:q.questions.length,overall:C.overallMastery(),momentum:mom});
+      document.getElementById('results-body').innerHTML=resultCard('📖','Story complete',`${q.correct}/${q.questions.length} correct · Momentum ${mom}`);
+      showView('view-results');
+    });
+  }
+
+  /* ---------- FLASHCARDS ---------- */
+  let fc=null;
+  function startFlashcards(){
+    let due=C.ITEMS.vocab.concat(C.ITEMS.grammar,C.ITEMS.kanji).filter(c=>C.isDue(c.id));
+    if(!due.length) due=C.shuffle([...C.ITEMS.vocab,...C.ITEMS.grammar,...C.ITEMS.kanji]).slice(0,10);
+    fc={cards:C.shuffle(due),i:0,start:Date.now(),n:0};
+    showView('view-session');renderFC();
+  }
+  function fcFace(c){
+    if(c.dim==='vocab')return{front:c.word,reading:c.reading,meaning:c.meaning,say:c.example};
+    if(c.dim==='kanji')return{front:c.char,reading:c.reading,meaning:c.meaning+' · '+c.exampleWord,say:c.exampleWord};
+    return{front:c.point,reading:'',meaning:c.explanation,say:c.listening||c.point};
+  }
+  function renderFC(){
+    if(fc.i>=fc.cards.length){C.logActivity(fc.n,Math.max(1,Math.round((Date.now()-fc.start)/60000)));C.snapshotToday();if(fc.n)C.bumpMomentum(8);renderDash();return showView('view-dash')}
+    const c=fc.cards[fc.i],f=fcFace(c);
+    document.getElementById('s-fill').style.width=(fc.i/fc.cards.length*100)+'%';
+    document.getElementById('s-meta').textContent=fc.i+'✓';
+    document.getElementById('session-body').innerHTML=`<div class="fc-scene" onclick="App.flipFC()"><div class="fc-inner" id="fci">
+      <div class="fc-face"><div class="fc-big">${f.front}</div><div style="font-size:13px;color:var(--ink3);font-weight:600">tap to flip</div></div>
+      <div class="fc-face fc-back"><div class="fc-big">${f.front}</div>${f.reading?`<div style="font-size:19px;color:var(--ink2);font-weight:700;margin-bottom:6px">${f.reading}</div>`:''}<div style="font-size:16px;color:var(--blue);font-weight:700;text-align:center">${f.meaning}</div></div></div></div>
+      <div id="fc-rate" style="display:none"><div class="rate-row"><button class="rate r1" onclick="App.rateFC(1)">Again</button><button class="rate r2" onclick="App.rateFC(2)">Hard</button><button class="rate r3" onclick="App.rateFC(3)">Good</button><button class="rate r4" onclick="App.rateFC(4)">Easy</button></div></div>`;
+    fc.flipped=false;
+  }
+  function flipFC(){if(fc.flipped)return;C.haptic('light');fc.flipped=true;document.getElementById('fci').classList.add('flip');document.getElementById('fc-rate').style.display='block';const c=fc.cards[fc.i],f=fcFace(c);speak(f.say)}
+  function rateFC(r){C.haptic('light');C.rate(fc.cards[fc.i].id,r);fc.n++;fc.i++;renderFC()}
+
+  /* ---------- shared ---------- */
+  function resultCard(emoji,title,sub){return `<div class="q-card" style="text-align:center;margin-top:2rem"><div style="font-size:64px;margin-bottom:8px;animation:popIn .5s var(--spring)">${emoji}</div><h2 style="font-size:26px;font-weight:900;margin-bottom:10px">${title}</h2><p style="color:var(--ink2);font-size:15px;margin-bottom:22px;line-height:1.6">${sub}</p><button class="m-cta" style="background:var(--ink);color:#fff" onclick="App.home()">Back home</button></div>`}
+  function exitSession(){C.haptic('light');try{speechSynthesis.cancel()}catch(e){}home()}
+  function home(){renderDash();showView('view-dash')}
+
+  return {renderDash,startMission,teachNext,startRecall,answer,nextQ,startReview,openLibrary,openReading,readingQuiz,startFlashcards,flipFC,rateFC,exitSession,home};
+})();
+
+/* ── INIT ── */
+(async function(){
+  C.loadContent(()=>App.renderDash());
+})();
+</script>
+</body>
+</html>
