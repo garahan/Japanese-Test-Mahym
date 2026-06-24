@@ -20,7 +20,7 @@
 //      REMIND_NAME        optional, defaults to "Mahym"
 // 4. The cron schedule is in vercel.json. Vercel cron runs in UTC; the included
 //    schedule "0 0 * * *" = 09:00 in Japan (JST = UTC+9). Adjust if she'd rather
-//    be nudged at a different hour.
+//    be nudged at a different hour. 
 // ─────────────────────────────────────────────────────────────────────────────
 
 const TOKEN = process.env.TELEGRAM_TOKEN;
