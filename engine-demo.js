@@ -3,7 +3,7 @@
    stages progressing, stability responding to WHEN you review, and the coach
    adapting both the daily dose and the message. Nothing here ships. */
 const Memory = require('./memory-engine.js');
-const Coach  = require('./coach.js');
+const Coach  = require('./Coach.js');
 
 const DAY = 86400000;
 const T0  = Date.UTC(2026, 0, 1);            // a fixed base time for reproducible output

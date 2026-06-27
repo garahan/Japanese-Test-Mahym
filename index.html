@@ -140,6 +140,22 @@ body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:va
 .rate:active{transform:translateY(4px);box-shadow:0 0 0 rgba(0,0,0,0)}
 .r1{background:#ffcdd2;color:#c62828}.r2{background:#ffe0b2;color:#ef6c00}.r3{background:#c8e6c9;color:#2e7d32}.r4{background:#bbdefb;color:#1565c0}
 
+/* production recall (mission recall step) */
+.recall-eyebrow{text-align:center;font-size:12px;font-weight:800;color:var(--ink3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:1rem}
+.recall-cuelabel{font-size:12px;font-weight:800;color:var(--ink3);text-transform:uppercase;letter-spacing:.08em;text-align:center;margin-bottom:10px}
+.recall-cue{font-family:'Noto Sans JP';font-size:30px;font-weight:900;text-align:center;line-height:1.4;margin-bottom:6px}
+.recall-answer{border-top:1px dashed var(--border);margin-top:18px;padding-top:18px;text-align:center;animation:popIn .3s var(--spring)}
+.recall-main{font-family:'Noto Sans JP';font-size:42px;font-weight:900;margin-bottom:4px}
+.recall-reading{font-size:18px;color:var(--ink2);font-weight:700;line-height:1.6}
+.recall-ex{font-family:'Noto Sans JP';font-size:16px;background:var(--bg);border-radius:12px;padding:12px 14px;line-height:1.6;text-align:left;margin-top:12px}
+.recall-exm{font-size:13px;color:var(--ink3);margin-top:6px;text-align:left}
+.recall-eglist{text-align:left;margin:6px 0 0;padding-left:1.1rem}
+.recall-eglist li{font-family:'Noto Sans JP';font-size:15px;line-height:1.7;margin-bottom:4px}
+.reveal-btn{width:100%;padding:15px;background:var(--ink);color:#fff;border:none;border-radius:16px;font-size:16px;font-weight:900;cursor:pointer;margin-top:18px}
+.reveal-btn:active{transform:scale(.97)}
+.fc-cue{font-family:'Noto Sans JP';font-size:30px;font-weight:900;color:var(--ink);line-height:1.4}
+.fc-grammar-back{font-size:16px;color:var(--ink2);font-weight:700;line-height:1.6;text-align:center}
+
 /* reading center */
 .passage{font-family:'Noto Sans JP';font-size:19px;line-height:2;background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.6rem;box-shadow:var(--shadow);margin-bottom:1rem}
 .read-tools{display:flex;gap:10px;margin-bottom:1rem}
@@ -210,6 +226,8 @@ body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:va
 <div class="view" id="view-results"><div class="body" id="results-body"></div></div>
 
 <script src="/seed-data.js"></script>
+<script src="/memory-engine.js"></script>
+<script src="/Coach.js"></script>
 <script src="/core.js"></script>
 <script>
 if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}))}
@@ -279,12 +297,14 @@ const App = (function(){
     } else {
       const m=C.buildMission();
       const newCount=m.newVocab.length+m.newGrammar.length;
+      const mTitle=m.coach?m.coach.headline:'Start training';
+      const mSub=m.coach?m.coach.message:`Built from your weakest area · ~${m.estMin} min`;
       slot.innerHTML=`<div class="mission-ring" onclick="C.haptic('heavy');App.startMission()"><div class="mission">
         <div class="m-label">Today's focus · ${FOCUS_LABEL[m.focus]}</div>
-        <div class="m-title">Start training</div>
-        <div class="m-sub">Built from your weakest area · ~${m.estMin} min</div>
+        <div class="m-title">${mTitle}</div>
+        <div class="m-sub">${mSub}</div>
         <div class="m-pills"><span class="m-pill focus">🎯 ${FOCUS_LABEL[m.focus]}</span>${m.due.length?`<span class="m-pill b">🔁 ${m.due.length} review</span>`:''}${newCount?`<span class="m-pill b">✨ ${newCount} new</span>`:''}<span class="m-pill b">📖 1 story</span></div>
-        <button class="m-cta">Let's go →</button></div></div>`;
+        <button class="m-cta">${m.coach&&m.coach.rescueMode?'Quick rescue →':"Let's go →"}</button></div></div>`;
     }
     // story
     const story=C.pickStory();
@@ -331,6 +351,75 @@ const App = (function(){
     document.getElementById('next').classList.add('show');
   }
   function nextQ(){C.haptic('light');quiz.i++;renderQ()}
+
+  /* ---------- PRODUCTION RECALL runner (recall from memory → reveal → self-grade) ----------
+     This is the core retrieval upgrade: instead of picking the answer from 4 options
+     (recognition), she must PRODUCE it from memory, then honestly grade how it felt
+     (Again/Hard/Good/Easy). That graded signal is exactly what the Memory engine needs,
+     and effortful recall builds far more durable memory than recognition. Used for
+     vocab / grammar / kanji; reading & listening stay multiple-choice (comprehension). */
+  let recall=null;
+  function runRecall(cards,title,onDone){
+    recall={cards,i:0,good:0,onDone,title};
+    showView('view-session');
+    document.getElementById('s-meta').textContent='';
+    renderRecall();
+  }
+  function renderRecall(){
+    if(recall.i>=recall.cards.length){return recall.onDone({n:recall.cards.length,good:recall.good})}
+    const it=recall.cards[recall.i];
+    document.getElementById('s-fill').style.width=(recall.i/recall.cards.length*100)+'%';
+    document.getElementById('s-meta').textContent=(recall.i+1)+'/'+recall.cards.length;
+    const dimName={vocab:'Vocabulary',grammar:'Grammar',kanji:'Kanji'}[it.dim]||'Recall';
+    const cueLabel = it.dim==='grammar' ? "Recall what it means & how it's formed"
+                   : it.dim==='kanji'   ? 'Recall the reading & meaning'
+                   :                      'Recall the Japanese word';
+    const cue = it.dim==='grammar' ? it.point : it.meaning;
+    document.getElementById('session-body').innerHTML=`
+      <div class="recall-eyebrow">🧠 ${dimName} · produce from memory</div>
+      <div class="q-card" id="rc">
+        <div class="recall-cuelabel">${cueLabel}</div>
+        <div class="recall-cue">${cue}</div>
+        <div id="recall-answer" class="recall-answer" style="display:none"></div>
+        <button class="reveal-btn" id="reveal-btn" onclick="App.revealRecall()">Show answer</button>
+        <div id="recall-grade" class="rate-row" style="display:none">
+          <button class="rate r1" onclick="App.gradeRecall(1)">Again</button>
+          <button class="rate r2" onclick="App.gradeRecall(2)">Hard</button>
+          <button class="rate r3" onclick="App.gradeRecall(3)">Good</button>
+          <button class="rate r4" onclick="App.gradeRecall(4)">Easy</button>
+        </div>
+      </div>`;
+  }
+  function revealRecall(){
+    C.haptic('light');
+    const it=recall.cards[recall.i];
+    let html, say;
+    if(it.dim==='vocab'){
+      say=it.example||it.word;
+      html=`<div class="recall-main">${it.word}</div><div class="recall-reading">${it.reading||''}</div>
+        <div class="recall-ex">${it.example||''}</div><div class="recall-exm">${it.exampleMeaning||''}</div>`;
+    } else if(it.dim==='kanji'){
+      say=it.exampleWord||it.char;
+      html=`<div class="recall-main">${it.char}</div><div class="recall-reading">${it.reading||''}</div>
+        <div class="recall-ex">${it.exampleWord||''}</div>`;
+    } else {
+      say=it.listening||(it.examples&&it.examples[0])||it.point;
+      html=`<div class="fc-grammar-back" style="margin-bottom:10px">${it.explanation||''}</div>
+        <ul class="recall-eglist">${(it.examples||[]).map(x=>`<li>${x}</li>`).join('')}</ul>`;
+    }
+    html+=`<button class="listen-btn" onclick="sayNow('${sayRef(say)}')">▶ 聞く Listen</button>`;
+    const a=document.getElementById('recall-answer'); a.innerHTML=html; a.style.display='block';
+    document.getElementById('reveal-btn').style.display='none';
+    document.getElementById('recall-grade').style.display='grid';
+    speak(say);
+  }
+  function gradeRecall(g){
+    C.haptic(g>=3?'success':'error');
+    const it=recall.cards[recall.i];
+    C.rate(it.id,g);                 // graded 1..4 → straight into the Memory engine
+    if(g>=3) recall.good++;
+    recall.i++; renderRecall();
+  }
 
   /* ---------- SMART MISSION ---------- */
   let mission=null;
@@ -380,24 +469,40 @@ const App = (function(){
       <div class="read-tools"><button class="rt-listen" onclick="sayNow('${sayRef(s.passage)}')">🎧 Listen</button><button class="rt-start" onclick="App.startRecall()">Continue →</button></div>`;
   }
   function startRecall(){
-    const s=mission.plan.story;
+    const plan=mission.plan;
+    // PRODUCTION RECALL — what she should produce from memory today: the new items
+    // she just learned, plus any due/focus vocab·grammar·kanji.
+    const taught=mission.teach.map(t=>t.item.id);
+    const dueItems=[...C.ITEMS.vocab,...C.ITEMS.grammar,...C.ITEMS.kanji].filter(it=>C.isDue(it.id)).map(it=>it.id);
+    const focusItems=(C.ITEMS[plan.focus]||[]).map(it=>it.id);
+    const ids=[...new Set([...taught,...dueItems,...focusItems])]
+      .map(id=>C.BY_ID[id])
+      .filter(it=>it && ['vocab','grammar','kanji'].includes(it.dim));
+    const cards=C.shuffle(ids).slice(0,8);
+    // COMPREHENSION — reading & listening stay multiple-choice
+    const s=plan.story;
     const readingQs=(s&&s.questions)?s.questions.map(rq=>({id:rq.id,s:rq.q,a:'読解 — comprehension',o:rq.o,c:rq.c,exp:rq.exp,dim:'reading'})):[];
-    const qs=C.shuffle([...readingQs,...mission.plan.recall]).slice(0,7);
-    runQuiz(qs,'Recall',finishMission);
+    const compQs=C.shuffle([...readingQs,...plan.recall.filter(q=>q.dim==='reading'||q.dim==='listening')]).slice(0,5);
+
+    const runComp=(rstat)=>{
+      if(compQs.length) runQuiz(compQs,'Comprehension',(q)=>endMission(rstat.good+q.correct, rstat.n+q.questions.length));
+      else endMission(rstat.good, rstat.n);
+    };
+    if(cards.length) runRecall(cards,'Recall',runComp);
+    else runComp({n:0,good:0});
   }
-  function finishMission(q){
+  function endMission(correct,total){
     C.DB.set('mission_done',C.dateKey());
     const mins=Math.max(1,Math.round((Date.now()-mission.start)/60000));
-    const units=mission.teach.length+q.questions.length;
-    C.logActivity(units,mins);
+    C.logActivity(mission.teach.length+total,mins);
     C.snapshotToday();
     const mom=C.bumpMomentum(14);
     confetti();
-    report('mission',{focus:mission.plan.focus,correct:q.correct,total:q.questions.length,mins,overall:C.overallMastery(),momentum:mom});
+    report('mission',{focus:mission.plan.focus,correct,total,mins,overall:C.overallMastery(),momentum:mom});
     // true gain from THIS mission (captured at start), not vs. yesterday
     const gained=Math.max(0,C.overallMastery()-(mission.startOverall||0));
     document.getElementById('results-body').innerHTML=resultCard('🏆','Mission complete!',
-      `${q.correct}/${q.questions.length} correct · ${mins} min<br><strong style="color:var(--green)">N4 Mastery +${gained.toFixed(1)}%</strong> · Momentum ${mom}`);
+      `${correct}/${total} recalled · ${mins} min<br><strong style="color:var(--green)">N4 Mastery +${gained.toFixed(1)}%</strong> · Momentum ${mom}`);
     showView('view-results');
   }
 
@@ -454,18 +559,22 @@ const App = (function(){
     showView('view-session');renderFC();
   }
   function fcFace(c){
-    if(c.dim==='vocab')return{front:c.word,reading:c.reading,meaning:c.meaning,say:c.example};
-    if(c.dim==='kanji')return{front:c.char,reading:c.reading,meaning:c.meaning+' · '+c.exampleWord,say:c.exampleWord};
-    return{front:c.point,reading:'',meaning:c.explanation,say:c.listening||c.point};
+    // Production direction: show the MEANING (the cue) on the front; she recalls the
+    // Japanese, then flips to check. Harder than word→meaning recognition, and that
+    // desirable difficulty is what builds durable memory.
+    if(c.dim==='vocab')return{prompt:c.meaning,main:c.word,sub:c.reading,say:c.example||c.word,big:true};
+    if(c.dim==='kanji')return{prompt:c.meaning,main:c.char,sub:(c.reading||'')+(c.exampleWord?' · '+c.exampleWord:''),say:c.exampleWord||c.char,big:true};
+    return{prompt:c.point,main:c.explanation,sub:(c.examples&&c.examples[0])||'',say:c.listening||c.point,big:false};
   }
   function renderFC(){
     if(fc.i>=fc.cards.length){C.logActivity(fc.n,Math.max(1,Math.round((Date.now()-fc.start)/60000)));C.snapshotToday();if(fc.n)C.bumpMomentum(8);renderDash();return showView('view-dash')}
     const c=fc.cards[fc.i],f=fcFace(c);
     document.getElementById('s-fill').style.width=(fc.i/fc.cards.length*100)+'%';
     document.getElementById('s-meta').textContent=fc.i+'✓';
+    const mainHtml=f.big?`<div class="fc-big">${f.main}</div>`:`<div class="fc-grammar-back">${f.main}</div>`;
     document.getElementById('session-body').innerHTML=`<div class="fc-scene" onclick="App.flipFC()"><div class="fc-inner" id="fci">
-      <div class="fc-face"><div class="fc-big">${f.front}</div><div style="font-size:13px;color:var(--ink3);font-weight:600">tap to flip</div></div>
-      <div class="fc-face fc-back"><div class="fc-big">${f.front}</div>${f.reading?`<div style="font-size:19px;color:var(--ink2);font-weight:700;margin-bottom:6px">${f.reading}</div>`:''}<div style="font-size:16px;color:var(--blue);font-weight:700;text-align:center">${f.meaning}</div></div></div></div>
+      <div class="fc-face"><div class="fc-cue">${f.prompt}</div><div style="font-size:13px;color:var(--ink3);font-weight:600;margin-top:12px">tap to recall →</div></div>
+      <div class="fc-face fc-back">${mainHtml}${f.sub?`<div style="font-size:17px;color:var(--ink2);font-weight:700;margin-top:6px;text-align:center;font-family:'Noto Sans JP'">${f.sub}</div>`:''}</div></div></div>
       <div id="fc-rate" style="display:none"><div class="rate-row"><button class="rate r1" onclick="App.rateFC(1)">Again</button><button class="rate r2" onclick="App.rateFC(2)">Hard</button><button class="rate r3" onclick="App.rateFC(3)">Good</button><button class="rate r4" onclick="App.rateFC(4)">Easy</button></div></div>`;
     fc.flipped=false;
   }
@@ -477,7 +586,7 @@ const App = (function(){
   function exitSession(){C.haptic('light');try{speechSynthesis.cancel()}catch(e){}home()}
   function home(){renderDash();showView('view-dash')}
 
-  return {renderDash,startMission,teachNext,startRecall,answer,nextQ,startReview,openLibrary,openReading,readingQuiz,startFlashcards,flipFC,rateFC,exitSession,home};
+  return {renderDash,startMission,teachNext,startRecall,revealRecall,gradeRecall,answer,nextQ,startReview,openLibrary,openReading,readingQuiz,startFlashcards,flipFC,rateFC,exitSession,home};
 })();
 
 /* ── INIT ── */

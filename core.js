@@ -112,34 +112,29 @@
   // UNIFIED SRS  (every answer — quiz, flashcard, listening, reading — rates the linked item)
   // quality: 1 again · 2 hard · 3 good · 4 easy
   // ============================================================
+  // The scheduler now delegates to the FSRS-style Memory engine (memory-engine.js).
+  // Every item carries Stability (S), Difficulty (D), Retrievability (R). Reviews
+  // are timed to the ~90% recall edge — the spacing-effect sweet spot. The old
+  // SM-2 ladder (ease/interval snapping) has been retired.
+  function MEM() {
+    if (!root.Memory) throw new Error('memory-engine.js must load before core.js');
+    return root.Memory;
+  }
   function getSRS() { return DB.get('srs') || {}; }
   function saveSRS(s) { DB.set('srs', s); }
   function itemState(id) {
     const s = getSRS();
-    return s[id] || { interval: 0, reps: 0, ease: 2.5, last: 0, lastKey: null, next: 0, attempts: 0, correct: 0, peak: 0 };
+    return s[id] || { S: 0, D: 0, reps: 0, lapses: 0, last: 0, lastKey: null, next: 0, attempts: 0, correct: 0 };
   }
-  function rate(id, quality) {
-    const s = getSRS(); const c = itemState(id);
-    c.attempts++;
-    if (quality >= 3) {
-      c.correct++;
-      c.interval = c.reps === 0 ? 1 : c.reps === 1 ? 3 : Math.round(c.interval * c.ease);
-      // snap to the readable ladder when close
-      const ladder = DIALS.SRS_LADDER;
-      const snapped = ladder.find(x => x >= c.interval); if (snapped && c.reps >= 1) c.interval = snapped;
-      c.reps++;
-      c.ease = Math.max(1.3, c.ease + (0.1 - (4 - quality) * (0.08 + (4 - quality) * 0.02)));
-    } else {
-      c.interval = DIALS.MISS_RESET; c.reps = 0;
-      if (quality === 2) c.ease = Math.max(1.3, c.ease - 0.15);
-    }
-    c.last = Date.now(); c.lastKey = dateKey();
-    c.next = Date.now() + c.interval * 86400000;
-    c.peak = Math.max(c.peak, 1 - Math.exp(-c.reps / 2.5));
-    s[id] = c; saveSRS(s);
-    return c;
+  // quality / grade: 1 again · 2 hard · 3 good · 4 easy
+  function rate(id, grade) {
+    const s = getSRS();
+    const next = MEM().review(s[id] || null, grade);
+    next.lastKey = dateKey();
+    s[id] = next; saveSRS(s);
+    return next;
   }
-  function isDue(id) { const c = itemState(id); return c.attempts > 0 && c.next <= Date.now(); }
+  function isDue(id) { return MEM().isDue(getSRS()[id]); }
   function dueQuestions(limit) {
     const due = ITEMS.question.filter(q => isDue(q.id));
     return shuffle(due).slice(0, limit || 999);
@@ -148,15 +143,15 @@
   // ============================================================
   // MASTERY MATH (coverage-aware) — see blueprint §3.1
   // ============================================================
+  // Item mastery = durability: how close this memory is to being ~2-month-durable.
+  // Driven by Stability (S) from the Memory engine — 0 when never learned, 1.0 once
+  // the memory reaches the "mastered" stage (S ≥ MASTERED_S). It only climbs with
+  // successful reviews and dips on a lapse, so the progress bar doesn't oscillate
+  // day-to-day the way raw recall does. (Live recall is reported as retention, below.)
   function itemMastery(id) {
     const c = itemState(id);
-    if (!c.reps || !c.last) return 0;                         // never learned → 0
-    // strength grows with successful repetitions (Learn→Recall→Use→Master),
-    // ~0.33 after 1 good rep, ~0.70 after 3, ~0.86 after 5
-    const strength = 1 - Math.exp(-c.reps / 2.5);
-    const daysSince = (Date.now() - c.last) / 86400000;
-    const decay = Math.exp(-daysSince / Math.max(c.interval, 1));
-    return strength * decay;
+    if (!c.attempts || !c.S) return 0;                        // never studied → 0
+    return Math.min(1, c.S / MEM().CFG.MASTERED_S);
   }
   // The pool for a dimension must be exactly the ids that actually get RATED,
   // or coverage math silently caps the bar below 100%.
@@ -192,13 +187,16 @@
     }
     return wsum ? Math.round(total / wsum) : 0;
   }
-  // Retention: of what you ever learned, how much survives  (current / peak)
+  // Retention: right now, of everything she has learned, how much can she still
+  // recall? = mean current Retrievability (R) across items with ≥1 rep. This is the
+  // live "is my memory healthy today" number — it dips as reviews fall due and snaps
+  // back up when she clears them.
   function retention() {
-    const s = getSRS(); const ids = Object.keys(s).filter(id => s[id].reps > 0);
+    const s = getSRS(); const ids = Object.keys(s).filter(id => s[id].attempts > 0);
     if (!ids.length) return null;
-    let cur = 0, peak = 0;
-    ids.forEach(id => { cur += itemMastery(id); peak += Math.max(s[id].peak, 0.0001); });
-    return peak ? Math.round((cur / peak) * 100) : null;
+    const M = MEM();
+    const sum = ids.reduce((acc, id) => acc + M.currentR(s[id]), 0);
+    return Math.round((sum / ids.length) * 100);
   }
 
   // ============================================================
@@ -283,23 +281,194 @@
       .reduce((mx, q) => Math.max(mx, itemState(q.id).last || 0), 0);
     return stories.slice().sort((a, b) => lastTouch(a) - lastTouch(b))[0];
   }
+  // ---- Coach: ask the behaviour engine how big today's session should be ----
+  // Assembles every learnable item with its memory state, then lets Coach.planDay
+  // (Fogg B=MAP) decide the dose and the message. Returns null if Coach not loaded.
+  function coachItems() {
+    const s = getSRS();
+    const out = [];
+    for (const d of ['vocab', 'grammar', 'kanji']) {
+      (ITEMS[d] || []).forEach(it => out.push({ id: it.id, dim: d, state: s[it.id] || null }));
+    }
+    ITEMS.question.filter(q => q.dim === 'reading' || q.dim === 'listening')
+      .forEach(q => out.push({ id: q.id, dim: q.dim, state: s[q.id] || null }));
+    return out;
+  }
+  function coachPlan() {
+    if (!root.Coach) return null;
+    return root.Coach.planDay(coachItems(), {
+      activityLog: activityLog(),
+      momentum: getMomentum().value
+    });
+  }
+
   function buildMission() {
     const focus = weakestDim();
-    // weakness attack: surface due reviews from the focus dimension first
+    const plan = coachPlan();                       // Coach decides today's dose + message
+    const rescueMode = !!(plan && plan.rescueMode);
+    const dose = plan ? plan.focusDose : 12;
+    const reviewCap = rescueMode ? Math.max(3, Math.round(dose * 0.7)) : dose;
+
+    // weakness attack: surface due reviews from the focus dimension first, capped to the dose
     const allDue = dueQuestions(99);
-    const due = [...allDue.filter(q => q.dim === focus), ...allDue.filter(q => q.dim !== focus)].slice(0, 12);
-    // new chunk: a few unseen vocab + grammar (sentence-first)
-    const newVocab = unseen('vocab').slice(0, 2);
-    const newGrammar = unseen('grammar').slice(0, 1);
-    // weakness attack: if kanji is the weak spot, teach a couple of new ones too
-    const newKanji = focus === 'kanji' ? unseen('kanji').slice(0, 2) : [];
+    const due = [...allDue.filter(q => q.dim === focus), ...allDue.filter(q => q.dim !== focus)].slice(0, reviewCap);
+
+    // new chunk: scaled down on shaky days so a low-motivation session stays tiny
+    const newBudget = rescueMode ? 1 : 3;
+    const newVocab = unseen('vocab').slice(0, Math.min(2, newBudget));
+    const newGrammar = unseen('grammar').slice(0, Math.max(0, newBudget - newVocab.length));
+    const newKanji = (focus === 'kanji' && !rescueMode) ? unseen('kanji').slice(0, 2) : [];
+
     const story = pickStory();
-    // recall: 5 questions, skewed toward the focus dimension
+    // recall: skewed toward the focus dimension
     const focusQs = shuffle(ITEMS.question.filter(q => q.dim === focus));
     const otherQs = shuffle(ITEMS.question.filter(q => q.dim !== focus));
     const recall = [...focusQs.slice(0, 3), ...otherQs.slice(0, 2)].slice(0, 5);
     const estMin = 5 + (newVocab.length + newGrammar.length + newKanji.length) * 2 + 8 + 3 + recall.length;
-    return { focus, due, newVocab, newGrammar, newKanji, story, recall, estMin };
+    return {
+      focus, due, newVocab, newGrammar, newKanji, story, recall, estMin,
+      coach: plan ? { headline: plan.headline, message: plan.message, rescueMode } : null,
+      rescue: plan ? plan.rescue : []
+    };
+  }
+
+  // ============================================================
+  // LESSON PROGRESS — track 5 steps per MnN lesson
+  // Steps: 'vocab' | 'grammar' | 'reading' | 'quiz' | 'write'
+  // ============================================================
+  const LESSON_STEPS = ['vocab','grammar','reading','quiz','write'];
+
+  function getLessonByNum(n) {
+    return PACKS.find(p => p.lessonNum === n) || null;
+  }
+  function getLessonProgress(n) {
+    return DB.get('lp_' + n) || { steps: [] };
+  }
+  function markLessonStep(n, step) {
+    const p = getLessonProgress(n);
+    if (!p.steps.includes(step)) p.steps.push(step);
+    if (LESSON_STEPS.every(s => p.steps.includes(s))) {
+      p.completedAt = dateKey();
+      seedLessonIntoDrills(n);
+    }
+    DB.set('lp_' + n, p);
+    logActivity(1, 3);
+    bumpMomentum(5);
+  }
+  function isLessonComplete(n) {
+    const p = getLessonProgress(n);
+    return LESSON_STEPS.every(s => p.steps.includes(s));
+  }
+  function isLessonUnlocked(n) {
+    if (n === 1) return true;
+    return isLessonComplete(n - 1);
+  }
+
+  // ============================================================
+  // DRILL ENGINE — standalone SRS flashcard system
+  // Separate from quiz SRS so drills can be both directions
+  // Grades: 1=again 2=hard 3=good 4=easy
+  // ============================================================
+  const DRILL_DAILY_CAP = 50;
+
+  function drillGet(cardId) {
+    try { return JSON.parse(store.getItem('mnn_d_' + cardId)); } catch(e) { return null; }
+  }
+  function drillSet(cardId, data) {
+    store.setItem('mnn_d_' + cardId, JSON.stringify(data));
+  }
+  function drillIsDue(cardId) {
+    const r = drillGet(cardId);
+    if (!r) return true; // new card
+    return MEM().isDue(r);
+  }
+  function rateDrill(cardId, grade) {
+    const next = MEM().review(drillGet(cardId), grade);   // 1 again·2 hard·3 good·4 easy
+    next.lastReviewed = dateKey();
+    drillSet(cardId, next);
+    logActivity(1, 1); bumpMomentum(2);
+  }
+
+  function getDrillPool() {
+    const pool = [];
+    for (const pack of PACKS) {
+      if (!pack.lessonNum || !isLessonComplete(pack.lessonNum)) continue;
+      (pack.vocabulary  || []).forEach(v => {
+        pool.push({ id:'jpen_'+v.id, type:'vocab-jpen', item:v, lesson:pack.lessonNum, pack });
+        pool.push({ id:'enjp_'+v.id, type:'vocab-enjp', item:v, lesson:pack.lessonNum, pack });
+      });
+      (pack.grammar || []).forEach(g => {
+        pool.push({ id:'gram_'+g.id, type:'grammar', item:g, lesson:pack.lessonNum, pack });
+      });
+      (pack.kanji   || []).forEach(k => {
+        pool.push({ id:'kan_'+k.id, type:'kanji', item:k, lesson:pack.lessonNum, pack });
+      });
+    }
+    return pool;
+  }
+
+  function seedLessonIntoDrills(n) {
+    // Mark all cards for this lesson as "seeded" so they appear in the pool.
+    // Actual SRS records are created lazily on first rating.
+    DB.set('drill_seeded_'+n, true);
+  }
+
+  function getDrillDue(cap) {
+    cap = cap || DRILL_DAILY_CAP;
+    const M = MEM();
+    const pool = getDrillPool();
+    const dueCards = [], newCards = [];
+    for (const card of pool) {
+      const rec = drillGet(card.id);
+      if (!rec) { newCards.push(card); continue; }
+      if (M.isDue(rec)) dueCards.push(card);
+    }
+    // most-urgent (closest to being forgotten) first
+    dueCards.sort((a, b) => M.urgency(drillGet(b.id)) - M.urgency(drillGet(a.id)));
+    const result = dueCards.slice(0, cap);
+    const remaining = Math.max(0, cap - result.length);
+    result.push(...shuffle(newCards).slice(0, remaining));
+    return result;
+  }
+
+  function getDrillDueCount() { return getDrillDue().length; }
+
+  function getDrillStats() {
+    const pool = getDrillPool();
+    const M = MEM();
+    let due = 0, total = pool.length, rSum = 0, ratedCount = 0;
+    for (const card of pool) {
+      const rec = drillGet(card.id);
+      if (!rec) { due++; continue; }
+      if (M.isDue(rec)) due++;
+      if (rec.reps > 0) { rSum += M.currentR(rec); ratedCount++; }
+    }
+    return { due, total, retention: ratedCount ? Math.round((rSum / ratedCount) * 100) : null };
+  }
+
+  // Streak: consecutive days with any lesson step or drill card rated
+  function getStreak() {
+    const log = activityLog();
+    const keys = Object.keys(log).sort().reverse();
+    if (!keys.length) return 0;
+    let streak = 0, cursor = new Date();
+    for (const k of keys) {
+      const kDate = new Date(k + 'T00:00:00');
+      const diff = Math.round((new Date(dateKey()+'T00:00:00') - kDate) / 86400000);
+      if (diff === streak) streak++;
+      else break;
+    }
+    return streak;
+  }
+
+  // Previous lesson questions for interleaving in quiz step
+  function getPrevLessonQuestions(lessonNum, n) {
+    const qs = [];
+    for (const pack of PACKS) {
+      if (!pack.lessonNum || pack.lessonNum >= lessonNum || !isLessonComplete(pack.lessonNum)) continue;
+      qs.push(...(pack.questions || []));
+    }
+    return shuffle(qs).slice(0, n || 2);
   }
 
   // ---- expose ----
@@ -311,7 +480,14 @@
     snapshotToday, growthToday, growthRate, daysToReady, snapshots,
     activityLog, logActivity,
     getMomentum, bumpMomentum,
-    weakestDim, buildMission, pickStory
+    weakestDim, buildMission, pickStory, coachPlan,
+    // lesson system
+    LESSON_STEPS, getLessonByNum, getLessonProgress, markLessonStep,
+    isLessonComplete, isLessonUnlocked,
+    // drill engine
+    getDrillPool, getDrillDue, getDrillDueCount, getDrillStats,
+    rateDrill, drillGet,
+    getPrevLessonQuestions, getStreak
   };
 })(typeof window !== 'undefined' ? window : globalThis);
 

@@ -75,6 +75,25 @@ body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:va
 .ms .mt{font-weight:800;font-size:14px}
 .ms .mt.done{color:var(--green)}
 .ms .msub{font-size:12px;color:var(--ink3)}
+
+/* lesson track L25-L50 */
+.track-wrap{overflow-x:auto;padding:1rem 0 .5rem}
+.track-row{display:flex;align-items:center;min-width:max-content;padding:0 .5rem}
+.track-node{display:flex;flex-direction:column;align-items:center;position:relative;z-index:1}
+.track-circle{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;border:2.5px solid var(--border);background:var(--bg);color:var(--ink3);transition:all .3s}
+.track-node.done .track-circle{background:var(--blue);border-color:var(--blue);color:#fff;box-shadow:0 3px 10px rgba(41,121,255,.35)}
+.track-node.current .track-circle{background:#fff;border-color:var(--blue);color:var(--blue);box-shadow:0 0 0 4px rgba(41,121,255,.18);animation:pulse-node 2s infinite}
+@keyframes pulse-node{0%,100%{box-shadow:0 0 0 4px rgba(41,121,255,.18)}50%{box-shadow:0 0 0 7px rgba(41,121,255,.08)}}
+.track-label{font-size:9px;font-weight:700;color:var(--ink3);margin-top:5px;text-align:center;max-width:44px;line-height:1.2}
+.track-node.done .track-label{color:var(--blue)}
+.track-node.current .track-label{color:var(--blue);font-weight:900}
+.track-line{height:3px;width:28px;background:var(--border);flex-shrink:0;position:relative;top:-10px}
+.track-line.done{background:var(--blue)}
+.track-progress-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden;margin-top:10px}
+.track-progress-fill{height:100%;background:var(--blue);border-radius:3px;transition:width 1s var(--spring)}
+.track-legend{display:flex;gap:16px;margin-top:10px;flex-wrap:wrap}
+.track-legend span{font-size:11px;font-weight:700;color:var(--ink3);display:flex;align-items:center;gap:5px}
+.track-legend .dot{width:10px;height:10px;border-radius:50%}
 </style>
 </head>
 <body>
@@ -108,6 +127,17 @@ body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:va
     <div id="skills"></div>
   </div>
 
+  <div class="eyebrow" style="padding-left:4px">📍 Lesson track — L25 to L50</div>
+  <div class="card">
+    <div class="track-wrap"><div class="track-row" id="lesson-track"></div></div>
+    <div class="track-progress-bar"><div class="track-progress-fill" id="track-fill"></div></div>
+    <div class="track-legend">
+      <span><div class="dot" style="background:var(--blue)"></div>Done</span>
+      <span><div class="dot" style="background:#fff;border:2.5px solid var(--blue);box-sizing:border-box"></div>Current</span>
+      <span><div class="dot" style="background:var(--border)"></div>Locked</span>
+    </div>
+  </div>
+
   <div class="eyebrow" style="padding-left:4px">テーマ — Theme modules</div>
   <div class="mods" id="modules"></div>
 
@@ -118,6 +148,8 @@ body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:va
 </div>
 
 <script src="/seed-data.js"></script>
+<script src="/memory-engine.js"></script>
+<script src="/Coach.js"></script>
 <script src="/core.js"></script>
 <script>
 const C=window.Core;
@@ -170,6 +202,51 @@ function render(){
   // skills
   document.getElementById('skills').innerHTML=C.DIMS.map(d=>{const m=C.dimMastery(d);const meta=DIM_META[d];return `<div class="sk"><div class="sk-top"><span>${meta.label}</span><span>${m===null?'—':m+'%'}</span></div><div class="sk-track"><div class="sk-fill" style="width:${m||0}%;background:${meta.color}"></div></div></div>`}).join('');
 
+  // lesson track L25-L50
+  (function(){
+    const packs=C.PACKS();
+    const packNums=new Set(packs.map(p=>p.lessonNum));
+    const srs=C.getSRS();
+    function lessonMastery(lessonNum){
+      const p=packs.find(x=>x.lessonNum===lessonNum);
+      if(!p)return null;
+      const ids=[];
+      (p.vocabulary||[]).forEach(v=>ids.push(v.id));
+      (p.grammar||[]).forEach(g=>ids.push(g.id));
+      (p.kanji||[]).forEach(k=>ids.push(k.id));
+      if(!ids.length)return null;
+      const avg=ids.reduce((s,id)=>{const st=srs[id];return s+(st&&st.reps>0?Math.min(1,st.interval/30):0);},0)/ids.length;
+      return Math.round(avg*100);
+    }
+    const trackEl=document.getElementById('lesson-track');
+    let html='';
+    let doneCount=0;
+    let firstCurrent=-1;
+    for(let n=25;n<=50;n++){
+      const hasPack=packNums.has(n);
+      const m=hasPack?lessonMastery(n):null;
+      const isDone=m!==null&&m>=60;
+      const isCurrent=!isDone&&hasPack&&firstCurrent===-1;
+      if(isCurrent)firstCurrent=n;
+      if(isDone)doneCount++;
+      const cls=isDone?'done':isCurrent?'current':'';
+      const icon=isDone?'✓':n;
+      if(n>25)html+=`<div class="track-line${isDone||(!isDone&&n-1>=25&&packNums.has(n-1)&&lessonMastery(n-1)>=60)?'':''} ${n<=firstCurrent&&firstCurrent>-1||isDone?'done':''}"></div>`;
+      html+=`<div class="track-node ${cls}"><div class="track-circle">${icon}</div><div class="track-label">L${n}</div></div>`;
+    }
+    trackEl.innerHTML=html;
+    // fix line colors — line between n-1 and n is blue only if n-1 is done
+    const circles=trackEl.querySelectorAll('.track-node');
+    const lines=trackEl.querySelectorAll('.track-line');
+    lines.forEach((line,i)=>{
+      const prevNode=circles[i];
+      if(prevNode&&prevNode.classList.contains('done'))line.classList.add('done');
+      else line.classList.remove('done');
+    });
+    const pct=Math.round(doneCount/26*100);
+    document.getElementById('track-fill').style.width=pct+'%';
+  })();
+
   // modules
   const packs=C.PACKS();const byMod={};
   packs.forEach(p=>{const key=p.module;byMod[key]=byMod[key]||{label:p.moduleLabel||key,ids:[]};
@@ -178,7 +255,7 @@ function render(){
     if(p.reading)(p.reading.questions||[]).forEach(rq=>byMod[key].ids.push(rq.id));
     (p.listening||[]).forEach(l=>byMod[key].ids.push('lq_'+l.id));
   });
-  document.getElementById('modules').innerHTML=Object.values(byMod).map(m=>{
+  document.getElementById('modules').innerHTML=Object.values(byMod).filter(m=>m.label&&m.label!=='undefined').map(m=>{
     const avg=m.ids.length?Math.round(m.ids.reduce((s,id)=>s+C.itemMastery(id),0)/m.ids.length*100):0;
     return `<div class="mod"><div class="mn">${m.label}</div><div class="mtrack"><div class="mfill" style="width:${avg}%"></div></div><div class="mpct">${avg}% · ${m.ids.length} items</div></div>`;
   }).join('');
