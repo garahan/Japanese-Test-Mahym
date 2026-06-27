@@ -389,13 +389,16 @@ const App = (function(){
         <div class="cc-sub">${lSub(cur)?lSub(cur)+' · ':''}${lessonStepLabel(current)}</div>
       </div>` : '';
 
-    // daily review (spaced-repetition cards due across completed lessons)
-    const dueCount=C.getDrillDueCount();
-    document.getElementById('review-slot').innerHTML = dueCount>0 ? `
-      <div class="prac-card" style="margin-top:.8rem;background:var(--gold-soft);border-color:#ffe082" onclick="C.haptic('light');App.startReview()">
-        <div class="prac-icon">🔁</div>
-        <div class="prac-body"><div class="prac-name" style="color:#b26a00">Daily review</div><div class="prac-sub">${dueCount} card${dueCount>1?'s':''} ready · keep them from fading</div></div>
-        <div class="prac-arrow">→</div>
+    // Practice — ALWAYS available, across all lessons (spaced-repetition review + flashcards)
+    const pool=[...C.ITEMS.vocab,...C.ITEMS.grammar,...C.ITEMS.kanji];
+    const dueN=pool.filter(it=>C.itemState(it.id).attempts>0 && C.isDue(it.id)).length;
+    document.getElementById('review-slot').innerHTML = pool.length ? `
+      <div class="sect" style="margin-top:1.1rem">練習 — Practice (all lessons)</div>
+      <div class="tile wide" style="background:var(--gold-soft);border-color:#ffe082;margin-bottom:.6rem" onclick="C.haptic('light');App.startGlobalReview()">
+        <div class="t-icon">🔁</div><div><div class="t-name" style="color:#b26a00">Review · spaced repetition</div><div class="t-sub">${dueN>0?dueN+' due now · timely review':'Quick timed review — keeps memory fresh'}</div></div>
+      </div>
+      <div class="tile wide" onclick="C.haptic('light');App.startFlashcards()">
+        <div class="t-icon">🃏</div><div><div class="t-name">Flashcards</div><div class="t-sub">${pool.length} cards · recall & self-grade</div></div>
       </div>` : '';
 
     // lesson list (with empty-state safety net + title fallbacks for admin-saved content)
@@ -728,13 +731,39 @@ const App = (function(){
     });
   }
 
-  function resultCard(emoji,title,sub,action){return `<div class="q-card" style="text-align:center;margin-top:2rem"><div style="font-size:64px;margin-bottom:8px;animation:popIn .5s var(--spring)">${emoji}</div><h2 style="font-size:26px;font-weight:900;margin-bottom:10px">${title}</h2><p style="color:var(--ink2);font-size:15px;margin-bottom:22px;line-height:1.6">${sub}</p><button class="m-cta" style="background:var(--ink);color:#fff" onclick="${action||'App.home()'}">${action?'Continue →':'Back to lessons'}</button></div>`}
+  /* ---------- GLOBAL practice (works across ALL lessons, no completion gate) ---------- */
+  function allStudyCards(){ return [...C.ITEMS.vocab,...C.ITEMS.grammar,...C.ITEMS.kanji]; }
+  function startGlobalReview(){
+    curLesson=null;
+    const all=allStudyCards();
+    if(!all.length) return home();
+    const dueAttempted=all.filter(it=>C.itemState(it.id).attempts>0 && C.isDue(it.id));
+    const dueNew=all.filter(it=>C.itemState(it.id).attempts===0);
+    let cards=[...dueAttempted, ...C.shuffle(dueNew)].slice(0,25);
+    if(!cards.length) cards=C.shuffle(all).slice(0,20);   // nothing strictly due → quick mixed session
+    runRecall(C.shuffle(cards),'Review',r=>{ C.logActivity(r.n,Math.max(1,Math.round(r.n/4)));C.snapshotToday();const mom=C.bumpMomentum(8);
+      if(r.good>=Math.ceil(r.n*0.7))confetti();
+      report('review',{good:r.good,total:r.n,overall:C.overallMastery(),momentum:mom});
+      document.getElementById('results-body').innerHTML=resultCard('🔁','Review done',`${r.good}/${r.n} solid · Momentum ${mom}`);
+      showView('view-results');
+    });
+  }
+  function startFlashcards(){
+    curLesson=null;
+    const all=allStudyCards();
+    if(!all.length) return home();
+    const cards=C.shuffle(all).slice(0,20);
+    runRecall(cards,'Flashcards',r=>{ C.logActivity(r.n,Math.max(1,Math.round(r.n/4)));C.snapshotToday();C.bumpMomentum(6);
+      document.getElementById('results-body').innerHTML=resultCard('🃏','Flashcards done',`${r.good}/${r.n} known · nice work`);
+      showView('view-results');
+    });
+  }
   function exitSession(){C.haptic('light');try{speechSynthesis.cancel()}catch(e){}
     if(curLesson!=null) backToLesson(curLesson); else home(); }
   function home(){curLesson=null;renderHome();showView('view-dash')}
 
   return {renderHome,reloadContent,openLesson,lessonTab,markLearned,revealRecall,gradeRecall,answer,nextQ,
-          startReview,backToLesson,lessonReadingQuiz,
+          startReview,startGlobalReview,startFlashcards,backToLesson,lessonReadingQuiz,
           practiceVocab,practiceReadingDrill,practiceGrammar,practiceKanji,
           practiceListening,practiceReading,practiceMixed,practiceWrite,
           exitSession,home};
