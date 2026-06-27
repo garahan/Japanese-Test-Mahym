@@ -64,6 +64,15 @@
 
   function indexContent(packs) {
     PACKS = packs || [];
+    // Robustness: content saved via the admin / generate API carries module/lesson
+    // labels (e.g. 'L25') but often no numeric lessonNum. The lesson UI keys off
+    // lessonNum, so derive it from the first number in any lesson label if missing.
+    for (const p of PACKS) {
+      if (p.lessonNum == null) {
+        const m = String(p.lesson || p.module || p.lessonLabel || p.moduleLabel || '').match(/\d+/);
+        if (m) p.lessonNum = parseInt(m[0], 10);
+      }
+    }
     for (const d of Object.keys(ITEMS)) ITEMS[d] = [];
     for (const k in BY_ID) delete BY_ID[k];
 
