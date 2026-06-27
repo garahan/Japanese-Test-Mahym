@@ -413,13 +413,18 @@ const App = (function(){
         </div>
       </div>`;
     }).join('');
-    document.getElementById('lesson-list').innerHTML = listHtml || `
-      <div class="lesson-about" style="text-align:center">
+    document.getElementById('lesson-list').innerHTML = listHtml || (function(){
+      const packs=C.PACKS(), diag = packs.length
+        ? `Diagnostic: ${packs.length} pack(s) loaded, but none had a readable lesson number. First label seen: "${(packs[0].lesson||packs[0].module||packs[0].lessonLabel||packs[0].moduleLabel||packs[0].title||'(none)')}".`
+        : 'Diagnostic: 0 packs reached this device (server returned nothing and no bundled seed).';
+      return `<div class="lesson-about" style="text-align:center">
         <strong>No lessons loaded on this device yet.</strong><br>
         Don't worry — nothing was lost. Your saved progress is safe; the content just hasn't synced here.
         Add lessons in the admin panel, or tap reload to pull the latest from the server.
         <div style="margin-top:14px"><button class="lcta" onclick="App.reloadContent()">↻ Reload content</button></div>
+        <div style="margin-top:12px;font-size:11px;color:var(--ink3);line-height:1.5">${diag}</div>
       </div>`;
+    })();
   }
   function reloadContent(){ C.haptic('light'); try{C.DB.set('cache_packs',[])}catch(e){} location.reload(); }
 
