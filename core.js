@@ -65,13 +65,15 @@
   function indexContent(packs) {
     PACKS = packs || [];
     // Robustness: content saved via the admin / generate API carries module/lesson
-    // labels (e.g. 'L25') but often no numeric lessonNum. The lesson UI keys off
-    // lessonNum, so derive it from the first number in any lesson label if missing.
+    // labels (e.g. 'L25') but often no numeric lessonNum (or a string one). The lesson
+    // UI keys off a numeric lessonNum, so coerce/derive it for every pack.
     for (const p of PACKS) {
-      if (p.lessonNum == null) {
-        const m = String(p.lesson || p.module || p.lessonLabel || p.moduleLabel || '').match(/\d+/);
-        if (m) p.lessonNum = parseInt(m[0], 10);
-      }
+      let ln = p.lessonNum;
+      if (ln == null || ln === '' || isNaN(+ln)) {
+        const m = String(p.lesson || p.module || p.lessonLabel || p.moduleLabel || p.title || '').match(/\d+/);
+        ln = m ? parseInt(m[0], 10) : null;
+      } else { ln = +ln; }
+      if (ln != null) p.lessonNum = ln; else delete p.lessonNum;
     }
     for (const d of Object.keys(ITEMS)) ITEMS[d] = [];
     for (const k in BY_ID) delete BY_ID[k];
@@ -111,7 +113,18 @@
       const r = await fetch('/api/content?type=lessons');
       const j = await r.json();
       const packs = (j && j.data) || [];
-      if (packs.length) { indexContent(packs); DB.set('cache_packs', packs); if (onReady) onReady('api'); }
+      if (packs.length) {
+        indexContent(packs);
+        // If the server content has no readable lessons but the bundled seed does,
+        // keep the seed so the lesson screen is never empty.
+        if (!lessonNums().length && root.SEED_CONTENT) {
+          indexContent(root.SEED_CONTENT);
+          DB.set('cache_packs', root.SEED_CONTENT);
+        } else {
+          DB.set('cache_packs', packs);
+        }
+        if (onReady) onReady('api');
+      }
     } catch (e) {
       if (!PACKS.length && root.SEED_CONTENT) { indexContent(root.SEED_CONTENT); DB.set('cache_packs', root.SEED_CONTENT); if (onReady) onReady('seed'); }
     }
