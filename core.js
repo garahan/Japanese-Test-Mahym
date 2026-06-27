@@ -359,9 +359,28 @@
     const p = getLessonProgress(n);
     return LESSON_STEPS.every(s => p.steps.includes(s));
   }
+  function lessonNums() {
+    return PACKS.map(p => p.lessonNum).filter(Boolean).sort((a, b) => a - b);
+  }
   function isLessonUnlocked(n) {
-    if (n === 1) return true;
-    return isLessonComplete(n - 1);
+    const nums = lessonNums();
+    if (!nums.length || n <= nums[0]) return true;        // first available lesson is always open
+    const prev = nums.filter(x => x < n).pop();            // previous EXISTING lesson
+    return prev == null ? true : isLessonComplete(prev);
+  }
+
+  // Which lesson a content item belongs to, and how hard that lesson is.
+  function lessonOf(item) {
+    if (!item) return null;
+    return PACKS.find(p =>
+      (item.lesson && p.lesson === item.lesson) ||
+      (item.module && p.module === item.module) ||
+      (item.lessonNum && p.lessonNum === item.lessonNum)) || null;
+  }
+  function difficultyOf(item) {
+    if (item && item.difficulty) return item.difficulty;   // explicit per-item difficulty wins
+    const p = lessonOf(item);
+    return (p && p.difficulty) || 'medium';
   }
 
   // ============================================================
@@ -483,7 +502,7 @@
     weakestDim, buildMission, pickStory, coachPlan,
     // lesson system
     LESSON_STEPS, getLessonByNum, getLessonProgress, markLessonStep,
-    isLessonComplete, isLessonUnlocked,
+    isLessonComplete, isLessonUnlocked, lessonNums, lessonOf, difficultyOf,
     // drill engine
     getDrillPool, getDrillDue, getDrillDueCount, getDrillStats,
     rateDrill, drillGet,
