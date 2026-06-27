@@ -365,6 +365,8 @@ const App = (function(){
   function diffBadge(d){ const lab={easy:'Easy',medium:'Medium',hard:'Hard'}[d]||'Medium'; return `<span class="diff-badge diff-${d||'medium'}"><span class="diff-dot"></span>${lab}</span>`; }
   function lessonProgressPct(n){ const steps=C.LESSON_STEPS,p=C.getLessonProgress(n); return Math.round((p.steps.filter(s=>steps.includes(s)).length/steps.length)*100); }
   function lessonStepLabel(n){ const done=C.getLessonProgress(n).steps.length,total=C.LESSON_STEPS.length; return done===0?'Start with Learn':done>=total?'Completed ✓':`${done}/${total} steps done`; }
+  function lTitle(p,n){ return (p&&(p.topic||p.lessonLabel||p.moduleLabel))||('Lesson '+n); }
+  function lSub(p){ if(!p)return ''; return p.topicEn||(p.lessonLabel&&p.lessonLabel!==lTitle(p)?p.lessonLabel:'')||p.level||''; }
 
   function renderHome(){
     C.snapshotToday();
@@ -383,8 +385,8 @@ const App = (function(){
     document.getElementById('continue-slot').innerHTML = cur ? `
       <div class="continue-card" onclick="C.haptic('heavy');App.openLesson(${current})">
         <div class="cc-eyebrow">${C.isLessonComplete(current)?'Review':'Continue'} · Lesson ${current}</div>
-        <div class="cc-title">${cur.topic||''}</div>
-        <div class="cc-sub">${cur.topicEn||''} · ${lessonStepLabel(current)}</div>
+        <div class="cc-title">${lTitle(cur,current)}</div>
+        <div class="cc-sub">${lSub(cur)?lSub(cur)+' · ':''}${lessonStepLabel(current)}</div>
       </div>` : '';
 
     // daily review (spaced-repetition cards due across completed lessons)
@@ -396,20 +398,30 @@ const App = (function(){
         <div class="prac-arrow">→</div>
       </div>` : '';
 
-    // lesson list
-    document.getElementById('lesson-list').innerHTML = nums.map(n=>{
+    // lesson list (with empty-state safety net + title fallbacks for admin-saved content)
+    const listHtml = nums.map(n=>{
       const p=C.getLessonByNum(n); if(!p) return '';
       const pr=lessonProgressPct(n), complete=C.isLessonComplete(n), unlocked=C.isLessonUnlocked(n);
+      const title=p.topic||p.lessonLabel||p.moduleLabel||('Lesson '+n);
+      const sub=p.topicEn||(p.lessonLabel&&p.lessonLabel!==title?p.lessonLabel:'')||p.level||'';
       return `<div class="lesson-card${unlocked?'':' locked'}" onclick="C.haptic('light');App.openLesson(${n})">
         <div class="lc-num"><span class="n">${n}</span><span class="l">LESSON</span></div>
         <div class="lc-body">
-          <div class="lc-topic">${p.topic||''}</div>
-          <div class="lc-en">${p.topicEn||''}</div>
+          <div class="lc-topic">${title}</div>
+          <div class="lc-en">${sub}</div>
           <div class="lc-meta">${diffBadge(p.difficulty)}<div class="lc-prog"><div class="f" style="width:${pr}%"></div></div>${complete?'<span class="lc-check">✓</span>':(unlocked?'':'<span class="lc-lock">🔒</span>')}</div>
         </div>
       </div>`;
     }).join('');
+    document.getElementById('lesson-list').innerHTML = listHtml || `
+      <div class="lesson-about" style="text-align:center">
+        <strong>No lessons loaded on this device yet.</strong><br>
+        Don't worry — nothing was lost. Your saved progress is safe; the content just hasn't synced here.
+        Add lessons in the admin panel, or tap reload to pull the latest from the server.
+        <div style="margin-top:14px"><button class="lcta" onclick="App.reloadContent()">↻ Reload content</button></div>
+      </div>`;
   }
+  function reloadContent(){ C.haptic('light'); try{C.DB.set('cache_packs',[])}catch(e){} location.reload(); }
 
   /* ---------- generic quiz runner (mission recall, practice, reading Qs, listening) ---------- */
   let quiz=null;
@@ -552,13 +564,13 @@ const App = (function(){
   function renderLessonHead(n){
     const p=C.getLessonByNum(n);
     const head=document.getElementById('lesson-head');
-    head.setAttribute('data-kanji',(p.topic||'学').slice(0,1));
+    head.setAttribute('data-kanji',(p.topic||p.lessonLabel||p.moduleLabel||'学').slice(0,1));
     head.innerHTML=`
       <div class="lh-top"><button class="lh-back" onclick="App.home()">←</button>
         <div class="lh-label">Lesson ${n} · みんなの日本語</div>
         <div style="margin-left:auto">${diffBadge(p.difficulty)}</div></div>
-      <div class="lh-topic">${p.topic||''}</div>
-      <div class="lh-en">${p.topicEn||''}</div>
+      <div class="lh-topic">${lTitle(p,n)}</div>
+      <div class="lh-en">${lSub(p)}</div>
       <div class="lh-steps">${C.LESSON_STEPS.map(s=>`<div class="lh-step${C.getLessonProgress(n).steps.includes(s)?' done':''}"></div>`).join('')}</div>`;
   }
   function lessonTab(t){
@@ -716,7 +728,7 @@ const App = (function(){
     if(curLesson!=null) backToLesson(curLesson); else home(); }
   function home(){curLesson=null;renderHome();showView('view-dash')}
 
-  return {renderHome,openLesson,lessonTab,markLearned,revealRecall,gradeRecall,answer,nextQ,
+  return {renderHome,reloadContent,openLesson,lessonTab,markLearned,revealRecall,gradeRecall,answer,nextQ,
           startReview,backToLesson,lessonReadingQuiz,
           practiceVocab,practiceReadingDrill,practiceGrammar,practiceKanji,
           practiceListening,practiceReading,practiceMixed,practiceWrite,
