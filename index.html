@@ -262,6 +262,27 @@ button,.tile,.lesson-card,.opt,.rate,.m-cta,.next-btn,.reveal-btn,.shead,.fc-sce
 .q-diff{position:absolute;top:12px;right:12px}
 .q-card,.recall-answer{position:relative}
 .lookup-hint{font-size:12px;color:var(--ink3);font-weight:600;text-align:center;background:var(--gold-soft);border-radius:12px;padding:8px 12px;margin-bottom:1rem}
+
+/* ===================== JOURNEY MAP (compact 25→50 tracker) ===================== */
+.journey{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:1.1rem 1.1rem 1rem;box-shadow:var(--shadow)}
+.j-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px}
+.j-now{font-size:14px;font-weight:900}
+.j-count{font-size:12.5px;font-weight:800;color:var(--ink3)}
+.j-bar{height:9px;background:var(--bg);border-radius:5px;overflow:hidden;margin-bottom:16px}
+.j-bar .f{height:100%;background:linear-gradient(90deg,var(--green),#2979ff);border-radius:5px;transition:width .8s var(--spring)}
+.j-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.j-node{position:relative;aspect-ratio:1/1;border-radius:14px;background:var(--card);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;color:var(--ink);cursor:pointer;box-shadow:var(--shadow);transition:transform .12s var(--spring)}
+.j-node:active{transform:scale(.9)}
+.j-node.done{background:var(--green);color:#fff;border-color:var(--green)}
+.j-node.current{border:2.5px solid var(--blue);color:var(--blue);box-shadow:0 0 0 4px var(--blue-soft);animation:jpulse 2s var(--spring) infinite}
+.j-node.locked{background:var(--bg);color:var(--ink3);border-style:dashed;opacity:.65;cursor:default;box-shadow:none}
+.j-node .cor{position:absolute;top:2px;right:5px;font-size:10px;font-weight:900}
+.j-node .dot{position:absolute;bottom:6px;width:6px;height:6px;border-radius:50%}
+@keyframes jpulse{0%,100%{box-shadow:0 0 0 4px var(--blue-soft)}50%{box-shadow:0 0 0 7px var(--blue-soft)}}
+.j-legend{display:flex;gap:14px;justify-content:center;margin-top:16px;font-size:11px;color:var(--ink3);font-weight:600;flex-wrap:wrap}
+.j-legend span{display:inline-flex;align-items:center;gap:5px}
+.j-chip{width:13px;height:13px;border-radius:5px;display:inline-block;flex-shrink:0}
+.j-more{font-size:12px;color:var(--blue);text-decoration:none;font-weight:800}
 </style>
 </head>
 <body>
@@ -286,12 +307,8 @@ button,.tile,.lesson-card,.opt,.rate,.m-cta,.next-btn,.reveal-btn,.shead,.fc-sce
 
   <div class="body">
     <div id="continue-slot"></div>
+    <div id="journey-slot"></div>
     <div id="review-slot"></div>
-    <div class="sect">レッスン — Lessons</div>
-    <div id="lesson-list"></div>
-    <div class="tile wide" onclick="location.href='/roadmap.html'" style="background:var(--ink);border-color:var(--ink);margin-top:.4rem">
-      <div class="t-icon">🗺️</div><div><div class="t-name" style="color:#fff">My Journey</div><div class="t-sub" style="color:rgba(255,255,255,.6)">Roadmap · projection · heatmap</div></div>
-    </div>
   </div>
   <div class="admin-link"><a href="/admin.html">🌸</a></div>
 </div>
@@ -372,7 +389,7 @@ const App = (function(){
     C.snapshotToday();
     const nums=C.lessonNums();
     const done=nums.filter(n=>C.isLessonComplete(n)).length;
-    document.getElementById('ps-done').textContent=done+'/'+nums.length;
+    document.getElementById('ps-done').textContent=done+'/26';
     document.getElementById('ps-mastery').textContent=C.overallMastery()+'%';
     document.getElementById('ps-streak').textContent=C.getStreak();
     const mv=C.getMomentum().value;
@@ -401,33 +418,58 @@ const App = (function(){
         <div class="t-icon">🃏</div><div><div class="t-name">Flashcards</div><div class="t-sub">${pool.length} cards · recall & self-grade</div></div>
       </div>` : '';
 
-    // lesson list (with empty-state safety net + title fallbacks for admin-saved content)
-    const listHtml = nums.map(n=>{
-      const p=C.getLessonByNum(n); if(!p) return '';
-      const pr=lessonProgressPct(n), complete=C.isLessonComplete(n), unlocked=C.isLessonUnlocked(n);
-      const title=p.topic||p.lessonLabel||p.moduleLabel||('Lesson '+n);
-      const sub=p.topicEn||(p.lessonLabel&&p.lessonLabel!==title?p.lessonLabel:'')||p.level||'';
-      return `<div class="lesson-card${unlocked?'':' locked'}" onclick="C.haptic('light');App.openLesson(${n})">
-        <div class="lc-num"><span class="n">${n}</span><span class="l">LESSON</span></div>
-        <div class="lc-body">
-          <div class="lc-topic">${title}</div>
-          <div class="lc-en">${sub}</div>
-          <div class="lc-meta">${diffBadge(p.difficulty)}<div class="lc-prog"><div class="f" style="width:${pr}%"></div></div>${complete?'<span class="lc-check">✓</span>':(unlocked?'':'<span class="lc-lock">🔒</span>')}</div>
-        </div>
-      </div>`;
-    }).join('');
-    document.getElementById('lesson-list').innerHTML = listHtml || (function(){
+    // JOURNEY MAP — compact tracker for the whole 25→50 path
+    renderJourney();
+  }
+
+  function renderJourney(){
+    const START=25, END=50;
+    const have=new Set(C.lessonNums());
+    const slot=document.getElementById('journey-slot');
+
+    if(have.size===0){   // nothing synced → keep the reassuring empty-state + diagnostic
       const packs=C.PACKS(), diag = packs.length
         ? `Diagnostic: ${packs.length} pack(s) loaded, but none had a readable lesson number. First label seen: "${(packs[0].lesson||packs[0].module||packs[0].lessonLabel||packs[0].moduleLabel||packs[0].title||'(none)')}".`
-        : 'Diagnostic: 0 packs reached this device (server returned nothing and no bundled seed).';
-      return `<div class="lesson-about" style="text-align:center">
+        : 'Diagnostic: 0 packs reached this device.';
+      slot.innerHTML=`<div class="lesson-about" style="text-align:center">
         <strong>No lessons loaded on this device yet.</strong><br>
         Don't worry — nothing was lost. Your saved progress is safe; the content just hasn't synced here.
-        Add lessons in the admin panel, or tap reload to pull the latest from the server.
         <div style="margin-top:14px"><button class="lcta" onclick="App.reloadContent()">↻ Reload content</button></div>
-        <div style="margin-top:12px;font-size:11px;color:var(--ink3);line-height:1.5">${diag}</div>
+        <div style="margin-top:12px;font-size:11px;color:var(--ink3);line-height:1.5">${diag}</div></div>`;
+      return;
+    }
+
+    const sorted=[...have].sort((a,b)=>a-b);
+    const current=sorted.find(n=>!C.isLessonComplete(n));   // first unfinished lesson with content
+    let nodes='';
+    for(let n=START;n<=END;n++){
+      if(!have.has(n)){ nodes+=`<div class="j-node locked" aria-label="Lesson ${n} coming soon">${n}<span class="cor">🔒</span></div>`; continue; }
+      const p=C.getLessonByNum(n), done=C.isLessonComplete(n), cur=(n===current);
+      const cls=done?'done':cur?'current':'';
+      const dot=({easy:'#2bb673',medium:'#e69500',hard:'#e53935'})[(p&&p.difficulty)||'medium'];
+      nodes+=`<div class="j-node ${cls}" onclick="C.haptic('light');App.openLesson(${n})">${n}`
+        + (done?'<span class="cor">✓</span>':`<span class="dot" style="background:${dot}"></span>`)
+        + `</div>`;
+    }
+    const total=END-START+1;
+    const doneCount=sorted.filter(n=>C.isLessonComplete(n)).length;
+    const pct=Math.round(doneCount/total*100);
+    slot.innerHTML=`
+      <div class="sect" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem">
+        <span>私の道 — My Journey</span>
+        <a class="j-more" href="/roadmap.html">詳しく見る →</a>
+      </div>
+      <div class="journey">
+        <div class="j-head"><span class="j-now">Lessons 25 → 50</span><span class="j-count">${doneCount} / ${total} done · ${pct}%</span></div>
+        <div class="j-bar"><div class="f" style="width:${pct}%"></div></div>
+        <div class="j-grid">${nodes}</div>
+        <div class="j-legend">
+          <span><i class="j-chip" style="background:var(--green)"></i>Done</span>
+          <span><i class="j-chip" style="background:var(--card);border:2px solid var(--blue)"></i>Now</span>
+          <span><i class="j-chip" style="background:var(--card);border:1.5px solid var(--border)"></i>Open</span>
+          <span><i class="j-chip" style="background:var(--bg);border:1.5px dashed var(--border)"></i>Soon</span>
+        </div>
       </div>`;
-    })();
   }
   function reloadContent(){ C.haptic('light'); try{C.DB.set('cache_packs',[])}catch(e){} location.reload(); }
 
