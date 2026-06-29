@@ -271,6 +271,10 @@ button,.tile,.lesson-card,.opt,.rate,.m-cta,.next-btn,.reveal-btn,.shead,.fc-sce
 .j-bar{height:9px;background:var(--bg);border-radius:5px;overflow:hidden;margin-bottom:16px}
 .j-bar .f{height:100%;background:linear-gradient(90deg,var(--green),#2979ff);border-radius:5px;transition:width .8s var(--spring)}
 .j-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.j-sec{margin-bottom:14px}
+.j-sec:last-of-type{margin-bottom:0}
+.j-sec-h{display:flex;justify-content:space-between;align-items:center;font-size:11.5px;font-weight:800;color:var(--ink3);margin:0 2px 8px;text-transform:uppercase;letter-spacing:.04em}
+.j-sec-c{font-size:11px;font-weight:900;color:var(--ink2);background:var(--bg);border-radius:20px;padding:2px 9px}
 .j-node{position:relative;aspect-ratio:1/1;border-radius:14px;background:var(--card);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;color:var(--ink);cursor:pointer;box-shadow:var(--shadow);transition:transform .12s var(--spring)}
 .j-node:active{transform:scale(.9)}
 .j-node.done{background:var(--green);color:#fff;border-color:var(--green)}
@@ -441,16 +445,25 @@ const App = (function(){
 
     const sorted=[...have].sort((a,b)=>a-b);
     const current=sorted.find(n=>!C.isLessonComplete(n));   // first unfinished lesson with content
-    let nodes='';
-    for(let n=START;n<=END;n++){
-      if(!have.has(n)){ nodes+=`<div class="j-node locked" aria-label="Lesson ${n} coming soon">${n}<span class="cor">🔒</span></div>`; continue; }
+    const jnode=(n)=>{
+      if(!have.has(n)) return `<div class="j-node locked" aria-label="Lesson ${n} coming soon">${n}<span class="cor">🔒</span></div>`;
       const p=C.getLessonByNum(n), done=C.isLessonComplete(n), cur=(n===current);
-      const cls=done?'done':cur?'current':'';
       const dot=({easy:'#2bb673',medium:'#e69500',hard:'#e53935'})[(p&&p.difficulty)||'medium'];
-      nodes+=`<div class="j-node ${cls}" onclick="C.haptic('light');App.openLesson(${n})">${n}`
-        + (done?'<span class="cor">✓</span>':`<span class="dot" style="background:${dot}"></span>`)
-        + `</div>`;
-    }
+      return `<div class="j-node ${done?'done':cur?'current':''}" onclick="C.haptic('light');App.openLesson(${n})">${n}`
+        + (done?'<span class="cor">✓</span>':`<span class="dot" style="background:${dot}"></span>`) + `</div>`;
+    };
+    // grouped sections so the whole path to 50 scans cleanly
+    const sections=[[25,30],[31,40],[41,50]];
+    const secHtml=sections.map(([a,b])=>{
+      let nodes='',done=0,total=0;
+      for(let n=a;n<=b;n++){ if(have.has(n)){ total++; if(C.isLessonComplete(n)) done++; } nodes+=jnode(n); }
+      const tag = total>0 ? `${done}/${total}` : 'soon';
+      return `<div class="j-sec">
+        <div class="j-sec-h"><span>Lessons ${a}–${b}</span><span class="j-sec-c">${tag}</span></div>
+        <div class="j-grid">${nodes}</div>
+      </div>`;
+    }).join('');
+
     const total=END-START+1;
     const doneCount=sorted.filter(n=>C.isLessonComplete(n)).length;
     const pct=Math.round(doneCount/total*100);
@@ -462,7 +475,7 @@ const App = (function(){
       <div class="journey">
         <div class="j-head"><span class="j-now">Lessons 25 → 50</span><span class="j-count">${doneCount} / ${total} done · ${pct}%</span></div>
         <div class="j-bar"><div class="f" style="width:${pct}%"></div></div>
-        <div class="j-grid">${nodes}</div>
+        ${secHtml}
         <div class="j-legend">
           <span><i class="j-chip" style="background:var(--green)"></i>Done</span>
           <span><i class="j-chip" style="background:var(--card);border:2px solid var(--blue)"></i>Now</span>

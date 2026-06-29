@@ -526,6 +526,809 @@ const SEED_CONTENT = [
   ]
 }
 
+,
+
+/* ===================== LESSON 31 ===================== */
+{
+  lessonNum: 31,
+  topic: "意向形・〜（よ）うと思っています",
+  topicEn: "Volitional Form & Intentions / Plans",
+  module: 'L31', moduleLabel: 'L31 — Volitional & Intentions', lesson: 'L31', lessonLabel: 'Volitional & Intentions',
+  difficulty: "hard",
+  level: "N4",
+  vocabulary: [
+    { id: "L31v1", word: "予定", reading: "よてい", pitch: 0, meaning: "schedule; plan (fixed)", example: "来月、国へ帰る予定です。", exampleMeaning: "I'm scheduled to go home next month." },
+    { id: "L31v2", word: "計画", reading: "けいかく", pitch: 0, meaning: "plan", example: "旅行の計画を立てています。", exampleMeaning: "I'm making a travel plan." },
+    { id: "L31v3", word: "決めます", reading: "きめます", pitch: 0, meaning: "to decide", example: "来年留学しようと決めました。", exampleMeaning: "I decided to study abroad next year." },
+    { id: "L31v4", word: "申し込みます", reading: "もうしこみます", pitch: 5, meaning: "to apply; to sign up", example: "あした試験に申し込もうと思っています。", exampleMeaning: "I'm thinking of applying for the exam tomorrow." },
+    { id: "L31v5", word: "案内します", reading: "あんないします", pitch: 0, meaning: "to guide; to show around", example: "週末、町を案内するつもりです。", exampleMeaning: "I plan to show you around town this weekend." },
+    { id: "L31v6", word: "泊まります", reading: "とまります", pitch: 3, meaning: "to stay overnight", example: "京都で2泊しようと思っています。", exampleMeaning: "I'm thinking of staying two nights in Kyoto." },
+    { id: "L31v7", word: "増えます", reading: "ふえます", pitch: 3, meaning: "to increase", example: "貯金を増やすつもりです。", exampleMeaning: "I plan to increase my savings." },
+    { id: "L31v8", word: "やめます", reading: "やめます", pitch: 3, meaning: "to quit; to stop (a habit)", example: "たばこをやめようと思っています。", exampleMeaning: "I'm thinking of quitting smoking." },
+    { id: "L31v9", word: "育てます", reading: "そだてます", pitch: 3, meaning: "to raise; to bring up", example: "庭で野菜を育てるつもりです。", exampleMeaning: "I plan to grow vegetables in the garden." },
+    { id: "L31v10", word: "そろそろ", reading: "そろそろ", pitch: 1, meaning: "soon; it's about time", example: "そろそろ帰ろうと思います。", exampleMeaning: "I think I'll head home soon." }
+  ],
+  grammar: [
+    {
+      id: "L31g1",
+      point: "意向形 — volitional form (let's / I'll …)",
+      explanation: "Group I: final -u → -ou (行く→行こう, 話す→話そう). Group II: drop ます, add よう (食べます→食べよう, 見ます→見よう). Irregular: します→しよう, 来ます→来よう. The plain volitional is the casual form of ましょう ('let's / shall I'). On its own it means 'let's…' or 'I'll…'.",
+      examples: [
+        "ちょっと休もう。 (Let's take a little break.)",
+        "もう遅いから、帰ろう。 (It's late, so let's go home.)",
+        "今日は早く寝よう。 (I'll go to bed early today.)"
+      ],
+      listening: "The volitional ends in -ou / -you. On its own it's casual 'let's…'.",
+      production: "Suggest three things to a friend using the plain volitional (休もう, 食べよう…)."
+    },
+    {
+      id: "L31g2",
+      point: "〜（よ）うと思っています (I'm thinking of doing)",
+      explanation: "Volitional ＋ と思っています expresses an intention you've been holding. 〜と思います (without ている) is a decision made on the spot. Compare with 〜つもりです (firm plan/intention) and 〜予定です (a fixed schedule, often set by others or a timetable).",
+      examples: [
+        "夏休みに国へ帰ろうと思っています。 (I'm thinking of going home over summer.)",
+        "毎日30分歩くつもりです。 (I intend to walk 30 minutes every day.)",
+        "会議は3時から始まる予定です。 (The meeting is scheduled to start at 3.)"
+      ],
+      listening: "〜ようと思っています = a held intention; 〜つもり = firm plan; 〜予定 = fixed schedule.",
+      production: "Say one intention with 〜ようと思っています and one firm plan with 〜つもりです."
+    }
+  ],
+  kanji: [
+    { id: "L31k1", char: "予", reading: "よ", meaning: "beforehand; in advance", exampleWord: "予定（よてい）" },
+    { id: "L31k2", char: "定", reading: "てい／さだ（める）", meaning: "fix; decide; settle", exampleWord: "予定（よてい）" },
+    { id: "L31k3", char: "計", reading: "けい／はか（る）", meaning: "plan; measure; total", exampleWord: "計画（けいかく）" },
+    { id: "L31k4", char: "画", reading: "が／かく", meaning: "picture; stroke; plan", exampleWord: "計画（けいかく）" }
+  ],
+  reading: {
+    id: "L31r1",
+    title: "夏休みの計画",
+    passage: "もうすぐ夏休みです。\n私は今年、国へ帰ろうと思っています。\n両親に会って、友達と海へ行くつもりです。\n飛行機のチケットはもう予約しました。\nそして、休みのあいだに日本語の勉強も続けようと思っています。",
+    targetWords: [
+      { word: "帰ろうと思っています", id: "L31v8" },
+      { word: "予約しました", id: "L31v1" }
+    ],
+    questions: [
+      { id: "rq31-1", q: "この人は夏休みに何をしようと思っていますか。", o: ["仕事をする", "国へ帰る", "引っ越す", "学校に行く"], c: 1, exp: "国へ帰ろうと思っています。" },
+      { id: "rq31-2", q: "友達と何をするつもりですか。", o: ["山に登る", "海へ行く", "買い物する", "勉強する"], c: 1, exp: "友達と海へ行くつもりです。" },
+      { id: "rq31-3", q: "休みのあいだも続けようと思っていることは何ですか。", o: ["アルバイト", "日本語の勉強", "スポーツ", "料理"], c: 1, exp: "日本語の勉強も続けようと思っています。" }
+    ]
+  },
+  listening: [
+    { id: "L31l1", audioText: "A：週末、何をしますか。B：天気がよかったら、山に登ろうと思っています。", a: "Bさんは週末何をしようと思っていますか。", o: ["うちにいる", "山に登る", "買い物する", "仕事する"], c: 1, exp: "山に登ろうと思っています。" },
+    { id: "L31l2", audioText: "A：会議は何時からですか。B：2時から始まる予定です。少し早めに来てください。", a: "会議は何時から始まる予定ですか。", o: ["1時", "2時", "3時", "4時"], c: 1, exp: "2時から始まる予定です。" }
+  ],
+  questions: [
+    { id: "L31q1", dim: "grammar", type: "recall", difficulty: "medium", s: "行きます → volitional form?", a: "行こう", o: ["行こう", "行きよう", "行かよう", "行けよう"], c: 0, exp: "Group I: -ku → -kou. 行く→行こう.", linksTo: "L31g1" },
+    { id: "L31q2", dim: "grammar", type: "recall", difficulty: "medium", s: "食べます → volitional form?", a: "食べよう", o: ["食べよう", "食べろう", "食べおう", "食べよ"], c: 0, exp: "Group II: drop ます, add よう. 食べます→食べよう.", linksTo: "L31g1" },
+    { id: "L31q3", dim: "grammar", type: "recall", difficulty: "hard", s: "夏休みに国へ帰ろう___。(I'm thinking of…)", a: "と思っています", o: ["と思っています", "ています", "つもりです", "でしょう"], c: 0, exp: "Volitional ＋ と思っています = a held intention.", linksTo: "L31g2" },
+    { id: "L31q4", dim: "grammar", type: "recall", difficulty: "hard", s: "会議は3時から始まる___。(scheduled — fixed timetable)", a: "予定です", o: ["つもりです", "予定です", "と思います", "ようです"], c: 1, exp: "A fixed schedule (set by a timetable) uses 〜予定です, not つもり.", linksTo: "L31g2" },
+    { id: "L31q5", dim: "vocab", type: "recognition", difficulty: "easy", s: "申し込みます means…", a: "to apply / sign up", o: ["to decide", "to apply / sign up", "to increase", "to quit"], c: 1, exp: "申し込みます = to apply / sign up.", linksTo: "L31v4" },
+    { id: "L31q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji pair reads 「よてい」?", a: "予定", o: ["計画", "予定", "予約", "決定"], c: 1, exp: "予定（よてい）= schedule.", linksTo: "L31k1" }
+  ]
+},
+
+/* ===================== LESSON 32 ===================== */
+{
+  lessonNum: 32,
+  topic: "〜ほうがいい・〜でしょう・〜かもしれません",
+  topicEn: "Advice, Probability & Possibility",
+  module: 'L32', moduleLabel: 'L32 — Advice & Probability', lesson: 'L32', lessonLabel: 'Advice & Probability',
+  difficulty: "medium",
+  level: "N4",
+  vocabulary: [
+    { id: "L32v1", word: "運動します", reading: "うんどうします", pitch: 0, meaning: "to exercise", example: "毎日運動したほうがいいですよ。", exampleMeaning: "You'd better exercise every day." },
+    { id: "L32v2", word: "無理", reading: "むり", pitch: 1, meaning: "overdoing; unreasonable (na-adj)", example: "無理をしないほうがいいです。", exampleMeaning: "You'd better not overdo it." },
+    { id: "L32v3", word: "倒れます", reading: "たおれます", pitch: 3, meaning: "to collapse; to fall over", example: "働きすぎると、倒れるかもしれません。", exampleMeaning: "If you overwork, you might collapse." },
+    { id: "L32v4", word: "気をつけます", reading: "きをつけます", pitch: 0, meaning: "to be careful", example: "かぜに気をつけたほうがいいです。", exampleMeaning: "You'd better watch out for colds." },
+    { id: "L32v5", word: "危険", reading: "きけん", pitch: 0, meaning: "danger; dangerous (na-adj)", example: "夜、一人で歩くのは危険でしょう。", exampleMeaning: "Walking alone at night is probably dangerous." },
+    { id: "L32v6", word: "たぶん", reading: "たぶん", pitch: 1, meaning: "probably", example: "彼はたぶん来るでしょう。", exampleMeaning: "He'll probably come." },
+    { id: "L32v7", word: "効果", reading: "こうか", pitch: 1, meaning: "effect", example: "この薬は効果があるかもしれません。", exampleMeaning: "This medicine might be effective." },
+    { id: "L32v8", word: "変わります", reading: "かわります", pitch: 4, meaning: "to change", example: "天気が変わるかもしれません。", exampleMeaning: "The weather might change." },
+    { id: "L32v9", word: "止めます", reading: "とめます", pitch: 3, meaning: "to stop (something); to park", example: "ここに車を止めないほうがいいです。", exampleMeaning: "You'd better not park here." },
+    { id: "L32v10", word: "向かいます", reading: "むかいます", pitch: 4, meaning: "to head toward", example: "台風がこちらに向かっているでしょう。", exampleMeaning: "The typhoon is probably heading this way." }
+  ],
+  grammar: [
+    {
+      id: "L32g1",
+      point: "〜ほうがいいです (you'd better / it's better to)",
+      explanation: "Affirmative advice: past plain (た-form) ＋ ほうがいいです — 休んだほうがいいです. Negative advice: 〜ないほうがいいです — 無理をしないほうがいいです. It's a fairly strong recommendation, so use it gently with people above you.",
+      examples: [
+        "熱があるなら、病院へ行ったほうがいいですよ。 (If you have a fever, you'd better see a doctor.)",
+        "夜遅くコーヒーを飲まないほうがいいです。 (You'd better not drink coffee late at night.)",
+        "早く謝ったほうがいいと思います。 (I think you'd better apologise soon.)"
+      ],
+      listening: "Affirmative advice uses the past た-form ＋ ほうがいい; negative uses 〜ないほうがいい.",
+      production: "Give one 'you'd better do' and one 'you'd better not do' piece of advice."
+    },
+    {
+      id: "L32g2",
+      point: "〜でしょう / 〜かもしれません (probably / might)",
+      explanation: "〜でしょう = a confident guess ('probably', ~60–80%). 〜かもしれません = a weaker possibility ('might', ~30–50%). Attach to plain forms; na-adj/noun drop だ before でしょう and before かもしれません (元気でしょう / 雨かもしれません). たぶん often pairs with でしょう.",
+      examples: [
+        "あした晴れるでしょう。 (It'll probably be sunny tomorrow.)",
+        "彼はもう帰ったかもしれません。 (He might have already gone home.)",
+        "この問題は難しいでしょう。 (This problem is probably difficult.)"
+      ],
+      listening: "でしょう = a confident guess; かもしれません = a lighter 'maybe'.",
+      production: "Make one prediction with でしょう and one possibility with かもしれません."
+    }
+  ],
+  kanji: [
+    { id: "L32k1", char: "運", reading: "うん／はこ（ぶ）", meaning: "carry; luck; transport", exampleWord: "運動（うんどう）" },
+    { id: "L32k2", char: "動", reading: "どう／うご（く）", meaning: "move", exampleWord: "運動（うんどう）" },
+    { id: "L32k3", char: "危", reading: "き／あぶ（ない）", meaning: "danger", exampleWord: "危険（きけん）" },
+    { id: "L32k4", char: "険", reading: "けん／けわ（しい）", meaning: "steep; risk", exampleWord: "危険（きけん）" }
+  ],
+  reading: {
+    id: "L32r1",
+    title: "むりをしないで",
+    passage: "さいきん、田中さんはとても疲れているようです。\n毎日遅くまで残業しているからでしょう。\nこのまま無理を続けたら、倒れるかもしれません。\n私は「少し休んだほうがいいですよ」と言いました。\n田中さんは「そうですね、あした休もうと思います」と答えました。",
+    targetWords: [
+      { word: "無理", id: "L32v2" },
+      { word: "倒れる", id: "L32v3" }
+    ],
+    questions: [
+      { id: "rq32-1", q: "田中さんはなぜ疲れていますか。", o: ["病気だから", "毎日残業しているから", "運動しすぎたから", "旅行したから"], c: 1, exp: "毎日遅くまで残業しているからでしょう。" },
+      { id: "rq32-2", q: "このまま無理を続けると、どうなるかもしれませんか。", o: ["元気になる", "倒れる", "やせる", "出世する"], c: 1, exp: "倒れるかもしれません。" },
+      { id: "rq32-3", q: "「私」は田中さんに何と言いましたか。", o: ["もっと働け", "少し休んだほうがいい", "病院に行くな", "やめたほうがいい"], c: 1, exp: "少し休んだほうがいいですよ。" }
+    ]
+  },
+  listening: [
+    { id: "L32l1", audioText: "A：頭が痛くて、熱もあるんです。B：それは薬を飲んで、早く寝たほうがいいですよ。", a: "Bさんは何をすすめましたか。", o: ["運動する", "薬を飲んで早く寝る", "病院に行かない", "仕事を続ける"], c: 1, exp: "薬を飲んで、早く寝たほうがいいですよ。" },
+    { id: "L32l2", audioText: "A：あした、ピクニックに行けるでしょうか。B：天気予報によると、午後から雨が降るかもしれません。", a: "あしたの午後の天気はどうですか。", o: ["晴れる", "雨が降るかもしれない", "雪が降る", "わからない"], c: 1, exp: "午後から雨が降るかもしれません。" }
+  ],
+  questions: [
+    { id: "L32q1", dim: "grammar", type: "recall", difficulty: "easy", s: "熱があるなら、休ん___。(you'd better rest)", a: "だほうがいいです", o: ["だほうがいいです", "でほうがいいです", "るほうがいいです", "ないほうがいいです"], c: 0, exp: "Affirmative advice = past た-form ＋ ほうがいい: 休んだほうがいい.", linksTo: "L32g1" },
+    { id: "L32q2", dim: "grammar", type: "recall", difficulty: "medium", s: "ここに車を止め___。(you'd better not)", a: "ないほうがいいです", o: ["たほうがいいです", "ないほうがいいです", "るほうがいいです", "てほうがいいです"], c: 1, exp: "Negative advice = 〜ないほうがいいです.", linksTo: "L32g1" },
+    { id: "L32q3", dim: "grammar", type: "recall", difficulty: "medium", s: "あした、晴れる___。(probably)", a: "でしょう", o: ["かもしれません", "でしょう", "そうです", "ようです"], c: 1, exp: "でしょう = a confident guess ('probably').", linksTo: "L32g2" },
+    { id: "L32q4", dim: "grammar", type: "recall", difficulty: "hard", s: "Which is the WEAKER guess ('might')?", a: "雨かもしれません", o: ["雨でしょう", "雨かもしれません", "雨です", "雨だ"], c: 1, exp: "かもしれません (~maybe) is weaker than でしょう (~probably).", linksTo: "L32g2" },
+    { id: "L32q5", dim: "vocab", type: "recognition", difficulty: "easy", s: "倒れます means…", a: "to collapse", o: ["to change", "to collapse", "to exercise", "to stop"], c: 1, exp: "倒れます = to collapse / fall over.", linksTo: "L32v3" },
+    { id: "L32q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means 'danger'?", a: "危", o: ["運", "動", "危", "険"], c: 2, exp: "危 → 危険（きけん）danger. (険 = risk/steep.)", linksTo: "L32k3" }
+  ]
+},
+
+/* ===================== LESSON 33 ===================== */
+{
+  lessonNum: 33,
+  topic: "命令形・禁止形・〜と書いてあります",
+  topicEn: "Imperatives, Prohibitions & Quoting",
+  module: 'L33', moduleLabel: 'L33 — Imperatives & Quoting', lesson: 'L33', lessonLabel: 'Imperatives & Quoting',
+  difficulty: "hard",
+  level: "N4",
+  vocabulary: [
+    { id: "L33v1", word: "規則", reading: "きそく", pitch: 1, meaning: "rule; regulation", example: "規則を守ってください。", exampleMeaning: "Please follow the rules." },
+    { id: "L33v2", word: "守ります", reading: "まもります", pitch: 3, meaning: "to protect; to obey (a rule)", example: "約束を守れ、と父に言われました。", exampleMeaning: "My father told me to keep my promise." },
+    { id: "L33v3", word: "注意します", reading: "ちゅういします", pitch: 1, meaning: "to warn; to pay attention", example: "「危ない」と注意されました。", exampleMeaning: "I was warned, 'It's dangerous.'" },
+    { id: "L33v4", word: "伝えます", reading: "つたえます", pitch: 0, meaning: "to convey; to pass on a message", example: "田中さんによろしくと伝えてください。", exampleMeaning: "Please give my regards to Tanaka." },
+    { id: "L33v5", word: "禁止", reading: "きんし", pitch: 0, meaning: "prohibition", example: "ここは駐車禁止です。", exampleMeaning: "Parking is prohibited here." },
+    { id: "L33v6", word: "立入禁止", reading: "たちいりきんし", pitch: 0, meaning: "no entry; keep out", example: "「立入禁止」と書いてあります。", exampleMeaning: "It says 'No entry.'" },
+    { id: "L33v7", word: "非常口", reading: "ひじょうぐち", pitch: 3, meaning: "emergency exit", example: "あそこに非常口があります。", exampleMeaning: "There's an emergency exit over there." },
+    { id: "L33v8", word: "矢印", reading: "やじるし", pitch: 2, meaning: "arrow (sign)", example: "矢印のとおりに進んでください。", exampleMeaning: "Please go in the direction of the arrow." },
+    { id: "L33v9", word: "押します", reading: "おします", pitch: 3, meaning: "to push; to press", example: "このボタンを押せと書いてあります。", exampleMeaning: "It says to press this button." },
+    { id: "L33v10", word: "引きます", reading: "ひきます", pitch: 3, meaning: "to pull", example: "ドアは引いてください。", exampleMeaning: "Please pull the door." }
+  ],
+  grammar: [
+    {
+      id: "L33g1",
+      point: "命令形 / 禁止形 — imperative & prohibitive",
+      explanation: "Imperative (do it!): Group I -e (行く→行け, 待つ→待て), Group II ＋ろ (食べる→食べろ, 見る→見ろ), する→しろ, 来る→来い. Prohibitive (don't!): dictionary form ＋ な (行くな, 食べるな). These are blunt — used on signs, in emergencies, by coaches, or when quoting a strict order. Daily speech softens to 〜てください / 〜ないでください.",
+      examples: [
+        "「火を使うな」と書いてあります。 (It says 'Don't use fire.')",
+        "がんばれ！ もう少しだ。 (Go for it! Almost there.)",
+        "ここに止まれ、と書いてあります。 (It says 'Stop here.')"
+      ],
+      listening: "Imperatives end -e / -ro; prohibitions end dictionary-form ＋ な. They sound blunt — usually signs or strong orders.",
+      production: "Write two sign-style commands (one 'do', one 'don't') using the imperative/prohibitive."
+    },
+    {
+      id: "L33g2",
+      point: "〜と書いてあります / 〜と言っていました (it says… / they said…)",
+      explanation: "Use と (quote particle) ＋ a verb of saying/writing to report content. 〜と書いてあります = 'it is written that…' (signs, notices). 〜と言っていました = relaying what someone said. 〜という意味です = 'it means…'; 〜と読みます = 'it is read as…'.",
+      examples: [
+        "あの紙に「会議は中止」と書いてあります。 (That paper says 'Meeting cancelled.')",
+        "部長は来週出張すると言っていました。 (The manager said he'll travel next week.)",
+        "この漢字は「みち」と読みます。 (This kanji is read 'michi'.)"
+      ],
+      listening: "Listen for と just before 書いてあります / 言っていました / 読みます — it marks the quoted content.",
+      production: "Report one thing a sign says and one thing a friend said, using 〜と書いてあります / 〜と言っていました."
+    }
+  ],
+  kanji: [
+    { id: "L33k1", char: "規", reading: "き", meaning: "standard; rule", exampleWord: "規則（きそく）" },
+    { id: "L33k2", char: "則", reading: "そく", meaning: "rule; law", exampleWord: "規則（きそく）" },
+    { id: "L33k3", char: "禁", reading: "きん", meaning: "prohibit; forbid", exampleWord: "禁止（きんし）" },
+    { id: "L33k4", char: "守", reading: "しゅ／まも（る）", meaning: "protect; obey", exampleWord: "守ります（まもります）" }
+  ],
+  reading: {
+    id: "L33r1",
+    title: "公園のルール",
+    passage: "公園の入り口に大きな紙が貼ってあります。\nそこには「自転車を止めるな」と書いてあります。\nそして「ごみは持って帰れ」とも書いてあります。\n友達は「規則は守ったほうがいいよ」と言っていました。\nみんなが気持ちよく使えるように、ルールを守りましょう。",
+    targetWords: [
+      { word: "書いてあります", id: "L33v9" },
+      { word: "規則", id: "L33v1" }
+    ],
+    questions: [
+      { id: "rq33-1", q: "入り口の紙には何と書いてありますか。", o: ["自転車を止めろ", "自転車を止めるな", "ここで遊べ", "走るな"], c: 1, exp: "「自転車を止めるな」と書いてあります。" },
+      { id: "rq33-2", q: "ごみについて、何と書いてありますか。", o: ["捨てろ", "持って帰れ", "燃やせ", "集めろ"], c: 1, exp: "「ごみは持って帰れ」とも書いてあります。" },
+      { id: "rq33-3", q: "友達は何と言っていましたか。", o: ["規則は守ったほうがいい", "公園は嫌いだ", "ごみを捨てよう", "自転車で行こう"], c: 0, exp: "規則は守ったほうがいいよ、と言っていました。" }
+    ]
+  },
+  listening: [
+    { id: "L33l1", audioText: "A：あの看板、何と書いてありますか。B：「ここで泳ぐな、危険」と書いてありますよ。", a: "看板には何と書いてありますか。", o: ["ここで泳げ", "ここで泳ぐな", "魚を取るな", "入るな"], c: 1, exp: "「ここで泳ぐな、危険」と書いてあります。" },
+    { id: "L33l2", audioText: "A：田中さんは来ますか。B：さっき、少し遅れると言っていましたよ。", a: "田中さんは何と言っていましたか。", o: ["来ない", "少し遅れる", "もう着いた", "休む"], c: 1, exp: "少し遅れると言っていました。" }
+  ],
+  questions: [
+    { id: "L33q1", dim: "grammar", type: "recall", difficulty: "hard", s: "待ちます → imperative (do it!)?", a: "待て", o: ["待て", "待ろ", "待れ", "待い"], c: 0, exp: "Group I imperative: -tsu → -te. 待つ→待て.", linksTo: "L33g1" },
+    { id: "L33q2", dim: "grammar", type: "recall", difficulty: "hard", s: "食べます → prohibitive (don't!)?", a: "食べるな", o: ["食べな", "食べるな", "食べろな", "食べないな"], c: 1, exp: "Prohibitive = dictionary form ＋ な: 食べる→食べるな.", linksTo: "L33g1" },
+    { id: "L33q3", dim: "grammar", type: "recall", difficulty: "medium", s: "看板に「危険」___あります。(it says…)", a: "と書いて", o: ["と書いて", "を書いて", "に書いて", "が書いて"], c: 0, exp: "と marks the quoted content before 書いてあります.", linksTo: "L33g2" },
+    { id: "L33q4", dim: "grammar", type: "recall", difficulty: "medium", s: "部長は出張する___。(the manager said…)", a: "と言っていました", o: ["と言っていました", "と書いてあります", "と読みます", "という意味です"], c: 0, exp: "〜と言っていました relays what someone said.", linksTo: "L33g2" },
+    { id: "L33q5", dim: "vocab", type: "recognition", difficulty: "easy", s: "非常口 means…", a: "emergency exit", o: ["entrance", "emergency exit", "no entry", "arrow"], c: 1, exp: "非常口（ひじょうぐち）= emergency exit.", linksTo: "L33v7" },
+    { id: "L33q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means 'protect / obey'?", a: "守", o: ["規", "則", "禁", "守"], c: 3, exp: "守 → 守ります (protect/obey a rule).", linksTo: "L33k4" }
+  ]
+},
+
+/* ===================== LESSON 34 ===================== */
+{
+  lessonNum: 34,
+  topic: "〜とおりに・〜たあとで・〜ないで",
+  topicEn: "As Instructed · After · Without Doing",
+  module: 'L34', moduleLabel: 'L34 — As / After / Without', lesson: 'L34', lessonLabel: 'As / After / Without',
+  difficulty: "medium",
+  level: "N4",
+  vocabulary: [
+    { id: "L34v1", word: "説明書", reading: "せつめいしょ", pitch: 0, meaning: "instruction manual", example: "説明書のとおりに組み立てました。", exampleMeaning: "I assembled it as the manual said." },
+    { id: "L34v2", word: "順番", reading: "じゅんばん", pitch: 0, meaning: "order; turn", example: "順番のとおりに並んでください。", exampleMeaning: "Please line up in order." },
+    { id: "L34v3", word: "混ぜます", reading: "まぜます", pitch: 3, meaning: "to mix", example: "卵と砂糖を混ぜます。", exampleMeaning: "Mix the egg and sugar." },
+    { id: "L34v4", word: "組み立てます", reading: "くみたてます", pitch: 5, meaning: "to assemble; to put together", example: "本棚を自分で組み立てました。", exampleMeaning: "I assembled the bookshelf myself." },
+    { id: "L34v5", word: "確認します", reading: "かくにんします", pitch: 0, meaning: "to confirm; to check", example: "出かける前に、必ず確認します。", exampleMeaning: "I always check before going out." },
+    { id: "L34v6", word: "印", reading: "しるし", pitch: 0, meaning: "mark; sign", example: "地図に印をつけておきました。", exampleMeaning: "I put a mark on the map." },
+    { id: "L34v7", word: "線", reading: "せん", pitch: 1, meaning: "line", example: "赤い線のとおりに切ってください。", exampleMeaning: "Please cut along the red line." },
+    { id: "L34v8", word: "まず", reading: "まず", pitch: 1, meaning: "first (of all)", example: "まず手を洗ってください。", exampleMeaning: "First, please wash your hands." },
+    { id: "L34v9", word: "次に", reading: "つぎに", pitch: 0, meaning: "next", example: "次に、お湯を入れます。", exampleMeaning: "Next, add hot water." },
+    { id: "L34v10", word: "押さえます", reading: "おさえます", pitch: 4, meaning: "to hold down; to press", example: "ボタンを押さえたまま、待ちます。", exampleMeaning: "Hold the button down and wait." }
+  ],
+  grammar: [
+    {
+      id: "L34g1",
+      point: "〜とおりに (in the same way as / as)",
+      explanation: "Verb (dictionary or past た-form) ＋ とおりに, or noun ＋ のとおりに. Means 'do exactly as…'. Past た-form = 'as I just (saw/heard/did)': 見たとおりに. Dictionary form = 'as (someone) says': 私が言うとおりに. Noun: 説明書のとおりに.",
+      examples: [
+        "私が言うとおりに、書いてください。 (Write exactly as I say.)",
+        "説明書のとおりに、組み立てました。 (I assembled it as the manual said.)",
+        "習ったとおりに、作ってみます。 (I'll make it the way I learned.)"
+      ],
+      listening: "とおりに follows a verb or のとおりに follows a noun — 'exactly as…'.",
+      production: "Describe doing something 'as the recipe / as the manual' says using 〜とおりに."
+    },
+    {
+      id: "L34g2",
+      point: "〜たあとで / 〜ないで (after doing / without doing)",
+      explanation: "〜たあとで = 'after doing X' (X finishes, then Y): ごはんを食べたあとで、薬を飲みます。 Noun ＋ のあとで: 仕事のあとで. 〜ないで = do Y without doing X, or 'instead of': 朝ごはんを食べないで、出かけました。(Don't confuse with 〜なくて, which is a cause.)",
+      examples: [
+        "宿題をしたあとで、ゲームをします。 (After doing homework, I'll play games.)",
+        "傘を持たないで出かけて、ぬれました。 (I went out without an umbrella and got wet.)",
+        "辞書を使わないで、読んでみてください。 (Try reading without using a dictionary.)"
+      ],
+      listening: "〜たあとで = 'after'; 〜ないで = 'without doing' the action that follows.",
+      production: "Say one 'after X, I do Y' and one 'I did Y without doing X' sentence."
+    }
+  ],
+  kanji: [
+    { id: "L34k1", char: "説", reading: "せつ／と（く）", meaning: "explain", exampleWord: "説明書（せつめいしょ）" },
+    { id: "L34k2", char: "順", reading: "じゅん", meaning: "order; sequence", exampleWord: "順番（じゅんばん）" },
+    { id: "L34k3", char: "番", reading: "ばん", meaning: "number; turn", exampleWord: "順番（じゅんばん）" },
+    { id: "L34k4", char: "確", reading: "かく／たし（か）", meaning: "certain; confirm", exampleWord: "確認（かくにん）" }
+  ],
+  reading: {
+    id: "L34r1",
+    title: "カレーの作り方",
+    passage: "今日は説明書のとおりにカレーを作ってみました。\nまず、野菜と肉を切ります。\n次に、なべに油を入れて、肉を炒めます。\n野菜を入れたあとで、水を入れて20分煮ます。\n最後にルーを入れて、よく混ぜたら、できあがりです。",
+    targetWords: [
+      { word: "説明書のとおりに", id: "L34v1" },
+      { word: "混ぜたら", id: "L34v3" }
+    ],
+    questions: [
+      { id: "rq34-1", q: "最初に何をしますか。", o: ["水を入れる", "野菜と肉を切る", "ルーを入れる", "肉を炒める"], c: 1, exp: "まず、野菜と肉を切ります。" },
+      { id: "rq34-2", q: "野菜を入れたあとで、何をしますか。", o: ["切る", "水を入れて煮る", "食べる", "混ぜる"], c: 1, exp: "野菜を入れたあとで、水を入れて20分煮ます。" },
+      { id: "rq34-3", q: "最後にすることは何ですか。", o: ["肉を切る", "ルーを入れて混ぜる", "皿を洗う", "味見する"], c: 1, exp: "最後にルーを入れて、よく混ぜます。" }
+    ]
+  },
+  listening: [
+    { id: "L34l1", audioText: "A：この機械、どう使いますか。B：説明書のとおりに、まず赤いボタンを押してください。", a: "最初に何をしますか。", o: ["青いボタンを押す", "赤いボタンを押す", "電源を切る", "説明書を読む"], c: 1, exp: "説明書のとおりに、まず赤いボタンを押してください。" },
+    { id: "L34l2", audioText: "A：朝ごはんは食べましたか。B：いいえ、時間がなくて、何も食べないで来ました。", a: "Bさんは朝ごはんをどうしましたか。", o: ["パンを食べた", "何も食べないで来た", "家で食べた", "あとで食べる"], c: 1, exp: "何も食べないで来ました。" }
+  ],
+  questions: [
+    { id: "L34q1", dim: "grammar", type: "recall", difficulty: "medium", s: "私が言う___、書いてください。(exactly as I say)", a: "とおりに", o: ["とおりに", "あとで", "ないで", "ながら"], c: 0, exp: "Verb ＋ とおりに = 'exactly as…'.", linksTo: "L34g1" },
+    { id: "L34q2", dim: "grammar", type: "recall", difficulty: "easy", s: "説明書___組み立てました。(as the manual said)", a: "のとおりに", o: ["のとおりに", "とおりに", "のあとで", "ないで"], c: 0, exp: "Noun ＋ のとおりに.", linksTo: "L34g1" },
+    { id: "L34q3", dim: "grammar", type: "recall", difficulty: "medium", s: "宿題をし___、ゲームをします。(after doing)", a: "たあとで", o: ["たあとで", "ないで", "ながら", "るまえに"], c: 0, exp: "〜たあとで = 'after doing'.", linksTo: "L34g2" },
+    { id: "L34q4", dim: "grammar", type: "recall", difficulty: "hard", s: "傘を持た___出かけて、ぬれました。(without taking)", a: "ないで", o: ["なくて", "ないで", "たあとで", "ながら"], c: 1, exp: "〜ないで = do/go 'without doing' X. (なくて would be a cause.)", linksTo: "L34g2" },
+    { id: "L34q5", dim: "vocab", type: "recognition", difficulty: "easy", s: "組み立てます means…", a: "to assemble", o: ["to mix", "to assemble", "to confirm", "to push"], c: 1, exp: "組み立てます = to assemble / put together.", linksTo: "L34v4" },
+    { id: "L34q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means 'order / sequence'?", a: "順", o: ["説", "順", "番", "確"], c: 1, exp: "順 → 順番（じゅんばん）order/turn.", linksTo: "L34k2" }
+  ]
+},
+
+/* ===================== LESSON 35 ===================== */
+{
+  lessonNum: 35,
+  topic: "〜ば（条件形）・〜なら",
+  topicEn: "Provisional Conditional ば & なら",
+  module: 'L35', moduleLabel: 'L35 — Conditional ば & なら', lesson: 'L35', lessonLabel: 'Conditional ば & なら',
+  difficulty: "hard",
+  level: "N4",
+  vocabulary: [
+    { id: "L35v1", word: "季節", reading: "きせつ", pitch: 1, meaning: "season", example: "春になれば、暖かくなります。", exampleMeaning: "When spring comes, it gets warm." },
+    { id: "L35v2", word: "比べます", reading: "くらべます", pitch: 3, meaning: "to compare", example: "比べれば、違いがわかります。", exampleMeaning: "If you compare them, you'll see the difference." },
+    { id: "L35v3", word: "役に立ちます", reading: "やくにたちます", pitch: 0, meaning: "to be useful", example: "この辞書は役に立ちます。", exampleMeaning: "This dictionary is useful." },
+    { id: "L35v4", word: "利用します", reading: "りようします", pitch: 0, meaning: "to use; to make use of", example: "ネットを利用すれば、すぐ調べられます。", exampleMeaning: "If you use the internet, you can look it up right away." },
+    { id: "L35v5", word: "自由", reading: "じゆう", pitch: 2, meaning: "freedom; free (na-adj)", example: "自由に使ってもいいです。", exampleMeaning: "You may use it freely." },
+    { id: "L35v6", word: "確かめます", reading: "たしかめます", pitch: 4, meaning: "to make sure; to verify", example: "間違いがないか確かめます。", exampleMeaning: "I'll make sure there are no mistakes." },
+    { id: "L35v7", word: "回します", reading: "まわします", pitch: 4, meaning: "to turn; to rotate", example: "右に回せば、開きます。", exampleMeaning: "If you turn it right, it opens." },
+    { id: "L35v8", word: "進みます", reading: "すすみます", pitch: 4, meaning: "to advance; to proceed", example: "まっすぐ進めば、駅に着きます。", exampleMeaning: "If you go straight, you'll reach the station." },
+    { id: "L35v9", word: "押せば", reading: "おせば", pitch: 0, meaning: "if you push (ば-form of 押す)", example: "ボタンを押せば、動きます。", exampleMeaning: "If you press the button, it works." },
+    { id: "L35v10", word: "値段", reading: "ねだん", pitch: 0, meaning: "price", example: "値段が安ければ、買います。", exampleMeaning: "If the price is cheap, I'll buy it." }
+  ],
+  grammar: [
+    {
+      id: "L35g1",
+      point: "〜ば — provisional conditional (if)",
+      explanation: "Form: Group I final -u → -eba (行く→行けば, 押す→押せば). Group II: drop る, add れば (食べる→食べれば). i-adj: い→ければ (安い→安ければ; いい→よければ). na-adj/noun ＋ なら (元気なら). Used for general 'if X then Y', natural results, and conditions. If the main clause is a request/command, the ば-clause is usually a state (adjective/potential), not a controllable action.",
+      examples: [
+        "ボタンを押せば、ドアが開きます。 (If you press the button, the door opens.)",
+        "安ければ、買います。 (If it's cheap, I'll buy it.)",
+        "わからなければ、聞いてください。 (If you don't understand, please ask.)"
+      ],
+      listening: "Verbs in -eba / -reba, adjectives in -kereba signal the 'if' condition.",
+      production: "Make two 'if X, then Y' sentences with 〜ば (one verb, one adjective)."
+    },
+    {
+      id: "L35g2",
+      point: "〜なら (if it's the case that / as for)",
+      explanation: "Plain form ＋ なら (noun/na-adj drop だ). Picks up a topic the other person raised and gives advice or info about THAT case: 京都へ行くなら、新幹線が便利です ('if you're going to Kyoto, the bullet train is handy'). It often responds to what was just said.",
+      examples: [
+        "A: 辞書を買いたいんです。 B: 辞書なら、あの店が安いですよ。 (As for dictionaries, that shop is cheap.)",
+        "日本語を勉強するなら、毎日少しずつがいいです。 (If you're going to study Japanese, a little each day is best.)",
+        "暇なら、手伝ってください。 (If you're free, please help.)"
+      ],
+      listening: "なら picks up the topic just mentioned and comments on 'that case'.",
+      production: "Respond to 'I want to travel in Japan' with advice using 〜なら."
+    }
+  ],
+  kanji: [
+    { id: "L35k1", char: "季", reading: "き", meaning: "season", exampleWord: "季節（きせつ）" },
+    { id: "L35k2", char: "節", reading: "せつ／ふし", meaning: "season; node; joint", exampleWord: "季節（きせつ）" },
+    { id: "L35k3", char: "利", reading: "り／き（く）", meaning: "benefit; advantage", exampleWord: "利用（りよう）" },
+    { id: "L35k4", char: "由", reading: "ゆう／よし", meaning: "reason; cause", exampleWord: "自由（じゆう）" }
+  ],
+  reading: {
+    id: "L35r1",
+    title: "図書館の利用",
+    passage: "大学の図書館はとても便利です。\nカードがあれば、だれでも本が借りられます。\n借りたい本があれば、機械で予約することもできます。\n本の場所がわからなければ、係の人に聞いてください。\nレポートを書くなら、ここの資料を利用するといいですよ。",
+    targetWords: [
+      { word: "あれば", id: "L35v9" },
+      { word: "利用する", id: "L35v4" }
+    ],
+    questions: [
+      { id: "rq35-1", q: "本を借りるには何が必要ですか。", o: ["お金", "カード", "パスポート", "先生の許可"], c: 1, exp: "カードがあれば、だれでも本が借りられます。" },
+      { id: "rq35-2", q: "本の場所がわからないとき、どうしますか。", o: ["あきらめる", "係の人に聞く", "帰る", "機械で予約する"], c: 1, exp: "わからなければ、係の人に聞いてください。" },
+      { id: "rq35-3", q: "レポートを書くなら、何を利用するといいですか。", o: ["インターネットだけ", "ここの資料", "友達のノート", "教科書だけ"], c: 1, exp: "レポートを書くなら、ここの資料を利用するといい。" }
+    ]
+  },
+  listening: [
+    { id: "L35l1", audioText: "A：このコピー機、どうやって使いますか。B：このボタンを押せば、すぐ使えますよ。", a: "コピー機はどうすれば使えますか。", o: ["カードを入れる", "ボタンを押す", "係の人を呼ぶ", "お金を入れる"], c: 1, exp: "このボタンを押せば、すぐ使えます。" },
+    { id: "L35l2", audioText: "A：日本のおみやげを買いたいんですが。B：おみやげなら、駅の近くの店がいいですよ。", a: "Bさんは何をすすめましたか。", o: ["デパート", "駅の近くの店", "空港", "ネット"], c: 1, exp: "おみやげなら、駅の近くの店がいいですよ。" }
+  ],
+  questions: [
+    { id: "L35q1", dim: "grammar", type: "recall", difficulty: "medium", s: "押します → ば-conditional?", a: "押せば", o: ["押せば", "押すば", "押しば", "押されば"], c: 0, exp: "Group I: -su → -seba. 押す→押せば.", linksTo: "L35g1" },
+    { id: "L35q2", dim: "grammar", type: "recall", difficulty: "medium", s: "安い → ば-conditional?", a: "安ければ", o: ["安いば", "安ければ", "安かれば", "安くば"], c: 1, exp: "i-adj: い→ければ. 安い→安ければ.", linksTo: "L35g1" },
+    { id: "L35q3", dim: "grammar", type: "recall", difficulty: "hard", s: "いい → ば-conditional?", a: "よければ", o: ["いければ", "いいば", "よければ", "よけば"], c: 2, exp: "いい is irregular: よい→よければ.", linksTo: "L35g1" },
+    { id: "L35q4", dim: "grammar", type: "recall", difficulty: "hard", s: "辞書を買いたいんです。― 辞書___、あの店が安いですよ。", a: "なら", o: ["ば", "なら", "たら", "と"], c: 1, exp: "〜なら picks up the topic just raised ('as for dictionaries…').", linksTo: "L35g2" },
+    { id: "L35q5", dim: "vocab", type: "recognition", difficulty: "easy", s: "役に立ちます means…", a: "to be useful", o: ["to compare", "to be useful", "to turn", "to advance"], c: 1, exp: "役に立ちます = to be useful.", linksTo: "L35v3" },
+    { id: "L35q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji pair reads 「きせつ」?", a: "季節", o: ["季節", "自由", "利用", "値段"], c: 0, exp: "季節（きせつ）= season.", linksTo: "L35k1" }
+  ]
+},
+
+/* ===================== LESSON 36 ===================== */
+{
+  lessonNum: 36,
+  topic: "〜ように・〜ようになります・〜ようにします",
+  topicEn: "Purpose, Change of Ability & Effort",
+  module: 'L36', moduleLabel: 'L36 — Purpose & Change (ように)', lesson: 'L36', lessonLabel: 'Purpose & Change (ように)',
+  difficulty: "hard",
+  level: "N4",
+  vocabulary: [
+    { id: "L36v1", word: "慣れます", reading: "なれます", pitch: 3, meaning: "to get used to", example: "日本の生活に慣れました。", exampleMeaning: "I've gotten used to life in Japan." },
+    { id: "L36v2", word: "努力します", reading: "どりょくします", pitch: 0, meaning: "to make an effort", example: "毎日努力しています。", exampleMeaning: "I'm making an effort every day." },
+    { id: "L36v3", word: "できるだけ", reading: "できるだけ", pitch: 0, meaning: "as much as possible", example: "できるだけ日本語で話すようにしています。", exampleMeaning: "I try to speak in Japanese as much as possible." },
+    { id: "L36v4", word: "治ります", reading: "なおります", pitch: 3, meaning: "to recover; to get better (illness)", example: "薬を飲んだら、治りました。", exampleMeaning: "After taking medicine, I got better." },
+    { id: "L36v5", word: "通じます", reading: "つうじます", pitch: 3, meaning: "to be understood; to get through", example: "やっと言葉が通じるようになりました。", exampleMeaning: "Finally my words started getting through." },
+    { id: "L36v6", word: "覚えます", reading: "おぼえます", pitch: 3, meaning: "to memorize; to remember", example: "漢字を覚えるように、毎日書いています。", exampleMeaning: "I write daily so I'll remember kanji." },
+    { id: "L36v7", word: "自信", reading: "じしん", pitch: 0, meaning: "confidence", example: "話せるようになって、自信がつきました。", exampleMeaning: "Becoming able to speak gave me confidence." },
+    { id: "L36v8", word: "減らします", reading: "へらします", pitch: 4, meaning: "to reduce; to cut down", example: "塩をできるだけ減らすようにしています。", exampleMeaning: "I try to cut down on salt as much as possible." },
+    { id: "L36v9", word: "届きます", reading: "とどきます", pitch: 3, meaning: "to reach; to arrive", example: "上の棚に手が届くようになりました。", exampleMeaning: "I became able to reach the top shelf." },
+    { id: "L36v10", word: "進歩", reading: "しんぽ", pitch: 1, meaning: "progress; improvement", example: "毎日練習すれば、進歩します。", exampleMeaning: "If you practise daily, you'll make progress." }
+  ],
+  grammar: [
+    {
+      id: "L36g1",
+      point: "〜ように (so that / in order to)",
+      explanation: "Dictionary form or 〜ない ＋ ように states a goal you can't fully control (potential verbs, change verbs, negatives). 漢字が読めるように、練習します ('so that I can read kanji, I practise'). 忘れないように、メモします ('so I won't forget, I take notes'). For controllable goals you'd use 〜ために instead.",
+      examples: [
+        "後ろの人に聞こえるように、大きい声で話します。 (I speak loudly so the people in back can hear.)",
+        "風邪をひかないように、気をつけてください。 (Take care so you don't catch a cold.)",
+        "よく見えるように、めがねをかけます。 (I wear glasses so I can see well.)"
+      ],
+      listening: "〜ように often pairs with a potential/negative verb — the goal is a state you aim for, not a direct action.",
+      production: "State two goals using 〜ように (one 'so I can…', one 'so I won't…')."
+    },
+    {
+      id: "L36g2",
+      point: "〜ようになります / 〜ようにします (came to / make an effort to)",
+      explanation: "〜ようになります = a change over time, usually 'became able to': 泳げるようになりました. With negatives: 〜なくなりました (お酒を飲まなくなりました). 〜ようにします = make a conscious effort: 毎日歩くようにします; 〜ようにしています = an ongoing habit you keep up.",
+      examples: [
+        "練習して、自転車に乗れるようになりました。 (After practising, I became able to ride a bike.)",
+        "健康のために、階段を使うようにしています。 (For my health, I make a point of using the stairs.)",
+        "夜は甘いものを食べないようにしています。 (I try not to eat sweets at night.)"
+      ],
+      listening: "〜ようになりました = a change/achievement; 〜ようにしています = an ongoing effort/habit.",
+      production: "Say one thing you 'became able to' and one habit you 'try to' keep, using these patterns."
+    }
+  ],
+  kanji: [
+    { id: "L36k1", char: "慣", reading: "かん／な（れる）", meaning: "get used to; custom", exampleWord: "慣れます（なれます）" },
+    { id: "L36k2", char: "努", reading: "ど／つと（める）", meaning: "endeavour; effort", exampleWord: "努力（どりょく）" },
+    { id: "L36k3", char: "力", reading: "りょく／ちから", meaning: "power; strength", exampleWord: "努力（どりょく）" },
+    { id: "L36k4", char: "信", reading: "しん", meaning: "trust; believe", exampleWord: "自信（じしん）" }
+  ],
+  reading: {
+    id: "L36r1",
+    title: "日本語が話せるように",
+    passage: "日本に来たばかりのころは、簡単な言葉も通じませんでした。\nそこで、できるだけ日本人と話すようにしました。\n知らない言葉は、忘れないようにノートに書きました。\n半年たって、やっと自分の考えが言えるようになりました。\n今は少し自信がついて、もっと上手になりたいと思っています。",
+    targetWords: [
+      { word: "話すようにしました", id: "L36v3" },
+      { word: "言えるようになりました", id: "L36v5" }
+    ],
+    questions: [
+      { id: "rq36-1", q: "来たばかりのころ、どうでしたか。", o: ["よく話せた", "簡単な言葉も通じなかった", "日本語が好きだった", "友達が多かった"], c: 1, exp: "簡単な言葉も通じませんでした。" },
+      { id: "rq36-2", q: "知らない言葉はどうしましたか。", o: ["あきらめた", "ノートに書いた", "先生に聞いた", "辞書を買った"], c: 1, exp: "忘れないようにノートに書きました。" },
+      { id: "rq36-3", q: "半年後、どうなりましたか。", o: ["国へ帰った", "自分の考えが言えるようになった", "勉強をやめた", "通じなくなった"], c: 1, exp: "自分の考えが言えるようになりました。" }
+    ]
+  },
+  listening: [
+    { id: "L36l1", audioText: "A：ピアノが上手ですね。B：ありがとうございます。毎日練習して、やっと弾けるようになりました。", a: "Bさんはどうなりましたか。", o: ["弾けなくなった", "弾けるようになった", "やめた", "先生になった"], c: 1, exp: "やっと弾けるようになりました。" },
+    { id: "L36l2", audioText: "A：健康のために、何かしていますか。B：ええ、できるだけ歩くようにしています。", a: "Bさんは何をするようにしていますか。", o: ["走る", "歩く", "泳ぐ", "休む"], c: 1, exp: "できるだけ歩くようにしています。" }
+  ],
+  questions: [
+    { id: "L36q1", dim: "grammar", type: "recall", difficulty: "medium", s: "漢字が読める___、毎日練習します。(so that I can…)", a: "ように", o: ["ように", "ために", "ことに", "そうに"], c: 0, exp: "Potential/uncontrollable goal → 〜ように.", linksTo: "L36g1" },
+    { id: "L36q2", dim: "grammar", type: "recall", difficulty: "medium", s: "風邪をひか___、気をつけてください。(so you won't…)", a: "ないように", o: ["ないように", "るように", "ないために", "なくて"], c: 0, exp: "Negative goal: 〜ないように.", linksTo: "L36g1" },
+    { id: "L36q3", dim: "grammar", type: "recall", difficulty: "hard", s: "練習して、泳げる___。(became able to)", a: "ようになりました", o: ["ようにします", "ようになりました", "ようです", "ことにしました"], c: 1, exp: "〜ようになりました = a change ('became able to').", linksTo: "L36g2" },
+    { id: "L36q4", dim: "grammar", type: "recall", difficulty: "hard", s: "毎日、階段を使う___。(I make an effort to / habit)", a: "ようにしています", o: ["ようになります", "ようにしています", "ところです", "つもりです"], c: 1, exp: "〜ようにしています = an ongoing effort/habit.", linksTo: "L36g2" },
+    { id: "L36q5", dim: "vocab", type: "recognition", difficulty: "easy", s: "慣れます means…", a: "to get used to", o: ["to recover", "to get used to", "to reduce", "to reach"], c: 1, exp: "慣れます = to get used to.", linksTo: "L36v1" },
+    { id: "L36q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji pair reads 「どりょく」?", a: "努力", o: ["自信", "努力", "進歩", "通信"], c: 1, exp: "努力（どりょく）= effort.", linksTo: "L36k2" }
+  ]
+},
+
+/* ===================== LESSON 37 ===================== */
+{
+  lessonNum: 37,
+  topic: "受身（〜られます）",
+  topicEn: "Passive Verbs",
+  module: 'L37', moduleLabel: 'L37 — Passive Verbs', lesson: 'L37', lessonLabel: 'Passive Verbs',
+  difficulty: "hard",
+  level: "N4",
+  vocabulary: [
+    { id: "L37v1", word: "招待します", reading: "しょうたいします", pitch: 0, meaning: "to invite", example: "結婚式に招待されました。", exampleMeaning: "I was invited to the wedding." },
+    { id: "L37v2", word: "ほめます", reading: "ほめます", pitch: 2, meaning: "to praise", example: "先生にほめられました。", exampleMeaning: "I was praised by the teacher." },
+    { id: "L37v3", word: "叱ります", reading: "しかります", pitch: 3, meaning: "to scold", example: "母に叱られました。", exampleMeaning: "I was scolded by my mother." },
+    { id: "L37v4", word: "盗みます", reading: "ぬすみます", pitch: 3, meaning: "to steal", example: "電車で財布を盗まれました。", exampleMeaning: "My wallet was stolen on the train." },
+    { id: "L37v5", word: "踏みます", reading: "ふみます", pitch: 3, meaning: "to step on", example: "満員電車で足を踏まれました。", exampleMeaning: "My foot got stepped on in the packed train." },
+    { id: "L37v6", word: "建てます", reading: "たてます", pitch: 3, meaning: "to build", example: "この寺は1000年前に建てられました。", exampleMeaning: "This temple was built 1000 years ago." },
+    { id: "L37v7", word: "発明します", reading: "はつめいします", pitch: 0, meaning: "to invent", example: "電話はベルに発明されました。", exampleMeaning: "The telephone was invented by Bell." },
+    { id: "L37v8", word: "発見します", reading: "はっけんします", pitch: 0, meaning: "to discover", example: "新しい星が発見されました。", exampleMeaning: "A new star was discovered." },
+    { id: "L37v9", word: "輸出します", reading: "ゆしゅつします", pitch: 0, meaning: "to export", example: "車が世界中に輸出されています。", exampleMeaning: "Cars are exported all over the world." },
+    { id: "L37v10", word: "翻訳します", reading: "ほんやくします", pitch: 0, meaning: "to translate", example: "この本は英語に翻訳されました。", exampleMeaning: "This book was translated into English." }
+  ],
+  grammar: [
+    {
+      id: "L37g1",
+      point: "受身形 — passive verb forms",
+      explanation: "Group I: final -u → -areru (書く→書かれる, 取る→取られる). Group II: drop ます, add られます (食べます→食べられます, 見ます→見られます). Irregular: します→されます, 来ます→来られます. In a passive sentence the doer is marked with に: 私は先生にほめられました ('I was praised by the teacher').",
+      examples: [
+        "弟にケーキを食べられました。 (My cake was eaten by my little brother.)",
+        "会議で意見を聞かれました。 (I was asked my opinion at the meeting.)",
+        "みんなに笑われました。 (I was laughed at by everyone.)"
+      ],
+      listening: "Passive verbs end -areru / -rareru; the doer is marked with に.",
+      production: "Say two things that were done to you, using the passive with に."
+    },
+    {
+      id: "L37g2",
+      point: "Passive of suffering & 'made/discovered' passive",
+      explanation: "Indirect (suffering) passive: something happens that troubles you — 雨に降られました ('I got rained on'), 赤ちゃんに泣かれました. For possessions/body parts, the owner is the subject and the thing takes を: (私は)足を踏まれました. For creations/facts, the maker is usually dropped or marked by によって: この絵はピカソによって描かれました.",
+      examples: [
+        "電車で隣の人に足を踏まれました。 (My foot got stepped on by the person next to me.)",
+        "帰る途中で雨に降られて、ぬれました。 (I got rained on on the way home and got wet.)",
+        "オリンピックは4年に1回開かれます。 (The Olympics are held once every 4 years.)"
+      ],
+      listening: "Suffering passive often involves an unwanted event (雨に降られる); で / によって can mark when/by whom for facts.",
+      production: "Describe one annoying thing that happened to you using the suffering passive."
+    }
+  ],
+  kanji: [
+    { id: "L37k1", char: "招", reading: "しょう／まね（く）", meaning: "invite; beckon", exampleWord: "招待（しょうたい）" },
+    { id: "L37k2", char: "待", reading: "たい／ま（つ）", meaning: "wait; treat", exampleWord: "招待（しょうたい）" },
+    { id: "L37k3", char: "建", reading: "けん／た（てる）", meaning: "build", exampleWord: "建てます（たてます）" },
+    { id: "L37k4", char: "発", reading: "はつ／はっ", meaning: "emit; departure; reveal", exampleWord: "発見（はっけん）" }
+  ],
+  reading: {
+    id: "L37r1",
+    title: "古いお寺",
+    passage: "京都には古いお寺がたくさんあります。\nある寺は1200年前に建てられたそうです。\n毎年、世界中からたくさんの人が訪れます。\n美しい庭は、外国の本にもよく紹介されています。\n先週、私も友達に招待されて、その寺を見に行きました。",
+    targetWords: [
+      { word: "建てられた", id: "L37v6" },
+      { word: "招待されて", id: "L37v1" }
+    ],
+    questions: [
+      { id: "rq37-1", q: "ある寺はいつ建てられましたか。", o: ["200年前", "800年前", "1200年前", "去年"], c: 2, exp: "1200年前に建てられたそうです。" },
+      { id: "rq37-2", q: "美しい庭はどこに紹介されていますか。", o: ["テレビ", "外国の本", "新聞", "雑誌だけ"], c: 1, exp: "外国の本にもよく紹介されています。" },
+      { id: "rq37-3", q: "「私」はどうしてその寺へ行きましたか。", o: ["仕事で", "友達に招待されて", "一人で", "学校の授業で"], c: 1, exp: "友達に招待されて、見に行きました。" }
+    ]
+  },
+  listening: [
+    { id: "L37l1", audioText: "A：元気がないですね。どうしたんですか。B：今朝、電車で足を踏まれて、痛いんです。", a: "Bさんに何がありましたか。", o: ["転んだ", "足を踏まれた", "財布をなくした", "風邪をひいた"], c: 1, exp: "電車で足を踏まれて、痛いんです。" },
+    { id: "L37l2", audioText: "A：その時計、すてきですね。B：ありがとう。父に誕生日にもらったんです。みんなにほめられます。", a: "Bさんは時計についてどう言っていますか。", o: ["高かった", "みんなにほめられる", "壊れている", "自分で買った"], c: 1, exp: "みんなにほめられます。" }
+  ],
+  questions: [
+    { id: "L37q1", dim: "grammar", type: "recall", difficulty: "medium", s: "書きます → passive form?", a: "書かれます", o: ["書かれます", "書けます", "書かせます", "書かります"], c: 0, exp: "Group I passive: -ku → -kareru. 書く→書かれる.", linksTo: "L37g1" },
+    { id: "L37q2", dim: "grammar", type: "recall", difficulty: "medium", s: "食べます → passive form?", a: "食べられます", o: ["食べさせます", "食べられます", "食べれます", "食べます"], c: 1, exp: "Group II passive: drop ます, add られます. (Same shape as potential.)", linksTo: "L37g1" },
+    { id: "L37q3", dim: "grammar", type: "recall", difficulty: "hard", s: "私は先生___ほめられました。(by the teacher)", a: "に", o: ["を", "に", "が", "で"], c: 1, exp: "The doer in a passive sentence is marked with に.", linksTo: "L37g1" },
+    { id: "L37q4", dim: "grammar", type: "recall", difficulty: "hard", s: "満員電車で足___踏まれました。(my foot)", a: "を", o: ["が", "を", "に", "は"], c: 1, exp: "For a body part/possession in the suffering passive, the part takes を.", linksTo: "L37g2" },
+    { id: "L37q5", dim: "vocab", type: "recognition", difficulty: "easy", s: "盗みます means…", a: "to steal", o: ["to invite", "to steal", "to praise", "to build"], c: 1, exp: "盗みます = to steal → 盗まれました (was stolen).", linksTo: "L37v4" },
+    { id: "L37q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means 'build'?", a: "建", o: ["招", "待", "建", "発"], c: 2, exp: "建 → 建てます (build) / 建てられました (was built).", linksTo: "L37k3" }
+  ]
+},
+
+/* ===================== LESSON 38 ===================== */
+{
+  lessonNum: 38,
+  topic: "〜の（名詞化）・〜のは…です",
+  topicEn: "Nominalizing の & Cleft Sentences",
+  module: 'L38', moduleLabel: 'L38 — Nominalizer の', lesson: 'L38', lessonLabel: 'Nominalizer の',
+  difficulty: "medium",
+  level: "N4",
+  vocabulary: [
+    { id: "L38v1", word: "趣味", reading: "しゅみ", pitch: 1, meaning: "hobby", example: "私の趣味は写真を撮ることです。", exampleMeaning: "My hobby is taking photos." },
+    { id: "L38v2", word: "集めます", reading: "あつめます", pitch: 3, meaning: "to collect", example: "切手を集めるのが好きです。", exampleMeaning: "I like collecting stamps." },
+    { id: "L38v3", word: "興味", reading: "きょうみ", pitch: 1, meaning: "interest", example: "歴史に興味があります。", exampleMeaning: "I'm interested in history." },
+    { id: "L38v4", word: "得意", reading: "とくい", pitch: 0, meaning: "good at; strong point (na-adj)", example: "歌を歌うのが得意です。", exampleMeaning: "I'm good at singing." },
+    { id: "L38v5", word: "苦手", reading: "にがて", pitch: 0, meaning: "weak at; not good with (na-adj)", example: "早く起きるのは苦手です。", exampleMeaning: "Getting up early is not my strong point." },
+    { id: "L38v6", word: "楽しみ", reading: "たのしみ", pitch: 3, meaning: "enjoyment; something to look forward to", example: "旅行に行くのが楽しみです。", exampleMeaning: "I'm looking forward to the trip." },
+    { id: "L38v7", word: "性格", reading: "せいかく", pitch: 0, meaning: "personality", example: "彼は明るい性格です。", exampleMeaning: "He has a cheerful personality." },
+    { id: "L38v8", word: "才能", reading: "さいのう", pitch: 0, meaning: "talent", example: "絵をかく才能があります。", exampleMeaning: "He has a talent for drawing." },
+    { id: "L38v9", word: "知らせます", reading: "しらせます", pitch: 4, meaning: "to inform; to let know", example: "結果が出たら、知らせます。", exampleMeaning: "I'll let you know when the result comes out." },
+    { id: "L38v10", word: "手伝います", reading: "てつだいます", pitch: 4, meaning: "to help", example: "料理を作るのを手伝います。", exampleMeaning: "I'll help make the food." }
+  ],
+  grammar: [
+    {
+      id: "L38g1",
+      point: "Verb ＋ の (turning a verb into a noun)",
+      explanation: "Plain-form verb ＋ の makes the action a noun, so it can take は/が/を. 本を読むのが好きです ('I like reading'). 日本語を話すのは難しいです ('Speaking Japanese is hard'). With 好き・上手・得意・苦手 the action takes が; as an object it takes を (薬を飲むのを忘れた). (こと can replace の for facts, but の is preferred with perception/like-dislike.)",
+      examples: [
+        "音楽を聞くのが好きです。 (I like listening to music.)",
+        "朝早く起きるのは大変です。 (Getting up early is tough.)",
+        "かぎをかけるのを忘れました。 (I forgot to lock up.)"
+      ],
+      listening: "A plain verb followed by の が/は/を is the action working as a noun.",
+      production: "Say what you like doing and one thing that's hard for you, both using verb ＋ の."
+    },
+    {
+      id: "L38g2",
+      point: "〜のは…です (cleft — emphasising one part)",
+      explanation: "Take a sentence and spotlight one element by making the rest 〜のは… and putting the focus at the end. 私は北海道で生まれました → 私が生まれたのは北海道です ('the place I was born is Hokkaido'). It answers 'which/where/who/when exactly?'.",
+      examples: [
+        "私が会いたいのは山田さんです。 (The one I want to meet is Yamada.)",
+        "彼が日本へ来たのは3年前です。 (It was 3 years ago that he came to Japan.)",
+        "いちばん大切なのは健康です。 (The most important thing is health.)"
+      ],
+      listening: "〜のは…です puts the spotlighted answer (place/person/time) right at the end.",
+      production: "Emphasise where you were born or what you like most using 〜のは…です."
+    }
+  ],
+  kanji: [
+    { id: "L38k1", char: "趣", reading: "しゅ／おもむき", meaning: "taste; interest", exampleWord: "趣味（しゅみ）" },
+    { id: "L38k2", char: "味", reading: "み／あじ", meaning: "flavour; taste", exampleWord: "趣味（しゅみ）" },
+    { id: "L38k3", char: "興", reading: "きょう／こう", meaning: "interest; entertain", exampleWord: "興味（きょうみ）" },
+    { id: "L38k4", char: "得", reading: "とく／え（る）", meaning: "gain; advantage", exampleWord: "得意（とくい）" }
+  ],
+  reading: {
+    id: "L38r1",
+    title: "私の趣味",
+    passage: "私の趣味は古い切手を集めることです。\n小さいころから集めるのが好きで、今では1000枚以上あります。\n珍しい切手を見つけるのは簡単ではありません。\nでも、探すのがとても楽しいです。\nいちばんうれしいのは、外国の友達と切手を交換するときです。",
+    targetWords: [
+      { word: "集める", id: "L38v2" },
+      { word: "楽しい", id: "L38v6" }
+    ],
+    questions: [
+      { id: "rq38-1", q: "この人の趣味は何ですか。", o: ["写真を撮ること", "切手を集めること", "絵をかくこと", "旅行すること"], c: 1, exp: "趣味は古い切手を集めることです。" },
+      { id: "rq38-2", q: "珍しい切手を見つけるのはどうですか。", o: ["簡単だ", "簡単ではない", "つまらない", "お金がかかる"], c: 1, exp: "珍しい切手を見つけるのは簡単ではありません。" },
+      { id: "rq38-3", q: "いちばんうれしいのはどんなときですか。", o: ["切手を買うとき", "友達と切手を交換するとき", "切手を売るとき", "切手を見るとき"], c: 1, exp: "外国の友達と切手を交換するときです。" }
+    ]
+  },
+  listening: [
+    { id: "L38l1", audioText: "A：スポーツは得意ですか。B：いいえ、体を動かすのは苦手です。本を読むほうが好きです。", a: "Bさんが苦手なことは何ですか。", o: ["本を読むこと", "体を動かすこと", "歌うこと", "料理すること"], c: 1, exp: "体を動かすのは苦手です。" },
+    { id: "L38l2", audioText: "A：彼に初めて会ったのはいつですか。B：会ったのは去年の春です。大学のパーティーでした。", a: "二人が初めて会ったのはいつですか。", o: ["今年の春", "去年の春", "去年の冬", "おととし"], c: 1, exp: "会ったのは去年の春です。" }
+  ],
+  questions: [
+    { id: "L38q1", dim: "grammar", type: "recall", difficulty: "easy", s: "本を読む___が好きです。(I like reading)", a: "の", o: ["の", "こと", "もの", "ところ"], c: 0, exp: "Verb ＋ の が好き = 'like doing'.", linksTo: "L38g1" },
+    { id: "L38q2", dim: "grammar", type: "recall", difficulty: "medium", s: "かぎをかける___忘れました。(forgot to lock)", a: "のを", o: ["のが", "のは", "のを", "のに"], c: 2, exp: "As the object of 忘れる, the action takes のを.", linksTo: "L38g1" },
+    { id: "L38q3", dim: "grammar", type: "recall", difficulty: "hard", s: "私が生まれた___北海道です。(It was Hokkaido where I was born)", a: "のは", o: ["のが", "のは", "のを", "ので"], c: 1, exp: "Cleft: 〜のは…です spotlights the place.", linksTo: "L38g2" },
+    { id: "L38q4", dim: "grammar", type: "recall", difficulty: "medium", s: "歌を歌う___得意です。(good at singing)", a: "のが", o: ["のが", "のを", "のは", "のに"], c: 0, exp: "With 得意/上手/好き, the action takes のが.", linksTo: "L38g1" },
+    { id: "L38q5", dim: "vocab", type: "recognition", difficulty: "easy", s: "苦手 means…", a: "weak at / not good with", o: ["good at", "weak at / not good with", "interest", "talent"], c: 1, exp: "苦手 = weak at; 得意 = good at.", linksTo: "L38v5" },
+    { id: "L38q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji pair reads 「しゅみ」?", a: "趣味", o: ["興味", "趣味", "得意", "性格"], c: 1, exp: "趣味（しゅみ）= hobby.", linksTo: "L38k1" }
+  ]
+},
+
+/* ===================== LESSON 39 ===================== */
+{
+  lessonNum: 39,
+  topic: "〜て／で（原因）・〜ので",
+  topicEn: "Cause with て/で & Reason with ので",
+  module: 'L39', moduleLabel: 'L39 — Cause (て/で) & ので', lesson: 'L39', lessonLabel: 'Cause (て/で) & ので',
+  difficulty: "medium",
+  level: "N4",
+  vocabulary: [
+    { id: "L39v1", word: "地震", reading: "じしん", pitch: 0, meaning: "earthquake", example: "地震で電車が止まりました。", exampleMeaning: "The train stopped because of the earthquake." },
+    { id: "L39v2", word: "火事", reading: "かじ", pitch: 1, meaning: "fire (disaster)", example: "火事でビルが焼けました。", exampleMeaning: "The building burned down in a fire." },
+    { id: "L39v3", word: "渋滞", reading: "じゅうたい", pitch: 0, meaning: "traffic jam", example: "渋滞で遅れました。", exampleMeaning: "I was late because of a traffic jam." },
+    { id: "L39v4", word: "停電", reading: "ていでん", pitch: 0, meaning: "power outage", example: "停電でエアコンが止まりました。", exampleMeaning: "The AC stopped due to a power outage." },
+    { id: "L39v5", word: "びっくりします", reading: "びっくりします", pitch: 3, meaning: "to be surprised", example: "大きい音にびっくりしました。", exampleMeaning: "I was startled by the loud noise." },
+    { id: "L39v6", word: "安心します", reading: "あんしんします", pitch: 0, meaning: "to feel relieved", example: "無事だと聞いて、安心しました。", exampleMeaning: "I was relieved to hear everyone was safe." },
+    { id: "L39v7", word: "心配します", reading: "しんぱいします", pitch: 0, meaning: "to worry", example: "連絡がなくて、心配しました。", exampleMeaning: "I worried because there was no word." },
+    { id: "L39v8", word: "残念", reading: "ざんねん", pitch: 3, meaning: "regrettable; a pity (na-adj)", example: "中止になって、残念です。", exampleMeaning: "It's a pity it was cancelled." },
+    { id: "L39v9", word: "原因", reading: "げんいん", pitch: 0, meaning: "cause", example: "事故の原因はまだわかりません。", exampleMeaning: "The cause of the accident is still unknown." },
+    { id: "L39v10", word: "用事", reading: "ようじ", pitch: 0, meaning: "errand; something to do", example: "用事があるので、お先に失礼します。", exampleMeaning: "I have an errand, so I'll excuse myself first." }
+  ],
+  grammar: [
+    {
+      id: "L39g1",
+      point: "〜て / 〜で (cause / reason via the te-form)",
+      explanation: "The te-form can show cause when the main clause is an emotion or an uncontrollable result (no command, request, or volition follows). Verb て-form: ニュースを聞いて、びっくりしました. Noun ＋ で: 地震で電車が止まりました. i-adj い→くて (忙しくて…), na-adj/noun ＋で (病気で…).",
+      examples: [
+        "知らせを聞いて、安心しました。 (I heard the news and felt relieved.)",
+        "事故で道が込んでいます。 (The road is crowded because of an accident.)",
+        "宿題が多くて、寝られませんでした。 (There was so much homework I couldn't sleep.)"
+      ],
+      listening: "When the て/で clause is followed by a feeling or an out-of-control result, it's giving the cause.",
+      production: "Give two cause–effect sentences using て/で (e.g. 'because of the rain…')."
+    },
+    {
+      id: "L39g2",
+      point: "〜ので (reason — soft & objective)",
+      explanation: "Plain form ＋ ので (na-adj/noun: 〜なので). States a reason more softly and objectively than から, so it's common in polite explanations and excuses. 用事があるので、帰ります. Because it sounds reasonable rather than insistent, it's preferred when being considerate.",
+      examples: [
+        "頭が痛いので、早く帰ってもいいですか。 (My head hurts, so may I leave early?)",
+        "日曜日なので、銀行は休みです。 (It's Sunday, so the bank is closed.)",
+        "道が込んでいたので、遅れました。 (The road was crowded, so I was late.)"
+      ],
+      listening: "〜ので gives a soft, polite reason — common in excuses and requests.",
+      production: "Politely ask to leave early, giving a reason with 〜ので."
+    }
+  ],
+  kanji: [
+    { id: "L39k1", char: "地", reading: "ち／じ", meaning: "ground; earth", exampleWord: "地震（じしん）" },
+    { id: "L39k2", char: "震", reading: "しん／ふる（える）", meaning: "quake; tremble", exampleWord: "地震（じしん）" },
+    { id: "L39k3", char: "原", reading: "げん／はら", meaning: "origin; field", exampleWord: "原因（げんいん）" },
+    { id: "L39k4", char: "因", reading: "いん／よ（る）", meaning: "cause; depend on", exampleWord: "原因（げんいん）" }
+  ],
+  reading: {
+    id: "L39r1",
+    title: "大きい地震",
+    passage: "ゆうべ、大きい地震がありました。\n強い揺れにびっくりして、すぐ外に出ました。\n地震で電車が止まったので、駅にはたくさんの人がいました。\n家族から連絡がなくて、とても心配しました。\nでも、みんな無事だとわかって、安心しました。",
+    targetWords: [
+      { word: "びっくりして", id: "L39v5" },
+      { word: "心配しました", id: "L39v7" }
+    ],
+    questions: [
+      { id: "rq39-1", q: "この人はなぜすぐ外に出ましたか。", o: ["火事だったから", "強い揺れにびっくりして", "電車に乗るため", "買い物のため"], c: 1, exp: "強い揺れにびっくりして、すぐ外に出ました。" },
+      { id: "rq39-2", q: "駅に人が多かったのはなぜですか。", o: ["祭りがあったから", "地震で電車が止まったので", "セールがあったから", "雨だったから"], c: 1, exp: "地震で電車が止まったので、人が多かった。" },
+      { id: "rq39-3", q: "最後に、この人はどう感じましたか。", o: ["まだ心配だ", "みんな無事で安心した", "残念だ", "怒った"], c: 1, exp: "みんな無事だとわかって、安心しました。" }
+    ]
+  },
+  listening: [
+    { id: "L39l1", audioText: "A：遅かったですね。B：すみません、事故で道がすごく渋滞していたんです。", a: "Bさんはなぜ遅れましたか。", o: ["寝坊した", "事故の渋滞", "電車が止まった", "道に迷った"], c: 1, exp: "事故で道が渋滞していたんです。" },
+    { id: "L39l2", audioText: "A：あしたのパーティー、来られますか。B：すみません、用事があるので、行けないんです。", a: "Bさんはなぜ行けませんか。", o: ["病気だから", "用事があるから", "遠いから", "お金がないから"], c: 1, exp: "用事があるので、行けないんです。" }
+  ],
+  questions: [
+    { id: "L39q1", dim: "grammar", type: "recall", difficulty: "medium", s: "ニュースを聞い___、びっくりしました。(and was surprised)", a: "て", o: ["て", "で", "から", "のに"], c: 0, exp: "Verb て-form can express the cause of a feeling.", linksTo: "L39g1" },
+    { id: "L39q2", dim: "grammar", type: "recall", difficulty: "medium", s: "地震___電車が止まりました。(because of the earthquake)", a: "で", o: ["て", "で", "に", "を"], c: 1, exp: "Noun ＋ で expresses cause: 地震で.", linksTo: "L39g1" },
+    { id: "L39q3", dim: "grammar", type: "recall", difficulty: "easy", s: "頭が痛い___、早く帰ってもいいですか。(soft reason)", a: "ので", o: ["ので", "のに", "ても", "たら"], c: 0, exp: "〜ので gives a soft, polite reason.", linksTo: "L39g2" },
+    { id: "L39q4", dim: "grammar", type: "recall", difficulty: "hard", s: "日曜日 ＋ ので → ?", a: "日曜日なので", o: ["日曜日ので", "日曜日だので", "日曜日なので", "日曜日のので"], c: 2, exp: "Noun/na-adj take な before ので: 日曜日なので.", linksTo: "L39g2" },
+    { id: "L39q5", dim: "vocab", type: "recognition", difficulty: "easy", s: "渋滞 means…", a: "traffic jam", o: ["earthquake", "traffic jam", "power outage", "fire"], c: 1, exp: "渋滞（じゅうたい）= traffic jam.", linksTo: "L39v3" },
+    { id: "L39q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji pair reads 「じしん」 (earthquake)?", a: "地震", o: ["地震", "原因", "火事", "停電"], c: 0, exp: "地震（じしん）= earthquake.", linksTo: "L39k1" }
+  ]
+},
+
+/* ===================== LESSON 40 ===================== */
+{
+  lessonNum: 40,
+  topic: "〜か（どうか）・〜てみます",
+  topicEn: "Embedded Questions & Trying Out",
+  module: 'L40', moduleLabel: 'L40 — Embedded Questions & てみる', lesson: 'L40', lessonLabel: 'Embedded Questions & てみる',
+  difficulty: "medium",
+  level: "N4",
+  vocabulary: [
+    { id: "L40v1", word: "調べます", reading: "しらべます", pitch: 3, meaning: "to look up; to investigate", example: "電車の時間を調べてみます。", exampleMeaning: "I'll look up the train times." },
+    { id: "L40v2", word: "試します", reading: "ためします", pitch: 3, meaning: "to try out; to test", example: "新しい方法を試してみました。", exampleMeaning: "I tried out a new method." },
+    { id: "L40v3", word: "確認します", reading: "かくにんします", pitch: 0, meaning: "to confirm; to check", example: "予約できたかどうか確認します。", exampleMeaning: "I'll check whether the booking went through." },
+    { id: "L40v4", word: "数えます", reading: "かぞえます", pitch: 3, meaning: "to count", example: "お金が足りるかどうか、数えてみます。", exampleMeaning: "I'll count to see if there's enough money." },
+    { id: "L40v5", word: "合います", reading: "あいます", pitch: 2, meaning: "to fit; to match; to suit", example: "サイズが合うかどうか、着てみます。", exampleMeaning: "I'll try it on to see if the size fits." },
+    { id: "L40v6", word: "サイズ", reading: "サイズ", pitch: 1, meaning: "size", example: "このサイズで合うかどうか分かりません。", exampleMeaning: "I'm not sure if this size fits." },
+    { id: "L40v7", word: "締め切り", reading: "しめきり", pitch: 0, meaning: "deadline", example: "締め切りがいつか、調べます。", exampleMeaning: "I'll check when the deadline is." },
+    { id: "L40v8", word: "申し込みます", reading: "もうしこみます", pitch: 5, meaning: "to apply; to sign up", example: "申し込めるかどうか聞いてみます。", exampleMeaning: "I'll ask whether I can apply." },
+    { id: "L40v9", word: "知らせます", reading: "しらせます", pitch: 4, meaning: "to inform; to let know", example: "結果が出たかどうか知らせてください。", exampleMeaning: "Please let me know whether the result is out." },
+    { id: "L40v10", word: "計ります", reading: "はかります", pitch: 3, meaning: "to measure; to time", example: "熱があるかどうか、計ってみます。", exampleMeaning: "I'll take my temperature to see if I have a fever." }
+  ],
+  grammar: [
+    {
+      id: "L40g1",
+      point: "〜か（どうか）— embedded questions",
+      explanation: "Embed a question inside a sentence with か. Yes/no questions use 〜かどうか ('whether or not'): 来るかどうか分かりません. Wh-questions keep the question word ＋ か: どこにあるか教えてください. Plain forms go before か; a noun/na-adj before か drops だ (元気かどうか, 学生か).",
+      examples: [
+        "間に合うかどうか分かりません。 (I don't know whether we'll make it in time.)",
+        "彼が何時に来るか聞いてください。 (Please ask what time he's coming.)",
+        "これでいいかどうか、確認します。 (I'll check whether this is okay.)"
+      ],
+      listening: "か（どうか）turns a question into a noun-like chunk inside a bigger sentence.",
+      production: "Make one 'I don't know whether…' (かどうか) and one 'please tell me wh-…か' sentence."
+    },
+    {
+      id: "L40g2",
+      point: "〜てみます (try doing / do and see)",
+      explanation: "Te-form ＋ みます means 'do something to see how it goes / give it a try'. 食べてみます ('I'll try eating it'). Past: 〜てみました ('I tried…'). Request: 〜てみてください. It implies you don't yet know the result.",
+      examples: [
+        "この服を着てみてもいいですか。 (May I try this on?)",
+        "新しいレストランへ行ってみました。 (I tried going to the new restaurant.)",
+        "わからない言葉は、辞書で調べてみてください。 (Try looking up words you don't know.)"
+      ],
+      listening: "〜てみます = a trial action ('do and see'); often paired with 調べる/食べる/着る.",
+      production: "Say two things you'll 'try doing to see' using 〜てみます."
+    }
+  ],
+  kanji: [
+    { id: "L40k1", char: "調", reading: "ちょう／しら（べる）", meaning: "investigate; tune", exampleWord: "調べます（しらべます）" },
+    { id: "L40k2", char: "確", reading: "かく／たし（か）", meaning: "certain; confirm", exampleWord: "確認（かくにん）" },
+    { id: "L40k3", char: "認", reading: "にん／みと（める）", meaning: "recognise; approve", exampleWord: "確認（かくにん）" },
+    { id: "L40k4", char: "計", reading: "けい／はか（る）", meaning: "measure; plan; total", exampleWord: "計ります（はかります）" }
+  ],
+  reading: {
+    id: "L40r1",
+    title: "申し込みの前に",
+    passage: "来月の日本語のスピーチ大会に出たいと思っています。\nでも、留学生が申し込めるかどうか分かりませんでした。\nそこで、まず事務所に聞いてみました。\n係の人は「だいじょうぶですよ」と教えてくれました。\n締め切りがいつか確認して、さっそく申し込んでみるつもりです。",
+    targetWords: [
+      { word: "申し込めるかどうか", id: "L40v8" },
+      { word: "聞いてみました", id: "L40v3" }
+    ],
+    questions: [
+      { id: "rq40-1", q: "この人は何に出たいですか。", o: ["スポーツ大会", "スピーチ大会", "音楽会", "試験"], c: 1, exp: "日本語のスピーチ大会に出たい。" },
+      { id: "rq40-2", q: "分からなかったことは何ですか。", o: ["大会の日", "留学生が申し込めるかどうか", "場所", "賞金"], c: 1, exp: "留学生が申し込めるかどうか分からなかった。" },
+      { id: "rq40-3", q: "この人はまず何をしましたか。", o: ["申し込んだ", "事務所に聞いてみた", "あきらめた", "先生に相談した"], c: 1, exp: "まず事務所に聞いてみました。" }
+    ]
+  },
+  listening: [
+    { id: "L40l1", audioText: "A：この服、すてきですね。B：ありがとう。でもサイズが合うかどうか、ちょっと着てみます。", a: "Bさんはこれから何をしますか。", o: ["買う", "着てみる", "返す", "別の店へ行く"], c: 1, exp: "サイズが合うかどうか、着てみます。" },
+    { id: "L40l2", audioText: "A：会議は何時からか分かりますか。B：すみません、分かりません。確認してみますね。", a: "Bさんはこれから何をしますか。", o: ["会議に出る", "時間を確認してみる", "帰る", "資料を作る"], c: 1, exp: "確認してみますね。" }
+  ],
+  questions: [
+    { id: "L40q1", dim: "grammar", type: "recall", difficulty: "medium", s: "来る___分かりません。(whether or not he comes)", a: "かどうか", o: ["かどうか", "かが", "のか", "ことが"], c: 0, exp: "Yes/no embedded question = 〜かどうか.", linksTo: "L40g1" },
+    { id: "L40q2", dim: "grammar", type: "recall", difficulty: "hard", s: "彼が何時に来る___聞いてください。(wh-question embedded)", a: "か", o: ["か", "かどうか", "のを", "と"], c: 0, exp: "With a question word (何時), keep just か (not かどうか).", linksTo: "L40g1" },
+    { id: "L40q3", dim: "grammar", type: "recall", difficulty: "easy", s: "この服を着___もいいですか。(may I try on?)", a: "てみて", o: ["てみて", "ておいて", "てあって", "てしまって"], c: 0, exp: "〜てみる = try doing → 着てみてもいいですか.", linksTo: "L40g2" },
+    { id: "L40q4", dim: "grammar", type: "recall", difficulty: "hard", s: "学生 ＋ かどうか → ?", a: "学生かどうか", o: ["学生だかどうか", "学生かどうか", "学生なかどうか", "学生のかどうか"], c: 1, exp: "Noun before か drops だ: 学生かどうか.", linksTo: "L40g1" },
+    { id: "L40q5", dim: "vocab", type: "recognition", difficulty: "easy", s: "調べます means…", a: "to look up / investigate", o: ["to try out", "to look up / investigate", "to count", "to measure"], c: 1, exp: "調べます = to look up / investigate.", linksTo: "L40v1" },
+    { id: "L40q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji pair reads 「かくにん」?", a: "確認", o: ["確認", "調査", "計算", "確実"], c: 0, exp: "確認（かくにん）= confirmation/checking.", linksTo: "L40k2" }
+  ]
+}
+
+
 ];
 
 if (typeof window !== 'undefined') window.SEED_CONTENT = SEED_CONTENT;
