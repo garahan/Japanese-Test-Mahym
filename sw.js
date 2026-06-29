@@ -2,18 +2,20 @@
 // Strategy: stale-while-revalidate for app shell (instant load, silent refresh).
 // API calls (/api/*) always go to the network and are never cached.
 
-const CACHE = 'mahym-jp-v15';
+const CACHE = 'mahym-jp-v16';
 
 const ASSETS = [
   '/',
   '/index.html',
   '/roadmap.html',
   '/admin.html',
+  '/test.html',
   '/grammar-reference.html',
   '/core.js',
   '/memory-engine.js',
   '/Coach.js',
   '/seed-data.js',
+  '/feed-threads.js',
   '/jlpt-question-bank.js',
   '/manifest.json',
   '/icon-192.png',

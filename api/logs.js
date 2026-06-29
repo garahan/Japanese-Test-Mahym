@@ -28,7 +28,7 @@ function buildSummary(logs) {
 
   const examLogs = logs.filter(l => l.type === 'exam');
   const jlptLogs = logs.filter(l => l.type === 'jlpt');
-  const studyLogs = logs.filter(l => ['lesson-quiz', 'lesson-write', 'review', 'flashcards', 'practice', 'mission', 'reading'].includes(l.type));
+  const studyLogs = logs.filter(l => ['lesson-quiz', 'lesson-write', 'review', 'flashcards', 'practice', 'mission', 'reading', 'drill', 'listening', 'mistakes'].includes(l.type));
 
   const avgPct = (arr) => {
     const vals = arr.map(l => l.pct).filter(v => v != null);

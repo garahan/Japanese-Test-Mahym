@@ -87,6 +87,17 @@ function buildMessage(b) {
   } else if (b.type === 'practice') {
     head = `💪 <b>${name} did a practice session</b>`;
     if (score) lines.push(`✅ ${score}`);
+  } else if (b.type === 'drill') {
+    head = `🏋️ <b>${name} did a drill practice</b>`;
+    if (b.lesson) lines.push(`Lesson ${b.lesson}`);
+    if (b.good != null && b.total != null) lines.push(`✅ ${b.good}/${b.total} recalled`);
+  } else if (b.type === 'listening') {
+    head = `🎧 <b>${name} did a listening exercise</b>`;
+    if (b.lesson) lines.push(`Lesson ${b.lesson}`);
+    if (score) lines.push(`✅ ${score}`);
+  } else if (b.type === 'mistakes') {
+    head = `🔧 <b>${name} reviewed mistakes</b>`;
+    if (score) lines.push(`✅ ${score}`);
   } else {
     head = `📚 <b>${name} studied</b>`;
     if (score) lines.push(`✅ ${score}`);

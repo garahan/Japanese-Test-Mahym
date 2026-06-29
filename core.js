@@ -262,6 +262,10 @@
     const e = log[k] || { items: 0, minutes: 0 };
     e.items += units || 0; e.minutes += minutes || 0; log[k] = e;
     DB.set('activity_log', log);
+    // Time-based badge tracking
+    const h = new Date().getHours();
+    if (h >= 22 || h < 2) DB.set('night_owl', true);
+    if (h >= 4 && h < 7) DB.set('early_bird', true);
   }
 
   // ============================================================
@@ -556,6 +560,8 @@
       if (gap === 1) { s.count++; }
       else if (gap === 2 && s.freezes > 0) { s.freezes--; s.freezeUsed[today] = true; s.count++; }
       else if (gap > 2 || s.freezes === 0) { s.count = 1; }
+      // Track comeback after 7+ day gap
+      if (gap >= 7) DB.set('comeback_king', true);
     } else { s.count = 1; }
     s.lastDate = today;
     // Earn a freeze every 7 consecutive days (max 2)
@@ -569,10 +575,13 @@
   // WEAK-POINT ENGINE — track wrong answers, rank weak items
   // ============================================================
   function getWeakLog() { return DB.get('weak_log') || {}; }
-  function logWrong(id, dim) {
+  function logWrong(id, dim, ctx) {
     const wl = getWeakLog();
-    const e = wl[id] || { count: 0, dim, lastWrong: 0, consecutive: 0 };
+    const e = wl[id] || { count: 0, dim, lastWrong: 0, consecutive: 0, history: [] };
     e.count++; e.consecutive++; e.dim = dim || e.dim; e.lastWrong = Date.now();
+    if (ctx) {
+      e.history = (e.history || []).slice(-9).concat({ t: Date.now(), lesson: ctx.lesson || null, type: ctx.type || null });
+    }
     wl[id] = e; DB.set('weak_log', wl);
   }
   function clearWeak(id) {
@@ -700,6 +709,23 @@
       { id: 'exam_a', icon: '📝', title: 'Exam Rookie', desc: 'Pass mock exam level A', check: () => !!DB.get('exam_pass_A') },
       { id: 'exam_b', icon: '📑', title: 'Exam Challenger', desc: 'Pass mock exam level B', check: () => !!DB.get('exam_pass_B') },
       { id: 'exam_c', icon: '📜', title: 'Exam Conqueror', desc: 'Pass mock exam level C', check: () => !!DB.get('exam_pass_C') },
+      // New advanced badges
+      { id: 'streak_3', icon: '🌼', title: 'Getting Started', desc: '3-day streak', check: () => streak.count >= 3 },
+      { id: 'streak_14', icon: '🌿', title: 'Fortnight Force', desc: '14-day streak', check: () => streak.count >= 14 },
+      { id: 'streak_60', icon: '💎', title: 'Diamond Mind', desc: '60-day streak', check: () => streak.count >= 60 },
+      { id: 'items_200', icon: '🧩', title: 'Word Smith', desc: 'Learn 200 items', check: () => learned >= 200 },
+      { id: 'mastered_100', icon: '🏆', title: 'Century Master', desc: 'Master 100 items', check: () => mastered >= 100 },
+      { id: 'mastery_25', icon: '🌾', title: 'Sprouting', desc: 'Reach 25% overall mastery', check: () => overall >= 25 },
+      { id: 'mastery_100', icon: '🦁', title: 'Lion of Learning', desc: 'Reach 100% overall mastery', check: () => overall >= 100 },
+      { id: 'level_15', icon: '🎓', title: 'Graduate', desc: 'Reach level 15', check: () => xp.level >= 15 },
+      { id: 'level_20', icon: '🦉', title: 'Sage', desc: 'Reach level 20', check: () => xp.level >= 20 },
+      { id: 'retention_90', icon: '🌳', title: 'Deep Roots', desc: '90% retention rate', check: () => { const r = retention(); return r != null && r >= 90; } },
+      { id: 'retention_75', icon: '🌲', title: 'Evergreen', desc: '75% retention rate', check: () => { const r = retention(); return r != null && r >= 75; } },
+      { id: 'perfect_session', icon: '🎯', title: 'Flawless', desc: '100% on any session of 10+', check: () => !!DB.get('perfect_session') },
+      { id: 'speed_demon', icon: '⚡', title: 'Speed Demon', desc: 'Answer 20 items in under 3 minutes', check: () => !!DB.get('speed_demon') },
+      { id: 'comeback_king', icon: '🔄', title: 'Comeback King', desc: 'Return after 7+ day gap', check: () => !!DB.get('comeback_king') },
+      { id: 'night_owl', icon: '🦇', title: 'Night Owl', desc: 'Study after 10pm', check: () => !!DB.get('night_owl') },
+      { id: 'early_bird', icon: '🐦', title: 'Early Bird', desc: 'Study before 7am', check: () => !!DB.get('early_bird') },
     ];
 
     for (const b of checks) {
@@ -759,7 +785,7 @@
   // ============================================================
   // SETTINGS
   // ============================================================
-  function getSettings() { return DB.get('settings') || { sound: true, haptics: true, furigana: 'toggle', darkMode: false }; }
+  function getSettings() { return DB.get('settings') || { sound: true, haptics: true, furigana: 'off', darkMode: false }; }
   function setSettings(s) { const cur = getSettings(); Object.assign(cur, s); DB.set('settings', cur); return cur; }
 
   // ============================================================
@@ -771,6 +797,212 @@
     if (combo < 10) return 2;
     if (combo < 15) return 3;
     return 4;
+  }
+
+  // ============================================================
+  // FLOW STATE ENGINE — keeps learner in the optimal zone
+  // between boredom (too easy) and anxiety (too hard).
+  //
+  // Based on Csikszentmihalyi's flow theory + the same variable-
+  // ratio reinforcement principle that makes TikTok addictive:
+  //   1. Real-time difficulty adjustment (~75% accuracy target)
+  //   2. Response-time tracking (fast+correct = ramp up, slow+wrong = ease)
+  //   3. Frustration detection → insert "relief" question
+  //   4. Autopilot detection → insert "challenge" question
+  //   5. Variable reward density (strategic, not just random)
+  //   6. Near-miss detection for "so close!" feedback
+  // ============================================================
+  const FLOW = {
+    TARGET_MIN: 0.65,
+    TARGET_MAX: 0.85,
+    TARGET_IDEAL: 0.75,
+    FAST: 3000,
+    SLOW: 10000,
+    FRUSTRATION_STREAK: 3,
+    AUTOPILOT_STREAK: 7,
+    RAMP_SPEED: 18,
+  };
+
+  function getFlowState() {
+    return DB.get('flow_state') || {
+      responses: [],
+      currentAccuracy: null,
+      currentDifficulty: 'medium',
+      consecutiveWrong: 0,
+      consecutiveRight: 0,
+      flowScore: 50,
+      totalReviews: 0,
+      sessionStartTime: null,
+      lastResponseTime: null,
+    };
+  }
+
+  function startFlowSession() {
+    const f = getFlowState();
+    f.responses = [];
+    f.consecutiveWrong = 0;
+    f.consecutiveRight = 0;
+    f.sessionStartTime = Date.now();
+    DB.set('flow_state', f);
+    return f;
+  }
+
+  function recordFlowResponse(correct, timeMs, difficulty, dim) {
+    const f = getFlowState();
+    f.responses.push({ correct: correct ? 1 : 0, time: timeMs, difficulty, dim, ts: Date.now() });
+    f.totalReviews++;
+    f.lastResponseTime = timeMs;
+
+    if (correct) { f.consecutiveRight++; f.consecutiveWrong = 0; }
+    else { f.consecutiveWrong++; f.consecutiveRight = 0; }
+
+    // Rolling accuracy (last 8 responses)
+    const recent = f.responses.slice(-8);
+    f.currentAccuracy = recent.filter(r => r.correct).length / recent.length;
+
+    // Flow score: 0 = anxiety, 50 = flow, 100 = boredom
+    if (f.currentAccuracy > FLOW.TARGET_MAX) {
+      f.flowScore = Math.min(100, f.flowScore + FLOW.RAMP_SPEED);
+    } else if (f.currentAccuracy < FLOW.TARGET_MIN) {
+      f.flowScore = Math.max(0, f.flowScore - FLOW.RAMP_SPEED);
+    } else {
+      // In the zone — pull toward center
+      f.flowScore += (50 - f.flowScore) * 0.1;
+    }
+
+    // Response time influence: fast+correct = confident, ramp up
+    if (correct && timeMs < FLOW.FAST && f.consecutiveRight >= 2) {
+      f.flowScore = Math.min(100, f.flowScore + 5);
+    }
+    // Slow+wrong = struggling, ease down
+    if (!correct && timeMs > FLOW.SLOW) {
+      f.flowScore = Math.max(0, f.flowScore - 8);
+    }
+
+    // Map flow score to difficulty
+    if (f.flowScore > 68) f.currentDifficulty = 'hard';
+    else if (f.flowScore > 32) f.currentDifficulty = 'medium';
+    else f.currentDifficulty = 'easy';
+
+    DB.set('flow_state', f);
+    return f;
+  }
+
+  function flowNeedsRelief() {
+    const f = getFlowState();
+    return f.consecutiveWrong >= FLOW.FRUSTRATION_STREAK;
+  }
+
+  function flowNeedsChallenge() {
+    const f = getFlowState();
+    return f.consecutiveRight >= FLOW.AUTOPILOT_STREAK;
+  }
+
+  function flowTargetDifficulty() {
+    const f = getFlowState();
+    if (flowNeedsRelief()) return 'easy';
+    if (flowNeedsChallenge()) return 'hard';
+    return f.currentDifficulty;
+  }
+
+  // Pick the next question from a pool based on flow state
+  function flowPickNext(pool) {
+    const target = flowTargetDifficulty();
+    const remaining = pool.filter(q => !q._used);
+    if (!remaining.length) return null;
+
+    // 80% chance: pick from target difficulty
+    // 20% chance: pick from any (variety + novelty)
+    if (Math.random() < 0.8) {
+      const match = remaining.filter(q => difficultyOf(q) === target);
+      if (match.length) return shuffle(match)[0];
+    }
+    return shuffle(remaining)[0];
+  }
+
+  // Build a flow-optimized session from a pool
+  function flowBuildSession(pool, n) {
+    startFlowSession();
+    const session = [];
+    const poolCopy = pool.map(q => ({ ...q, _used: false }));
+    for (let i = 0; i < n; i++) {
+      const q = flowPickNext(poolCopy);
+      if (!q) break;
+      q._used = true;
+      session.push(q);
+    }
+    return session;
+  }
+
+  // Near-miss detection: was the wrong answer "close"?
+  // Returns true if the chosen option shares key characters/meaning with the correct one
+  function isNearMiss(chosen, correct, options) {
+    if (chosen === correct) return false;
+    const a = String(options[chosen] || '').trim();
+    const b = String(options[correct] || '').trim();
+    if (!a || !b) return false;
+    // Same length and differ by 1-2 characters (Japanese: similar kanji/reading)
+    if (a.length === b.length && a.length > 0) {
+      let diffs = 0;
+      for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) diffs++;
+      if (diffs <= 2 && diffs > 0) return true;
+    }
+    // One is a substring of the other
+    if (a.length > 2 && b.length > 2 && (a.includes(b) || b.includes(a))) return true;
+    // Share first 2+ characters
+    if (a.length >= 2 && b.length >= 2 && a.slice(0, 2) === b.slice(0, 2)) return true;
+    return false;
+  }
+
+  // Enhanced variable reward: strategic, not just random
+  function flowBonus(context) {
+    const f = getFlowState();
+    // After frustration streak → relief bonus (celebrate recovery)
+    if (f.consecutiveRight === 1 && f.consecutiveWrong >= 3) {
+      return { amount: 15, label: '💪 Comeback bonus!' };
+    }
+    // After a challenge question correct → jackpot
+    if (f.consecutiveRight >= 5 && f.flowScore > 60) {
+      if (Math.random() < 0.25) {
+        return { amount: 30, label: '🔥 On fire bonus!' };
+      }
+    }
+    // Random surprise (variable ratio)
+    if (Math.random() < 0.10) {
+      const bonuses = [5, 10, 15, 20, 25];
+      const amt = bonuses[Math.floor(Math.random() * bonuses.length)];
+      return { amount: amt, label: '🎁 Lucky bonus!' };
+    }
+    return null;
+  }
+
+  // Curiosity gap teasers — shown at session end
+  const CURIOSITY_TEASERS = [
+    'Tomorrow: why は and が are actually completely different',
+    'Next up: a kanji that contains the secret to 3 others',
+    'Coming: the grammar point that makes your Japanese sound native',
+    'Tomorrow: a word that Japanese people use 50 times a day',
+    'Next: the reading drill that unlocks 200+ vocabulary',
+    'Coming: why this one particle changes everything',
+    'Tomorrow: the kanji story that makes 覚える stick forever',
+    'Next: a grammar pattern you\'ve been using wrong without knowing',
+    'Coming: the listening trick that trains your ear in 30 seconds',
+    'Tomorrow: two kanji that look identical but mean opposites',
+  ];
+
+  function curiosityTeaser() {
+    const idx = (getFlowState().totalReviews || 0) % CURIOSITY_TEASERS.length;
+    return CURIOSITY_TEASERS[idx];
+  }
+
+  // Sunk-cost / investment display
+  function totalInvestment() {
+    const srs = getSRS();
+    const totalReviews = Object.values(srs).reduce((sum, s) => sum + (s.reps || 0), 0);
+    const learned = Object.values(srs).filter(s => s.reps > 0).length;
+    const mastered = Object.keys(srs).filter(id => itemMastery(id) >= 80).length;
+    const streak = getStreakData();
+    return { totalReviews, learned, mastered, streakDays: streak.count, longestStreak: streak.longest };
   }
 
   // ---- expose ----
@@ -815,7 +1047,12 @@
     // settings
     getSettings, setSettings,
     // combo
-    comboMultiplier
+    comboMultiplier,
+    // flow state engine
+    FLOW, getFlowState, startFlowSession, recordFlowResponse,
+    flowNeedsRelief, flowNeedsChallenge, flowTargetDifficulty,
+    flowPickNext, flowBuildSession, isNearMiss, flowBonus,
+    curiosityTeaser, totalInvestment
   };
 })(typeof window !== 'undefined' ? window : globalThis);
 

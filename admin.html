@@ -6,7 +6,7 @@
 <title>🌸 Admin — Mastery System</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f0ede8;--card:#fff;--ink:#1c1c2e;--ink2:#52526e;--ink3:#9898b0;--accent:#ff4b4b;--green:#00c853;--blue:#2979ff;--gold:#ffb300;--border:#e4e0d8;--shadow:0 4px 12px rgba(28,28,46,.06);--r:16px}
+:root{--bg:#f0ede8;--card:#fff;--ink:#1c1c2e;--ink2:#52526e;--ink3:#9898b0;--accent:#ff4b4b;--green:#00c853;--blue:#2979ff;--gold:#ffb300;--purple:#7c4dff;--border:#e4e0d8;--shadow:0 4px 12px rgba(28,28,46,.06);--r:16px}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);font-size:15px}
 .wrap{max-width:820px;margin:0 auto;padding:1.5rem 1rem 4rem}
@@ -76,6 +76,55 @@ body.dark code{background:var(--bg)}
 .exam-badge.pass{background:#eafaf1;color:#008738}.exam-badge.fail{background:#ffeeee;color:#d32f2f}
 body.dark .feed-item{border-color:var(--border)}
 body.dark .breakdown-bar{background:var(--bg)}
+
+/* insight cards */
+.insight-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:.6rem;box-shadow:var(--shadow)}
+.insight-card .ic-head{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.insight-card .ic-icon{font-size:20px}
+.insight-card .ic-title{font-weight:900;font-size:14px}
+.insight-card .ic-body{font-size:13px;color:var(--ink2);font-weight:600;line-height:1.6}
+.insight-card .ic-trend{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:900;padding:3px 8px;border-radius:20px;margin-left:6px}
+.insight-card .ic-trend.up{background:#e8f5e9;color:#2e7d32}
+.insight-card .ic-trend.down{background:#fce4ec;color:#c62828}
+.insight-card .ic-trend.flat{background:var(--bg);color:var(--ink3)}
+
+/* weak points detail */
+.weak-detail{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;font-weight:700}
+.weak-detail:last-child{border-bottom:none}
+.weak-detail .wd-jp{font-size:16px;font-weight:900;min-width:80px}
+.weak-detail .wd-meta{font-size:11px;color:var(--ink3);font-weight:600}
+.weak-detail .wd-bar{flex:1;height:6px;background:var(--bg);border-radius:3px;overflow:hidden}
+.weak-detail .wd-bar .f{height:100%;border-radius:3px}
+.weak-detail .wd-tag{font-size:10px;font-weight:900;padding:2px 7px;border-radius:20px;text-transform:uppercase}
+.weak-detail .wd-tag.vocab{background:#e3f2fd;color:#1565c0}
+.weak-detail .wd-tag.grammar{background:#f3e5f5;color:#7b1fa2}
+.weak-detail .wd-tag.kanji{background:#e8f5e9;color:#2e7d32}
+
+/* heatmap */
+.heatmap{display:grid;grid-template-columns:repeat(14,1fr);gap:3px;margin-top:8px}
+.heat-cell{aspect-ratio:1/1;border-radius:4px;background:var(--bg)}
+.heat-cell.l1{background:#c8e6c9}.heat-cell.l2{background:#81c784}.heat-cell.l3{background:#4caf50}.heat-cell.l4{background:#2e7d32}
+.heat-cell.empty{background:var(--bg);opacity:.5}
+
+/* generate test button */
+.gen-test-btn{background:linear-gradient(135deg,#7c4dff,#2196f3);color:#fff;border:none;border-radius:14px;padding:14px 20px;font-weight:900;font-size:15px;cursor:pointer;font-family:inherit;width:100%;box-shadow:0 4px 14px rgba(124,77,255,.3);transition:transform .15s}
+.gen-test-btn:active{transform:scale(.97)}
+.gen-test-btn:disabled{opacity:.5;cursor:wait}
+.test-link-box{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-top:10px;font-size:13px;font-weight:700;word-break:break-all;display:none}
+.test-link-box.show{display:block}
+.test-link-box .tl-copy{background:var(--ink);color:#fff;border:none;border-radius:8px;padding:6px 14px;font-weight:800;font-size:12px;cursor:pointer;margin-top:6px}
+
+/* mini stat row */
+.mini-stat-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:.6rem}
+.mini-stat{flex:1;min-width:100px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:10px 12px;box-shadow:var(--shadow)}
+.mini-stat .ms-v{font-size:18px;font-weight:900}
+.mini-stat .ms-l{font-size:10px;color:var(--ink3);font-weight:700;text-transform:uppercase;margin-top:2px}
+.mini-stat .ms-delta{font-size:10px;font-weight:900;margin-top:3px}
+.mini-stat .ms-delta.up{color:var(--green)}.mini-stat .ms-delta.down{color:var(--accent)}
+
+body.dark .insight-card{background:var(--card);border-color:var(--border)}
+body.dark .heat-cell.empty{background:var(--bg)}
+body.dark .test-link-box{background:var(--bg);border-color:var(--border)}
 </style>
 </head>
 <body>
@@ -123,6 +172,32 @@ body.dark .breakdown-bar{background:var(--bg)}
       <!-- Summary stats -->
       <div class="statgrid" id="rep-stats"></div>
 
+      <!-- Mini stats: local device insights -->
+      <div class="mini-stat-row" id="rep-mini-stats"></div>
+
+      <!-- Growth trend insights -->
+      <div class="section">
+        <h3 style="font-weight:900;margin-bottom:12px">📈 Growth Trend & Insights</h3>
+        <div id="rep-insights"></div>
+        <div id="rep-heatmap-section" style="margin-top:14px">
+          <div style="font-size:12px;font-weight:800;color:var(--ink3);margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em">Activity Heatmap (last 14 days)</div>
+          <div class="heatmap" id="rep-heatmap"></div>
+        </div>
+      </div>
+
+      <!-- Weak points detail -->
+      <div class="section">
+        <h3 style="font-weight:900;margin-bottom:4px">🎯 Weak Points Detail</h3>
+        <p class="muted" style="font-size:12px;margin-bottom:10px">Items the user struggles with most — ranked by wrong count & recency</p>
+        <div id="rep-weak-detail"></div>
+        <button class="gen-test-btn" id="gen-test-btn" style="margin-top:14px" onclick="generateWeaknessTest()">🧪 Generate 30-question test targeting weak points</button>
+        <div class="test-link-box" id="test-link-box">
+          <div style="font-weight:900;margin-bottom:4px">✅ Test generated! Share this link:</div>
+          <div id="test-link-url" style="color:var(--blue)"></div>
+          <button class="tl-copy" onclick="copyTestLink()">📋 Copy link</button>
+        </div>
+      </div>
+
       <!-- Activity breakdown -->
       <div class="section">
         <h3 style="font-weight:900;margin-bottom:12px">📊 Activity Breakdown</h3>
@@ -139,6 +214,12 @@ body.dark .breakdown-bar{background:var(--bg)}
       <div class="section">
         <h3 style="font-weight:900;margin-bottom:12px">🧠 Skill Mastery <span class="muted" style="font-size:12px;font-weight:600">(this device)</span></h3>
         <div id="rep-skills"></div>
+      </div>
+
+      <!-- Badge progress -->
+      <div class="section">
+        <h3 style="font-weight:900;margin-bottom:12px">🏅 Badge Progress <span class="muted" style="font-size:12px;font-weight:600">(this device)</span></h3>
+        <div id="rep-badges"></div>
       </div>
 
       <!-- Activity Feed -->
@@ -333,6 +414,9 @@ const TYPE_META={
   'exam':{icon:'📋',label:'MEXT Exam',color:'var(--accent)'},
   'jlpt':{icon:'🎯',label:'JLPT Test',color:'var(--blue)'},
   'study':{icon:'📚',label:'Study',color:'var(--ink2)'},
+  'drill':{icon:'🏋️',label:'Drill Practice',color:'var(--green)'},
+  'listening':{icon:'🎧',label:'Listening',color:'var(--purple)'},
+  'mistakes':{icon:'🔧',label:'Mistake Review',color:'var(--accent)'},
 };
 function timeAgo(iso){
   const d=new Date(iso),now=Date.now(),diff=now-d.getTime();
@@ -346,8 +430,8 @@ function renderReports(){
   document.getElementById('rep-loading').style.display='block';
   document.getElementById('rep-dashboard').style.display='none';
   fetchLogs();
-  // Also render local skill mastery
-  C.loadContent(()=>renderLocalSkills());
+  // Also render local skill mastery + weak points + insights
+  C.loadContent(()=>{ renderLocalSkills(); renderLocalInsights(); renderWeakDetail(); renderHeatmap(); renderBadges(); });
 }
 async function fetchLogs(){
   try{
@@ -420,9 +504,256 @@ function renderDashboard(logs,summary){
   }).join(''):'<p class="muted">No activity logged yet. Activity will appear here as Mahym studies.</p>';
   document.getElementById('rep-feed').innerHTML=feedHTML;
 }
+
+function renderLocalInsights(){
+  const overall=C.overallMastery();
+  const ret=C.retention();
+  const mom=C.getMomentum().value;
+  const streak=C.getStreakData();
+  const xp=C.getXP();
+  const srs=C.getSRS();
+  const learned=Object.values(srs).filter(s=>s.reps>0).length;
+  const mastered=Object.keys(srs).filter(id=>C.itemMastery(id)>=80).length;
+  const growth=C.growthToday();
+  const daysLeft=C.daysToReady(80);
+  const weakN=C.weakCount();
+  const dailyGoal=C.getDailyGoal();
+  const goalPct=C.dailyGoalPct();
+  const snaps=C.snapshots();
+  const snapKeys=Object.keys(snaps).sort();
+  const prevOverall=snapKeys.length>=2?snaps[snapKeys[snapKeys.length-2]]:null;
+  const overallDelta=prevOverall!=null?overall-prevOverall:null;
+
+  // Mini stats row
+  document.getElementById('rep-mini-stats').innerHTML=`
+    <div class="mini-stat"><div class="ms-v">${overall}%</div><div class="ms-l">Mastery</div><div class="ms-delta ${overallDelta>0?'up':overallDelta<0?'down':''}">${overallDelta!=null?(overallDelta>0?'+'+overallDelta:overallDelta===0?'flat':overallDelta):'—'}</div></div>
+    <div class="mini-stat"><div class="ms-v">${ret!=null?ret+'%':'—'}</div><div class="ms-l">Retention</div><div class="ms-delta ${ret!=null?(ret>=70?'up':'down'):''}">${ret!=null?(ret>=70?'healthy':'needs review'):'—'}</div></div>
+    <div class="mini-stat"><div class="ms-v">${mom}</div><div class="ms-l">Momentum</div><div class="ms-delta ${mom>=20?'up':mom<5?'down':''}">${mom>=20?'on fire':mom>=10?'building':mom<5?'low':''}</div></div>
+    <div class="mini-stat"><div class="ms-v">${learned}</div><div class="ms-l">Learned</div><div class="ms-delta up">+${learned} total</div></div>
+    <div class="mini-stat"><div class="ms-v">${mastered}</div><div class="ms-l">Mastered</div><div class="ms-delta up">${learned>0?Math.round(mastered/learned*100)+'% rate':'—'}</div></div>
+    <div class="mini-stat"><div class="ms-v">${weakN}</div><div class="ms-l">Weak Items</div><div class="ms-delta ${weakN===0?'up':weakN>5?'down':''}">${weakN===0?'all strong':weakN+' to fix'}</div></div>
+    <div class="mini-stat"><div class="ms-v">Lv${xp.level}</div><div class="ms-l">Level</div><div class="ms-delta up">${xp.total} XP</div></div>
+    <div class="mini-stat"><div class="ms-v">${streak.count}</div><div class="ms-l">Streak</div><div class="ms-delta ${streak.count>=7?'up':''}">${streak.count>=7?'🔥':streak.count>=3?'building':'start!'}</div></div>
+  `;
+
+  // Insight cards
+  const insights=[];
+
+  // Growth trend
+  if(growth>0){
+    insights.push({icon:'📈',title:'Growth Today',body:`Mastery increased by <b>+${growth}%</b> since yesterday. At this rate, you'll reach 80% mastery in <b>${daysLeft} days</b>.`,trend:'up',trendLabel:'+'+growth+'%'});
+  }else if(growth===0&&snapKeys.length>1){
+    insights.push({icon:'📊',title:'Steady',body:'Mastery held steady today. Keep studying to maintain growth.',trend:'flat',trendLabel:'flat'});
+  }else if(growth<0){
+    insights.push({icon:'📉',title:'Dip Detected',body:`Mastery dropped ${growth}%. This is normal after a gap — review to recover.`,trend:'down',trendLabel:growth+'%'});
+  }
+
+  // Retention alert
+  if(ret!=null){
+    if(ret<50){
+      insights.push({icon:'�',title:'Memory Wilting',body:`Retention is at ${ret}%. Many items are due for review. A review session now will recover them quickly.`,trend:'down',trendLabel:ret+'%'});
+    }else if(ret>=85){
+      insights.push({icon:'🌳',title:'Deep Roots',body:`Retention at ${ret}% — memory is strong and durable. Excellent consistency!`,trend:'up',trendLabel:ret+'%'});
+    }
+  }
+
+  // Momentum
+  if(mom>=30){
+    insights.push({icon:'⚡',title:'Charged Up',body:`Momentum at ${mom} — the user is in a powerful learning streak. Keep the fire burning!`,trend:'up',trendLabel:mom+''});
+  }else if(mom<5 && learned>10){
+    insights.push({icon:'🔋',title:'Low Battery',body:`Momentum dropped to ${mom}. Even a 5-minute review session will recharge it.`,trend:'down',trendLabel:mom+''});
+  }
+
+  // Weak points alert
+  if(weakN>=5){
+    const weakest=C.getWeakItems(3);
+    const names=weakest.map(w=>w.item&&(w.item.word||w.item.point||w.item.char)||w.id).join(', ');
+    insights.push({icon:'🎯',title:'Weak Spots Detected',body:`${weakN} items need strengthening. Weakest: ${names}. Use the Generate Test button below to create a targeted test.`,trend:'down',trendLabel:weakN+''});
+  }
+
+  // Daily goal
+  if(goalPct>0){
+    insights.push({icon:'🎯',title:'Daily Goal',body:`${dailyGoal.current}/${dailyGoal.target} items today (${goalPct}%). ${goalPct>=100?'Goal achieved! 🎉':'Keep going!'}`,trend:goalPct>=100?'up':'flat',trendLabel:goalPct+'%'});
+  }
+
+  // Streak insight
+  if(streak.count>=7){
+    insights.push({icon:'🔥',title:'Streak Power',body:`${streak.count}-day streak! Longest: ${streak.longest} days. Each day makes memory stronger.`,trend:'up',trendLabel:streak.count+'d'});
+  }
+
+  // Tiny movement detection
+  if(snapKeys.length>=3){
+    const recent= snapKeys.slice(-3).map(k=>snaps[k]);
+    const microDelta=recent[2]-recent[0];
+    if(Math.abs(microDelta)>=0.1 && Math.abs(microDelta)<2){
+      insights.push({icon:'🔍',title:'Micro-Movement',body:`Tiny ${microDelta>0?'growth':'shift'} of ${microDelta>0?'+':''}${microDelta.toFixed(1)}% over 3 sessions. Every bit counts — consistency compounds.`,trend:microDelta>0?'up':'flat',trendLabel:microDelta.toFixed(1)+'%'});
+    }
+  }
+
+  document.getElementById('rep-insights').innerHTML=insights.length?insights.map(ic=>{
+    const tClass=ic.trend||'flat';
+    const tLabel=ic.trendLabel||'';
+    return `<div class="insight-card">
+      <div class="ic-head"><span class="ic-icon">${ic.icon}</span><span class="ic-title">${ic.title}</span><span class="ic-trend ${tClass}">${tLabel}</span></div>
+      <div class="ic-body">${ic.body}</div>
+    </div>`;
+  }).join(''):'<p class="muted">No insights yet — start studying to see growth patterns.</p>';
+}
+
+function renderHeatmap(){
+  const log=C.activityLog();
+  const today=new Date();
+  const cells=[];
+  for(let i=13;i>=0;i--){
+    const d=new Date(today); d.setDate(d.getDate()-i);
+    const k=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+    const e=log[k];
+    let cls='empty';
+    if(e){
+      const items=e.items||0;
+      if(items>=20)cls='l4';else if(items>=10)cls='l3';else if(items>=5)cls='l2';else if(items>=1)cls='l1';
+    }
+    cells.push(`<div class="heat-cell ${cls}" title="${k}: ${e?(e.items||0)+' items':'no activity'}"></div>`);
+  }
+  document.getElementById('rep-heatmap').innerHTML=cells.join('');
+}
+
+function renderWeakDetail(){
+  const weak=C.getWeakItems(20);
+  const weakN=C.weakCount();
+  const html=weak.length?weak.map(w=>{
+    const it=w.item;
+    const jp=it?(it.word||it.point||it.char||w.id):w.id;
+    const dim=w.dim||'vocab';
+    const meaning=it?(it.meaning||it.pointEn||it.exampleWord||''):'';
+    const m=w.mastery||0;
+    const barColor=m<30?'var(--accent)':m<60?'var(--gold)':'var(--green)';
+    return `<div class="weak-detail">
+      <span class="wd-jp">${jp}</span>
+      <span class="wd-tag ${dim}">${dim}</span>
+      <span class="wd-meta">${w.consecutive}× wrong · ${meaning}</span>
+      <div class="wd-bar"><div class="f" style="width:${100-m}%;background:${barColor}"></div></div>
+      <span class="wd-meta">${m}%</span>
+    </div>`;
+  }).join(''):'<p class="muted">No weak items — everything is solid! 🎉</p>';
+  document.getElementById('rep-weak-detail').innerHTML=html;
+}
+
 function renderLocalSkills(){
-  const meta={vocab:'🧠 Vocabulary',grammar:'✍ Grammar',reading:'📖 Reading',listening:'🎧 Listening',kanji:'🈶 Kanji'};
-  document.getElementById('rep-skills').innerHTML=C.DIMS.map(d=>{const m=C.dimMastery(d);return `<div style="display:flex;justify-content:space-between;padding:7px 0;font-weight:700;font-size:14px"><span>${meta[d]}</span><span>${m===null?'—':m+'%'}</span></div>`}).join('');
+  const meta={vocab:'�🧠 Vocabulary',grammar:'✍ Grammar',reading:'📖 Reading',listening:'🎧 Listening',kanji:'🈶 Kanji'};
+  const dims=C.DIMS||['vocab','grammar','reading','listening','kanji'];
+  document.getElementById('rep-skills').innerHTML=dims.map(d=>{
+    const m=C.dimMastery(d);
+    const color=m==null?'var(--ink3)':m>=70?'var(--green)':m>=40?'var(--gold)':'var(--accent)';
+    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;font-weight:700;font-size:14px">
+      <span>${meta[d]||d}</span>
+      <span style="display:flex;align-items:center;gap:8px">
+        <span style="width:60px;height:6px;background:var(--bg);border-radius:3px;overflow:hidden"><span style="display:block;height:100%;width:${m||0}%;background:${color};border-radius:3px"></span></span>
+        <span style="min-width:36px;text-align:right">${m===null?'—':m+'%'}</span>
+      </span>
+    </div>`;
+  }).join('');
+}
+
+function renderBadges(){
+  const badges=C.checkBadges();
+  const earned=badges.earned||{};
+  const earnedIds=Object.keys(earned);
+  const totalBadges=32;
+  const pct=Math.round(earnedIds.length/totalBadges*100);
+  let html=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+    <span style="font-size:13px;font-weight:800">${earnedIds.length}/${totalBadges} earned (${pct}%)</span>
+    <span style="width:80px;height:6px;background:var(--bg);border-radius:3px;overflow:hidden"><span style="display:block;height:100%;width:${pct}%;background:var(--gold);border-radius:3px"></span></span>
+  </div>`;
+  html+='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(60px,1fr));gap:6px">';
+  earnedIds.forEach(id=>{
+    const b=earned[id];
+    html+=`<div style="text-align:center;padding:6px 4px;background:var(--bg);border-radius:10px;border:1px solid var(--border)" title="${b.title}: ${b.desc||''}">
+      <div style="font-size:20px">${b.icon}</div>
+      <div style="font-size:9px;font-weight:800;margin-top:2px">${b.title}</div>
+    </div>`;
+  });
+  html+='</div>';
+  document.getElementById('rep-badges').innerHTML=html;
+}
+
+/* ---- generate weakness test ---- */
+let currentTestLink='';
+function generateWeaknessTest(){
+  const btn=document.getElementById('gen-test-btn');
+  btn.disabled=true; btn.textContent='Generating…';
+  try{
+    const weak=C.getWeakItems(30);
+    const allItems=[...C.ITEMS.vocab,...C.ITEMS.grammar,...C.ITEMS.kanji];
+    const questions=[];
+
+    function buildQuestion(it,dim){
+      if(!it)return null;
+      const jp=it.word||it.reading||it.point||it.char||'';
+      const en=it.meaning||it.pointEn||it.exampleWord||it.reading||'';
+      if(!jp||!en)return null;
+      // Build distractors from English meanings of other items
+      const distractors=allItems
+        .filter(x=>x.id!==it.id)
+        .map(x=>x.meaning||x.pointEn||x.exampleWord||x.reading||'')
+        .filter(v=>v && v!==en);
+      // Deduplicate and shuffle distractors
+      const uniqueDistractors=[...new Set(distractors)];
+      const wrongOpts=C.shuffle(uniqueDistractors).slice(0,3);
+      if(wrongOpts.length<3)return null;
+      const opts=C.shuffle([en,...wrongOpts]);
+      const correctIdx=opts.indexOf(en);
+      if(correctIdx<0)return null;
+      return {
+        q:dim==='kanji'?`Which meaning matches ${jp}?`:
+           dim==='grammar'?`Which grammar point means "${en}"?`:
+           `Which meaning matches "${jp}"?`,
+        o:opts, c:correctIdx,
+        d:dim
+      };
+    }
+
+    // Build questions from weak items first
+    weak.forEach(w=>{
+      const q=buildQuestion(w.item,w.dim||'vocab');
+      if(q){q.id=w.id;questions.push(q)}
+    });
+
+    // Fill with random items if not enough weak ones
+    const usedIds=new Set(questions.map(q=>q.id));
+    let attempts=0;
+    while(questions.length<30 && attempts<100){
+      attempts++;
+      const pool=allItems.filter(it=>!usedIds.has(it.id));
+      if(!pool.length)break;
+      const it=pool[Math.floor(Math.random()*pool.length)];
+      const q=buildQuestion(it,it.dim||'vocab');
+      if(q){q.id=it.id;usedIds.add(it.id);questions.push(q)}
+    }
+
+    if(!questions.length){
+      btn.disabled=false; btn.textContent='🧪 Generate 30-question test targeting weak points';
+      toast('No items available to generate a test');
+      return;
+    }
+
+    // Encode test data into URL (compact format)
+    const testData={q:questions.slice(0,30),t:Date.now(),w:C.weakCount()};
+    const encoded=btoa(encodeURIComponent(JSON.stringify(testData)));
+    currentTestLink=location.origin+'/test.html#'+encoded;
+
+    document.getElementById('test-link-url').textContent=currentTestLink;
+    document.getElementById('test-link-box').classList.add('show');
+    btn.disabled=false; btn.textContent='🧪 Generate 30-question test targeting weak points';
+    toast('Test generated with '+questions.length+' questions!');
+  }catch(e){
+    btn.disabled=false; btn.textContent='🧪 Generate 30-question test targeting weak points';
+    toast('Error: '+e.message);
+  }
+}
+function copyTestLink(){
+  if(!currentTestLink)return;
+  navigator.clipboard.writeText(currentTestLink).then(()=>toast('Link copied!')).catch(()=>toast('Copy failed — select and copy manually'));
 }
 
 /* ---- system ---- */

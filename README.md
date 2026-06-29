@@ -27,9 +27,12 @@ and getting study reports on your phone.
 ```
 index.html        Home — hero, coach whisper, continue card, practice, badges
 roadmap.html      Journey — rank ladder, projections, heatmap, modules
-admin.html        Content Studio — create/edit Lesson Packs, bulk import, backup
+admin.html        Content Studio — create/edit Lesson Packs, bulk import, backup, insights dashboard
+test.html         Weakness Test — timed test page for shareable links targeting weak points
 core.js           The engine: SRS, mastery math, momentum, mission builder
 seed-data.js      Bundled sample content (also used by /api/seed)
+feed-threads.js   Twitter-style learning threads (dopamine-rich cultural posts)
+jlpt-question-bank.js  JLPT question bank (N5–N1, 6 sections each)
 manifest.json     PWA manifest (with quick-action shortcuts)
 sw.js             Service worker (offline, stale-while-revalidate, notifications)
 icon-*.png        App icons (道)
@@ -40,11 +43,13 @@ engine-demo.js    Demo/test harness for the engine
 api/
   content.js      Lesson Pack storage (GET read / POST write)
   admin-auth.js   Admin password check
-  results.js      Telegram study reporter
+  results.js      Telegram study reporter + activity log storage
+  logs.js         Fetch activity logs for admin dashboard
   seed.js         One-time content seeder (merge, safe to re-run)
   debug.js        Health check (env presence + lesson count)
   remind.js       Scheduled reminder notifications (cron)
-  generate.js     Content generation helpers
+  generate.js     AI content generation (Anthropic) for lesson packs
+  thread.js       AI thread generation (Gemini/Anthropic) for feed
 ```
 
 ---
@@ -105,11 +110,17 @@ Open the site on the phone → browser menu → **Add to Home Screen**.
 ## Features
 
 - **Dopamine-first home page** — Time-based greeting, animated streak flame, count-up stats, breathing continue card, coach whisper (rotating motivational messages), skeleton loading, staggered card entrances, shine sweeps, achievement toasts, XP float numbers
+- **Growth tree badge system** — Visual tree (🌰→🌱→🌿→🌲→🌳) that grows/wilts based on retention + momentum. 32 badges with tooltips, leaf rewards, animated sway
+- **Weak points dashboard** — Color-coded weak items with dimension tags (vocab/grammar/kanji), consecutive-wrong tracking, one-tap strengthen mode
+- **Journey map** — Compact 10-per-row grid (Lessons 25→50) with difficulty dots, progress bar, and legend
+- **Admin insights dashboard** — Mini stats (8 metrics), insight cards (growth, retention, momentum, weak spots, daily goals, streak power, micro-movement detection), 14-day activity heatmap, weak points detail, badge progress, Generate Test button
+- **Weakness test generation** — 30-question MCQ test targeting weak points, encoded as shareable URL with timer, question navigation, and results review
 - **JLPT Placement Test** — N5→N1 levels with real JLPT scoring (3 sections, 180 points, sectional + total pass marks), placement detection, study recommendations
 - **MEXT Exam Practice** — Government scholarship exam simulation, 3 difficulty levels (初級/中級/上級), timed, 5 sections
+- **Learning threads** — Twitter-style cultural posts (kanji secrets, grammar mysteries) with AI-generated fresh content via Gemini/Anthropic
 - **Notifications** — Streak reminders, review-due alerts, daily-goal nudges (iOS 16.4+ with home-screen install)
 - **PWA shortcuts** — Long-press app icon for quick actions: Continue Lesson, Flashcards, JLPT Test, My Journey
-- **Dark mode** — Synced across all pages (home, roadmap, grammar reference, admin)
+- **Dark mode** — Synced across all pages (home, roadmap, grammar reference, admin, test)
 - **Offline-first** — Service worker caches all assets + Google Fonts for full offline use
 
 ## Daily use
