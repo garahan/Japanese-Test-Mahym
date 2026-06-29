@@ -2559,7 +2559,9 @@ const App = (function(){
     B:{diff:'medium',jp:'中級', en:'Intermediate',color:'#e69500'},
     C:{diff:'hard',  jp:'上級', en:'Advanced',    color:'#e53935'}
   };
-  const EXAM_TIME={A:12*60, B:15*60, C:18*60};   // mini-simulation minutes per level
+  // Real MEXT Japanese exam: ~60 min for ~30 questions = 2 min/question
+  // Our test: ~23 questions, scaled to ~75% of real per-question time
+  const EXAM_TIME={A:25*60, B:30*60, C:35*60};   // practice exam minutes per level
   const PASS_PCT=60;
   let EX=null, examTimer=null;
 
@@ -2597,7 +2599,10 @@ const App = (function(){
 
   function buildExam(level){
     const L=LEVELS[level], diff=L.diff, sh=C.shuffle;
-    const bankQs=(window.JLPT_BANK||[]).filter(q=>q.difficulty===diff);
+    // Map exam difficulty to JLPT levels for bank filtering
+    const diffToLevels={easy:['N5','N4'], medium:['N3','N2'], hard:['N1']};
+    const bankLevels=diffToLevels[diff]||[];
+    const bankQs=(window.JLPT_BANK||[]).filter(q=>bankLevels.includes(q.level));
     const qPool=[...C.ITEMS.question.filter(q=>q.type!=='listening'&&q.type!=='comprehension'), ...bankQs];
     const pick=(dim,n)=>{ let p=sh(qPool.filter(q=>q.dim===dim&&C.difficultyOf(q)===diff));
       if(p.length<n) p=p.concat(sh(qPool.filter(q=>q.dim===dim&&C.difficultyOf(q)!==diff)));
@@ -2785,12 +2790,19 @@ const App = (function(){
      This is a placement test — user can take any level anytime to check their realistic level.
      After completing, we reveal their estimated JLPT level based on performance. */
 
+  // Real JLPT timing (minutes): Vocab/Grammar, Reading, Listening
+  // Scaled to ~50% for practice test with ~25 questions
   const JLPT_LEVELS={
-    N5:{jp:'N5',en:'Basic',         jpDesc:'初級基礎',  desc:'Basic grammar, hiragana/katakana, ~800 words', color:'#4caf50', diff:'easy',   time:10*60},
-    N4:{jp:'N4',en:'Pre-Intermediate',jpDesc:'初級',    desc:'Elementary grammar, ~1,500 words, basic kanji', color:'#2196f3', diff:'easy',   time:12*60},
-    N3:{jp:'N3',en:'Intermediate',   jpDesc:'中級',    desc:'Everyday Japanese, ~3,000-4,000 words',         color:'#ff9800', diff:'medium', time:15*60},
-    N2:{jp:'N2',en:'Pre-Advanced',   jpDesc:'中上級',  desc:'Broad topics, ~6,000 words, abstract reading',   color:'#f44336', diff:'medium', time:18*60},
-    N1:{jp:'N1',en:'Advanced',       jpDesc:'上級',    desc:'Nuanced, ~10,000 words, complex texts',          color:'#9c27b0', diff:'hard',   time:20*60}
+    N5:{jp:'N5',en:'Basic',         jpDesc:'初級基礎',  desc:'Basic grammar, hiragana/katakana, ~800 words', color:'#4caf50', diff:'easy',
+        secTime:{vocab_grammar:13*60, reading:25*60, listening:15*60}, time:53*60},
+    N4:{jp:'N4',en:'Pre-Intermediate',jpDesc:'初級',    desc:'Elementary grammar, ~1,500 words, basic kanji', color:'#2196f3', diff:'easy',
+        secTime:{vocab_grammar:15*60, reading:30*60, listening:18*60}, time:63*60},
+    N3:{jp:'N3',en:'Intermediate',   jpDesc:'中級',    desc:'Everyday Japanese, ~3,000-4,000 words',         color:'#ff9800', diff:'medium',
+        secTime:{vocab_grammar:15*60, reading:35*60, listening:20*60}, time:70*60},
+    N2:{jp:'N2',en:'Pre-Advanced',   jpDesc:'中上級',  desc:'Broad topics, ~6,000 words, abstract reading',   color:'#f44336', diff:'medium',
+        secTime:{vocab_grammar:18*60, reading:53*60, listening:25*60}, time:96*60},
+    N1:{jp:'N1',en:'Advanced',       jpDesc:'上級',    desc:'Nuanced, ~10,000 words, complex texts',          color:'#9c27b0', diff:'hard',
+        secTime:{vocab_grammar:18*60, reading:55*60, listening:30*60}, time:103*60}
   };
   // JLPT scoring: total out of 180, with 3 sections
   // Section weights vary by level (N5-N4: vocab/grammar=60, reading=60, listening=60)
@@ -2861,16 +2873,24 @@ const App = (function(){
 
   function buildJlpt(level){
     const L=JLPT_LEVELS[level], diff=L.diff, sh=C.shuffle;
-    const bankQs=(window.JLPT_BANK||[]).filter(q=>q.difficulty===diff);
-    const qPool=[...C.ITEMS.question, ...bankQs];
+    // Filter bank questions by JLPT level (not difficulty — N5 and N4 share 'easy')
+    const bankQs=(window.JLPT_BANK||[]).filter(q=>q.level===level);
+    // Lesson questions filtered by matching difficulty
+    const lessonQs=C.ITEMS.question.filter(q=>q.type!=='listening'&&q.type!=='comprehension'&&C.difficultyOf(q)===diff);
+    const lessonQsAny=C.ITEMS.question.filter(q=>q.type!=='listening'&&q.type!=='comprehension');
     const pick=(dim,n,types)=>{
-      let p=qPool.filter(q=>q.dim===dim&&C.difficultyOf(q)===diff&&(!types||types.includes(q.type)));
-      if(p.length<n) p=p.concat(qPool.filter(q=>q.dim===dim&&C.difficultyOf(q)!==diff&&(!types||types.includes(q.type))));
+      // First: bank questions for this level
+      let p=bankQs.filter(q=>q.dim===dim&&(!types||types.includes(q.type)));
+      // Then: lesson questions at matching difficulty
+      if(p.length<n) p=p.concat(lessonQs.filter(q=>q.dim===dim&&(!types||types.includes(q.type))));
+      // Finally: any lesson questions
+      if(p.length<n) p=p.concat(lessonQsAny.filter(q=>q.dim===dim&&(!types||types.includes(q.type))));
       return sh(p).slice(0,n);
     };
     const screens=[]; const sec={};
 
     // Section 1: 言語知識 (Vocabulary + Grammar + Kanji) — 60 points
+    // Real JLPT N5-N4: vocab=paraphrase+orthography, kanji=readings; N3-N1: vocab=paraphrase+usage, grammar=sentence-grammar
     const vocabQs=pick('vocab',6).map(q=>({q:q.s,o:q.o,c:q.c,exp:q.exp,section:'vocab_grammar',secLabel:'言語知識 Language Knowledge',pts:5}));
     const grammarQs=pick('grammar',5).map(q=>({q:q.s,o:q.o,c:q.c,exp:q.exp,section:'vocab_grammar',secLabel:'言語知識 Language Knowledge',pts:5}));
     const kanjiQs=pick('kanji',2).map(q=>({q:q.s,o:q.o,c:q.c,exp:q.exp,section:'vocab_grammar',secLabel:'言語知識 Language Knowledge',pts:5}));
