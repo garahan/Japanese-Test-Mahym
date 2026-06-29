@@ -101,7 +101,7 @@ body.dark .breakdown-bar{background:var(--bg)}
 .weak-detail .wd-tag.kanji{background:#e8f5e9;color:#2e7d32}
 
 /* heatmap */
-.heatmap{display:grid;grid-template-columns:repeat(14,1fr);gap:3px;margin-top:8px}
+.heatmap{display:grid;grid-template-columns:repeat(30,1fr);gap:3px;margin-top:8px;overflow-x:auto;-webkit-overflow-scrolling:touch}
 .heat-cell{aspect-ratio:1/1;border-radius:4px;background:var(--bg)}
 .heat-cell.l1{background:#c8e6c9}.heat-cell.l2{background:#81c784}.heat-cell.l3{background:#4caf50}.heat-cell.l4{background:#2e7d32}
 .heat-cell.empty{background:var(--bg);opacity:.5}
@@ -179,8 +179,9 @@ body.dark .test-link-box{background:var(--bg);border-color:var(--border)}
       <div class="section">
         <h3 style="font-weight:900;margin-bottom:12px">📈 Growth Trend & Insights</h3>
         <div id="rep-insights"></div>
+        <div id="rep-sparkline" style="margin-top:10px;padding:10px;background:var(--bg);border-radius:12px"></div>
         <div id="rep-heatmap-section" style="margin-top:14px">
-          <div style="font-size:12px;font-weight:800;color:var(--ink3);margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em">Activity Heatmap (last 14 days)</div>
+          <div style="font-size:12px;font-weight:800;color:var(--ink3);margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em">Activity Heatmap (last 30 days)</div>
           <div class="heatmap" id="rep-heatmap"></div>
         </div>
       </div>
@@ -200,7 +201,10 @@ body.dark .test-link-box{background:var(--bg);border-color:var(--border)}
 
       <!-- Activity breakdown -->
       <div class="section">
-        <h3 style="font-weight:900;margin-bottom:12px">📊 Activity Breakdown</h3>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <h3 style="font-weight:900">📊 Activity Breakdown</h3>
+          <button class="btn btn-sm btn-ghost" onclick="exportCSV()">📥 Export CSV</button>
+        </div>
         <div id="rep-breakdown"></div>
       </div>
 
@@ -417,6 +421,7 @@ const TYPE_META={
   'drill':{icon:'🏋️',label:'Drill Practice',color:'var(--green)'},
   'listening':{icon:'🎧',label:'Listening',color:'var(--purple)'},
   'mistakes':{icon:'🔧',label:'Mistake Review',color:'var(--accent)'},
+  'test':{icon:'🧪',label:'Weakness Test',color:'var(--purple)'},
 };
 function timeAgo(iso){
   const d=new Date(iso),now=Date.now(),diff=now-d.getTime();
@@ -604,7 +609,7 @@ function renderHeatmap(){
   const log=C.activityLog();
   const today=new Date();
   const cells=[];
-  for(let i=13;i>=0;i--){
+  for(let i=29;i>=0;i--){
     const d=new Date(today); d.setDate(d.getDate()-i);
     const k=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
     const e=log[k];
@@ -616,6 +621,29 @@ function renderHeatmap(){
     cells.push(`<div class="heat-cell ${cls}" title="${k}: ${e?(e.items||0)+' items':'no activity'}"></div>`);
   }
   document.getElementById('rep-heatmap').innerHTML=cells.join('');
+
+  // Sparkline trend chart
+  const snaps=C.snapshots();
+  const keys=Object.keys(snaps).sort();
+  const sparkEl=document.getElementById('rep-sparkline');
+  if(sparkEl && keys.length>=2){
+    const vals=keys.map(k=>snaps[k]);
+    const min=Math.min(...vals),max=Math.max(...vals);
+    const range=max-min||1;
+    const W=200,H=40;
+    const pts=vals.map((v,i)=>{
+      const x=(i/(vals.length-1))*W;
+      const y=H-((v-min)/range)*H;
+      return x.toFixed(1)+','+y.toFixed(1);
+    }).join(' ');
+    const lastVal=vals[vals.length-1];
+    const firstVal=vals[0];
+    const trend=lastVal>firstVal?'↑':lastVal<firstVal?'↓':'→';
+    const trendColor=lastVal>firstVal?'var(--green)':lastVal<firstVal?'var(--accent)':'var(--ink3)';
+    sparkEl.innerHTML=`<svg width="${W}" height="${H}" style="display:block;margin:0 auto"><polyline points="${pts}" fill="none" stroke="${trendColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="${W}" cy="${H-((lastVal-min)/range)*H}" r="3" fill="${trendColor}"/></svg><div style="text-align:center;font-size:11px;font-weight:800;color:${trendColor};margin-top:4px">${firstVal}% → ${lastVal}% ${trend}</div>`;
+  } else if(sparkEl){
+    sparkEl.innerHTML='<p class="muted" style="font-size:12px;text-align:center">Not enough data for trend chart yet.</p>';
+  }
 }
 
 function renderWeakDetail(){
@@ -659,7 +687,7 @@ function renderBadges(){
   const badges=C.checkBadges();
   const earned=badges.earned||{};
   const earnedIds=Object.keys(earned);
-  const totalBadges=32;
+  const totalBadges=(C.BADGE_LIST||[]).length||32;
   const pct=Math.round(earnedIds.length/totalBadges*100);
   let html=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
     <span style="font-size:13px;font-weight:800">${earnedIds.length}/${totalBadges} earned (${pct}%)</span>
@@ -754,6 +782,25 @@ function generateWeaknessTest(){
 function copyTestLink(){
   if(!currentTestLink)return;
   navigator.clipboard.writeText(currentTestLink).then(()=>toast('Link copied!')).catch(()=>toast('Copy failed — select and copy manually'));
+}
+
+function exportCSV(){
+  const log=C.activityLog();
+  const snaps=C.snapshots();
+  const weak=C.getWeakItems(50);
+  const rows=[['Date','Items','Minutes','Mastery']];
+  Object.keys(log).sort().forEach(k=>{const e=log[k];rows.push([k,e.items||0,e.minutes||0,snaps[k]!=null?snaps[k]:''])});
+  rows.push([]);
+  rows.push(['Weak Item ID','Dimension','Wrong Count','Mastery %']);
+  weak.forEach(w=>{rows.push([w.id,w.dim,w.consecutive||w.count||0,Math.round(w.mastery||0)])});
+  const csv=rows.map(r=>r.join(',')).join('\n');
+  const blob=new Blob([csv],{type:'text/csv'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='mahym-progress-'+C.dateKey()+'.csv';
+  a.click();
+  URL.revokeObjectURL(a.href);
+  toast('CSV exported!');
 }
 
 /* ---- system ---- */
