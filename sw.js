@@ -3,7 +3,7 @@
 // API calls (/api/*) always go to the network and are never cached.
 // Google Fonts are cached separately (cache-first) so the app renders offline.
 
-const CACHE = 'mahym-jp-v14';
+const CACHE = 'mahym-jp-v15';
 const FONT_CACHE = 'mahym-fonts-v1';   // stable across app updates so fonts persist
 
 const ASSETS = [
