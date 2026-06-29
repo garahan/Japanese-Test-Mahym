@@ -25,20 +25,26 @@ and getting study reports on your phone.
 ## Files
 
 ```
-index.html        Home — Future Self, daily Mission, Mastery, Practice
+index.html        Home — hero, coach whisper, continue card, practice, badges
 roadmap.html      Journey — rank ladder, projections, heatmap, modules
-admin.html        Content Studio — create/edit Lesson Packs, bulk import
+admin.html        Content Studio — create/edit Lesson Packs, bulk import, backup
 core.js           The engine: SRS, mastery math, momentum, mission builder
 seed-data.js      Bundled sample content (also used by /api/seed)
-manifest.json     PWA manifest
-sw.js             Service worker (offline, stale-while-revalidate)
+manifest.json     PWA manifest (with quick-action shortcuts)
+sw.js             Service worker (offline, stale-while-revalidate, notifications)
 icon-*.png        App icons (道)
+Coach.js          Coach whisper engine — motivational messaging
+memory-engine.js  Memory & retention tracking module
+grammar-reference.html  Searchable grammar cheat-sheet (all lessons)
+engine-demo.js    Demo/test harness for the engine
 api/
   content.js      Lesson Pack storage (GET read / POST write)
   admin-auth.js   Admin password check
   results.js      Telegram study reporter
   seed.js         One-time content seeder (merge, safe to re-run)
   debug.js        Health check (env presence + lesson count)
+  remind.js       Scheduled reminder notifications (cron)
+  generate.js     Content generation helpers
 ```
 
 ---
@@ -95,6 +101,16 @@ present and how many Lesson Packs are stored.
 Open the site on the phone → browser menu → **Add to Home Screen**.
 
 ---
+
+## Features
+
+- **Dopamine-first home page** — Time-based greeting, animated streak flame, count-up stats, breathing continue card, coach whisper (rotating motivational messages), skeleton loading, staggered card entrances, shine sweeps, achievement toasts, XP float numbers
+- **JLPT Placement Test** — N5→N1 levels with real JLPT scoring (3 sections, 180 points, sectional + total pass marks), placement detection, study recommendations
+- **MEXT Exam Practice** — Government scholarship exam simulation, 3 difficulty levels (初級/中級/上級), timed, 5 sections
+- **Notifications** — Streak reminders, review-due alerts, daily-goal nudges (iOS 16.4+ with home-screen install)
+- **PWA shortcuts** — Long-press app icon for quick actions: Continue Lesson, Flashcards, JLPT Test, My Journey
+- **Dark mode** — Synced across all pages (home, roadmap, grammar reference, admin)
+- **Offline-first** — Service worker caches all assets + Google Fonts for full offline use
 
 ## Daily use
 

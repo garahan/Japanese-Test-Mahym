@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>🌸 Admin — Mastery System</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -50,6 +50,32 @@ h2{font-size:22px;font-weight:900}.muted{color:var(--ink3);font-size:13px;font-w
 .stat .v{font-size:26px;font-weight:900}.stat .l{font-size:11px;color:var(--ink3);font-weight:700;text-transform:uppercase;margin-top:2px}
 .section{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.3rem;box-shadow:var(--shadow);margin-bottom:1rem}
 code{background:var(--bg);padding:2px 6px;border-radius:6px;font-size:13px}
+body.dark{--bg:#1a1a2e;--card:#252542;--ink:#e8e8f0;--ink2:#a0a0c0;--ink3:#6e6e90;--border:#353560;--shadow:0 4px 12px rgba(0,0,0,.3)}
+body.dark .btn-ghost{background:var(--bg);color:var(--ink2)}
+body.dark .tab{background:var(--card);border-color:var(--border);color:var(--ink2)}
+body.dark .tab.active{background:var(--ink);color:#fff}
+body.dark .input{background:var(--card);border-color:var(--border);color:var(--ink)}
+body.dark .chip{background:var(--bg);color:var(--ink2)}
+body.dark code{background:var(--bg)}
+/* activity feed */
+.feed-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
+.feed-item:last-child{border-bottom:none}
+.feed-icon{font-size:20px;flex-shrink:0;width:32px;text-align:center}
+.feed-body{flex:1;min-width:0}
+.feed-title{font-weight:800;font-size:14px}
+.feed-meta{font-size:12px;color:var(--ink3);font-weight:600;margin-top:2px}
+.feed-score{font-weight:800;font-size:13px;margin-top:3px}
+.feed-score.good{color:var(--green)}.feed-score.bad{color:var(--accent)}
+.breakdown-row{display:flex;align-items:center;gap:10px;padding:6px 0;font-size:14px;font-weight:700}
+.breakdown-bar{flex:1;height:8px;background:var(--bg);border-radius:4px;overflow:hidden}
+.breakdown-bar .f{height:100%;border-radius:4px;transition:width .5s}
+.breakdown-count{font-weight:800;font-size:13px;color:var(--ink2);min-width:30px;text-align:right}
+.exam-result-item{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:14px;font-weight:700}
+.exam-result-item:last-child{border-bottom:none}
+.exam-badge{display:inline-block;font-size:11px;font-weight:800;padding:3px 10px;border-radius:20px}
+.exam-badge.pass{background:#eafaf1;color:#008738}.exam-badge.fail{background:#ffeeee;color:#d32f2f}
+body.dark .feed-item{border-color:var(--border)}
+body.dark .breakdown-bar{background:var(--bg)}
 </style>
 </head>
 <body>
@@ -69,7 +95,7 @@ code{background:var(--bg);padding:2px 6px;border-radius:6px;font-size:13px}
   <div class="nav">
     <div class="tab active" onclick="tab('lessons',this)">📦 Lesson Packs</div>
     <div class="tab" onclick="tab('bulk',this)">📥 Bulk Import</div>
-    <div class="tab" onclick="tab('reports',this)">📊 Reports</div>
+    <div class="tab" onclick="tab('reports',this)">📊 Activity Dashboard</div>
     <div class="tab" onclick="tab('system',this)">🛠 System</div>
   </div>
 
@@ -92,9 +118,35 @@ code{background:var(--bg);padding:2px 6px;border-radius:6px;font-size:13px}
 
   <!-- REPORTS -->
   <div class="page" id="page-reports">
-    <p class="muted" style="margin-bottom:1rem">📍 Progress on <strong>this device only</strong>. For her real progress on her phone, rely on the automatic Telegram reports.</p>
-    <div class="statgrid" id="rep-stats"></div>
-    <div class="section"><h3 style="font-weight:900;margin-bottom:12px">Skill mastery</h3><div id="rep-skills"></div></div>
+    <div id="rep-loading" class="muted" style="text-align:center;padding:2rem">Loading activity logs…</div>
+    <div id="rep-dashboard" style="display:none">
+      <!-- Summary stats -->
+      <div class="statgrid" id="rep-stats"></div>
+
+      <!-- Activity breakdown -->
+      <div class="section">
+        <h3 style="font-weight:900;margin-bottom:12px">📊 Activity Breakdown</h3>
+        <div id="rep-breakdown"></div>
+      </div>
+
+      <!-- Exam & JLPT Results -->
+      <div class="section" id="rep-exams-section" style="display:none">
+        <h3 style="font-weight:900;margin-bottom:12px">📝 Exam Results</h3>
+        <div id="rep-exams"></div>
+      </div>
+
+      <!-- Skill mastery (local device) -->
+      <div class="section">
+        <h3 style="font-weight:900;margin-bottom:12px">🧠 Skill Mastery <span class="muted" style="font-size:12px;font-weight:600">(this device)</span></h3>
+        <div id="rep-skills"></div>
+      </div>
+
+      <!-- Activity Feed -->
+      <div class="section">
+        <h3 style="font-weight:900;margin-bottom:12px">📋 Recent Activity Feed</h3>
+        <div id="rep-feed"></div>
+      </div>
+    </div>
   </div>
 
   <!-- SYSTEM -->
@@ -108,9 +160,21 @@ code{background:var(--bg);padding:2px 6px;border-radius:6px;font-size:13px}
       <button class="btn btn-ghost btn-sm" onclick="checkDebug()">Run check</button>
       <pre id="debug-out" class="muted" style="margin-top:10px;white-space:pre-wrap"></pre>
     </div>
+    <div class="section">
+      <h3 style="font-weight:900;margin-bottom:8px">💾 Backup & Restore</h3>
+      <p class="muted">Export all learning progress (SRS, XP, streak, badges, settings) to a JSON file. Import to restore on a new device.</p>
+      <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+        <button class="btn btn-ghost btn-sm" onclick="exportProgress()">⬇ Export progress</button>
+        <label class="btn btn-ghost btn-sm" style="cursor:pointer">⬆ Import progress<input type="file" accept=".json" onchange="importProgress(event)" style="display:none"></label>
+      </div>
+      <div id="backup-msg" style="margin-top:8px"></div>
+    </div>
     <div class="section" style="border-color:#ffd1d1">
       <h3 style="color:var(--accent);font-weight:900;margin-bottom:8px">⚠️ Danger zone</h3>
-      <button class="btn btn-danger btn-sm" onclick="resetLocal()">Reset this device's learning progress</button>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btn-danger btn-sm" onclick="resetLocal()">Reset this device's progress</button>
+        <button class="btn btn-danger btn-sm" onclick="clearLogs()">Clear all activity logs</button>
+      </div>
     </div>
   </div>
 </div>
@@ -257,24 +321,144 @@ async function apiWrite(body){
   catch(e){toast('Network error');return false}
 }
 
-/* ---- reports (this device) ---- */
+/* ---- reports (activity dashboard) ---- */
+const TYPE_META={
+  'mission':{icon:'🏆',label:'Mission',color:'var(--gold)'},
+  'reading':{icon:'📖',label:'Reading',color:'var(--blue)'},
+  'practice':{icon:'💪',label:'Practice',color:'var(--accent)'},
+  'review':{icon:'🔁',label:'Review',color:'var(--blue)'},
+  'flashcards':{icon:'🃏',label:'Flashcards',color:'var(--purple)'},
+  'lesson-quiz':{icon:'📝',label:'Lesson Quiz',color:'var(--green)'},
+  'lesson-write':{icon:'✍️',label:'Writing Drill',color:'var(--ink2)'},
+  'exam':{icon:'📋',label:'MEXT Exam',color:'var(--accent)'},
+  'jlpt':{icon:'🎯',label:'JLPT Test',color:'var(--blue)'},
+  'study':{icon:'📚',label:'Study',color:'var(--ink2)'},
+};
+function timeAgo(iso){
+  const d=new Date(iso),now=Date.now(),diff=now-d.getTime();
+  const m=Math.floor(diff/60000),h=Math.floor(diff/3600000),day=Math.floor(diff/86400000);
+  if(day>0)return day+'d ago';
+  if(h>0)return h+'h ago';
+  if(m>0)return m+'m ago';
+  return 'just now';
+}
 function renderReports(){
-  C.loadContent(()=>{
-    const overall=C.overallMastery(),ret=C.retention(),mom=C.getMomentum().value;
-    const srs=C.getSRS();const learned=Object.values(srs).filter(s=>s.reps>0).length;
-    document.getElementById('rep-stats').innerHTML=`
-      <div class="stat"><div class="v">${overall}%</div><div class="l">N4 Mastery</div></div>
-      <div class="stat"><div class="v">${ret===null?'—':ret+'%'}</div><div class="l">Retention</div></div>
-      <div class="stat"><div class="v" style="color:var(--gold)">${mom}</div><div class="l">Momentum</div></div>
-      <div class="stat"><div class="v">${learned}</div><div class="l">Items learned</div></div>`;
-    const meta={vocab:'🧠 Vocabulary',grammar:'✍ Grammar',reading:'📖 Reading',listening:'🎧 Listening',kanji:'🈶 Kanji'};
-    document.getElementById('rep-skills').innerHTML=C.DIMS.map(d=>{const m=C.dimMastery(d);return `<div style="display:flex;justify-content:space-between;padding:7px 0;font-weight:700;font-size:14px"><span>${meta[d]}</span><span>${m===null?'—':m+'%'}</span></div>`}).join('');
-  });
+  document.getElementById('rep-loading').style.display='block';
+  document.getElementById('rep-dashboard').style.display='none';
+  fetchLogs();
+  // Also render local skill mastery
+  C.loadContent(()=>renderLocalSkills());
+}
+async function fetchLogs(){
+  try{
+    const r=await fetch('/api/logs?limit=100',{headers:{'x-admin-password':PASSWORD}});
+    const j=await r.json();
+    if(j.ok){
+      renderDashboard(j.logs,j.summary||{});
+      return;
+    }
+  }catch(e){}
+  // Fallback: no logs
+  renderDashboard([],{});
+}
+function renderDashboard(logs,summary){
+  document.getElementById('rep-loading').style.display='none';
+  document.getElementById('rep-dashboard').style.display='block';
+
+  // Summary stats
+  const streak=summary.streak||0;
+  const lastAct=summary.lastActivity?timeAgo(summary.lastActivity):'—';
+  document.getElementById('rep-stats').innerHTML=`
+    <div class="stat"><div class="v">${summary.totalLogs||0}</div><div class="l">Total Sessions</div></div>
+    <div class="stat"><div class="v">${summary.sessions24h||0}</div><div class="l">Last 24h</div></div>
+    <div class="stat"><div class="v" style="color:var(--gold)">${streak}</div><div class="l">Day Streak</div></div>
+    <div class="stat"><div class="v" style="color:var(--blue)">${summary.sessions7d||0}</div><div class="l">Last 7d</div></div>
+    <div class="stat"><div class="v">${summary.avgStudyPct!=null?summary.avgStudyPct+'%':'—'}</div><div class="l">Avg Score</div></div>
+    <div class="stat"><div class="v" style="font-size:14px">${lastAct}</div><div class="l">Last Active</div></div>`;
+
+  // Activity breakdown
+  const byType=summary.byType||{};
+  const maxCount=Math.max(1,...Object.values(byType));
+  const breakdownHTML=Object.entries(byType).sort((a,b)=>b[1]-a[1]).map(([type,count])=>{
+    const m=TYPE_META[type]||TYPE_META['study'];
+    const w=Math.round(count/maxCount*100);
+    return `<div class="breakdown-row"><span style="min-width:110px">${m.icon} ${m.label}</span>
+      <div class="breakdown-bar"><div class="f" style="width:${w}%;background:${m.color}"></div></div>
+      <span class="breakdown-count">${count}</span></div>`;
+  }).join('');
+  document.getElementById('rep-breakdown').innerHTML=breakdownHTML||'<p class="muted">No activity yet.</p>';
+
+  // Exam & JLPT results
+  const exams=[...(summary.examResults||[]).map(e=>({...e,kind:'exam'})),
+               ...(summary.jlptResults||[]).map(e=>({...e,kind:'jlpt'}))];
+  if(exams.length){
+    document.getElementById('rep-exams-section').style.display='block';
+    document.getElementById('rep-exams').innerHTML=exams.map(e=>{
+      const badge=e.passed?'<span class="exam-badge pass">PASS</span>':'<span class="exam-badge fail">NOT YET</span>';
+      const score=e.kind==='jlpt'?`${e.score}/180`:`${e.pct}%`;
+      const lvl=e.kind==='jlpt'?e.level:e.level;
+      const icon=e.kind==='jlpt'?'🎯':'📋';
+      return `<div class="exam-result-item"><span>${icon} ${lvl}</span><span>${score} ${badge}</span></div>`;
+    }).join('');
+  }else{
+    document.getElementById('rep-exams-section').style.display='none';
+  }
+
+  // Activity feed
+  const feedHTML=logs.length?logs.slice(0,50).map(l=>{
+    const m=TYPE_META[l.type]||TYPE_META['study'];
+    let detail='';
+    if(l.pct!=null)detail=`<div class="feed-score ${l.pct>=70?'good':'bad'}">${l.pct}% correct</div>`;
+    else if(l.correct!=null&&l.total!=null)detail=`<div class="feed-score ${l.correct/l.total>=0.7?'good':'bad'}">${l.correct}/${l.total}</div>`;
+    if(l.examLevel)detail+=`<div class="feed-meta">MEXT Level ${l.examLevel} · ${l.examPct}% ${l.examPassed?'✅':'❌'}</div>`;
+    if(l.jlptLevel)detail+=`<div class="feed-meta">JLPT ${l.jlptLevel} · ${l.jlptScore}/180 ${l.jlptPassed?'✅':'❌'}</div>`;
+    if(l.lesson)detail+=`<div class="feed-meta">Lesson ${l.lesson}</div>`;
+    if(l.overall!=null)detail+=`<div class="feed-meta">Mastery ${l.overall}% · 🔥 ${l.momentum||0}</div>`;
+    return `<div class="feed-item"><div class="feed-icon">${m.icon}</div>
+      <div class="feed-body"><div class="feed-title">${m.label}</div>
+      <div class="feed-meta">${timeAgo(l.timestamp)}</div>${detail}</div></div>`;
+  }).join(''):'<p class="muted">No activity logged yet. Activity will appear here as Mahym studies.</p>';
+  document.getElementById('rep-feed').innerHTML=feedHTML;
+}
+function renderLocalSkills(){
+  const meta={vocab:'🧠 Vocabulary',grammar:'✍ Grammar',reading:'📖 Reading',listening:'🎧 Listening',kanji:'🈶 Kanji'};
+  document.getElementById('rep-skills').innerHTML=C.DIMS.map(d=>{const m=C.dimMastery(d);return `<div style="display:flex;justify-content:space-between;padding:7px 0;font-weight:700;font-size:14px"><span>${meta[d]}</span><span>${m===null?'—':m+'%'}</span></div>`}).join('');
 }
 
 /* ---- system ---- */
 async function checkDebug(){document.getElementById('debug-out').textContent='Checking…';try{const r=await fetch('/api/debug');const j=await r.json();document.getElementById('debug-out').textContent=JSON.stringify(j,null,2)}catch(e){document.getElementById('debug-out').textContent='Error: '+e.message}}
-function resetLocal(){if(!confirm("Erase this device's learning progress? (Content is not affected.)"))return;['srs','mastery_snaps','activity_log','momentum','mission_done','cache_packs'].forEach(k=>localStorage.removeItem('mnn_'+k));toast('Local progress reset')}
+function resetLocal(){if(!confirm("Erase this device's learning progress? (Content is not affected.)"))return;['srs','mastery_snaps','activity_log','momentum','mission_done','cache_packs','xp','streak_v2','weak_log','daily_goal','consecutive_correct','badges','settings','drill_srs','jlpt_best_N5','jlpt_best_N4','jlpt_best_N3','jlpt_best_N2','jlpt_best_N1','jlpt_pass_N5','jlpt_pass_N4','jlpt_pass_N3','jlpt_pass_N2','jlpt_pass_N1','jlpt_attempts_N5','jlpt_attempts_N4','jlpt_attempts_N3','jlpt_attempts_N2','jlpt_attempts_N1','jlpt_placement'].forEach(k=>localStorage.removeItem('mnn_'+k));toast('Local progress reset')}
+async function clearLogs(){if(!confirm('Delete ALL activity logs from the server? This cannot be undone.'))return;try{const r=await fetch('/api/logs',{method:'DELETE',headers:{'x-admin-password':PASSWORD}});const j=await r.json();if(j.ok){toast('Logs cleared')}else{toast(j.error||'Failed')}}catch(e){toast('Network error')}}
+
+/* ---- backup & restore ---- */
+function exportProgress(){
+  const data=C.exportData();
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download=`mahym-backup-${data.exportedAt}.json`;
+  document.body.appendChild(a);a.click();a.remove();
+  URL.revokeObjectURL(url);
+  document.getElementById('backup-msg').innerHTML=`<span style="color:var(--green);font-weight:700">✅ Exported ${Object.keys(data.data).length} keys</span>`;
+}
+function importProgress(ev){
+  const file=ev.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=()=>{
+    try{
+      const count=C.importData(reader.result);
+      document.getElementById('backup-msg').innerHTML=`<span style="color:var(--green);font-weight:700">✅ Imported ${count} keys. Reload to see updated progress.</span>`;
+      setTimeout(()=>location.reload(),1500);
+    }catch(e){
+      document.getElementById('backup-msg').innerHTML=`<span style="color:var(--accent);font-weight:700">❌ ${e.message}</span>`;
+    }
+  };
+  reader.readAsText(file);
+}
+// Apply dark mode
+if(C.getSettings().darkMode) document.body.classList.add('dark');
+// Register service worker
+if('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(()=>{});
 </script>
 </body>
 </html>

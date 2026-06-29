@@ -512,6 +512,267 @@
     return shuffle(qs).slice(0, n || 2);
   }
 
+  // ============================================================
+  // XP & LEVEL SYSTEM
+  // ============================================================
+  function getXP() { return DB.get('xp') || { total: 0, level: 1, todayXP: 0, lastDate: null }; }
+  function xpForLevel(lv) { return Math.round(100 * (lv - 1) * lv / 2); }
+  function levelForXP(total) {
+    let lv = 1;
+    while (xpForLevel(lv + 1) <= total) lv++;
+    return lv;
+  }
+  function levelProgress() {
+    const xp = getXP();
+    const lv = xp.level || levelForXP(xp.total);
+    const cur = xpForLevel(lv);
+    const next = xpForLevel(lv + 1);
+    const pct = next > cur ? Math.round((xp.total - cur) / (next - cur) * 100) : 100;
+    return { level: lv, total: xp.total, intoLevel: xp.total - cur, levelSpan: next - cur, pct, toNext: next - xp.total };
+  }
+  function addXP(amount) {
+    const xp = getXP();
+    const today = dateKey();
+    if (xp.lastDate !== today) { xp.todayXP = 0; xp.lastDate = today; }
+    xp.total += amount;
+    xp.todayXP += amount;
+    const newLevel = levelForXP(xp.total);
+    const leveledUp = newLevel > xp.level;
+    xp.level = newLevel;
+    DB.set('xp', xp);
+    return { amount, total: xp.total, level: xp.level, leveledUp, todayXP: xp.todayXP };
+  }
+
+  // ============================================================
+  // STREAK WITH FREEZE / GRACE DAY
+  // ============================================================
+  function getStreakData() { return DB.get('streak_v2') || { count: 0, longest: 0, freezes: 1, lastDate: null, freezeUsed: {} }; }
+  function updateStreak() {
+    const s = getStreakData();
+    const today = dateKey();
+    if (s.lastDate === today) return s;
+    if (s.lastDate) {
+      const gap = daysBetween(s.lastDate, today);
+      if (gap === 1) { s.count++; }
+      else if (gap === 2 && s.freezes > 0) { s.freezes--; s.freezeUsed[today] = true; s.count++; }
+      else if (gap > 2 || s.freezes === 0) { s.count = 1; }
+    } else { s.count = 1; }
+    s.lastDate = today;
+    // Earn a freeze every 7 consecutive days (max 2)
+    if (s.count > 0 && s.count % 7 === 0 && s.freezes < 2) s.freezes++;
+    if (s.count > s.longest) s.longest = s.count;
+    DB.set('streak_v2', s);
+    return s;
+  }
+
+  // ============================================================
+  // WEAK-POINT ENGINE — track wrong answers, rank weak items
+  // ============================================================
+  function getWeakLog() { return DB.get('weak_log') || {}; }
+  function logWrong(id, dim) {
+    const wl = getWeakLog();
+    const e = wl[id] || { count: 0, dim, lastWrong: 0, consecutive: 0 };
+    e.count++; e.consecutive++; e.dim = dim || e.dim; e.lastWrong = Date.now();
+    wl[id] = e; DB.set('weak_log', wl);
+  }
+  function clearWeak(id) {
+    const wl = getWeakLog();
+    if (wl[id]) { wl[id].consecutive = 0; DB.set('weak_log', wl); }
+  }
+  function getWeakItems(limit) {
+    const wl = getWeakLog();
+    const srs = getSRS();
+    const entries = Object.entries(wl)
+      .filter(([id, e]) => e.consecutive > 0 && BY_ID[id])
+      .map(([id, e]) => {
+        const st = srs[id] || {};
+        const mastery = itemMastery(id);
+        const recencyDays = (Date.now() - e.lastWrong) / 86400000;
+        const score = e.consecutive * 3 + (10 - mastery / 10) + Math.max(0, 5 - recencyDays);
+        return { id, dim: e.dim, wrongCount: e.count, consecutive: e.consecutive, mastery, score, item: BY_ID[id] };
+      })
+      .sort((a, b) => b.score - a.score);
+    return entries.slice(0, limit || 20);
+  }
+  function weakCount() { return Object.values(getWeakLog()).filter(e => e.consecutive > 0).length; }
+
+  // ============================================================
+  // DAILY GOAL RING
+  // ============================================================
+  function getDailyGoal() { return DB.get('daily_goal') || { target: 10, current: 0, date: null }; }
+  function setDailyGoal(target) { const g = getDailyGoal(); g.target = target; DB.set('daily_goal', g); }
+  function progressDailyGoal(n) {
+    const g = getDailyGoal(); const today = dateKey();
+    if (g.date !== today) { g.current = 0; g.date = today; }
+    g.current += n || 1;
+    DB.set('daily_goal', g);
+    return g;
+  }
+  function isDailyGoalDone() { const g = getDailyGoal(); return g.date === dateKey() && g.current >= g.target; }
+  function dailyGoalPct() { const g = getDailyGoal(); if (g.date !== dateKey()) return 0; return Math.min(100, Math.round(g.current / g.target * 100)); }
+
+  // ============================================================
+  // REVIEW CAPS (anti-avalanche for returning users)
+  // ============================================================
+  const REVIEW_CAP = 30;
+  function getCappedDue(limit) {
+    const M = MEM();
+    const allDue = ITEMS.question.filter(q => isDue(q.id));
+    // Sort by urgency (most at-risk first)
+    allDue.sort((a, b) => M.urgency(itemState(b.id)) - M.urgency(itemState(a.id)));
+    return allDue.slice(0, limit || REVIEW_CAP);
+  }
+
+  // ============================================================
+  // STRENGTHEN MODE — drill weakest items until accuracy recovers
+  // ============================================================
+  function getStrengthenCards(limit) {
+    const weak = getWeakItems(limit || 15);
+    return weak.map(w => {
+      const it = BY_ID[w.id];
+      if (!it) return null;
+      return Object.assign({}, it, { _weak: true, _weakScore: w.score });
+    }).filter(Boolean);
+  }
+
+  // ============================================================
+  // CONSECUTIVE-CORRECT MASTERY GATING
+  // MCQ has 25% chance of lucky guess. Require consecutive correct
+  // + production answers before an item counts as truly mastered.
+  // ============================================================
+  function getConsecutiveCorrect(id) {
+    const cc = DB.get('consecutive_correct') || {};
+    return cc[id] || 0;
+  }
+  function bumpConsecutiveCorrect(id, correct) {
+    const cc = DB.get('consecutive_correct') || {};
+    if (correct) cc[id] = (cc[id] || 0) + 1;
+    else cc[id] = 0;
+    DB.set('consecutive_correct', cc);
+    return cc[id];
+  }
+  function isReliablyMastered(id) {
+    return itemMastery(id) >= 80 && getConsecutiveCorrect(id) >= 3;
+  }
+
+  // ============================================================
+  // VARIABLE BONUS REWARDS (occasional surprise XP)
+  // ============================================================
+  function maybeBonus() {
+    // ~12% chance of a bonus on any correct answer
+    if (Math.random() < 0.12) {
+      const bonuses = [5, 10, 15, 20, 25];
+      const amt = bonuses[Math.floor(Math.random() * bonuses.length)];
+      return { amount: amt, label: '🎁 Lucky bonus!' };
+    }
+    return null;
+  }
+
+  // ============================================================
+  // BADGE / MILESTONE SYSTEM
+  // ============================================================
+  function getBadges() { return DB.get('badges') || {}; }
+  function checkBadges() {
+    const earned = getBadges();
+    const newly = [];
+    const xp = getXP();
+    const srs = getSRS();
+    const streak = getStreakData();
+    const learned = Object.values(srs).filter(s => s.reps > 0).length;
+    const mastered = Object.keys(srs).filter(id => itemMastery(id) >= 80).length;
+    const overall = overallMastery();
+    const mom = getMomentum().value;
+
+    const checks = [
+      { id: 'first_steps', icon: '🌱', title: 'First Steps', desc: 'Learn your first 5 items', check: () => learned >= 5 },
+      { id: 'first_lesson', icon: '📚', title: 'First Lesson', desc: 'Complete your first lesson', check: () => lessonNums().some(n => isLessonComplete(n)) },
+      { id: 'momentum_30', icon: '⚡', title: 'Charged Up', desc: 'Reach 30 momentum', check: () => mom >= 30 },
+      { id: 'streak_7', icon: '🔥', title: 'Week Warrior', desc: '7-day streak', check: () => streak.count >= 7 },
+      { id: 'streak_30', icon: '🏆', title: 'Unbreakable', desc: '30-day streak', check: () => streak.count >= 30 },
+      { id: 'items_50', icon: '🧠', title: 'Half Century', desc: 'Learn 50 items', check: () => learned >= 50 },
+      { id: 'items_100', icon: '💯', title: 'Centurion', desc: 'Learn 100 items', check: () => learned >= 100 },
+      { id: 'mastered_25', icon: '✨', title: 'Memory Keeper', desc: 'Master 25 items', check: () => mastered >= 25 },
+      { id: 'mastered_50', icon: '🌟', title: 'Memory Master', desc: 'Master 50 items', check: () => mastered >= 50 },
+      { id: 'mastery_50', icon: '🎯', title: 'Halfway There', desc: 'Reach 50% overall mastery', check: () => overall >= 50 },
+      { id: 'mastery_80', icon: '👑', title: 'MEXT Ready', desc: 'Reach 80% overall mastery', check: () => overall >= 80 },
+      { id: 'level_5', icon: '🎖️', title: 'Rising Star', desc: 'Reach level 5', check: () => xp.level >= 5 },
+      { id: 'level_10', icon: '🏅', title: 'Scholar', desc: 'Reach level 10', check: () => xp.level >= 10 },
+      { id: 'exam_a', icon: '📝', title: 'Exam Rookie', desc: 'Pass mock exam level A', check: () => !!DB.get('exam_pass_A') },
+      { id: 'exam_b', icon: '📑', title: 'Exam Challenger', desc: 'Pass mock exam level B', check: () => !!DB.get('exam_pass_B') },
+      { id: 'exam_c', icon: '📜', title: 'Exam Conqueror', desc: 'Pass mock exam level C', check: () => !!DB.get('exam_pass_C') },
+    ];
+
+    for (const b of checks) {
+      if (!earned[b.id] && b.check()) {
+        earned[b.id] = { icon: b.icon, title: b.title, desc: b.desc, date: dateKey() };
+        newly.push(b);
+      }
+    }
+    if (newly.length) DB.set('badges', earned);
+    return { earned, newly };
+  }
+
+  // ============================================================
+  // ADAPTIVE DIFFICULTY — pick questions near the learner's edge
+  // ============================================================
+  function adaptiveDifficulty() {
+    const overall = overallMastery();
+    if (overall < 20) return 'easy';
+    if (overall < 50) return 'medium';
+    if (overall < 75) return 'medium';
+    return 'hard';
+  }
+  function pickAdaptiveQuestions(pool, n) {
+    const target = adaptiveDifficulty();
+    const match = pool.filter(q => difficultyOf(q) === target);
+    const rest = pool.filter(q => difficultyOf(q) !== target);
+    // 70% at target difficulty, 30% mixed (interleaving)
+    const matchN = Math.min(match.length, Math.ceil(n * 0.7));
+    const restN = Math.min(rest.length, n - matchN);
+    return [...shuffle(match).slice(0, matchN), ...shuffle(rest).slice(0, restN)];
+  }
+
+  // ============================================================
+  // DATA EXPORT / IMPORT
+  // ============================================================
+  function exportData() {
+    const keys = [];
+    try {
+      for (let i = 0; i < store.length; i++) {
+        const k = store.key(i);
+        if (k && k.startsWith('mnn_')) keys.push(k);
+      }
+    } catch (e) {}
+    const data = {};
+    keys.forEach(k => { try { data[k] = store.getItem(k); } catch (e) {} });
+    return { exportedAt: dateKey(), version: 2, data };
+  }
+  function importData(json) {
+    const obj = typeof json === 'string' ? JSON.parse(json) : json;
+    if (!obj || !obj.data) throw new Error('Invalid backup format');
+    for (const k in obj.data) {
+      try { store.setItem(k, obj.data[k]); } catch (e) {}
+    }
+    return Object.keys(obj.data).length;
+  }
+
+  // ============================================================
+  // SETTINGS
+  // ============================================================
+  function getSettings() { return DB.get('settings') || { sound: true, haptics: true, furigana: 'toggle', darkMode: false }; }
+  function setSettings(s) { const cur = getSettings(); Object.assign(cur, s); DB.set('settings', cur); return cur; }
+
+  // ============================================================
+  // COMBO SYSTEM (upgraded — multiplier + XP bonus)
+  // ============================================================
+  function comboMultiplier(combo) {
+    if (combo < 3) return 1;
+    if (combo < 6) return 1.5;
+    if (combo < 10) return 2;
+    if (combo < 15) return 3;
+    return 4;
+  }
+
   // ---- expose ----
   root.Core = {
     DB, DIALS, DIMS, dateKey, daysBetween, haptic, shuffle,
@@ -528,7 +789,33 @@
     // drill engine
     getDrillPool, getDrillDue, getDrillDueCount, getDrillStats,
     rateDrill, drillGet,
-    getPrevLessonQuestions, getStreak
+    getPrevLessonQuestions, getStreak,
+    // XP & level
+    getXP, addXP, levelForXP, xpForLevel, levelProgress,
+    // streak with freeze
+    getStreakData, updateStreak,
+    // weak-point engine
+    getWeakLog, logWrong, clearWeak, getWeakItems, weakCount,
+    // daily goal
+    getDailyGoal, setDailyGoal, progressDailyGoal, isDailyGoalDone, dailyGoalPct,
+    // review caps
+    getCappedDue, REVIEW_CAP,
+    // strengthen mode
+    getStrengthenCards,
+    // consecutive-correct mastery
+    getConsecutiveCorrect, bumpConsecutiveCorrect, isReliablyMastered,
+    // variable bonus
+    maybeBonus,
+    // badges
+    getBadges, checkBadges,
+    // adaptive difficulty
+    adaptiveDifficulty, pickAdaptiveQuestions,
+    // data export/import
+    exportData, importData,
+    // settings
+    getSettings, setSettings,
+    // combo
+    comboMultiplier
   };
 })(typeof window !== 'undefined' ? window : globalThis);
 

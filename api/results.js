@@ -1,4 +1,5 @@
-// /api/results.js — sends a study report to YOUR Telegram (coach view).
+// /api/results.js — sends a study report to the coach's Telegram AND stores
+// an activity log in Upstash Redis so the admin panel can display a dashboard.
 // Fire-and-forget from the client. Auth: a shared secret.
 //
 // Security model: this is a static PWA, so the secret lives in client source
@@ -14,6 +15,29 @@
 const TOKEN = process.env.TELEGRAM_TOKEN;
 const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 const SECRET = process.env.RESULTS_SECRET; // optional
+const REDIS_URL = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
+const REDIS_TOKEN = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+const LOG_KEY = 'logs:activity';
+const MAX_LOGS = 200;
+
+async function redis(cmd) {
+  if (!REDIS_URL || !REDIS_TOKEN) throw new Error('Redis env vars missing');
+  const r = await fetch(REDIS_URL, {
+    method: 'POST',
+    headers: { Authorization: 'Bearer ' + REDIS_TOKEN, 'Content-Type': 'application/json' },
+    body: JSON.stringify(cmd)
+  });
+  const j = await r.json();
+  if (j.error) throw new Error(j.error);
+  return j.result;
+}
+
+async function readLogs() {
+  try { const v = await redis(['GET', LOG_KEY]); return v ? JSON.parse(v) : []; } catch { return []; }
+}
+async function writeLogs(arr) {
+  try { await redis(['SET', LOG_KEY, JSON.stringify(arr)]); } catch (e) { /* non-fatal */ }
+}
 
 const bar = (pct) => {
   const n = Math.max(0, Math.min(10, Math.round((pct || 0) / 10)));
@@ -38,6 +62,28 @@ function buildMessage(b) {
     head = `📖 <b>${name} read a story</b>`;
     if (b.title) lines.push(`“${esc(b.title)}”`);
     if (score) lines.push(`✅ Comprehension: ${score}`);
+  } else if (b.type === 'exam') {
+    head = `📝 <b>${name} took a MEXT exam</b>`;
+    if (b.examLevel) lines.push(`Level: ${esc(b.examLevel)}`);
+    if (b.examPct != null) lines.push(`Score: ${b.examPct}% ${b.examPassed ? '✅ Passed' : '❌ Not yet'}`);
+  } else if (b.type === 'jlpt') {
+    head = `🎯 <b>${name} took a JLPT placement test</b>`;
+    if (b.jlptLevel) lines.push(`Level: ${esc(b.jlptLevel)}`);
+    if (b.jlptScore != null) lines.push(`Score: ${b.jlptScore}/180 ${b.jlptPassed ? '✅ Passed' : '❌ Not yet'}`);
+  } else if (b.type === 'lesson-quiz') {
+    head = `📝 <b>${name} finished a lesson quiz</b>`;
+    if (b.lesson) lines.push(`Lesson ${b.lesson}`);
+    if (score) lines.push(`✅ ${score}`);
+  } else if (b.type === 'lesson-write') {
+    head = `✍️ <b>${name} finished a writing drill</b>`;
+    if (b.lesson) lines.push(`Lesson ${b.lesson}`);
+    if (b.good != null && b.total != null) lines.push(`✅ ${b.good}/${b.total} recalled`);
+  } else if (b.type === 'review') {
+    head = `🔁 <b>${name} completed a review session</b>`;
+    if (b.good != null && b.total != null) lines.push(`✅ ${b.good}/${b.total} solid`);
+  } else if (b.type === 'flashcards') {
+    head = `🃏 <b>${name} finished flashcards</b>`;
+    if (b.good != null && b.total != null) lines.push(`✅ ${b.good}/${b.total} known`);
   } else if (b.type === 'practice') {
     head = `💪 <b>${name} did a practice session</b>`;
     if (score) lines.push(`✅ ${score}`);
@@ -67,6 +113,34 @@ module.exports = async (req, res) => {
   if (SECRET && body.secret !== SECRET) {
     return res.status(401).json({ ok: false, error: 'Unauthorized' });
   }
+
+  // Store activity log in Redis (non-fatal if Redis isn't configured)
+  const logEntry = {
+    type: body.type || 'study',
+    name: body.name || 'Mahym',
+    timestamp: new Date().toISOString(),
+    overall: body.overall ?? null,
+    momentum: body.momentum ?? null,
+    correct: body.correct ?? body.good ?? null,
+    total: body.total ?? null,
+    pct: body.total != null ? pct(body.correct ?? body.good, body.total) : null,
+    lesson: body.lesson ?? null,
+    examLevel: body.examLevel ?? null,
+    examPct: body.examPct ?? null,
+    examPassed: body.examPassed ?? null,
+    jlptLevel: body.jlptLevel ?? null,
+    jlptScore: body.jlptScore ?? null,
+    jlptPassed: body.jlptPassed ?? null,
+    focus: body.focus ?? null,
+    title: body.title ?? null,
+    mins: body.mins ?? null,
+  };
+  try {
+    const logs = await readLogs();
+    logs.unshift(logEntry);
+    if (logs.length > MAX_LOGS) logs.length = MAX_LOGS;
+    await writeLogs(logs);
+  } catch (e) { /* non-fatal */ }
 
   // If Telegram isn't configured, succeed quietly so the client never errors.
   if (!TOKEN || !CHAT_ID) {

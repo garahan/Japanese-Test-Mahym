@@ -82,11 +82,7 @@ const SEED_CONTENT = [
     { id: "L25q3", dim: "grammar", type: "recall", difficulty: "hard", s: "Choose the natural sentence.", a: "高くても買います", o: ["高いたら買います", "高くても買います", "高いても買います", "高かっても買います"], c: 1, exp: "i-adj 高い → 高くても (drop い, add くても).", linksTo: "L25g2" },
     { id: "L25q4", dim: "vocab", type: "recognition", difficulty: "easy", s: "給料 means…", a: "salary", o: ["bonus", "salary", "savings", "tax"], c: 1, exp: "給料 (きゅうりょう) = salary/pay. ボーナス = bonus.", linksTo: "L25v4" },
     { id: "L25q5", dim: "vocab", type: "recall", difficulty: "medium", s: "ベルが鳴ったら、ここに___ください。(gather)", a: "集まって", o: ["集めて", "集まって", "過ぎて", "連絡して"], c: 1, exp: "集まります = (people) gather. 集めます = to collect things.", linksTo: "L25v8" },
-    { id: "L25q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji is read 「ぜん」 in 「全部」?", a: "全", o: ["業", "留", "全", "連"], c: 2, exp: "全 = whole/all → 全部（ぜんぶ）.", linksTo: "L25k3" },
-    { id: "L25q7", dim: "vocab", type: "recognition", difficulty: "easy", s: "留学します means…", a: "to study abroad", o: ["to graduate", "to study abroad", "to contact", "to gather"], c: 1, exp: "留学します（りゅうがくします）= to study abroad.", linksTo: "L25v3" },
-    { id: "L25q8", dim: "vocab", type: "recall", difficulty: "medium", s: "ベルが鳴ったら、ここに___ください。(gather)", a: "集まって", o: ["集めて", "集まって", "過ぎて", "卒業して"], c: 1, exp: "集まります = (people) gather → 集まって.", linksTo: "L25v8" },
-    { id: "L25q9", dim: "kanji", type: "recognition", difficulty: "easy", s: "Which kanji means \u0027connect\u0027?", a: "連", o: ["業", "留", "全", "連"], c: 3, exp: "連 → 連絡（れんらく）connect/contact.", linksTo: "L25k4" },
-    { id: "L25q10", dim: "grammar", type: "recall", difficulty: "medium", s: "宝くじが当たっ___、家を買います。(if I win)", a: "たら", o: ["たら", "ても", "ながら", "ので"], c: 0, exp: "た-form ＋ ら = conditional; the result depends on winning.", linksTo: "L25g1" }
+    { id: "L25q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji is read 「ぜん」 in 「全部」?", a: "全", o: ["業", "留", "全", "連"], c: 2, exp: "全 = whole/all → 全部（ぜんぶ）.", linksTo: "L25k3" }
   ]
 },
 
@@ -178,11 +174,7 @@ const SEED_CONTENT = [
     { id: "L26q3", dim: "grammar", type: "recall", difficulty: "medium", s: "写真を撮っ___。(Could you take a photo? — very polite)", a: "ていただけませんか", o: ["てください", "ていただけませんか", "てもいいですか", "ましょうか"], c: 1, exp: "て-form ＋ いただけませんか = polite request.", linksTo: "L26g2" },
     { id: "L26q4", dim: "grammar", type: "recall", difficulty: "medium", s: "どこで払っ___いいですか。(Where should I pay?)", a: "たら", o: ["たら", "ても", "ながら", "ては"], c: 0, exp: "Question word ＋ た-form ＋ らいいですか = 'what/where should I…?'.", linksTo: "L26g3" },
     { id: "L26q5", dim: "vocab", type: "recognition", difficulty: "easy", s: "故障します means…", a: "to break down", o: ["to be crowded", "to break down (machine)", "to hurry", "to explain"], c: 1, exp: "故障します = a machine breaks down. 込みます = to be crowded.", linksTo: "L26v4" },
-    { id: "L26q6", dim: "vocab", type: "recall", difficulty: "medium", s: "電車が___いて、遅れたんです。(crowded)", a: "込んで", o: ["動いて", "込んで", "急いで", "直して"], c: 1, exp: "込みます = to be crowded → 込んでいて.", linksTo: "L26v6" },
-    { id: "L26q7", dim: "vocab", type: "recognition", difficulty: "easy", s: "急ぎます means…", a: "to hurry", o: ["to fix", "to hurry", "to explain", "to exchange money"], c: 1, exp: "急ぎます（いそぎます）= to hurry.", linksTo: "L26v8" },
-    { id: "L26q8", dim: "vocab", type: "recognition", difficulty: "medium", s: "両替します means…", a: "to exchange money", o: ["to be crowded", "to break down", "to exchange money", "to confirm"], c: 2, exp: "両替します = exchange money / break a bill.", linksTo: "L26v10" },
-    { id: "L26q9", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji is read 「せつ」 in 「説明」?", a: "説", o: ["約", "束", "急", "説"], c: 3, exp: "説 → 説明（せつめい）explain.", linksTo: "L26k4" },
-    { id: "L26q10", dim: "grammar", type: "recall", difficulty: "medium", s: "もう少しゆっくり話し___。(could you… — very polite)", a: "ていただけませんか", o: ["ていただけませんか", "てください", "ましょうか", "ています"], c: 0, exp: "て-form ＋ いただけませんか = polite request.", linksTo: "L26g2" }
+    { id: "L26q6", dim: "vocab", type: "recall", difficulty: "medium", s: "電車が___いて、遅れたんです。(crowded)", a: "込んで", o: ["動いて", "込んで", "急いで", "直して"], c: 1, exp: "込みます = to be crowded → 込んでいて.", linksTo: "L26v6" }
   ]
 },
 
@@ -275,11 +267,7 @@ const SEED_CONTENT = [
     { id: "L27q3", dim: "grammar", type: "recall", difficulty: "hard", s: "となりの部屋から音楽が___。(can be heard, spontaneously)", a: "聞こえます", o: ["聞けます", "聞こえます", "聞かれます", "聞きます"], c: 1, exp: "Spontaneous hearing = 聞こえます (not 聞けます).", linksTo: "L27g2" },
     { id: "L27q4", dim: "grammar", type: "recall", difficulty: "hard", s: "100円___ありません。(I have only 100 yen.)", a: "しか", o: ["だけ", "しか", "でも", "ほど"], c: 1, exp: "しか + negative verb = 'only'. だけ would take a positive verb.", linksTo: "L27g3" },
     { id: "L27q5", dim: "vocab", type: "recognition", difficulty: "easy", s: "景色 means…", a: "scenery", o: ["traffic light", "scenery", "pet", "signal"], c: 1, exp: "景色 (けしき) = scenery/view.", linksTo: "L27v4" },
-    { id: "L27q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means 'hear / listen'?", a: "聞", o: ["見", "聞", "泳", "信"], c: 1, exp: "聞 = hear/listen → 聞こえます.", linksTo: "L27k2" },
-    { id: "L27q7", dim: "vocab", type: "recognition", difficulty: "easy", s: "泳ぎます means…", a: "to swim", o: ["to translate", "to swim", "to reach", "to be visible"], c: 1, exp: "泳ぎます（およぎます）= to swim.", linksTo: "L27v6" },
-    { id: "L27q8", dim: "vocab", type: "recognition", difficulty: "medium", s: "信号 means…", a: "traffic light", o: ["scenery", "traffic light", "pet", "translation"], c: 1, exp: "信号（しんごう）= traffic light / signal.", linksTo: "L27v7" },
-    { id: "L27q9", dim: "kanji", type: "recognition", difficulty: "easy", s: "Which kanji means \u0027see\u0027?", a: "見", o: ["見", "聞", "泳", "信"], c: 0, exp: "見 → 見えます (be visible).", linksTo: "L27k1" },
-    { id: "L27q10", dim: "grammar", type: "recall", difficulty: "hard", s: "ひらがな___読めません。(only)", a: "しか", o: ["だけ", "しか", "でも", "ほど"], c: 1, exp: "しか + negative = \u0027only\u0027. だけ would take a positive verb.", linksTo: "L27g3" }
+    { id: "L27q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means 'hear / listen'?", a: "聞", o: ["見", "聞", "泳", "信"], c: 1, exp: "聞 = hear/listen → 聞こえます.", linksTo: "L27k2" }
   ]
 },
 
@@ -372,11 +360,7 @@ const SEED_CONTENT = [
     { id: "L28q3", dim: "grammar", type: "recall", difficulty: "medium", s: "貿易の会社で働い___。(I work — ongoing/occupation)", a: "ています", o: ["ます", "ています", "ました", "たいです"], c: 1, exp: "Occupations use 〜ています (ongoing state).", linksTo: "L28g2" },
     { id: "L28q4", dim: "grammar", type: "recall", difficulty: "medium", s: "安い___、おいしい___、よく来ます。(cheap AND tasty…)", a: "し / し", o: ["て / て", "し / し", "から / から", "が / が"], c: 1, exp: "〜し stacks reasons: 安いし、おいしいし.", linksTo: "L28g3" },
     { id: "L28q5", dim: "vocab", type: "recognition", difficulty: "easy", s: "通います means…", a: "to commute / attend regularly", o: ["to continue", "to commute / attend regularly", "to save up", "to work overtime"], c: 1, exp: "通います = commute/attend regularly.", linksTo: "L28v1" },
-    { id: "L28q6", dim: "vocab", type: "recall", difficulty: "medium", s: "彼は___だし、よく働きます。(diligent)", a: "まじめ", o: ["親切", "まじめ", "別々", "残業"], c: 1, exp: "まじめ = serious/diligent.", linksTo: "L28v9" },
-    { id: "L28q7", dim: "vocab", type: "recognition", difficulty: "easy", s: "続けます means…", a: "to continue", o: ["to commute", "to continue", "to save up", "to work overtime"], c: 1, exp: "続けます（つづけます）= to continue.", linksTo: "L28v2" },
-    { id: "L28q8", dim: "vocab", type: "recognition", difficulty: "medium", s: "別々に means…", a: "separately", o: ["separately", "gradually", "kindly", "seriously"], c: 0, exp: "別々に（べつべつに）= separately.", linksTo: "L28v4" },
-    { id: "L28q9", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means \u0027continue\u0027?", a: "続", o: ["通", "続", "親", "番"], c: 1, exp: "続 → 続けます (continue).", linksTo: "L28k2" },
-    { id: "L28q10", dim: "grammar", type: "recall", difficulty: "hard", s: "Pick the natural \u0027eat while watching TV\u0027.", a: "見ながら食べます", o: ["食べながら見ます", "見ながら食べます", "見るながら食べます", "食べるながら見ます"], c: 1, exp: "Background = ます-stem ＋ ながら; the main action (eat) comes after.", linksTo: "L28g1" }
+    { id: "L28q6", dim: "vocab", type: "recall", difficulty: "medium", s: "彼は___だし、よく働きます。(diligent)", a: "まじめ", o: ["親切", "まじめ", "別々", "残業"], c: 1, exp: "まじめ = serious/diligent.", linksTo: "L28v9" }
   ]
 },
 
@@ -457,11 +441,7 @@ const SEED_CONTENT = [
     { id: "L29q3", dim: "grammar", type: "recall", difficulty: "easy", s: "傘を電車に忘れ___。(I left it — regret)", a: "てしまいました", o: ["ました", "てしまいました", "ています", "ておきました"], c: 1, exp: "〜てしまいました shows the regret of an unintended result.", linksTo: "L29g2" },
     { id: "L29q4", dim: "grammar", type: "recall", difficulty: "hard", s: "Casual form of 食べてしまう is…", a: "食べちゃう", o: ["食べじゃう", "食べちゃう", "食べとく", "食べてる"], c: 1, exp: "〜てしまう → 〜ちゃう (〜でしまう → 〜じゃう).", linksTo: "L29g2" },
     { id: "L29q5", dim: "vocab", type: "recognition", difficulty: "medium", s: "Which pair is correct (intransitive)?", a: "割れます = to break (by itself)", o: ["割れます = to break it", "割れます = to break (by itself)", "落とします = to fall", "消します = to go out"], c: 1, exp: "割れます is intransitive; 割ります is transitive ('break it').", linksTo: "L29v1" },
-    { id: "L29q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means 'fall / drop'?", a: "落", o: ["消", "落", "汚", "間"], c: 1, exp: "落 → 落とします (drop).", linksTo: "L29k2" },
-    { id: "L29q7", dim: "vocab", type: "recognition", difficulty: "easy", s: "壊れます means…", a: "to break (be broken)", o: ["to break (be broken)", "to disappear", "to get dirty", "to drop"], c: 0, exp: "壊れます（こわれます）= to break / be broken (intransitive).", linksTo: "L29v2" },
-    { id: "L29q8", dim: "vocab", type: "recognition", difficulty: "medium", s: "忘れ物 means…", a: "something left behind", o: ["hometown", "something left behind", "a mistake", "dirt"], c: 1, exp: "忘れ物（わすれもの）= something left behind.", linksTo: "L29v10" },
-    { id: "L29q9", dim: "kanji", type: "recognition", difficulty: "easy", s: "Which kanji means \u0027dirty\u0027?", a: "汚", o: ["消", "落", "汚", "間"], c: 2, exp: "汚 → 汚れます (get dirty).", linksTo: "L29k3" },
-    { id: "L29q10", dim: "grammar", type: "recall", difficulty: "hard", s: "あ、さいふが___よ。(a wallet is lying there — state)", a: "落ちています", o: ["落としています", "落ちています", "落ちます", "落とします"], c: 1, exp: "Intransitive 落ちる ＋ ています = resulting state.", linksTo: "L29g1" }
+    { id: "L29q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means 'fall / drop'?", a: "落", o: ["消", "落", "汚", "間"], c: 1, exp: "落 → 落とします (drop).", linksTo: "L29k2" }
   ]
 },
 
@@ -542,11 +522,7 @@ const SEED_CONTENT = [
     { id: "L30q3", dim: "grammar", type: "recall", difficulty: "medium", s: "旅行の前にホテルを予約し___。(do in advance)", a: "ておきます", o: ["てあります", "ておきます", "ています", "てしまいます"], c: 1, exp: "〜ておきます = do something in advance as preparation.", linksTo: "L30g2" },
     { id: "L30q4", dim: "grammar", type: "recall", difficulty: "easy", s: "そのままにし___ください。(leave it as is)", a: "ておいて", o: ["てあって", "ておいて", "てしまって", "ていて"], c: 1, exp: "〜ておく also means 'leave a state as it is'.", linksTo: "L30g2" },
     { id: "L30q5", dim: "vocab", type: "recognition", difficulty: "easy", s: "片付けます means…", a: "to tidy up", o: ["to prepare", "to reserve", "to tidy up", "to line up"], c: 2, exp: "片付けます = tidy up / clear away.", linksTo: "L30v7" },
-    { id: "L30q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means 'beforehand / in advance'?", a: "予", o: ["並", "準", "予", "資"], c: 2, exp: "予 → 予約（よやく）reserve in advance.", linksTo: "L30k3" },
-    { id: "L30q7", dim: "vocab", type: "recognition", difficulty: "easy", s: "予約します means…", a: "to reserve", o: ["to prepare", "to reserve", "to tidy up", "to put away"], c: 1, exp: "予約します（よやくします）= to reserve / book.", linksTo: "L30v6" },
-    { id: "L30q8", dim: "vocab", type: "recognition", difficulty: "medium", s: "資料 means…", a: "materials / documents", o: ["materials / documents", "bottle opener", "tool", "deadline"], c: 0, exp: "資料（しりょう）= materials / documents.", linksTo: "L30v9" },
-    { id: "L30q9", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means \u0027line up\u0027?", a: "並", o: ["並", "準", "予", "資"], c: 0, exp: "並 → 並べます (line up / arrange).", linksTo: "L30k1" },
-    { id: "L30q10", dim: "vocab", type: "recall", difficulty: "medium", s: "それは___にしておいてください。(as it is)", a: "そのまま", o: ["そのまま", "べつべつ", "ちょうど", "きちんと"], c: 0, exp: "そのまま = as it is / leave it unchanged.", linksTo: "L30v10" }
+    { id: "L30q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means 'beforehand / in advance'?", a: "予", o: ["並", "準", "予", "資"], c: 2, exp: "予 → 予約（よやく）reserve in advance.", linksTo: "L30k3" }
   ]
 }
 
@@ -628,11 +604,7 @@ const SEED_CONTENT = [
     { id: "L31q3", dim: "grammar", type: "recall", difficulty: "hard", s: "夏休みに国へ帰ろう___。(I'm thinking of…)", a: "と思っています", o: ["と思っています", "ています", "つもりです", "でしょう"], c: 0, exp: "Volitional ＋ と思っています = a held intention.", linksTo: "L31g2" },
     { id: "L31q4", dim: "grammar", type: "recall", difficulty: "hard", s: "会議は3時から始まる___。(scheduled — fixed timetable)", a: "予定です", o: ["つもりです", "予定です", "と思います", "ようです"], c: 1, exp: "A fixed schedule (set by a timetable) uses 〜予定です, not つもり.", linksTo: "L31g2" },
     { id: "L31q5", dim: "vocab", type: "recognition", difficulty: "easy", s: "申し込みます means…", a: "to apply / sign up", o: ["to decide", "to apply / sign up", "to increase", "to quit"], c: 1, exp: "申し込みます = to apply / sign up.", linksTo: "L31v4" },
-    { id: "L31q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji pair reads 「よてい」?", a: "予定", o: ["計画", "予定", "予約", "決定"], c: 1, exp: "予定（よてい）= schedule.", linksTo: "L31k1" },
-    { id: "L31q7", dim: "vocab", type: "recognition", difficulty: "easy", s: "決めます means…", a: "to decide", o: ["to apply", "to decide", "to increase", "to quit"], c: 1, exp: "決めます（きめます）= to decide.", linksTo: "L31v3" },
-    { id: "L31q8", dim: "vocab", type: "recognition", difficulty: "medium", s: "育てます means…", a: "to raise / bring up", o: ["to stay overnight", "to raise / bring up", "to guide", "to increase"], c: 1, exp: "育てます（そだてます）= to raise / bring up.", linksTo: "L31v9" },
-    { id: "L31q9", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means \u0027plan\u0027 (as in 計画)?", a: "計", o: ["予", "定", "計", "画"], c: 2, exp: "計 → 計画（けいかく）plan.", linksTo: "L31k3" },
-    { id: "L31q10", dim: "grammar", type: "recall", difficulty: "medium", s: "夏休みに国へ帰ろう___。(I\u0027m thinking of…)", a: "と思っています", o: ["と思っています", "ています", "でしょう", "はずです"], c: 0, exp: "Volitional ＋ と思っています = a held intention.", linksTo: "L31g2" }
+    { id: "L31q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji pair reads 「よてい」?", a: "予定", o: ["計画", "予定", "予約", "決定"], c: 1, exp: "予定（よてい）= schedule.", linksTo: "L31k1" }
   ]
 },
 
@@ -712,11 +684,7 @@ const SEED_CONTENT = [
     { id: "L32q3", dim: "grammar", type: "recall", difficulty: "medium", s: "あした、晴れる___。(probably)", a: "でしょう", o: ["かもしれません", "でしょう", "そうです", "ようです"], c: 1, exp: "でしょう = a confident guess ('probably').", linksTo: "L32g2" },
     { id: "L32q4", dim: "grammar", type: "recall", difficulty: "hard", s: "Which is the WEAKER guess ('might')?", a: "雨かもしれません", o: ["雨でしょう", "雨かもしれません", "雨です", "雨だ"], c: 1, exp: "かもしれません (~maybe) is weaker than でしょう (~probably).", linksTo: "L32g2" },
     { id: "L32q5", dim: "vocab", type: "recognition", difficulty: "easy", s: "倒れます means…", a: "to collapse", o: ["to change", "to collapse", "to exercise", "to stop"], c: 1, exp: "倒れます = to collapse / fall over.", linksTo: "L32v3" },
-    { id: "L32q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means 'danger'?", a: "危", o: ["運", "動", "危", "険"], c: 2, exp: "危 → 危険（きけん）danger. (険 = risk/steep.)", linksTo: "L32k3" },
-    { id: "L32q7", dim: "vocab", type: "recognition", difficulty: "easy", s: "気をつけます means…", a: "to be careful", o: ["to exercise", "to be careful", "to collapse", "to change"], c: 1, exp: "気をつけます = to be careful.", linksTo: "L32v4" },
-    { id: "L32q8", dim: "vocab", type: "recognition", difficulty: "medium", s: "効果 means…", a: "effect", o: ["danger", "effect", "exercise", "change"], c: 1, exp: "効果（こうか）= effect.", linksTo: "L32v7" },
-    { id: "L32q9", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means \u0027move\u0027 (as in 運動)?", a: "動", o: ["運", "動", "危", "険"], c: 1, exp: "動 → 運動（うんどう）exercise; 動きます (move).", linksTo: "L32k2" },
-    { id: "L32q10", dim: "grammar", type: "recall", difficulty: "hard", s: "彼はもう帰った___。(he might have… — weaker guess)", a: "かもしれません", o: ["でしょう", "かもしれません", "はずです", "そうです"], c: 1, exp: "かもしれません = a lighter \u0027maybe\u0027, weaker than でしょう.", linksTo: "L32g2" }
+    { id: "L32q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means 'danger'?", a: "危", o: ["運", "動", "危", "険"], c: 2, exp: "危 → 危険（きけん）danger. (険 = risk/steep.)", linksTo: "L32k3" }
   ]
 },
 
@@ -796,11 +764,7 @@ const SEED_CONTENT = [
     { id: "L33q3", dim: "grammar", type: "recall", difficulty: "medium", s: "看板に「危険」___あります。(it says…)", a: "と書いて", o: ["と書いて", "を書いて", "に書いて", "が書いて"], c: 0, exp: "と marks the quoted content before 書いてあります.", linksTo: "L33g2" },
     { id: "L33q4", dim: "grammar", type: "recall", difficulty: "medium", s: "部長は出張する___。(the manager said…)", a: "と言っていました", o: ["と言っていました", "と書いてあります", "と読みます", "という意味です"], c: 0, exp: "〜と言っていました relays what someone said.", linksTo: "L33g2" },
     { id: "L33q5", dim: "vocab", type: "recognition", difficulty: "easy", s: "非常口 means…", a: "emergency exit", o: ["entrance", "emergency exit", "no entry", "arrow"], c: 1, exp: "非常口（ひじょうぐち）= emergency exit.", linksTo: "L33v7" },
-    { id: "L33q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means 'protect / obey'?", a: "守", o: ["規", "則", "禁", "守"], c: 3, exp: "守 → 守ります (protect/obey a rule).", linksTo: "L33k4" },
-    { id: "L33q7", dim: "vocab", type: "recognition", difficulty: "easy", s: "守ります means…", a: "to protect / obey", o: ["to warn", "to protect / obey", "to convey", "to push"], c: 1, exp: "守ります（まもります）= to protect / obey a rule.", linksTo: "L33v2" },
-    { id: "L33q8", dim: "vocab", type: "recognition", difficulty: "medium", s: "伝えます means…", a: "to convey / pass on", o: ["to pull", "to convey / pass on", "to prohibit", "to warn"], c: 1, exp: "伝えます（つたえます）= to convey / pass on a message.", linksTo: "L33v4" },
-    { id: "L33q9", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means \u0027prohibit\u0027?", a: "禁", o: ["規", "則", "禁", "守"], c: 2, exp: "禁 → 禁止（きんし）prohibition.", linksTo: "L33k3" },
-    { id: "L33q10", dim: "grammar", type: "recall", difficulty: "hard", s: "「ここで泳ぐ___」と書いてあります。(don\u0027t! — prohibitive)", a: "な", o: ["な", "ろ", "れ", "ないで"], c: 0, exp: "Prohibitive = dictionary form ＋ な: 泳ぐな.", linksTo: "L33g1" }
+    { id: "L33q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means 'protect / obey'?", a: "守", o: ["規", "則", "禁", "守"], c: 3, exp: "守 → 守ります (protect/obey a rule).", linksTo: "L33k4" }
   ]
 },
 
@@ -880,11 +844,7 @@ const SEED_CONTENT = [
     { id: "L34q3", dim: "grammar", type: "recall", difficulty: "medium", s: "宿題をし___、ゲームをします。(after doing)", a: "たあとで", o: ["たあとで", "ないで", "ながら", "るまえに"], c: 0, exp: "〜たあとで = 'after doing'.", linksTo: "L34g2" },
     { id: "L34q4", dim: "grammar", type: "recall", difficulty: "hard", s: "傘を持た___出かけて、ぬれました。(without taking)", a: "ないで", o: ["なくて", "ないで", "たあとで", "ながら"], c: 1, exp: "〜ないで = do/go 'without doing' X. (なくて would be a cause.)", linksTo: "L34g2" },
     { id: "L34q5", dim: "vocab", type: "recognition", difficulty: "easy", s: "組み立てます means…", a: "to assemble", o: ["to mix", "to assemble", "to confirm", "to push"], c: 1, exp: "組み立てます = to assemble / put together.", linksTo: "L34v4" },
-    { id: "L34q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means 'order / sequence'?", a: "順", o: ["説", "順", "番", "確"], c: 1, exp: "順 → 順番（じゅんばん）order/turn.", linksTo: "L34k2" },
-    { id: "L34q7", dim: "vocab", type: "recognition", difficulty: "easy", s: "確認します means…", a: "to confirm / check", o: ["to mix", "to confirm / check", "to assemble", "to hold down"], c: 1, exp: "確認します（かくにんします）= to confirm / check.", linksTo: "L34v5" },
-    { id: "L34q8", dim: "vocab", type: "recognition", difficulty: "medium", s: "順番 means…", a: "order / turn", o: ["instruction manual", "order / turn", "mark", "line"], c: 1, exp: "順番（じゅんばん）= order / turn.", linksTo: "L34v2" },
-    { id: "L34q9", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means \u0027certain / confirm\u0027?", a: "確", o: ["説", "順", "番", "確"], c: 3, exp: "確 → 確認（かくにん）confirm.", linksTo: "L34k4" },
-    { id: "L34q10", dim: "vocab", type: "recall", difficulty: "medium", s: "本棚を自分で___。(assemble)", a: "組み立てました", o: ["混ぜました", "組み立てました", "確認しました", "押さえました"], c: 1, exp: "組み立てます = to assemble → 組み立てました.", linksTo: "L34v4" }
+    { id: "L34q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means 'order / sequence'?", a: "順", o: ["説", "順", "番", "確"], c: 1, exp: "順 → 順番（じゅんばん）order/turn.", linksTo: "L34k2" }
   ]
 },
 
@@ -964,11 +924,7 @@ const SEED_CONTENT = [
     { id: "L35q3", dim: "grammar", type: "recall", difficulty: "hard", s: "いい → ば-conditional?", a: "よければ", o: ["いければ", "いいば", "よければ", "よけば"], c: 2, exp: "いい is irregular: よい→よければ.", linksTo: "L35g1" },
     { id: "L35q4", dim: "grammar", type: "recall", difficulty: "hard", s: "辞書を買いたいんです。― 辞書___、あの店が安いですよ。", a: "なら", o: ["ば", "なら", "たら", "と"], c: 1, exp: "〜なら picks up the topic just raised ('as for dictionaries…').", linksTo: "L35g2" },
     { id: "L35q5", dim: "vocab", type: "recognition", difficulty: "easy", s: "役に立ちます means…", a: "to be useful", o: ["to compare", "to be useful", "to turn", "to advance"], c: 1, exp: "役に立ちます = to be useful.", linksTo: "L35v3" },
-    { id: "L35q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji pair reads 「きせつ」?", a: "季節", o: ["季節", "自由", "利用", "値段"], c: 0, exp: "季節（きせつ）= season.", linksTo: "L35k1" },
-    { id: "L35q7", dim: "vocab", type: "recognition", difficulty: "easy", s: "利用します means…", a: "to use / make use of", o: ["to compare", "to use / make use of", "to turn", "to advance"], c: 1, exp: "利用します（りようします）= to use / make use of.", linksTo: "L35v4" },
-    { id: "L35q8", dim: "vocab", type: "recognition", difficulty: "medium", s: "値段 means…", a: "price", o: ["season", "price", "freedom", "line"], c: 1, exp: "値段（ねだん）= price.", linksTo: "L35v10" },
-    { id: "L35q9", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means \u0027benefit\u0027 (as in 利用)?", a: "利", o: ["季", "節", "利", "由"], c: 2, exp: "利 → 利用（りよう）use / benefit.", linksTo: "L35k3" },
-    { id: "L35q10", dim: "grammar", type: "recall", difficulty: "hard", s: "京都へ行く___、新幹線が便利です。(if / as for)", a: "なら", o: ["ば", "なら", "たら", "と"], c: 1, exp: "〜なら picks up the topic just raised (\u0027if you\u0027re going to Kyoto…\u0027).", linksTo: "L35g2" }
+    { id: "L35q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji pair reads 「きせつ」?", a: "季節", o: ["季節", "自由", "利用", "値段"], c: 0, exp: "季節（きせつ）= season.", linksTo: "L35k1" }
   ]
 },
 
@@ -1048,11 +1004,7 @@ const SEED_CONTENT = [
     { id: "L36q3", dim: "grammar", type: "recall", difficulty: "hard", s: "練習して、泳げる___。(became able to)", a: "ようになりました", o: ["ようにします", "ようになりました", "ようです", "ことにしました"], c: 1, exp: "〜ようになりました = a change ('became able to').", linksTo: "L36g2" },
     { id: "L36q4", dim: "grammar", type: "recall", difficulty: "hard", s: "毎日、階段を使う___。(I make an effort to / habit)", a: "ようにしています", o: ["ようになります", "ようにしています", "ところです", "つもりです"], c: 1, exp: "〜ようにしています = an ongoing effort/habit.", linksTo: "L36g2" },
     { id: "L36q5", dim: "vocab", type: "recognition", difficulty: "easy", s: "慣れます means…", a: "to get used to", o: ["to recover", "to get used to", "to reduce", "to reach"], c: 1, exp: "慣れます = to get used to.", linksTo: "L36v1" },
-    { id: "L36q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji pair reads 「どりょく」?", a: "努力", o: ["自信", "努力", "進歩", "通信"], c: 1, exp: "努力（どりょく）= effort.", linksTo: "L36k2" },
-    { id: "L36q7", dim: "vocab", type: "recognition", difficulty: "easy", s: "慣れます means…", a: "to get used to", o: ["to recover", "to get used to", "to reduce", "to reach"], c: 1, exp: "慣れます（なれます）= to get used to.", linksTo: "L36v1" },
-    { id: "L36q8", dim: "vocab", type: "recognition", difficulty: "medium", s: "治ります means…", a: "to recover (illness)", o: ["to memorize", "to recover (illness)", "to reduce", "to be understood"], c: 1, exp: "治ります（なおります）= to recover / get better.", linksTo: "L36v4" },
-    { id: "L36q9", dim: "kanji", type: "recognition", difficulty: "easy", s: "Which kanji means \u0027get used to\u0027?", a: "慣", o: ["慣", "努", "力", "信"], c: 0, exp: "慣 → 慣れます (get used to).", linksTo: "L36k1" },
-    { id: "L36q10", dim: "grammar", type: "recall", difficulty: "hard", s: "忘れない___、メモします。(so I won\u0027t forget)", a: "ように", o: ["ように", "ために", "ので", "から"], c: 0, exp: "Negative / uncontrollable goal → 〜ように.", linksTo: "L36g1" }
+    { id: "L36q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji pair reads 「どりょく」?", a: "努力", o: ["自信", "努力", "進歩", "通信"], c: 1, exp: "努力（どりょく）= effort.", linksTo: "L36k2" }
   ]
 },
 
@@ -1132,11 +1084,7 @@ const SEED_CONTENT = [
     { id: "L37q3", dim: "grammar", type: "recall", difficulty: "hard", s: "私は先生___ほめられました。(by the teacher)", a: "に", o: ["を", "に", "が", "で"], c: 1, exp: "The doer in a passive sentence is marked with に.", linksTo: "L37g1" },
     { id: "L37q4", dim: "grammar", type: "recall", difficulty: "hard", s: "満員電車で足___踏まれました。(my foot)", a: "を", o: ["が", "を", "に", "は"], c: 1, exp: "For a body part/possession in the suffering passive, the part takes を.", linksTo: "L37g2" },
     { id: "L37q5", dim: "vocab", type: "recognition", difficulty: "easy", s: "盗みます means…", a: "to steal", o: ["to invite", "to steal", "to praise", "to build"], c: 1, exp: "盗みます = to steal → 盗まれました (was stolen).", linksTo: "L37v4" },
-    { id: "L37q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means 'build'?", a: "建", o: ["招", "待", "建", "発"], c: 2, exp: "建 → 建てます (build) / 建てられました (was built).", linksTo: "L37k3" },
-    { id: "L37q7", dim: "vocab", type: "recognition", difficulty: "easy", s: "ほめます means…", a: "to praise", o: ["to invite", "to praise", "to scold", "to steal"], c: 1, exp: "ほめます = to praise.", linksTo: "L37v2" },
-    { id: "L37q8", dim: "vocab", type: "recognition", difficulty: "medium", s: "招待します means…", a: "to invite", o: ["to invite", "to build", "to discover", "to export"], c: 0, exp: "招待します（しょうたいします）= to invite.", linksTo: "L37v1" },
-    { id: "L37q9", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means \u0027invite\u0027?", a: "招", o: ["招", "待", "建", "発"], c: 0, exp: "招 → 招待（しょうたい）invite.", linksTo: "L37k1" },
-    { id: "L37q10", dim: "grammar", type: "recall", difficulty: "hard", s: "弟にケーキを___。(my cake was eaten by my brother)", a: "食べられました", o: ["食べさせました", "食べられました", "食べました", "食べさせられました"], c: 1, exp: "Passive: 食べる→食べられる. The doer takes に.", linksTo: "L37g1" }
+    { id: "L37q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means 'build'?", a: "建", o: ["招", "待", "建", "発"], c: 2, exp: "建 → 建てます (build) / 建てられました (was built).", linksTo: "L37k3" }
   ]
 },
 
@@ -1216,11 +1164,7 @@ const SEED_CONTENT = [
     { id: "L38q3", dim: "grammar", type: "recall", difficulty: "hard", s: "私が生まれた___北海道です。(It was Hokkaido where I was born)", a: "のは", o: ["のが", "のは", "のを", "ので"], c: 1, exp: "Cleft: 〜のは…です spotlights the place.", linksTo: "L38g2" },
     { id: "L38q4", dim: "grammar", type: "recall", difficulty: "medium", s: "歌を歌う___得意です。(good at singing)", a: "のが", o: ["のが", "のを", "のは", "のに"], c: 0, exp: "With 得意/上手/好き, the action takes のが.", linksTo: "L38g1" },
     { id: "L38q5", dim: "vocab", type: "recognition", difficulty: "easy", s: "苦手 means…", a: "weak at / not good with", o: ["good at", "weak at / not good with", "interest", "talent"], c: 1, exp: "苦手 = weak at; 得意 = good at.", linksTo: "L38v5" },
-    { id: "L38q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji pair reads 「しゅみ」?", a: "趣味", o: ["興味", "趣味", "得意", "性格"], c: 1, exp: "趣味（しゅみ）= hobby.", linksTo: "L38k1" },
-    { id: "L38q7", dim: "vocab", type: "recognition", difficulty: "easy", s: "趣味 means…", a: "hobby", o: ["hobby", "interest", "talent", "personality"], c: 0, exp: "趣味（しゅみ）= hobby.", linksTo: "L38v1" },
-    { id: "L38q8", dim: "vocab", type: "recognition", difficulty: "medium", s: "得意 means…", a: "good at", o: ["good at", "weak at", "interest", "talent"], c: 0, exp: "得意（とくい）= good at. 苦手 = weak at.", linksTo: "L38v4" },
-    { id: "L38q9", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means \u0027interest\u0027 (as in 興味)?", a: "興", o: ["趣", "味", "興", "得"], c: 2, exp: "興 → 興味（きょうみ）interest.", linksTo: "L38k3" },
-    { id: "L38q10", dim: "grammar", type: "recall", difficulty: "medium", s: "私が会いたい___山田さんです。(the one I want to meet…)", a: "のは", o: ["のが", "のは", "のを", "ので"], c: 1, exp: "Cleft: 〜のは…です spotlights the focus.", linksTo: "L38g2" }
+    { id: "L38q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji pair reads 「しゅみ」?", a: "趣味", o: ["興味", "趣味", "得意", "性格"], c: 1, exp: "趣味（しゅみ）= hobby.", linksTo: "L38k1" }
   ]
 },
 
@@ -1300,11 +1244,7 @@ const SEED_CONTENT = [
     { id: "L39q3", dim: "grammar", type: "recall", difficulty: "easy", s: "頭が痛い___、早く帰ってもいいですか。(soft reason)", a: "ので", o: ["ので", "のに", "ても", "たら"], c: 0, exp: "〜ので gives a soft, polite reason.", linksTo: "L39g2" },
     { id: "L39q4", dim: "grammar", type: "recall", difficulty: "hard", s: "日曜日 ＋ ので → ?", a: "日曜日なので", o: ["日曜日ので", "日曜日だので", "日曜日なので", "日曜日のので"], c: 2, exp: "Noun/na-adj take な before ので: 日曜日なので.", linksTo: "L39g2" },
     { id: "L39q5", dim: "vocab", type: "recognition", difficulty: "easy", s: "渋滞 means…", a: "traffic jam", o: ["earthquake", "traffic jam", "power outage", "fire"], c: 1, exp: "渋滞（じゅうたい）= traffic jam.", linksTo: "L39v3" },
-    { id: "L39q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji pair reads 「じしん」 (earthquake)?", a: "地震", o: ["地震", "原因", "火事", "停電"], c: 0, exp: "地震（じしん）= earthquake.", linksTo: "L39k1" },
-    { id: "L39q7", dim: "vocab", type: "recognition", difficulty: "easy", s: "火事 means…", a: "fire (disaster)", o: ["earthquake", "fire (disaster)", "traffic jam", "power outage"], c: 1, exp: "火事（かじ）= fire.", linksTo: "L39v2" },
-    { id: "L39q8", dim: "vocab", type: "recognition", difficulty: "medium", s: "用事 means…", a: "errand / something to do", o: ["cause", "errand / something to do", "relief", "worry"], c: 1, exp: "用事（ようじ）= errand.", linksTo: "L39v10" },
-    { id: "L39q9", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji pair reads 「げんいん」 (cause)?", a: "原因", o: ["地震", "原因", "火事", "停電"], c: 1, exp: "原因（げんいん）= cause.", linksTo: "L39k3" },
-    { id: "L39q10", dim: "grammar", type: "recall", difficulty: "medium", s: "火事___ビルが焼けました。(because of the fire)", a: "で", o: ["て", "で", "に", "を"], c: 1, exp: "Noun ＋ で expresses cause.", linksTo: "L39g1" }
+    { id: "L39q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji pair reads 「じしん」 (earthquake)?", a: "地震", o: ["地震", "原因", "火事", "停電"], c: 0, exp: "地震（じしん）= earthquake.", linksTo: "L39k1" }
   ]
 },
 
@@ -1384,11 +1324,7 @@ const SEED_CONTENT = [
     { id: "L40q3", dim: "grammar", type: "recall", difficulty: "easy", s: "この服を着___もいいですか。(may I try on?)", a: "てみて", o: ["てみて", "ておいて", "てあって", "てしまって"], c: 0, exp: "〜てみる = try doing → 着てみてもいいですか.", linksTo: "L40g2" },
     { id: "L40q4", dim: "grammar", type: "recall", difficulty: "hard", s: "学生 ＋ かどうか → ?", a: "学生かどうか", o: ["学生だかどうか", "学生かどうか", "学生なかどうか", "学生のかどうか"], c: 1, exp: "Noun before か drops だ: 学生かどうか.", linksTo: "L40g1" },
     { id: "L40q5", dim: "vocab", type: "recognition", difficulty: "easy", s: "調べます means…", a: "to look up / investigate", o: ["to try out", "to look up / investigate", "to count", "to measure"], c: 1, exp: "調べます = to look up / investigate.", linksTo: "L40v1" },
-    { id: "L40q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji pair reads 「かくにん」?", a: "確認", o: ["確認", "調査", "計算", "確実"], c: 0, exp: "確認（かくにん）= confirmation/checking.", linksTo: "L40k2" },
-    { id: "L40q7", dim: "vocab", type: "recognition", difficulty: "easy", s: "試します means…", a: "to try out / test", o: ["to look up", "to try out / test", "to count", "to measure"], c: 1, exp: "試します（ためします）= to try out / test.", linksTo: "L40v2" },
-    { id: "L40q8", dim: "vocab", type: "recognition", difficulty: "medium", s: "締め切り means…", a: "deadline", o: ["size", "deadline", "information", "application"], c: 1, exp: "締め切り（しめきり）= deadline.", linksTo: "L40v7" },
-    { id: "L40q9", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means \u0027investigate / look up\u0027?", a: "調", o: ["調", "確", "認", "計"], c: 0, exp: "調 → 調べます (look up / investigate).", linksTo: "L40k1" },
-    { id: "L40q10", dim: "grammar", type: "recall", difficulty: "medium", s: "新しいレストランへ行っ___。(tried going and seeing)", a: "てみました", o: ["てみました", "ておきました", "てありました", "てしまいました"], c: 0, exp: "〜てみる = try doing → 行ってみました.", linksTo: "L40g2" }
+    { id: "L40q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji pair reads 「かくにん」?", a: "確認", o: ["確認", "調査", "計算", "確実"], c: 0, exp: "確認（かくにん）= confirmation/checking.", linksTo: "L40k2" }
   ]
 }
 
@@ -1471,11 +1407,7 @@ const SEED_CONTENT = [
     { id: "L41q3", dim: "grammar", type: "recall", difficulty: "medium", s: "弟に宿題を教え___。(I did it for him)", a: "てあげました", o: ["てあげました", "てくれました", "てもらいました", "ていただきました"], c: 0, exp: "〜てあげます = I do something for someone.", linksTo: "L41g1" },
     { id: "L41q4", dim: "grammar", type: "recall", difficulty: "hard", s: "先生に作文を直し___。(I humbly received the favour)", a: "ていただきました", o: ["てくださいました", "ていただきました", "てあげました", "てやりました"], c: 1, exp: "〜ていただきます = humble 'I had (someone respected) do'.", linksTo: "L41g2" },
     { id: "L41q5", dim: "vocab", type: "recognition", difficulty: "easy", s: "迎えます means…", a: "to go to meet / pick up", o: ["to send", "to go to meet / pick up", "to lend", "to deliver"], c: 1, exp: "迎えます = go to meet / pick someone up.", linksTo: "L41v4" },
-    { id: "L41q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means 'lend'?", a: "貸", o: ["貸", "紹", "送", "祝"], c: 0, exp: "貸 → 貸します (lend).", linksTo: "L41k1" },
-    { id: "L41q7", dim: "vocab", type: "recognition", difficulty: "easy", s: "貸します means…", a: "to lend", o: ["to lend", "to introduce", "to send", "to deliver"], c: 0, exp: "貸します（かします）= to lend.", linksTo: "L41v1" },
-    { id: "L41q8", dim: "vocab", type: "recognition", difficulty: "medium", s: "届けます means…", a: "to deliver", o: ["to lend", "to introduce", "to deliver", "to fix"], c: 2, exp: "届けます（とどけます）= to deliver.", linksTo: "L41v6" },
-    { id: "L41q9", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means \u0027send\u0027?", a: "送", o: ["貸", "紹", "送", "祝"], c: 2, exp: "送 → 送ります (send / see off).", linksTo: "L41k3" },
-    { id: "L41q10", dim: "grammar", type: "recall", difficulty: "hard", s: "部長が手紙を直し___。(kindly did it for me — respectful)", a: "てくださいました", o: ["てくださいました", "ていただきました", "てあげました", "てやりました"], c: 0, exp: "〜てくださいます = respectful \u0027does for me\u0027.", linksTo: "L41g2" }
+    { id: "L41q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means 'lend'?", a: "貸", o: ["貸", "紹", "送", "祝"], c: 0, exp: "貸 → 貸します (lend).", linksTo: "L41k1" }
   ]
 },
 
@@ -1555,11 +1487,7 @@ const SEED_CONTENT = [
     { id: "L42q3", dim: "grammar", type: "recall", difficulty: "medium", s: "このはさみは布を切る___使います。(used for)", a: "のに", o: ["ために", "のに", "ように", "ので"], c: 1, exp: "〜のに ＋ 使う = 'used for doing'.", linksTo: "L42g2" },
     { id: "L42q4", dim: "grammar", type: "recall", difficulty: "hard", s: "駅まで行く___1時間かかります。(it takes…)", a: "のに", o: ["のに", "ために", "ように", "から"], c: 0, exp: "〜のに ＋ かかる expresses cost/time for an action.", linksTo: "L42g2" },
     { id: "L42q5", dim: "vocab", type: "recognition", difficulty: "easy", s: "機会 means…", a: "opportunity", o: ["tool", "opportunity", "environment", "health"], c: 1, exp: "機会（きかい）= opportunity / chance.", linksTo: "L42v4" },
-    { id: "L42q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji pair reads 「ひつよう」?", a: "必要", o: ["必要", "健康", "機会", "道具"], c: 0, exp: "必要（ひつよう）= necessary.", linksTo: "L42k1" },
-    { id: "L42q7", dim: "vocab", type: "recognition", difficulty: "easy", s: "健康 means…", a: "health", o: ["tool", "health", "opportunity", "environment"], c: 1, exp: "健康（けんこう）= health.", linksTo: "L42v2" },
-    { id: "L42q8", dim: "vocab", type: "recognition", difficulty: "medium", s: "道具 means…", a: "tool", o: ["tool", "opportunity", "health", "environment"], c: 0, exp: "道具（どうぐ）= tool.", linksTo: "L42v3" },
-    { id: "L42q9", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji pair reads 「けんこう」 (health)?", a: "健康", o: ["必要", "健康", "機会", "道具"], c: 1, exp: "健康（けんこう）= health.", linksTo: "L42k3" },
-    { id: "L42q10", dim: "vocab", type: "recognition", difficulty: "medium", s: "必要 means…", a: "necessary", o: ["necessary", "useful", "free", "careful"], c: 0, exp: "必要（ひつよう）= necessary.", linksTo: "L42v5" }
+    { id: "L42q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji pair reads 「ひつよう」?", a: "必要", o: ["必要", "健康", "機会", "道具"], c: 0, exp: "必要（ひつよう）= necessary.", linksTo: "L42k1" }
   ]
 },
 
@@ -1639,11 +1567,7 @@ const SEED_CONTENT = [
     { id: "L43q3", dim: "grammar", type: "recall", difficulty: "easy", s: "このケーキ、おいし___ですね。(looks tasty)", a: "そう", o: ["そう", "すぎ", "らしい", "がる"], c: 0, exp: "i-adj drop い ＋ そう: おいしい→おいしそう.", linksTo: "L43g1" },
     { id: "L43q4", dim: "grammar", type: "recall", difficulty: "medium", s: "だんだん寒くなっ___。(it's gotten colder — change toward now)", a: "てきました", o: ["ていきました", "てきました", "ておきました", "てあります"], c: 1, exp: "〜てきました = a change developing up to now.", linksTo: "L43g2" },
     { id: "L43q5", dim: "vocab", type: "recognition", difficulty: "easy", s: "厳しい means…", a: "strict", o: ["kind", "strict", "gradual", "sudden"], c: 1, exp: "厳しい = strict/severe. 優しい = kind.", linksTo: "L43v7" },
-    { id: "L43q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means 'gentle / kind'?", a: "優", o: ["泣", "喜", "優", "厳"], c: 2, exp: "優 → 優しい (gentle/kind).", linksTo: "L43k3" },
-    { id: "L43q7", dim: "vocab", type: "recognition", difficulty: "easy", s: "優しい means…", a: "kind / gentle", o: ["kind / gentle", "strict", "gradual", "sudden"], c: 0, exp: "優しい（やさしい）= kind / gentle.", linksTo: "L43v6" },
-    { id: "L43q8", dim: "vocab", type: "recognition", difficulty: "medium", s: "似合います means…", a: "to suit / look good on", o: ["to fall", "to suit / look good on", "to cry", "to spill"], c: 1, exp: "似合います（にあいます）= to suit.", linksTo: "L43v8" },
-    { id: "L43q9", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means \u0027strict\u0027?", a: "厳", o: ["泣", "喜", "優", "厳"], c: 3, exp: "厳 → 厳しい (strict).", linksTo: "L43k4" },
-    { id: "L43q10", dim: "grammar", type: "recall", difficulty: "medium", s: "あの人は元気___ですね。(looks energetic — appearance)", a: "そう", o: ["そう", "よう", "らしい", "みたい"], c: 0, exp: "na-adj ＋ そう = visual guess (looks…).", linksTo: "L43g1" }
+    { id: "L43q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means 'gentle / kind'?", a: "優", o: ["泣", "喜", "優", "厳"], c: 2, exp: "優 → 優しい (gentle/kind).", linksTo: "L43k3" }
   ]
 },
 
@@ -1735,11 +1659,7 @@ const SEED_CONTENT = [
     { id: "L44q3", dim: "grammar", type: "recall", difficulty: "medium", s: "字が小さくて、読み___です。(hard to read)", a: "にくい", o: ["やすい", "にくい", "すぎ", "そう"], c: 1, exp: "ます-stem ＋ にくい = 'hard to do'.", linksTo: "L44g2" },
     { id: "L44q4", dim: "grammar", type: "recall", difficulty: "hard", s: "部屋を___しました。(made it clean — someone did it)", a: "きれいに", o: ["きれいく", "きれいに", "きれいだ", "きれいの"], c: 1, exp: "na-adj ＋ に します = make it that way. (i-adj would use く.)", linksTo: "L44g3" },
     { id: "L44q5", dim: "vocab", type: "recognition", difficulty: "easy", s: "やわらかい means…", a: "soft", o: ["hard", "soft", "thick", "deep"], c: 1, exp: "やわらかい = soft. かたい = hard.", linksTo: "L44v5" },
-    { id: "L44q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means 'deep'?", a: "深", o: ["量", "深", "倍", "静"], c: 1, exp: "深 → 深い (deep).", linksTo: "L44k2" },
-    { id: "L44q7", dim: "vocab", type: "recognition", difficulty: "easy", s: "かたい means…", a: "hard / tough", o: ["soft", "hard / tough", "thick", "deep"], c: 1, exp: "かたい = hard / tough. やわらかい = soft.", linksTo: "L44v6" },
-    { id: "L44q8", dim: "vocab", type: "recognition", difficulty: "medium", s: "薄い means…", a: "thin / weak (taste)", o: ["thick", "thin / weak (taste)", "soft", "deep"], c: 1, exp: "薄い（うすい）= thin / weak. 厚い = thick.", linksTo: "L44v4" },
-    { id: "L44q9", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means \u0027quiet\u0027?", a: "静", o: ["量", "深", "倍", "静"], c: 3, exp: "静 → 静か (quiet).", linksTo: "L44k4" },
-    { id: "L44q10", dim: "grammar", type: "recall", difficulty: "medium", s: "この町は住み___です。(easy to live in)", a: "やすい", o: ["やすい", "にくい", "すぎ", "そう"], c: 0, exp: "ます-stem ＋ やすい = easy to do.", linksTo: "L44g2" }
+    { id: "L44q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means 'deep'?", a: "深", o: ["量", "深", "倍", "静"], c: 1, exp: "深 → 深い (deep).", linksTo: "L44k2" }
   ]
 },
 
@@ -1819,11 +1739,7 @@ const SEED_CONTENT = [
     { id: "L45q3", dim: "grammar", type: "recall", difficulty: "hard", s: "薬を飲んだ___、熱が下がりません。(even though)", a: "のに", o: ["ので", "のに", "から", "ように"], c: 1, exp: "〜のに = 'even though', with surprise/complaint.", linksTo: "L45g2" },
     { id: "L45q4", dim: "grammar", type: "recall", difficulty: "hard", s: "日曜日 ＋ のに (although it's Sunday) → ?", a: "日曜日なのに", o: ["日曜日のに", "日曜日だのに", "日曜日なのに", "日曜日でのに"], c: 2, exp: "Noun/na-adj take な before のに: 日曜日なのに.", linksTo: "L45g2" },
     { id: "L45q5", dim: "vocab", type: "recognition", difficulty: "easy", s: "欠席します means…", a: "to be absent", o: ["to attend", "to be absent", "to be late", "to submit"], c: 1, exp: "欠席します = be absent; 出席します = attend.", linksTo: "L45v7" },
-    { id: "L45q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji pair reads 「ばあい」?", a: "場合", o: ["場合", "非常", "期間", "許可"], c: 0, exp: "場合（ばあい）= case/situation.", linksTo: "L45k1" },
-    { id: "L45q7", dim: "vocab", type: "recognition", difficulty: "easy", s: "出席します means…", a: "to attend", o: ["to be absent", "to attend", "to be late", "to submit"], c: 1, exp: "出席します = attend. 欠席します = be absent.", linksTo: "L45v8" },
-    { id: "L45q8", dim: "vocab", type: "recognition", difficulty: "medium", s: "提出します means…", a: "to submit / hand in", o: ["to cancel", "to submit / hand in", "to extend", "to attend"], c: 1, exp: "提出します（ていしゅつします）= to submit.", linksTo: "L45v9" },
-    { id: "L45q9", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji pair reads 「きかん」 (period)?", a: "期間", o: ["場合", "非常", "期間", "許可"], c: 2, exp: "期間（きかん）= period / term.", linksTo: "L45k3" },
-    { id: "L45q10", dim: "grammar", type: "recall", difficulty: "hard", s: "一生けんめい練習した___、負けてしまいました。(even though)", a: "のに", o: ["のに", "ので", "から", "ば"], c: 0, exp: "〜のに = \u0027even though\u0027, with disappointment.", linksTo: "L45g2" }
+    { id: "L45q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji pair reads 「ばあい」?", a: "場合", o: ["場合", "非常", "期間", "許可"], c: 0, exp: "場合（ばあい）= case/situation.", linksTo: "L45k1" }
   ]
 },
 
@@ -1903,11 +1819,7 @@ const SEED_CONTENT = [
     { id: "L46q3", dim: "grammar", type: "recall", difficulty: "medium", s: "日本に来た___で、まだよくわかりません。(only just)", a: "ばかり", o: ["ところ", "ばかり", "はず", "そう"], c: 1, exp: "〜たばかり = 'only just did' (subjective 'not long ago').", linksTo: "L46g2" },
     { id: "L46q4", dim: "grammar", type: "recall", difficulty: "hard", s: "約束したから、来る___です。(should come — logical)", a: "はず", o: ["はず", "ばかり", "ところ", "よう"], c: 0, exp: "〜はずです = a logical expectation.", linksTo: "L46g2" },
     { id: "L46q5", dim: "vocab", type: "recognition", difficulty: "easy", s: "留守 means…", a: "not at home / absence", o: ["arrival", "not at home / absence", "preparation", "deadline"], c: 1, exp: "留守（るす）= being out / not at home.", linksTo: "L46v2" },
-    { id: "L46q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji pair reads 「とうちゃく」?", a: "到着", o: ["到着", "出発", "用意", "留守"], c: 0, exp: "到着（とうちゃく）= arrival.", linksTo: "L46k1" },
-    { id: "L46q7", dim: "vocab", type: "recognition", difficulty: "easy", s: "間に合います means…", a: "to be in time", o: ["to depart", "to be in time", "to arrive", "to prepare"], c: 1, exp: "間に合います（まにあいます）= to be in time.", linksTo: "L46v6" },
-    { id: "L46q8", dim: "vocab", type: "recognition", difficulty: "medium", s: "受け取ります means…", a: "to receive / accept", o: ["to hand over", "to receive / accept", "to prepare", "to arrive"], c: 1, exp: "受け取ります（うけとります）= to receive / accept.", linksTo: "L46v10" },
-    { id: "L46q9", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means \u0027depart\u0027 (as in 出発)?", a: "発", o: ["到", "着", "発", "用"], c: 2, exp: "発 → 出発（しゅっぱつ）departure.", linksTo: "L46k3" },
-    { id: "L46q10", dim: "grammar", type: "recall", difficulty: "medium", s: "今、レポートを書い___です。(in the middle of)", a: "ているところ", o: ["るところ", "ているところ", "たところ", "たばかり"], c: 1, exp: "〜ているところ = in the middle of doing.", linksTo: "L46g1" }
+    { id: "L46q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji pair reads 「とうちゃく」?", a: "到着", o: ["到着", "出発", "用意", "留守"], c: 0, exp: "到着（とうちゃく）= arrival.", linksTo: "L46k1" }
   ]
 },
 
@@ -1987,11 +1899,7 @@ const SEED_CONTENT = [
     { id: "L47q3", dim: "grammar", type: "recall", difficulty: "medium", s: "電気がついているから、家にいる___。(it seems)", a: "ようです", o: ["そうです", "ようです", "つもりです", "ところです"], c: 1, exp: "〜ようです = a reasoned guess from evidence.", linksTo: "L47g2" },
     { id: "L47q4", dim: "grammar", type: "recall", difficulty: "hard", s: "Which is hearsay ('I heard it'll rain'), not appearance?", a: "雨が降るそうです", o: ["雨が降りそうです", "雨が降るそうです", "雨のようです", "雨らしい顔"], c: 1, exp: "Plain 降る ＋ そう = hearsay. 降りそう (stem) = appearance.", linksTo: "L47g1" },
     { id: "L47q5", dim: "vocab", type: "recognition", difficulty: "easy", s: "合格します means…", a: "to pass (an exam)", o: ["to move house", "to pass (an exam)", "to visit", "to win"], c: 1, exp: "合格します = pass an exam.", linksTo: "L47v3" },
-    { id: "L47q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji pair reads 「ごうかく」?", a: "合格", o: ["合格", "情報", "予報", "格安"], c: 0, exp: "合格（ごうかく）= passing (an exam).", linksTo: "L47k2" },
-    { id: "L47q7", dim: "vocab", type: "recognition", difficulty: "easy", s: "引っ越します means…", a: "to move (house)", o: ["to pass an exam", "to move (house)", "to visit", "to win"], c: 1, exp: "引っ越します（ひっこします）= to move house.", linksTo: "L47v4" },
-    { id: "L47q8", dim: "vocab", type: "recognition", difficulty: "medium", s: "情報 means…", a: "information", o: ["rumour", "information", "forecast", "opportunity"], c: 1, exp: "情報（じょうほう）= information.", linksTo: "L47v10" },
-    { id: "L47q9", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means \u0027report / news\u0027 (天気予報)?", a: "報", o: ["報", "合", "格", "情"], c: 0, exp: "報 → 天気予報（てんきよほう）forecast.", linksTo: "L47k1" },
-    { id: "L47q10", dim: "grammar", type: "recall", difficulty: "medium", s: "道がぬれている。雨が降った___。(it seems — from evidence)", a: "ようです", o: ["そうです", "ようです", "つもりです", "ところです"], c: 1, exp: "〜ようです = a reasoned guess from evidence.", linksTo: "L47g2" }
+    { id: "L47q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji pair reads 「ごうかく」?", a: "合格", o: ["合格", "情報", "予報", "格安"], c: 0, exp: "合格（ごうかく）= passing (an exam).", linksTo: "L47k2" }
   ]
 },
 
@@ -2071,11 +1979,7 @@ const SEED_CONTENT = [
     { id: "L48q3", dim: "grammar", type: "recall", difficulty: "hard", s: "母は妹___買い物に行かせました。(intransitive verb)", a: "を", o: ["を", "に", "が", "へ"], c: 0, exp: "For an intransitive verb, the person made to act takes を.", linksTo: "L48g1" },
     { id: "L48q4", dim: "grammar", type: "recall", difficulty: "easy", s: "少し休ま___。(please let me rest)", a: "せてください", o: ["せてください", "れてください", "してください", "させられて"], c: 0, exp: "Causative te-form ＋ ください = 'please let me…'.", linksTo: "L48g2" },
     { id: "L48q5", dim: "vocab", type: "recognition", difficulty: "easy", s: "許します means…", a: "to permit / forgive", o: ["to carry", "to distribute", "to permit / forgive", "to be troubled"], c: 2, exp: "許します = permit / forgive.", linksTo: "L48v9" },
-    { id: "L48q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means 'be troubled'?", a: "困", o: ["配", "困", "経", "許"], c: 1, exp: "困 → 困ります (be troubled) / 困らせる (trouble someone).", linksTo: "L48k2" },
-    { id: "L48q7", dim: "vocab", type: "recognition", difficulty: "easy", s: "笑います means…", a: "to laugh", o: ["to carry", "to laugh", "to distribute", "to be troubled"], c: 1, exp: "笑います（わらいます）= to laugh.", linksTo: "L48v4" },
-    { id: "L48q8", dim: "vocab", type: "recognition", difficulty: "medium", s: "配ります means…", a: "to distribute / hand out", o: ["to carry", "to distribute / hand out", "to permit", "to experience"], c: 1, exp: "配ります（くばります）= to distribute.", linksTo: "L48v2" },
-    { id: "L48q9", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means \u0027permit / forgive\u0027?", a: "許", o: ["配", "困", "経", "許"], c: 3, exp: "許 → 許します (permit / forgive).", linksTo: "L48k4" },
-    { id: "L48q10", dim: "grammar", type: "recall", difficulty: "hard", s: "母は妹を買い物に___。(made / sent her go)", a: "行かせました", o: ["行かれました", "行かせました", "行きました", "行かせられました"], c: 1, exp: "Causative: 行く→行かせる. The person (intransitive) takes を.", linksTo: "L48g1" }
+    { id: "L48q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means 'be troubled'?", a: "困", o: ["配", "困", "経", "許"], c: 1, exp: "困 → 困ります (be troubled) / 困らせる (trouble someone).", linksTo: "L48k2" }
   ]
 },
 
@@ -2155,11 +2059,7 @@ const SEED_CONTENT = [
     { id: "L49q3", dim: "grammar", type: "recall", difficulty: "medium", s: "書きます → お〜になります honorific?", a: "お書きになります", o: ["お書きになります", "お書きします", "書かせます", "お書きでございます"], c: 0, exp: "お ＋ ます-stem ＋ になります = honorific. (お〜します is humble.)", linksTo: "L49g1" },
     { id: "L49q4", dim: "grammar", type: "recall", difficulty: "medium", s: "Polite request: ___ください。(please use — する-noun 利用)", a: "ご利用", o: ["お利用", "ご利用", "利用に", "利用して"], c: 1, exp: "する-nouns take ご: ご利用ください.", linksTo: "L49g2" },
     { id: "L49q5", dim: "vocab", type: "recognition", difficulty: "medium", s: "いらっしゃいます is the honorific of…", a: "go / come / be", o: ["eat / drink", "go / come / be", "say", "do"], c: 1, exp: "いらっしゃる = honorific of 行く・来る・いる.", linksTo: "L49v1" },
-    { id: "L49q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji pair reads 「そんけい」 (respect)?", a: "尊敬", o: ["尊敬", "敬語", "尊重", "敬意"], c: 0, exp: "尊敬（そんけい）= respect.", linksTo: "L49k1" },
-    { id: "L49q7", dim: "vocab", type: "recognition", difficulty: "easy", s: "お客様 means…", a: "guest / customer (hon.)", o: ["reception desk", "guest / customer (hon.)", "use", "attendance"], c: 1, exp: "お客様（おきゃくさま）= honorific guest / customer.", linksTo: "L49v7" },
-    { id: "L49q8", dim: "vocab", type: "recognition", difficulty: "medium", s: "おっしゃいます is the honorific of…", a: "to say", o: ["to go / come / be", "to eat / drink", "to say", "to do"], c: 2, exp: "おっしゃる = honorific of 言う (say).", linksTo: "L49v3" },
-    { id: "L49q9", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means \u0027guest\u0027?", a: "客", o: ["尊", "敬", "客", "様"], c: 2, exp: "客 → お客様（おきゃくさま）guest.", linksTo: "L49k3" },
-    { id: "L49q10", dim: "grammar", type: "recall", difficulty: "hard", s: "来る → honorific (special verb)?", a: "いらっしゃる", o: ["いらっしゃる", "まいる", "おる", "うかがう"], c: 0, exp: "Honorific of 行く・来る・いる = いらっしゃる. (まいる/おる are humble.)", linksTo: "L49g1" }
+    { id: "L49q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji pair reads 「そんけい」 (respect)?", a: "尊敬", o: ["尊敬", "敬語", "尊重", "敬意"], c: 0, exp: "尊敬（そんけい）= respect.", linksTo: "L49k1" }
   ]
 },
 
@@ -2239,11 +2139,7 @@ const SEED_CONTENT = [
     { id: "L50q3", dim: "grammar", type: "recall", difficulty: "medium", s: "案内します → humble?", a: "ご案内します", o: ["ご案内します", "ご案内になります", "案内されます", "お案内します"], c: 0, exp: "する-noun humble = ご ＋ noun ＋ します/いたします.", linksTo: "L50g1" },
     { id: "L50q4", dim: "grammar", type: "recall", difficulty: "hard", s: "ロビーでお待ちし___。(I'll be waiting — humble)", a: "ております", o: ["ております", "ていらっしゃいます", "ています", "てございます"], c: 0, exp: "〜ております = humble of 〜ています.", linksTo: "L50g2" },
     { id: "L50q5", dim: "vocab", type: "recognition", difficulty: "medium", s: "いただきます (humble) replaces…", a: "eat / drink / receive", o: ["go / come", "say", "eat / drink / receive", "do"], c: 2, exp: "いただく = humble of 食べる・飲む・もらう.", linksTo: "L50v3" },
-    { id: "L50q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji pair reads 「しつれい」?", a: "失礼", o: ["失礼", "案内", "敬語", "礼儀"], c: 0, exp: "失礼（しつれい）= excuse me / impoliteness.", linksTo: "L50k1" },
-    { id: "L50q7", dim: "vocab", type: "recognition", difficulty: "easy", s: "失礼します means…", a: "to excuse oneself", o: ["to excuse oneself", "to deliver", "to guide", "to know"], c: 0, exp: "失礼します（しつれいします）= excuse me / excuse oneself.", linksTo: "L50v8" },
-    { id: "L50q8", dim: "vocab", type: "recognition", difficulty: "medium", s: "はいけんします (humble) replaces…", a: "to look at / see", o: ["to go / come", "to say", "to look at / see", "to do"], c: 2, exp: "はいけんする = humble of 見る (look at).", linksTo: "L50v4" },
-    { id: "L50q9", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji means \u0027say (humble)\u0027 (申します)?", a: "申", o: ["失", "礼", "申", "案"], c: 2, exp: "申 → 申します（もうします）say (humble).", linksTo: "L50k3" },
-    { id: "L50q10", dim: "grammar", type: "recall", difficulty: "hard", s: "見る → humble (special verb)?", a: "はいけんする", o: ["はいけんする", "ごらんになる", "みる", "おみえになる"], c: 0, exp: "Humble of 見る = はいけんする. (ごらんになる is honorific.)", linksTo: "L50g1" }
+    { id: "L50q6", dim: "kanji", type: "recognition", difficulty: "medium", s: "Which kanji pair reads 「しつれい」?", a: "失礼", o: ["失礼", "案内", "敬語", "礼儀"], c: 0, exp: "失礼（しつれい）= excuse me / impoliteness.", linksTo: "L50k1" }
   ]
 }
 

@@ -33,6 +33,8 @@
     WINDOW: 14,          // days over which we measure adherence
     GAP_RETURN: 2,       // missing this many days → "welcome back", shrink the ask
     RESCUE_DOSE: 3,      // the 60-second minimum session size
+    REVIEW_CAP: 30,      // max reviews per day (anti-avalanche)
+    CATCHUP_MODE: 50,    // when due > this, switch to catch-up mode (sorted by urgency)
     DOSE_BY_ADHERENCE: [ // sustainable daily ceiling as habit strengthens
       { upTo: 0.30, dose: 5  },   // shaky habit → keep it tiny
       { upTo: 0.60, dose: 10 },
@@ -100,29 +102,41 @@
     if (returning) dose = Math.min(dose, CFG.RESCUE_DOSE * 2); // ease back in after a gap
     const rescueMode = a < 0.30 || returning;
 
+    // ---- anti-avalanche: cap reviews, use catch-up mode when overwhelmed ----
+    const avalanche = due.length > CFG.CATCHUP_MODE;
+    const reviewCap = avalanche ? CFG.REVIEW_CAP : dose;
+    const catchUpMode = avalanche && !rescueMode;
+
     // ---- choose the items: most-urgent due first, then top up with new ----
     const byUrgency = due.slice().sort((x, y) => Memory.urgency(y.state, now) - Memory.urgency(x.state, now));
-    const reviewPick = byUrgency.slice(0, dose);
-    const room = Math.max(0, dose - reviewPick.length);
+    const reviewPick = byUrgency.slice(0, Math.min(reviewCap, dose));
+    const room = Math.max(0, Math.min(reviewCap, dose) - reviewPick.length);
     const newAllowance = Math.min(room, Math.ceil(dose * CFG.NEW_RATIO));
     const newPick = fresh.slice(0, newAllowance);
 
     // the 60-second rescue is always the 3 highest-urgency items (or new if none due)
     const rescue = (byUrgency.length ? byUrgency : fresh).slice(0, CFG.RESCUE_DOSE).map(it => it.id);
 
+    // "just one card" — the single highest-urgency item, always offered
+    const justOne = (byUrgency.length ? byUrgency : fresh)[0];
+    const justOneId = justOne ? justOne.id : null;
+
     const coach = chooseMessage({
-      name, returning, gap, rescueMode,
+      name, returning, gap, rescueMode, catchUpMode, avalanche,
       due: due.length, risk: risk.length, fresh: fresh.length,
       adherence: a, momentum: ctx.momentum || 0, stages
     });
 
     return {
       date: today,
-      focusDose: dose,
+      focusDose: Math.min(reviewCap, dose),
       rescueMode,
+      catchUpMode,
+      avalanche,
       review: reviewPick.map(it => it.id),
       new: newPick.map(it => it.id),
       rescue,
+      justOne: justOneId,
       stages,
       headline: coach.headline,
       message: coach.message,
@@ -132,8 +146,8 @@
         date: today, name,
         due: due.length, atRisk: risk.length,
         adherence: +a.toFixed(2), gap, momentum: ctx.momentum || 0,
-        recommended: rescueMode ? CFG.RESCUE_DOSE : dose,
-        stages, headline: coach.headline
+        recommended: rescueMode ? CFG.RESCUE_DOSE : Math.min(reviewCap, dose),
+        avalanche, stages, headline: coach.headline
       }
     };
   }
@@ -142,6 +156,13 @@
           behaviour-science principle it applies (so the reasoning is legible) -- */
   function chooseMessage(s) {
     const name = s.name;
+    if (s.avalanche && !s.returning) {
+      return {
+        headline: `${s.due} reviews waiting — let's catch up`,
+        message: `You've got ${s.due} items due. Don't worry — I've picked the ${CFG.REVIEW_CAP} most at-risk ones. Do what you can; the rest will reschedule. Even 5 minutes counts.`,
+        principle: 'Anti-avalanche: cap daily load to prevent avoidance; sort by urgency to rescue what matters most'
+      };
+    }
     if (s.returning) {
       return {
         headline: 'Welcome back',

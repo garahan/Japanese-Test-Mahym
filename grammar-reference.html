@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1c1c2e">
+<title>文法 — Grammar Reference</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#faf5f0;--card:#fff;--ink:#1a1a2e;--ink3:#6b6b80;--border:#eee5dc;
+  --blue:#2979ff;--green:#00c853;--gold:#ffb300;--red:#ff4b6e;--purple:#8e24aa;
+  --blue-soft:#e3f0ff;--green-soft:#e8f5e9;--gold-soft:#fff8e1;--red-soft:#fce4ec;
+  --shadow:0 2px 12px rgba(0,0,0,.06);--spring:cubic-bezier(.34,1.56,.64,1)
+}
+body.dark{
+  --bg:#161620;--card:#1e1e2e;--ink:#e8e8f0;--ink3:#9999b0;--border:#333348;
+  --blue-soft:#1a2332;--green-soft:#1a2a1e;--gold-soft:#2a2418;--red-soft:#2a1a1e;
+  --shadow:0 2px 12px rgba(0,0,0,.3)
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'Inter','Noto Sans JP',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;transition:background .3s}
+.gr-head{background:linear-gradient(135deg,var(--red),#ff7a59);color:#fff;padding:calc(env(safe-area-inset-top) + 20px) 20px 24px;text-align:center}
+.gr-head h1{font-size:22px;font-weight:900;font-family:'Noto Sans JP';margin-bottom:4px}
+.gr-head p{font-size:13px;opacity:.9}
+.gr-back{position:absolute;top:calc(env(safe-area-inset-top) + 12px);left:16px;background:rgba(255,255,255,.2);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer}
+.gr-search{padding:12px 16px;position:sticky;top:0;z-index:10;background:var(--bg)}
+.gr-search input{width:100%;padding:12px 16px;border:2px solid var(--border);border-radius:14px;background:var(--card);color:var(--ink);font-size:15px;font-family:inherit}
+.gr-search input:focus{outline:none;border-color:var(--blue)}
+.gr-chips{display:flex;gap:6px;padding:0 16px 12px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.gr-chip{white-space:nowrap;padding:6px 14px;border-radius:20px;background:var(--card);border:1.5px solid var(--border);color:var(--ink3);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s}
+.gr-chip.active{background:var(--red);color:#fff;border-color:var(--red)}
+.gr-body{padding:0 16px 80px}
+.gr-lesson{margin-bottom:1.5rem}
+.gr-lesson-head{font-size:16px;font-weight:900;font-family:'Noto Sans JP';padding:10px 0;border-bottom:2px solid var(--border);margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.gr-lesson-head .gr-lv{font-size:12px;color:var(--ink3);font-weight:700}
+.gr-card{background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:16px;margin-bottom:10px;box-shadow:var(--shadow);transition:transform .15s var(--spring)}
+.gr-card:active{transform:scale(.98)}
+.gr-point{font-size:17px;font-weight:900;font-family:'Noto Sans JP';color:var(--red);margin-bottom:6px}
+.gr-exp{font-size:14px;color:var(--ink);line-height:1.7;margin-bottom:10px}
+.gr-examples{list-style:none;padding:0}
+.gr-examples li{font-size:13px;padding:6px 10px;background:var(--bg);border-radius:8px;margin-bottom:4px;font-family:'Noto Sans JP'}
+.gr-examples li::before{content:'例 ';color:var(--gold);font-weight:900}
+.gr-empty{text-align:center;padding:3rem 1rem;color:var(--ink3)}
+.gr-empty .es-icon{font-size:48px;margin-bottom:.5rem}
+.gr-empty .es-title{font-size:18px;font-weight:900;color:var(--ink)}
+.gr-dark-toggle{position:absolute;top:calc(env(safe-area-inset-top) + 12px);right:16px;background:rgba(255,255,255,.2);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:16px;cursor:pointer}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div class="gr-head">
+  <button class="gr-back" onclick="location.href='/index.html'">←</button>
+  <h1>文法 — Grammar Reference</h1>
+  <p>All grammar points · searchable · revisitable</p>
+  <button class="gr-dark-toggle" id="gr-dark" onclick="toggleDark()">🌙</button>
+</div>
+<div class="gr-search"><input type="text" id="gr-input" placeholder="🔍 Search grammar points..." oninput="filterGrammar()"></div>
+<div class="gr-chips" id="gr-chips"></div>
+<div class="gr-body" id="gr-body"></div>
+
+<script src="/seed-data.js"></script>
+<script src="/memory-engine.js"></script>
+<script src="/Coach.js"></script>
+<script src="/core.js"></script>
+<script>
+const C=window.Core;
+let allGrammar=[];
+let activeLesson='all';
+
+function collectGrammar(){
+  const packs=C.PACKS();
+  const result=[];
+  packs.forEach(p=>{
+    const lessonNum=p.lessonNum||p.lesson;
+    const lessonLabel=p.lessonLabel||('Lesson '+lessonNum);
+    (p.grammar||[]).forEach(g=>{
+      result.push({...g,lessonNum,lessonLabel,level:p.level||'N4'});
+    });
+  });
+  return result.sort((a,b)=>(a.lessonNum||0)-(b.lessonNum||0));
+}
+
+function renderChips(){
+  const lessons=[...new Set(allGrammar.map(g=>g.lessonNum))].sort((a,b)=>a-b);
+  const chips=document.getElementById('gr-chips');
+  let html=`<button class="gr-chip ${activeLesson==='all'?'active':''}" onclick="setLesson('all')">All</button>`;
+  lessons.forEach(l=>{
+    html+=`<button class="gr-chip ${activeLesson===l?'active':''}" onclick="setLesson(${l})">L${l}</button>`;
+  });
+  chips.innerHTML=html;
+}
+
+function setLesson(l){ activeLesson=l; renderChips(); filterGrammar(); }
+
+function filterGrammar(){
+  const q=(document.getElementById('gr-input').value||'').toLowerCase().trim();
+  let filtered=allGrammar;
+  if(activeLesson!=='all') filtered=filtered.filter(g=>g.lessonNum===activeLesson);
+  if(q) filtered=filtered.filter(g=>
+    (g.point||'').toLowerCase().includes(q)||
+    (g.explanation||'').toLowerCase().includes(q)||
+    (g.examples||[]).some(e=>e.toLowerCase().includes(q))
+  );
+  renderGrammar(filtered);
+}
+
+function renderGrammar(items){
+  const body=document.getElementById('gr-body');
+  if(!items.length){
+    body.innerHTML=`<div class="gr-empty"><div class="es-icon">📚</div><div class="es-title">No grammar points found</div><div style="font-size:14px;margin-top:4px">Try a different search or lesson filter</div></div>`;
+    return;
+  }
+  // Group by lesson
+  const byLesson={};
+  items.forEach(g=>{
+    const key=g.lessonNum;
+    if(!byLesson[key]) byLesson[key]={label:g.lessonLabel,items:[]};
+    byLesson[key].items.push(g);
+  });
+  let html='';
+  Object.keys(byLesson).sort((a,b)=>a-b).forEach(k=>{
+    const group=byLesson[k];
+    html+=`<div class="gr-lesson"><div class="gr-lesson-head">Lesson ${k} · ${group.label}<span class="gr-lv">${group.items[0].level}</span></div>`;
+    group.items.forEach(g=>{
+      html+=`<div class="gr-card">
+        <div class="gr-point">${g.point||''}</div>
+        <div class="gr-exp">${g.explanation||''}</div>
+        ${(g.examples||[]).length?`<ul class="gr-examples">${g.examples.map(e=>`<li>${e}</li>`).join('')}</ul>`:''}
+      </div>`;
+    });
+    html+=`</div>`;
+  });
+  body.innerHTML=html;
+}
+
+function toggleDark(){
+  const s=C.getSettings();
+  s.darkMode=!s.darkMode;
+  C.setSettings(s);
+  document.body.classList.toggle('dark',s.darkMode);
+  document.getElementById('gr-dark').textContent=s.darkMode?'☀️':'🌙';
+}
+
+// Init
+C.loadContent(()=>{
+  allGrammar=collectGrammar();
+  renderChips();
+  filterGrammar();
+  // Apply dark mode
+  const s=C.getSettings();
+  if(s.darkMode){ document.body.classList.add('dark'); document.getElementById('gr-dark').textContent='☀️'; }
+});
+// Register service worker
+if('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(()=>{});
+</script>
+</body>
+</html>
