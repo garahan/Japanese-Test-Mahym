@@ -288,6 +288,11 @@ button,.tile,.lesson-card,.opt,.rate,.m-cta,.next-btn,.reveal-btn,.shead,.fc-sce
 .j-legend span{display:inline-flex;align-items:center;gap:5px}
 .j-chip{width:13px;height:13px;border-radius:5px;display:inline-block;flex-shrink:0}
 .j-more{font-size:12px;color:var(--blue);text-decoration:none;font-weight:800}
+.backup-row{margin-top:1.6rem;padding-top:1.2rem;border-top:1px solid var(--border);text-align:center}
+.backup-cap{font-size:12px;color:var(--ink3);font-weight:600;line-height:1.5;margin-bottom:10px;max-width:300px;margin-left:auto;margin-right:auto}
+.backup-btns{display:flex;gap:10px;justify-content:center}
+.backup-btn{background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:9px 16px;font-size:13px;font-weight:800;color:var(--ink2);cursor:pointer}
+.backup-btn:active{transform:scale(.97)}
 
 /* ===================== EXAM COUNTDOWN + MOCK EXAM ===================== */
 .exam-countdown{display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:13px;padding:8px 12px;margin-bottom:14px;cursor:pointer;font-weight:800}
@@ -372,6 +377,14 @@ button,.tile,.lesson-card,.opt,.rate,.m-cta,.next-btn,.reveal-btn,.shead,.fc-sce
     <div id="continue-slot"></div>
     <div id="journey-slot"></div>
     <div id="review-slot"></div>
+    <div class="backup-row">
+      <div class="backup-cap">Your progress is saved on this device only. Back it up so it's never lost.</div>
+      <div class="backup-btns">
+        <button class="backup-btn" onclick="App.exportProgress()">⬇️ Export progress</button>
+        <button class="backup-btn" onclick="document.getElementById('import-file').click()">⬆️ Import</button>
+      </div>
+      <input type="file" id="import-file" accept="application/json,.json" style="display:none" onchange="App.importProgress(event)">
+    </div>
   </div>
   <div class="admin-link"><a href="/admin.html">🌸</a></div>
 </div>
@@ -488,6 +501,9 @@ const App = (function(){
       </div>
       <div class="mock-tile" style="margin-top:.6rem" onclick="C.haptic('heavy');App.openExamHub()">
         <div class="mt-ico">📝</div><div><div class="mt-name">模擬試験 — Mock exam</div><div class="mt-sub">MEXT style · timed · 初級→中級→上級</div></div>
+      </div>
+      <div class="mock-tile" style="margin-top:.6rem;background:linear-gradient(135deg,#0d6e56,#1d9e75);border-color:#1d9e75" onclick="C.haptic('heavy');App.openJlptHub()">
+        <div class="mt-ico">🎓</div><div><div class="mt-name">JLPT レベルチェック — Level check</div><div class="mt-sub">Placement · estimate your N5–N3 level & score</div></div>
       </div>` : '';
 
     // JOURNEY MAP — compact tracker for the whole 25→50 path
@@ -883,7 +899,151 @@ const App = (function(){
   }
   function exitSession(){C.haptic('light');try{speechSynthesis.cancel()}catch(e){}
     if(curLesson!=null) backToLesson(curLesson); else home(); }
+  /* ===================== JLPT LEVEL CHECK (placement, repeatable) ===================== */
+  const JLPT_PASS={N5:80, N4:90, N3:95};   // official total pass marks (/180)
+  function openJlptHub(){
+    clearInterval(examTimer); EX=null;
+    document.getElementById('exam-top').classList.remove('show');
+    const last=C.DB.get('jlpt_last');
+    const lastHtml = last ? `<div class="level-card lv-A" style="cursor:default">
+        <div class="lv-row"><div class="lv-badge" style="background:#1d9e75">${last.level}</div>
+          <div><div class="lv-name">Last estimate · ${last.level}</div><div class="lv-jp">${last.total}/180 points · ${last.date}</div></div>
+        </div></div>` : '';
+    document.getElementById('exam-body').innerHTML=`
+      <button class="sback" style="margin-bottom:1rem" onclick="App.home()">← Home</button>
+      <div class="exam-hub-head">
+        <div class="exam-hub-title">🎓 JLPT レベルチェック</div>
+        <div class="exam-hub-sub">A placement check you can take anytime. Mixed difficulty across the JLPT skill areas — <b>文字・語彙</b>, <b>文法</b>, <b>読解</b>, <b>聴解</b>. At the end it estimates your level (N5–N3) and gives a JLPT-style score out of 180. Your answers also feed your reviews.</div>
+      </div>
+      ${lastHtml}
+      <button class="mock-tile" style="width:100%;justify-content:center;background:linear-gradient(135deg,#0d6e56,#1d9e75);border-color:#1d9e75;margin-top:.4rem" onclick="C.haptic('heavy');App.startPlacement()">
+        <div class="mt-ico">▶</div><div><div class="mt-name">Start level check</div><div class="mt-sub">~15 min · 4 skill sections · mixed N5–N3</div></div>
+      </button>
+      <div class="exam-hub-sub" style="margin-top:1rem">Note: this is a practice estimate based on your lessons — the official JLPT is the real measure.</div>`;
+    showView('view-exam');
+  }
+
+  function buildPlacement(){
+    const sh=C.shuffle, qPool=C.ITEMS.question;
+    const nonGen=q=>q.type!=='listening'&&q.type!=='comprehension';
+    const spread=(pool,e,m,h)=>{ const b=d=>sh(pool.filter(q=>C.difficultyOf(q)===d));
+      return [].concat(b('easy').slice(0,e),b('medium').slice(0,m),b('hard').slice(0,h)); };
+    const screens=[], sec=[];
+    const add=(key,label,desc,skill,items)=>{ if(!items.length) return; sec.push({key,label,skill});
+      items.forEach((it,idx)=>screens.push({section:key,secLabel:label,secDesc:desc,secFirst:idx===0,skill,
+        q:it.q,o:it.o,c:it.c,exp:it.exp,rid:it.rid,band:it.band,audioText:it.audioText||null,pts:1,
+        passage:idx===0?it.passage:null,passageTitle:idx===0?it.ptitle:null})); };
+    add('文字・語彙','文字・語彙 Vocabulary / Kanji','Choose the best word or reading.','lang',
+      spread(qPool.filter(q=>(q.dim==='vocab'||q.dim==='kanji')&&nonGen(q)),2,2,2)
+        .map(q=>({rid:q.linksTo||q.id,q:q.s,o:q.o,c:q.c,exp:q.exp,band:C.difficultyOf(q)})));
+    add('文法','文法 Grammar','Choose the most appropriate option.','lang',
+      spread(qPool.filter(q=>q.dim==='grammar'&&nonGen(q)),2,2,2)
+        .map(q=>({rid:q.linksTo||q.id,q:q.s,o:q.o,c:q.c,exp:q.exp,band:C.difficultyOf(q)})));
+    const packs=C.PACKS().filter(p=>p.reading&&p.reading.questions&&p.reading.questions.length);
+    const rp=sh(packs)[0];
+    if(rp) add('読解','読解 Reading','Read the passage, then answer.','read',
+      rp.reading.questions.slice(0,3).map((rq,idx)=>({rid:rq.id,q:rq.q,o:rq.o,c:rq.c,exp:rq.exp,band:rp.difficulty||'medium',
+        passage:idx===0?rp.reading.passage:null,ptitle:idx===0?rp.reading.title:null})));
+    add('聴解','聴解 Listening','Tap ▶ to listen, then choose.','listen',
+      sh(qPool.filter(q=>q.type==='listening')).slice(0,4)
+        .map(q=>({rid:q.id,q:q.s,o:q.o,c:q.c,exp:q.exp,band:C.difficultyOf(q),audioText:q.audioText})));
+    return {screens, sec, time:15*60};
+  }
+
+  function startPlacement(){
+    const built=buildPlacement();
+    if(built.screens.length<6){ alert('Not enough lesson content yet for a full level check. Complete a few more lessons first.'); return; }
+    EX={ mode:'jlpt', screens:built.screens, sec:built.sec, i:0, answers:new Array(built.screens.length).fill(null), left:built.time };
+    document.getElementById('exam-top').classList.add('show');
+    clearInterval(examTimer); examTimer=setInterval(tickTimer,1000);
+    renderExamScreen(); showView('view-exam');
+  }
+
+  function finishPlacement(auto){
+    const band={easy:{c:0,t:0},medium:{c:0,t:0},hard:{c:0,t:0}};
+    const skill={lang:{c:0,t:0},read:{c:0,t:0},listen:{c:0,t:0}};
+    EX.screens.forEach((s,idx)=>{ const ok=EX.answers[idx]===s.c;
+      if(s.band&&band[s.band]){ band[s.band].t++; if(ok)band[s.band].c++; }
+      if(s.skill&&skill[s.skill]){ skill[s.skill].t++; if(ok)skill[s.skill].c++; }
+      if(s.rid&&EX.answers[idx]!=null){ try{ C.rate(s.rid, ok?3:1); }catch(e){} }
+    });
+    const acc=o=>o.t?o.c/o.t:0;
+    const sLang=Math.round(acc(skill.lang)*60), sRead=Math.round(acc(skill.read)*60), sListen=Math.round(acc(skill.listen)*60);
+    const total=sLang+sRead+sListen;
+    const eA=acc(band.easy), mA=acc(band.medium), hA=acc(band.hard);
+    let level, note;
+    if(hA>=0.6 && mA>=0.7){ level='N3'; note='You\u2019re handling the hardest items well — approaching N3.'; }
+    else if(mA>=0.6){ level='N4'; note='Solid on core N4 grammar and vocabulary.'; }
+    else if(eA>=0.6){ level='N5'; note='N5 basics are in place — keep building toward N4.'; }
+    else { level='N5'; note='Still building the N5 foundation — keep practicing.'; }
+    const passMark=JLPT_PASS[level], wouldPass=total>=passMark;
+    C.DB.set('jlpt_last',{level,total,date:C.dateKey()});
+    C.bumpMomentum&&C.bumpMomentum(2);
+    const ringColor = level==='N3'?'#1d9e75':level==='N4'?'#e69500':'#2979ff';
+    const row=(jp,en,score)=>`<div class="exam-brow"><span class="bn">${jp} <span style="color:var(--ink3);font-weight:600">${en}</span></span><span class="bs">${score}/60</span></div>`;
+    const wrong=EX.screens.map((s,idx)=>({s,idx})).filter(x=>EX.answers[x.idx]!==x.s.c);
+    const review=wrong.length?`<div class="sect" style="margin-top:1.2rem">Review — ${wrong.length} to revisit</div>`+wrong.map(({s,idx})=>`
+      <div class="exam-review-q"><div style="font-weight:700;margin-bottom:6px">${s.q}</div>
+        <div class="erv-bad">Your answer: ${EX.answers[idx]==null?'—':s.o[EX.answers[idx]]}</div>
+        <div class="erv-good">Correct: ${s.o[s.c]}</div>
+        ${s.exp?`<div style="color:var(--ink3);margin-top:5px">${s.exp}</div>`:''}</div>`).join(''):'';
+    document.getElementById('exam-top').classList.remove('show');
+    document.getElementById('exam-body').innerHTML=`
+      <div style="text-align:center;margin-top:.5rem">
+        <div class="cc-eyebrow" style="color:var(--ink3)">JLPT level check${auto?' · time up':''}</div>
+        <div class="exam-score-ring" style="background:${ringColor}"><div class="pct">${level}</div><div class="lab">ESTIMATED LEVEL</div></div>
+        <div class="exam-verdict">${total} / 180 points</div>
+        <div style="color:var(--ink3);font-size:13px;max-width:300px;margin:.3rem auto 0">${note}</div>
+        <div style="margin-top:8px;font-size:13px;font-weight:800;color:${wouldPass?'var(--green)':'var(--ink3)'}">${wouldPass?'✓ above the '+level+' pass line ('+passMark+'/180)':'below the '+level+' pass line ('+passMark+'/180)'}</div>
+      </div>
+      <div class="sect" style="margin-top:1.2rem">JLPT scorecard</div>
+      <div class="exam-breakdown">
+        ${row('言語知識','Language knowledge',sLang)}
+        ${row('読解','Reading',sRead)}
+        ${row('聴解','Listening',sListen)}
+        <div class="exam-brow" style="background:var(--bg)"><span class="bn" style="font-weight:900">合計 Total</span><span class="bs">${total}/180</span></div>
+      </div>
+      <div style="font-size:11.5px;color:var(--ink3);line-height:1.5;margin-bottom:1rem">Estimated from your lesson performance (easy≈N5 · medium≈N4 · hard≈N3). The official JLPT uses scaled scoring; this is a practice guide.</div>
+      <div style="display:flex;gap:10px;margin:1rem 0">
+        <button class="exam-next" style="background:var(--card);color:var(--ink);border:1.5px solid var(--border);margin:0" onclick="App.startPlacement()">↻ Retake</button>
+        <button class="exam-next" style="margin:0" onclick="App.openJlptHub()">Level check menu</button>
+      </div>
+      ${review}
+      <button class="sback" style="margin:1rem 0" onclick="App.home()">← Home</button>`;
+    EX=null; scrollTo(0,0);
+  }
+
   function home(){curLesson=null;renderHome();showView('view-dash')}
+
+  /* ===================== BACKUP — export / import all progress ===================== */
+  function exportProgress(){
+    C.haptic('light');
+    const data={ _app:'mahym-japanese', _version:1, _exported:new Date().toISOString(), keys:{} };
+    for(let i=0;i<localStorage.length;i++){ const k=localStorage.key(i); if(k&&k.indexOf('mnn')===0) data.keys[k]=localStorage.getItem(k); }
+    const blob=new Blob([JSON.stringify(data)],{type:'application/json'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url; a.download='mahym-japanese-progress-'+C.dateKey()+'.json';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),1000);
+  }
+  function importProgress(e){
+    const file=e.target.files&&e.target.files[0]; if(!file) return;
+    const reader=new FileReader();
+    reader.onload=()=>{
+      try{
+        const data=JSON.parse(reader.result);
+        if(!data||!data.keys||data._app!=='mahym-japanese'){ alert('That doesn\u2019t look like a Mahym progress file.'); return; }
+        const n=Object.keys(data.keys).length;
+        if(!confirm('Restore '+n+' saved items? This replaces the progress currently on this device.')) { e.target.value=''; return; }
+        Object.keys(data.keys).forEach(k=>localStorage.setItem(k, data.keys[k]));
+        alert('Progress restored. The app will reload.');
+        location.reload();
+      }catch(err){ alert('Could not read that file. Make sure it\u2019s the exported .json.'); }
+      finally{ e.target.value=''; }
+    };
+    reader.readAsText(file);
+  }
 
   /* ===================== EXAM COUNTDOWN ===================== */
   const EXAM_DEFAULT_DATE='2027-06-15';   // Ashgabat · mid-June next year (editable by tapping)
@@ -963,17 +1123,17 @@ const App = (function(){
       sec.push({key,label,pts:0,poss:0});
       items.forEach((it,idx)=>screens.push({
         section:key, secLabel:label, secDesc:desc, secFirst:idx===0,
-        q:it.q, o:it.o, c:it.c, exp:it.exp, pts,
+        q:it.q, o:it.o, c:it.c, exp:it.exp, pts, rid:it.rid||null,
         passage:idx===0?passage:null, passageTitle:idx===0?ptitle:null
       }));
     };
     // I 文法 (grammar MCQ) · II 語彙 (vocab MCQ) · III 漢字語彙 (kanji MCQ)
     addSec('I','文法 Grammar','Choose the most appropriate option for each blank.',
-      pick('grammar',6).map(q=>({q:q.s,o:q.o,c:q.c,exp:q.exp})),2);
+      pick('grammar',6).map(q=>({rid:q.linksTo||q.id, q:q.s,o:q.o,c:q.c,exp:q.exp})),2);
     addSec('II','語彙 Vocabulary','Choose the word that best fits each sentence.',
-      pick('vocab',5).map(q=>({q:q.s,o:q.o,c:q.c,exp:q.exp})),2);
+      pick('vocab',5).map(q=>({rid:q.linksTo||q.id, q:q.s,o:q.o,c:q.c,exp:q.exp})),2);
     addSec('III','漢字語彙 Kanji vocabulary','Choose the correct kanji / reading.',
-      pick('kanji',3).map(q=>({q:q.s,o:q.o,c:q.c,exp:q.exp})),3);
+      pick('kanji',3).map(q=>({rid:q.linksTo||q.id, q:q.s,o:q.o,c:q.c,exp:q.exp})),3);
     // IV 漢字 読み書き — generated reading + writing from vocab with kanji
     const vpref=sh(C.ITEMS.vocab.filter(v=>hasKanji(v.word)&&C.difficultyOf(v)===diff));
     const vall=sh(C.ITEMS.vocab.filter(v=>hasKanji(v.word)));
@@ -995,7 +1155,7 @@ const App = (function(){
     let cand=sh(packs.filter(p=>(p.difficulty||'medium')===diff)); if(!cand.length) cand=sh(packs);
     if(cand.length){ const p=cand[0];
       addSec('V','読解 Reading comprehension','Read the passage, then answer.',
-        p.reading.questions.slice(0,3).map(rq=>({q:rq.q,o:rq.o,c:rq.c,exp:rq.exp})),6,
+        p.reading.questions.slice(0,3).map(rq=>({rid:rq.id, q:rq.q,o:rq.o,c:rq.c,exp:rq.exp})),6,
         p.reading.passage, p.reading.title); }
     return {level, screens, sec, time:EXAM_TIME[level]};
   }
@@ -1004,7 +1164,7 @@ const App = (function(){
     if(!examUnlocked(level)){ alert('Pass the previous level first.'); return; }
     const built=buildExam(level);
     if(built.screens.length<5){ alert('Not enough lesson content for this level yet. Try completing more lessons or pick level A.'); return; }
-    EX={ level, screens:built.screens, sec:built.sec, i:0, answers:new Array(built.screens.length).fill(null), left:built.time };
+    EX={ mode:'mext', level, screens:built.screens, sec:built.sec, i:0, answers:new Array(built.screens.length).fill(null), left:built.time };
     document.getElementById('exam-top').classList.add('show');
     clearInterval(examTimer); examTimer=setInterval(tickTimer,1000);
     renderExamScreen();
@@ -1020,21 +1180,24 @@ const App = (function(){
   }
 
   function renderExamScreen(){
-    const s=EX.screens[EX.i], n=EX.screens.length;
+    const s=EX.screens[EX.i], n=EX.screens.length, jl=EX.mode==='jlpt';
+    const pill = jl ? s.secLabel : ('Section '+s.section+' · '+s.secLabel);
     document.getElementById('exam-top').innerHTML=`
       <div class="exam-top-row">
         <button class="exam-quit" onclick="App.examQuit()">✕</button>
-        <span class="exam-section-pill">Section ${s.section} · ${s.secLabel}</span>
+        <span class="exam-section-pill">${pill}</span>
         <span class="exam-timer" id="exam-timer">${fmtTime(EX.left)}</span>
       </div>
       <div class="exam-prog"><div class="f" style="width:${Math.round((EX.i+1)/n*100)}%"></div></div>`;
     let h='';
-    if(s.secFirst) h+=`<div class="exam-sec-head">Section ${s.section} · ${s.secLabel}</div><div class="exam-sec-desc">${s.secDesc}</div>`;
+    if(s.secFirst) h+=`<div class="exam-sec-head">${jl?'':'Section '+s.section+' · '}${s.secLabel}</div><div class="exam-sec-desc">${s.secDesc}</div>`;
     if(s.passage) h+=`<div class="exam-passage"><strong>${s.passageTitle||''}</strong>\n\n${s.passage}</div>`;
+    if(s.audioText) h+=`<div style="text-align:center;margin-bottom:14px"><button class="listen-btn" onclick="sayNow('${sayRef(s.audioText)}')">▶ 聞く Listen</button></div>`;
     h+=`<div class="exam-q">${(EX.i+1)}. ${s.q}</div><div class="opts">`;
     s.o.forEach((o,idx)=>h+=`<button class="opt${EX.answers[EX.i]===idx?' sel':''}" onclick="App.examPick(${idx})">${o}</button>`);
     h+=`</div><button class="exam-next" id="exam-next" ${EX.answers[EX.i]==null?'disabled':''} onclick="App.examNext()">${EX.i===n-1?'Finish ▸':'Next ▸'}</button>`;
     const body=document.getElementById('exam-body'); body.innerHTML=h; scrollTo(0,0);
+    if(s.audioText) setTimeout(()=>{try{speak(s.audioText)}catch(e){}},350);
   }
   function examPick(i){
     C.haptic('light'); EX.answers[EX.i]=i;
@@ -1046,16 +1209,24 @@ const App = (function(){
     if(EX.i<EX.screens.length-1){ EX.i++; renderExamScreen(); } else finishExam(false);
   }
   function examQuit(){
-    if(!confirm('Quit this exam? Your progress in this attempt will be lost.')) return;
-    clearInterval(examTimer); EX=null; openExamHub();
+    if(!confirm('Quit this test? Your progress in this attempt will be lost.')) return;
+    const jl=EX&&EX.mode==='jlpt'; clearInterval(examTimer); EX=null;
+    try{speechSynthesis.cancel()}catch(e){}
+    jl?openJlptHub():openExamHub();
   }
 
   function finishExam(auto){
     clearInterval(examTimer);
+    try{speechSynthesis.cancel()}catch(e){}
+    if(EX.mode==='jlpt'){ return finishPlacement(auto); }
     const secMap={}; EX.sec.forEach(s=>secMap[s.key]={...s});
     let earned=0, poss=0;
     EX.screens.forEach((s,idx)=>{ poss+=s.pts; const sm=secMap[s.section]; sm.poss+=s.pts;
-      if(EX.answers[idx]===s.c){ earned+=s.pts; sm.pts+=s.pts; } });
+      const correct = EX.answers[idx]===s.c;
+      if(correct){ earned+=s.pts; sm.pts+=s.pts; }
+      // feed real question items into the memory engine (only answered ones)
+      if(s.rid && EX.answers[idx]!=null){ try{ C.rate(s.rid, correct?3:1); }catch(e){} }
+    });
     const pct=poss?Math.round(earned/poss*100):0;
     const passed=pct>=PASS_PCT;
     const lvl=EX.level, prev=C.DB.get('exam_best_'+lvl)||0;
@@ -1099,6 +1270,8 @@ const App = (function(){
           practiceVocab,practiceReadingDrill,practiceGrammar,practiceKanji,
           practiceListening,practiceReading,practiceMixed,practiceWrite,
           setExamDate,openExamHub,startExam,examPick,examNext,examQuit,
+          openJlptHub,startPlacement,
+          exportProgress,importProgress,
           exitSession,home};
 })();
 
