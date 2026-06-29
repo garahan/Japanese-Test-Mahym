@@ -681,55 +681,55 @@
   // BADGE / MILESTONE SYSTEM
   // ============================================================
   function getBadges() { return DB.get('badges') || {}; }
+
+  const BADGE_LIST = [
+    { id: 'first_steps', icon: '🌱', title: 'First Steps', desc: 'Learn your first 5 items', check: (ctx) => ctx.learned >= 5 },
+    { id: 'first_lesson', icon: '📚', title: 'First Lesson', desc: 'Complete your first lesson', check: (ctx) => ctx.lessonNums.some(n => isLessonComplete(n)) },
+    { id: 'momentum_30', icon: '⚡', title: 'Charged Up', desc: 'Reach 30 momentum', check: (ctx) => ctx.mom >= 30 },
+    { id: 'streak_7', icon: '🔥', title: 'Week Warrior', desc: '7-day streak', check: (ctx) => ctx.streak.count >= 7 },
+    { id: 'streak_30', icon: '🏆', title: 'Unbreakable', desc: '30-day streak', check: (ctx) => ctx.streak.count >= 30 },
+    { id: 'items_50', icon: '🧠', title: 'Half Century', desc: 'Learn 50 items', check: (ctx) => ctx.learned >= 50 },
+    { id: 'items_100', icon: '💯', title: 'Centurion', desc: 'Learn 100 items', check: (ctx) => ctx.learned >= 100 },
+    { id: 'mastered_25', icon: '✨', title: 'Memory Keeper', desc: 'Master 25 items', check: (ctx) => ctx.mastered >= 25 },
+    { id: 'mastered_50', icon: '🌟', title: 'Memory Master', desc: 'Master 50 items', check: (ctx) => ctx.mastered >= 50 },
+    { id: 'mastery_50', icon: '🎯', title: 'Halfway There', desc: 'Reach 50% overall mastery', check: (ctx) => ctx.overall >= 50 },
+    { id: 'mastery_80', icon: '👑', title: 'MEXT Ready', desc: 'Reach 80% overall mastery', check: (ctx) => ctx.overall >= 80 },
+    { id: 'level_5', icon: '🎖️', title: 'Rising Star', desc: 'Reach level 5', check: (ctx) => ctx.xp.level >= 5 },
+    { id: 'level_10', icon: '🏅', title: 'Scholar', desc: 'Reach level 10', check: (ctx) => ctx.xp.level >= 10 },
+    { id: 'exam_a', icon: '📝', title: 'Exam Rookie', desc: 'Pass mock exam level A', check: () => !!DB.get('exam_pass_A') },
+    { id: 'exam_b', icon: '📑', title: 'Exam Challenger', desc: 'Pass mock exam level B', check: () => !!DB.get('exam_pass_B') },
+    { id: 'exam_c', icon: '📜', title: 'Exam Conqueror', desc: 'Pass mock exam level C', check: () => !!DB.get('exam_pass_C') },
+    { id: 'streak_3', icon: '🌼', title: 'Getting Started', desc: '3-day streak', check: (ctx) => ctx.streak.count >= 3 },
+    { id: 'streak_14', icon: '🌿', title: 'Fortnight Force', desc: '14-day streak', check: (ctx) => ctx.streak.count >= 14 },
+    { id: 'streak_60', icon: '💎', title: 'Diamond Mind', desc: '60-day streak', check: (ctx) => ctx.streak.count >= 60 },
+    { id: 'items_200', icon: '🧩', title: 'Word Smith', desc: 'Learn 200 items', check: (ctx) => ctx.learned >= 200 },
+    { id: 'mastered_100', icon: '🏆', title: 'Century Master', desc: 'Master 100 items', check: (ctx) => ctx.mastered >= 100 },
+    { id: 'mastery_25', icon: '🌾', title: 'Sprouting', desc: 'Reach 25% overall mastery', check: (ctx) => ctx.overall >= 25 },
+    { id: 'mastery_100', icon: '🦁', title: 'Lion of Learning', desc: 'Reach 100% overall mastery', check: (ctx) => ctx.overall >= 100 },
+    { id: 'level_15', icon: '🎓', title: 'Graduate', desc: 'Reach level 15', check: (ctx) => ctx.xp.level >= 15 },
+    { id: 'level_20', icon: '🦉', title: 'Sage', desc: 'Reach level 20', check: (ctx) => ctx.xp.level >= 20 },
+    { id: 'retention_90', icon: '🌳', title: 'Deep Roots', desc: '90% retention rate', check: () => { const r = retention(); return r != null && r >= 90; } },
+    { id: 'retention_75', icon: '🌲', title: 'Evergreen', desc: '75% retention rate', check: () => { const r = retention(); return r != null && r >= 75; } },
+    { id: 'perfect_session', icon: '🎯', title: 'Flawless', desc: '100% on any session of 10+', check: () => !!DB.get('perfect_session') },
+    { id: 'speed_demon', icon: '⚡', title: 'Speed Demon', desc: 'Answer 20 items in under 3 minutes', check: () => !!DB.get('speed_demon') },
+    { id: 'comeback_king', icon: '🔄', title: 'Comeback King', desc: 'Return after 7+ day gap', check: () => !!DB.get('comeback_king') },
+    { id: 'night_owl', icon: '🦇', title: 'Night Owl', desc: 'Study after 10pm', check: () => !!DB.get('night_owl') },
+    { id: 'early_bird', icon: '🐦', title: 'Early Bird', desc: 'Study before 7am', check: () => !!DB.get('early_bird') },
+  ];
+
   function checkBadges() {
     const earned = getBadges();
     const newly = [];
-    const xp = getXP();
-    const srs = getSRS();
-    const streak = getStreakData();
-    const learned = Object.values(srs).filter(s => s.reps > 0).length;
-    const mastered = Object.keys(srs).filter(id => itemMastery(id) >= 80).length;
-    const overall = overallMastery();
-    const mom = getMomentum().value;
+    const ctx = {
+      xp: getXP(), streak: getStreakData(),
+      learned: Object.values(getSRS()).filter(s => s.reps > 0).length,
+      mastered: Object.keys(getSRS()).filter(id => itemMastery(id) >= 80).length,
+      overall: overallMastery(), mom: getMomentum().value,
+      lessonNums: lessonNums(),
+    };
 
-    const checks = [
-      { id: 'first_steps', icon: '🌱', title: 'First Steps', desc: 'Learn your first 5 items', check: () => learned >= 5 },
-      { id: 'first_lesson', icon: '📚', title: 'First Lesson', desc: 'Complete your first lesson', check: () => lessonNums().some(n => isLessonComplete(n)) },
-      { id: 'momentum_30', icon: '⚡', title: 'Charged Up', desc: 'Reach 30 momentum', check: () => mom >= 30 },
-      { id: 'streak_7', icon: '🔥', title: 'Week Warrior', desc: '7-day streak', check: () => streak.count >= 7 },
-      { id: 'streak_30', icon: '🏆', title: 'Unbreakable', desc: '30-day streak', check: () => streak.count >= 30 },
-      { id: 'items_50', icon: '🧠', title: 'Half Century', desc: 'Learn 50 items', check: () => learned >= 50 },
-      { id: 'items_100', icon: '💯', title: 'Centurion', desc: 'Learn 100 items', check: () => learned >= 100 },
-      { id: 'mastered_25', icon: '✨', title: 'Memory Keeper', desc: 'Master 25 items', check: () => mastered >= 25 },
-      { id: 'mastered_50', icon: '🌟', title: 'Memory Master', desc: 'Master 50 items', check: () => mastered >= 50 },
-      { id: 'mastery_50', icon: '🎯', title: 'Halfway There', desc: 'Reach 50% overall mastery', check: () => overall >= 50 },
-      { id: 'mastery_80', icon: '👑', title: 'MEXT Ready', desc: 'Reach 80% overall mastery', check: () => overall >= 80 },
-      { id: 'level_5', icon: '🎖️', title: 'Rising Star', desc: 'Reach level 5', check: () => xp.level >= 5 },
-      { id: 'level_10', icon: '🏅', title: 'Scholar', desc: 'Reach level 10', check: () => xp.level >= 10 },
-      { id: 'exam_a', icon: '📝', title: 'Exam Rookie', desc: 'Pass mock exam level A', check: () => !!DB.get('exam_pass_A') },
-      { id: 'exam_b', icon: '📑', title: 'Exam Challenger', desc: 'Pass mock exam level B', check: () => !!DB.get('exam_pass_B') },
-      { id: 'exam_c', icon: '📜', title: 'Exam Conqueror', desc: 'Pass mock exam level C', check: () => !!DB.get('exam_pass_C') },
-      // New advanced badges
-      { id: 'streak_3', icon: '🌼', title: 'Getting Started', desc: '3-day streak', check: () => streak.count >= 3 },
-      { id: 'streak_14', icon: '🌿', title: 'Fortnight Force', desc: '14-day streak', check: () => streak.count >= 14 },
-      { id: 'streak_60', icon: '💎', title: 'Diamond Mind', desc: '60-day streak', check: () => streak.count >= 60 },
-      { id: 'items_200', icon: '🧩', title: 'Word Smith', desc: 'Learn 200 items', check: () => learned >= 200 },
-      { id: 'mastered_100', icon: '🏆', title: 'Century Master', desc: 'Master 100 items', check: () => mastered >= 100 },
-      { id: 'mastery_25', icon: '🌾', title: 'Sprouting', desc: 'Reach 25% overall mastery', check: () => overall >= 25 },
-      { id: 'mastery_100', icon: '🦁', title: 'Lion of Learning', desc: 'Reach 100% overall mastery', check: () => overall >= 100 },
-      { id: 'level_15', icon: '🎓', title: 'Graduate', desc: 'Reach level 15', check: () => xp.level >= 15 },
-      { id: 'level_20', icon: '🦉', title: 'Sage', desc: 'Reach level 20', check: () => xp.level >= 20 },
-      { id: 'retention_90', icon: '🌳', title: 'Deep Roots', desc: '90% retention rate', check: () => { const r = retention(); return r != null && r >= 90; } },
-      { id: 'retention_75', icon: '🌲', title: 'Evergreen', desc: '75% retention rate', check: () => { const r = retention(); return r != null && r >= 75; } },
-      { id: 'perfect_session', icon: '🎯', title: 'Flawless', desc: '100% on any session of 10+', check: () => !!DB.get('perfect_session') },
-      { id: 'speed_demon', icon: '⚡', title: 'Speed Demon', desc: 'Answer 20 items in under 3 minutes', check: () => !!DB.get('speed_demon') },
-      { id: 'comeback_king', icon: '🔄', title: 'Comeback King', desc: 'Return after 7+ day gap', check: () => !!DB.get('comeback_king') },
-      { id: 'night_owl', icon: '🦇', title: 'Night Owl', desc: 'Study after 10pm', check: () => !!DB.get('night_owl') },
-      { id: 'early_bird', icon: '🐦', title: 'Early Bird', desc: 'Study before 7am', check: () => !!DB.get('early_bird') },
-    ];
-
-    for (const b of checks) {
-      if (!earned[b.id] && b.check()) {
+    for (const b of BADGE_LIST) {
+      if (!earned[b.id] && b.check(ctx)) {
         earned[b.id] = { icon: b.icon, title: b.title, desc: b.desc, date: dateKey() };
         newly.push(b);
       }
@@ -1039,7 +1039,7 @@
     // variable bonus
     maybeBonus,
     // badges
-    getBadges, checkBadges,
+    getBadges, checkBadges, BADGE_LIST,
     // adaptive difficulty
     adaptiveDifficulty, pickAdaptiveQuestions,
     // data export/import

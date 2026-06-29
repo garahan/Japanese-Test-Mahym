@@ -123,7 +123,7 @@ button,.tile,.lesson-card,.opt,.rate,.m-cta,.next-btn,.reveal-btn,.shead,.fc-sce
 .hero-greeting .hg-wave{display:inline-block;animation:wave 2.5s ease-in-out infinite;transform-origin:70% 70%}
 @keyframes wave{0%,100%{transform:rotate(0)}20%{transform:rotate(14deg)}40%{transform:rotate(-8deg)}60%{transform:rotate(14deg)}80%{transform:rotate(-4deg)}}
 .hero-date{font-size:11px;color:rgba(255,255,255,.4);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
-.hero-gear{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;flex-shrink:0;transition:transform .3s var(--spring);color:rgba(255,255,255,.6)}
+.hero-gear{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-size:17px;cursor:pointer;flex-shrink:0;transition:transform .3s var(--spring);color:rgba(255,255,255,.6)}
 .hero-gear:active{transform:rotate(90deg) scale(.9)}
 .hero-gear.active{color:#69f0ae}
 /* streak flame */
@@ -297,6 +297,28 @@ body.dark .sback{background:var(--bg)}
 
 /* flashcards (larger Japanese) */
 .fc-scene{perspective:1000px;margin-bottom:1.4rem;cursor:pointer}
+
+/* Flashcard Hub */
+.fh-section{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:1.1rem 1.2rem;margin-bottom:.8rem;box-shadow:var(--shadow)}
+.fh-section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.fh-section-title{font-size:16px;font-weight:900;font-family:'Noto Sans JP'}
+.fh-section-count{font-size:12px;font-weight:800;color:var(--ink3);background:var(--bg);padding:3px 10px;border-radius:20px}
+.fh-tabs{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:0 0 10px;position:sticky;top:calc(env(safe-area-inset-top) + 52px);z-index:8;background:var(--bg);padding-top:8px}
+.fh-tab{white-space:nowrap;padding:7px 14px;border-radius:20px;background:var(--card);border:1.5px solid var(--border);color:var(--ink3);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s}
+.fh-tab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.fh-chart{background:var(--bg);border-radius:14px;padding:12px;margin-bottom:.8rem}
+.fh-chart-row{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.fh-chart-row:last-child{margin-bottom:0}
+.fh-chart-label{font-size:12px;font-weight:800;min-width:70px;flex-shrink:0}
+.fh-chart-bar{flex:1;height:18px;background:var(--card);border-radius:9px;overflow:hidden;position:relative}
+.fh-chart-fill{height:100%;border-radius:9px;transition:width .8s var(--spring)}
+.fh-chart-val{font-size:11px;font-weight:800;min-width:40px;text-align:right;flex-shrink:0;color:var(--ink3)}
+.fh-start-btn{width:100%;padding:13px;background:var(--blue);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:900;cursor:pointer;margin-top:8px;box-shadow:0 4px 0 #1565c0;transition:transform .15s var(--spring)}
+.fh-start-btn:active{transform:translateY(3px);box-shadow:0 1px 0 #1565c0}
+.fh-start-btn.green{background:var(--green);box-shadow:0 4px 0 #00a344}
+.fh-start-btn.green:active{box-shadow:0 1px 0 #00a344}
+.fh-start-btn.purple{background:var(--purple);box-shadow:0 4px 0 #6a1b9a}
+.fh-start-btn.purple:active{box-shadow:0 1px 0 #6a1b9a}
 .fc-inner{position:relative;width:100%;min-height:320px;transition:transform .6s var(--spring);transform-style:preserve-3d}
 .fc-inner.flip{transform:rotateY(180deg)}
 .fc-face{position:absolute;inset:0;background:var(--card);border:2px solid var(--border);border-radius:24px;padding:2rem;display:flex;flex-direction:column;align-items:center;justify-content:center;backface-visibility:hidden;box-shadow:var(--shadow);text-align:center}
@@ -413,7 +435,8 @@ body.dark .coach-whisper{background:linear-gradient(135deg,var(--card),rgba(67,9
 .vocab-rd{font-size:13px;color:var(--ink3);font-weight:600}
 .vocab-mn{font-size:13.5px;color:var(--blue);font-weight:700}
 .vocab-ex{font-family:'Noto Sans JP';font-size:13px;color:var(--ink2);margin-top:3px;line-height:1.5}
-.mini-listen{flex-shrink:0;background:var(--blue-soft);color:var(--blue);border:none;width:38px;height:38px;border-radius:12px;font-size:15px;cursor:pointer}
+.mini-listen{flex-shrink:0;background:var(--blue-soft);color:var(--blue);border:none;width:40px;height:40px;border-radius:12px;font-size:16px;cursor:pointer;transition:transform .15s var(--spring)}
+.mini-listen:active{transform:scale(.9)}
 .gram-card{border-top:1px solid var(--border);padding-top:14px;margin-top:14px}
 .gram-card:first-of-type{border-top:none;padding-top:0;margin-top:0}
 .gram-point{font-family:'Noto Sans JP';font-size:19px;font-weight:900;margin-bottom:6px;letter-spacing:.01em}
@@ -463,6 +486,31 @@ body.dark .coach-whisper{background:linear-gradient(135deg,var(--card),rgba(67,9
 .j-chip{width:13px;height:13px;border-radius:5px;display:inline-block;flex-shrink:0}
 .j-more{font-size:12px;color:var(--blue);text-decoration:none;font-weight:800}
 
+/* ===================== JLPT PHASE ROADMAP ===================== */
+.phase-roadmap{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:1rem;box-shadow:var(--shadow);margin-top:.4rem}
+.phase-rm-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.phase-rm-title{font-size:14px;font-weight:900}
+.phase-rm-sub{font-size:11px;font-weight:700;color:var(--ink3)}
+.phase-rm-track{position:relative;padding:8px 0 4px}
+.phase-rm-line{position:absolute;top:20px;left:12%;right:12%;height:3px;background:var(--border);border-radius:2px;z-index:0}
+.phase-rm-line .fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--purple));border-radius:2px;transition:width .6s var(--spring)}
+.phase-rm-steps{display:flex;justify-content:space-between;position:relative;z-index:1}
+.phase-step{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;flex:1;max-width:120px}
+.phase-step-dot{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;border:3px solid var(--border);background:var(--card);transition:all .25s var(--spring);position:relative}
+.phase-step.active .phase-step-dot{border-color:var(--blue);background:var(--blue);color:#fff;box-shadow:0 0 0 4px var(--blue-soft);animation:jpulse 2.5s var(--spring) infinite}
+.phase-step.done .phase-step-dot{border-color:var(--green);background:var(--green);color:#fff}
+.phase-step.locked .phase-step-dot{opacity:.45;border-style:dashed}
+.phase-step-label{font-size:11px;font-weight:900;text-align:center;line-height:1.3}
+.phase-step-date{font-size:9px;font-weight:700;color:var(--ink3);text-align:center}
+.phase-step.active .phase-step-label{color:var(--blue)}
+.phase-step.done .phase-step-label{color:var(--green)}
+.phase-step-pct{font-size:10px;font-weight:800;color:var(--ink3);margin-top:2px}
+.phase-step.done .phase-step-pct{color:var(--green)}
+.phase-step.active .phase-step-pct{color:var(--blue)}
+.phase-rm-detail{margin-top:12px;padding:10px 12px;background:var(--bg);border-radius:12px;font-size:12px;font-weight:600;color:var(--ink2);line-height:1.5;display:flex;align-items:flex-start;gap:8px}
+.phase-rm-detail .prd-icon{font-size:20px;flex-shrink:0}
+.phase-rm-detail b{color:var(--ink);font-weight:900}
+
 /* ===================== EXAM COUNTDOWN + MOCK EXAM ===================== */
 .exam-countdown{display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:13px;padding:8px 12px;margin-bottom:14px;cursor:pointer;font-weight:800}
 .exam-countdown .ec-days{font-size:18px;color:#ffd84d}
@@ -506,8 +554,12 @@ body.dark .coach-whisper{background:linear-gradient(135deg,var(--card),rgba(67,9
 .exam-sec-desc{font-size:12px;color:var(--ink3);font-weight:600;margin-bottom:1rem}
 .exam-passage{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 16px;font-size:15px;line-height:2;margin-bottom:1rem;white-space:pre-line}
 .exam-q{font-size:17px;font-weight:700;line-height:1.7;margin-bottom:1rem}
-.exam-next{width:100%;padding:15px;border:none;border-radius:14px;background:var(--ink);color:#fff;font-size:16px;font-weight:800;cursor:pointer;margin-top:.5rem}
+.exam-nav-row{display:flex;gap:10px;margin-top:.5rem}
+.exam-prev{flex:0 0 auto;padding:15px 20px;border:2px solid var(--border);border-radius:14px;background:var(--card);color:var(--ink2);font-size:16px;font-weight:800;cursor:pointer}
+.exam-prev:disabled{opacity:.3;cursor:not-allowed}
+.exam-next{flex:1;padding:15px;border:none;border-radius:14px;background:var(--ink);color:#fff;font-size:16px;font-weight:800;cursor:pointer;margin-top:0}
 .exam-next:disabled{opacity:.4;cursor:not-allowed}
+.exam-click-guard{pointer-events:none!important}
 /* exam result */
 .exam-score-ring{width:130px;height:130px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:1rem auto;color:#fff}
 .exam-score-ring .pct{font-size:34px;font-weight:900;line-height:1}
@@ -526,6 +578,7 @@ body.dark .hero{background:linear-gradient(160deg,#0d0d1a 0%,#16162e 60%,#1a1a3a
 body.dark .lesson-head{background:#16162a}body.dark .continue-card{background:linear-gradient(135deg,#1a2a5a,#1a4a9a)}
 body.dark .story-card{background:linear-gradient(135deg,#1a2a5a,#1a4a9a)}body.dark .mock-tile{background:linear-gradient(135deg,#2a1a5a,#4a2a90)}
 body.dark .opt{background:var(--card)}body.dark .teach{background:var(--card)}
+body.dark .exam-prev{background:var(--card);border-color:var(--border);color:var(--ink2)}
 body.dark .passage{background:var(--card)}body.dark .fc-face{background:var(--card)}
 body.dark .q-card{background:var(--card)}body.dark .panel{background:var(--card)}
 body.dark .rate-row .rate{color:#fff}
@@ -644,6 +697,24 @@ body.dark .bottom-nav{background:rgba(26,26,46,.82)}
 .thread-cta .cta-arrow{font-size:18px;transition:transform .2s}
 .thread-cta:active .cta-arrow{transform:translateX(4px)}
 
+/* Twitter-style thread connecting line */
+.thread-post-line{position:relative}
+.thread-post-line:not(:last-child)::before{content:'';position:absolute;left:11px;top:28px;bottom:-4px;width:2px;background:var(--border);border-radius:1px}
+.thread-post-avatar{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#4361ee,#7209b7);flex-shrink:0;margin-top:2px;position:relative;z-index:1;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;font-weight:900}
+.thread-post-row{display:flex;gap:10px;align-items:flex-start}
+.thread-post-content{flex:1;min-width:0}
+.thread-post-name{font-size:11px;font-weight:900;color:var(--ink3);margin-bottom:3px;display:flex;align-items:center;gap:6px}
+.thread-post-name .tpn-level{font-size:9px;padding:1px 6px;border-radius:10px;background:var(--blue-soft);color:var(--blue);font-weight:800}
+.thread-post-text{font-size:14.5px;line-height:1.7;font-weight:500;color:var(--ink2);-webkit-user-select:text;user-select:text;cursor:text;animation:postFade .4s ease both}
+.thread-post-actions{display:flex;gap:16px;margin-top:8px;padding-top:6px}
+.tp-action{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:var(--ink3);cursor:pointer;user-select:none;transition:color .2s,transform .1s;padding:4px 8px;border-radius:12px}
+.tp-action:active{transform:scale(.92)}
+.tp-action.liked{color:#e53935}
+.tp-action.disliked{color:var(--ink3);opacity:.5}
+.tp-action .tp-icon{font-size:15px;transition:transform .2s}
+.tp-action.liked .tp-icon{animation:likePop .3s var(--spring)}
+@keyframes likePop{0%{transform:scale(1)}50%{transform:scale(1.4)}100%{transform:scale(1)}}
+
 .feed-more{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:16px;margin:0 0 2rem;border:2px dashed var(--border);border-radius:18px;background:transparent;font-size:14px;font-weight:800;color:var(--blue);cursor:pointer;transition:all .2s}
 .feed-more:active{background:var(--blue-soft);border-color:var(--blue);transform:scale(.98)}
 
@@ -706,7 +777,14 @@ body.dark .feed-timer{background:linear-gradient(135deg,rgba(67,97,238,.1),rgba(
 .badge-cell.earned .bc-icon{animation:badgeShine 2s ease infinite}
 .badge-cell .bc-title{font-size:9px;font-weight:800;line-height:1.2}
 .badge-cell.locked .bc-icon{filter:grayscale(1)}
+.badge-cell.newly-earned{animation:badgePop .6s var(--spring) both;box-shadow:0 0 0 3px var(--gold),0 4px 16px rgba(255,179,0,.3)}
+@keyframes badgePop{0%{transform:scale(1)}30%{transform:scale(1.15)}100%{transform:scale(1)}}
+.badge-cell .bc-ribbon{position:absolute;top:-2px;right:-2px;background:var(--gold);color:#fff;font-size:7px;font-weight:900;padding:2px 5px;border-radius:8px;letter-spacing:.05em;animation:badgeShine 1.5s ease infinite}
 @keyframes badgeShine{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+
+/* Growth Tree upgrade animation */
+.gt-tree.upgraded{animation:treeUpgrade .8s var(--spring) both}
+@keyframes treeUpgrade{0%{transform:scale(1)}30%{transform:scale(1.3) rotate(5deg);filter:drop-shadow(0 0 20px rgba(0,200,83,.6))}60%{transform:scale(1.1) rotate(-3deg)}100%{transform:scale(1) rotate(0)}}
 
 /* Growth Tree */
 .growth-tree-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:1.2rem;box-shadow:var(--shadow);margin-top:.8rem;text-align:center}
@@ -874,9 +952,10 @@ body.dark .feed-timer{background:linear-gradient(135deg,rgba(67,97,238,.1),rgba(
 
   <div class="body">
     <div id="continue-slot"></div>
+    <div id="phase-slot"></div>
     <div id="review-slot"></div>
-    <div id="journey-slot"></div>
     <div id="weak-slot"></div>
+    <div id="journey-slot"></div>
     <div id="badges-slot"></div>
   </div>
   <div class="admin-link"><a href="/admin.html">🌸</a></div>
@@ -903,6 +982,16 @@ body.dark .feed-timer{background:linear-gradient(135deg,rgba(67,97,238,.1),rgba(
   <div class="body" id="session-body"></div>
 </div>
 
+<!-- ===================== FLASHCARD HUB ===================== -->
+<div class="view" id="view-flashhub">
+  <div class="shead" id="fh-head">
+    <button class="sback" onclick="App.exitSession()">✕</button>
+    <div class="sbar-wrap"><div style="font-size:16px;font-weight:900">🃏 Flashcards</div></div>
+    <div class="s-meta"></div>
+  </div>
+  <div class="body" id="flashhub-body"></div>
+</div>
+
 <div class="view" id="view-results"><div class="body" id="results-body"></div></div>
 
 <div class="view" id="view-exam">
@@ -913,7 +1002,7 @@ body.dark .feed-timer{background:linear-gradient(135deg,rgba(67,97,238,.1),rgba(
 <!-- ===================== THREAD FEED (dopamine threads) ===================== -->
 <div class="view" id="view-feed">
   <div class="feed-header">
-    <div class="feed-header-title">🌸 Daily Threads</div>
+    <div class="feed-header-title">🌸 日本語スレッド</div>
     <div class="feed-header-sub" id="feed-remaining">Loading…</div>
     <div class="feed-dots" id="feed-dots"></div>
   </div>
@@ -929,7 +1018,14 @@ body.dark .feed-timer{background:linear-gradient(135deg,rgba(67,97,238,.1),rgba(
   <button class="bn-item" id="bn-badges" onclick="App.goBadges()"><span class="bn-ico">🏆</span>Badges</button>
 </div>
 
+<script src="/n3-content.js"></script>
 <script src="/seed-data.js"></script>
+<script>
+// Merge N3 content into SEED_CONTENT for unified indexing
+if (window.N3_CONTENT && window.SEED_CONTENT) {
+  window.SEED_CONTENT = window.SEED_CONTENT.concat(window.N3_CONTENT);
+}
+</script>
 <script src="/memory-engine.js"></script>
 <script src="/Coach.js"></script>
 <script src="/core.js"></script>
@@ -970,6 +1066,29 @@ function speak(text){ if(!('speechSynthesis' in window))return; try{speechSynthe
 const _sayReg={}; let _sayN=0;
 function sayRef(t){ const k='s'+(++_sayN); _sayReg[k]=t||''; return k; }
 function sayNow(k){ speak(_sayReg[k]||''); }
+
+/* ── pronunciation check (Web Speech API) ── */
+function checkPronunciation(target,btn){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR)return;
+  const r=new SR(); r.lang='ja-JP'; r.interimResults=false; r.maxAlternatives=3;
+  btn.textContent='🎤…'; btn.style.background='var(--gold-soft)'; btn.style.color='var(--gold)';
+  r.onresult=(e)=>{
+    const heard=e.results[0][0].transcript.trim();
+    const cleanTarget=(target||'').replace(/[をはがでにのとへや]/g,'').trim();
+    const cleanHeard=heard.replace(/[をはがでにのとへや]/g,'').trim();
+    const ok=cleanHeard.includes(cleanTarget)||cleanTarget.includes(cleanHeard)||heard===target;
+    btn.textContent=ok?'✅':'❌';
+    btn.style.background=ok?'var(--green-soft)':'var(--red-soft)';
+    btn.style.color=ok?'var(--green)':'var(--red)';
+    btn.title=ok?'Correct! Heard: '+heard:'Heard: '+heard+' (target: '+target+')';
+    if(ok)C.haptic('success');else C.haptic('error');
+    setTimeout(()=>{btn.textContent='🎤';btn.style.background='var(--green-soft)';btn.style.color='var(--green)';},3000);
+  };
+  r.onerror=()=>{btn.textContent='🎤';btn.style.background='var(--green-soft)';btn.style.color='var(--green)';};
+  r.onend=()=>{if(btn.textContent==='🎤…'){btn.textContent='🎤';btn.style.background='var(--green-soft)';btn.style.color='var(--green)';}};
+  r.start();
+}
 
 /* ── particles & confetti (the juice) ── */
 function particle(e,text,color){const p=document.createElement('div');p.className='particle';p.textContent=text;p.style.color=color||'var(--green)';let x=innerWidth/2,y=innerHeight/2;if(e&&e.touches&&e.touches[0]){x=e.touches[0].clientX;y=e.touches[0].clientY}else if(e&&e.clientX){x=e.clientX;y=e.clientY}p.style.left=(x+(Math.random()-.5)*40)+'px';p.style.top=(y-40)+'px';document.body.appendChild(p);setTimeout(()=>p.remove(),800)}
@@ -1196,8 +1315,27 @@ function checkStreakBurst(streakCount){
   }
 }
 
-/* ── Telegram report (fire-and-forget) ── */
-function report(type,payload){try{fetch('/api/results',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type,secret:RESULTS_SECRET,name:'Mahym',momentum:C.getMomentum().value,...payload})}).catch(()=>{})}catch(e){}}
+/* ── Telegram report (fire-and-forget with offline queue) ── */
+function report(type,payload){
+  const body=JSON.stringify({type,secret:RESULTS_SECRET,name:'Mahym',momentum:C.getMomentum().value,...payload});
+  try{
+    fetch('/api/results',{method:'POST',headers:{'Content-Type':'application/json'},body}).catch(()=>{
+      // Queue for retry when back online
+      try{const q=JSON.parse(localStorage.getItem('mnn_report_queue')||'[]');q.push({body,t:Date.now()});localStorage.setItem('mnn_report_queue',JSON.stringify(q.slice(-20)))}catch(e){}
+    });
+  }catch(e){
+    try{const q=JSON.parse(localStorage.getItem('mnn_report_queue')||'[]');q.push({body,t:Date.now()});localStorage.setItem('mnn_report_queue',JSON.stringify(q.slice(-20)))}catch(e){}
+  }
+}
+// Retry queued reports on load
+function flushReportQueue(){
+  try{
+    const q=JSON.parse(localStorage.getItem('mnn_report_queue')||'[]');
+    if(!q.length)return;
+    localStorage.setItem('mnn_report_queue','[]');
+    q.forEach(item=>{try{fetch('/api/results',{method:'POST',headers:{'Content-Type':'application/json'},body:item.body}).catch(()=>{const rq=JSON.parse(localStorage.getItem('mnn_report_queue')||'[]');rq.push(item);localStorage.setItem('mnn_report_queue',JSON.stringify(rq.slice(-20)))})}catch(e){}});
+  }catch(e){}
+}
 
 /* ── Secret admin access (tap greeting 5x) ── */
 let _tapCount=0,_tapTimer=null;
@@ -1371,7 +1509,7 @@ const App = (function(){
         <div class="t-icon">🔁</div><div><div class="t-name" style="color:#e65100">Review due · ${dueN} cards</div><div class="t-sub">Spaced repetition · keep your memory sharp</div></div>
       </div>` : `<div class="empty-state stagger stagger-3" style="padding:1rem"><div class="es-icon" style="font-size:36px">✅</div><div class="es-title" style="font-size:15px">All caught up!</div><div class="es-sub" style="font-size:13px">No reviews due — your memory is healthy.</div></div>`}
       <div class="tile wide stagger stagger-4" style="--shine-delay:1s" onclick="C.haptic('light');App.startFlashcards()">
-        <div class="t-icon">🃏</div><div><div class="t-name">Flashcards</div><div class="t-sub">${pool.length} cards · recall & self-grade</div></div>
+        <div class="t-icon">🃏</div><div><div class="t-name">Flashcards</div><div class="t-sub">${pool.length} cards · JP→Meaning · by lesson & JLPT</div></div>
       </div>
       <div class="mock-tile stagger stagger-5" style="margin-top:.6rem;--shine-delay:2s" onclick="C.haptic('heavy');App.openExamHub()">
         <div class="mt-ico">📝</div><div><div class="mt-name">MEXT Exam Practice</div><div class="mt-sub">Government scholarship exam · timed · 3 levels</div></div>
@@ -1402,34 +1540,24 @@ const App = (function(){
     else if (learnedCount === 0) { treeEmoji='🌰'; treeStatus='A seed — ready to plant. Start your first lesson!'; treeColor='var(--ink3)'; }
     else { treeEmoji='🥀'; treeStatus='Wilting — your memory needs water. Review now!'; treeColor='var(--red)'; }
 
+    // Tree upgrade detection
+    const prevTree = C.DB.get('gt_stage') || '';
+    if (prevTree && prevTree !== treeEmoji) {
+      setTimeout(() => { const el = document.getElementById('gt-tree'); if (el) { el.classList.add('upgraded'); } }, 100);
+    }
+    C.DB.set('gt_stage', treeEmoji);
+
     // Leaves = earned badges count (visual reward)
     const earnedCount = Object.keys(badges.earned || {}).length;
     const leavesHTML = earnedCount > 0 ? Array(Math.min(earnedCount, 12)).fill(0).map((_,i)=>`<span class="gt-leaf" style="animation-delay:${i*.06}s">🍃</span>`).join('') : '';
 
-    const badgeList=[
-      {id:'first_steps',icon:'🌱',title:'First Steps'},{id:'first_lesson',icon:'📚',title:'First Lesson'},
-      {id:'momentum_30',icon:'⚡',title:'Charged Up'},{id:'streak_3',icon:'🌼',title:'Getting Started'},
-      {id:'streak_7',icon:'🔥',title:'Week Warrior'},{id:'streak_14',icon:'🌿',title:'Fortnight Force'},
-      {id:'streak_30',icon:'🏆',title:'Unbreakable'},{id:'streak_60',icon:'💎',title:'Diamond Mind'},
-      {id:'items_50',icon:'🧠',title:'Half Century'},{id:'items_100',icon:'💯',title:'Centurion'},
-      {id:'items_200',icon:'🧩',title:'Word Smith'},{id:'mastered_25',icon:'✨',title:'Keeper'},
-      {id:'mastered_50',icon:'🌟',title:'Master'},{id:'mastered_100',icon:'🏆',title:'Century Master'},
-      {id:'mastery_25',icon:'🌾',title:'Sprouting'},{id:'mastery_50',icon:'🎯',title:'Halfway'},
-      {id:'mastery_80',icon:'👑',title:'MEXT Ready'},{id:'mastery_100',icon:'🦁',title:'Lion'},
-      {id:'level_5',icon:'🎖️',title:'Rising Star'},{id:'level_10',icon:'🏅',title:'Scholar'},
-      {id:'level_15',icon:'🎓',title:'Graduate'},{id:'level_20',icon:'🦉',title:'Sage'},
-      {id:'exam_a',icon:'📝',title:'Exam Rookie'},{id:'exam_b',icon:'📑',title:'Challenger'},
-      {id:'exam_c',icon:'📜',title:'Conqueror'},{id:'retention_75',icon:'🌲',title:'Evergreen'},
-      {id:'retention_90',icon:'🌳',title:'Deep Roots'},{id:'perfect_session',icon:'🎯',title:'Flawless'},
-      {id:'speed_demon',icon:'⚡',title:'Speed Demon'},{id:'comeback_king',icon:'🔄',title:'Comeback'},
-      {id:'night_owl',icon:'🦇',title:'Night Owl'},{id:'early_bird',icon:'🐦',title:'Early Bird'},
-    ];
+    const badgeList=C.BADGE_LIST||[];
 
     document.getElementById('badges-slot').innerHTML = `
       <div class="sect" style="margin-top:1.1rem">バッジ — Badges & Growth</div>
       <div class="growth-tree-card">
         <div class="gt-header"><span class="gt-title">🌳 Your Learning Tree</span><span class="gt-retention" style="color:${treeColor}">${ret!=null?ret+'%':'—'} retention</span></div>
-        <div class="gt-tree">${treeEmoji}</div>
+        <div class="gt-tree" id="gt-tree">${treeEmoji}</div>
         <div class="gt-status">${treeStatus}</div>
         <div class="gt-bar"><div class="f" style="width:${retV}%;background:${treeColor}"></div></div>
         <div class="gt-leaves">${leavesHTML}</div>
@@ -1442,7 +1570,7 @@ const App = (function(){
         </div>
       </div>
       <div class="badge-grid">${badgeList.map(b=>{
-        const e=badges.earned[b.id];const desc=e?(e.desc||''):'Locked';return `<div class="badge-cell ${e?'earned':'locked'}" title="${b.title}: ${desc}"><div class="bc-icon">${b.icon}</div><div class="bc-title">${b.title}</div></div>`;
+        const e=badges.earned[b.id];const desc=e?(e.desc||''):'Locked';const isNew=e&&e.date===C.dateKey();return `<div class="badge-cell ${e?'earned':'locked'} ${isNew?'newly-earned':''}" title="${b.title}: ${desc}"><div class="bc-icon">${b.icon}</div><div class="bc-title">${b.title}</div>${isNew?'<span class="bc-ribbon">NEW</span>':''}</div>`;
       }).join('')}</div>`;
 
     // Show newly earned badges
@@ -1453,11 +1581,115 @@ const App = (function(){
     checkFeedBadge();
 
     // JOURNEY MAP — compact tracker for the whole 25→50 path
+    renderPhaseRoadmap();
     renderJourney();
   }
 
+  function renderPhaseRoadmap(){
+    const slot=document.getElementById('phase-slot');
+    if(!slot) return;
+
+    // Calculate mastery per level
+    const allItems=C.ITEMS;
+    const srs=C.getSRS();
+    const packs=C.PACKS();
+
+    // N4 mastery: based on lesson packs L25-50
+    const n4Packs=packs.filter(p=>p.level==='N4'||!p.level);
+    const n4Items=[...allItems.vocab,...allItems.grammar,...allItems.kanji].filter(it=>{
+      const p=C.lessonOf(it.id); return p && p>=25 && p<=50;
+    });
+    const n4Learned=n4Items.filter(it=>srs[it.id]&&srs[it.id].reps>0).length;
+    const n4Mastered=n4Items.filter(it=>C.itemMastery(it.id)>=80).length;
+    const n4Pct=n4Items.length?Math.round(n4Mastered/n4Items.length*100):0;
+
+    // N3 mastery: based on lesson packs with level N3
+    const n3Packs=packs.filter(p=>p.level==='N3');
+    const n3Items=[...allItems.vocab,...allItems.grammar,...allItems.kanji].filter(it=>it.level==='N3');
+    const n3Learned=n3Items.filter(it=>srs[it.id]&&srs[it.id].reps>0).length;
+    const n3Mastered=n3Items.filter(it=>C.itemMastery(it.id)>=80).length;
+    const n3Pct=n3Items.length?Math.round(n3Mastered/n3Items.length*100):0;
+
+    // N2 mastery: based on JLPT bank N2 + any N3 content
+    const n2BankItems=(window.JLPT_BANK||[]).filter(q=>q.level==='N2');
+    const n2Learned=n2BankItems.filter(q=>srs[q.id]&&srs[q.id].reps>0).length;
+    const n2Pct=n2BankItems.length?Math.round(n2Learned/n2BankItems.length*10):0; // rough estimate
+
+    // MEXT: based on exam pass status
+    const mextA=C.DB.get('exam_pass_A');
+    const mextB=C.DB.get('exam_pass_B');
+    const mextC=C.DB.get('exam_pass_C');
+    const mextDone=[mextA,mextB,mextC].filter(Boolean).length;
+    const mextPct=Math.round(mextDone/3*100);
+
+    // Determine current phase
+    let activePhase='n4';
+    if(n4Pct>=80 && n3Items.length>0) activePhase='n3';
+    if(n4Pct>=80 && n3Pct>=80 && n2BankItems.length>0) activePhase='n2';
+    if(n4Pct>=80 && n3Pct>=80 && n2Pct>=50) activePhase='mext';
+
+    // Exam date
+    const examDate=C.DB.get('exam_date');
+    const today=new Date();
+    let daysLeft=365;
+    if(examDate){
+      const ed=new Date(examDate+'T00:00:00');
+      daysLeft=Math.max(0,Math.ceil((ed-today)/86400000));
+    }
+
+    // Phase definitions
+    const phases=[
+      {key:'n4',icon:'📘',label:'N4',sub:'Minna L25-50',pct:n4Pct,date:'Now → Dec 2025',done:n4Pct>=80,active:activePhase==='n4',
+       detail:n4Pct>=80?'<b>N4 Mastered!</b> 🎉 You\'re ready to start N3. Focus on N3 grammar and new vocabulary.'
+             :`<b>Current phase.</b> ${n4Learned}/${n4Items.length} items learned · ${n4Mastered} mastered. Complete all lessons 25-50 and reach 80% mastery to advance.`},
+      {key:'n3',icon:'📗',label:'N3',sub:'Bridge level',pct:n3Pct,date:'Jan → Mar 2026',done:n3Pct>=80&&n3Items.length>0,active:activePhase==='n3',
+       detail:n3Items.length===0?'<b>Locked.</b> Complete N4 first (80%+ mastery). N3 content will unlock with intermediate grammar, ~1,500 new vocab, and 300+ kanji.'
+             :n3Pct>=80?'<b>N3 Mastered!</b> Ready for N2 intensive prep.'
+             :`<b>Active.</b> ${n3Learned}/${n3Items.length} items learned. Study intermediate grammar and expand vocabulary.`},
+      {key:'n2',icon:'📕',label:'N2',sub:'Target level',pct:n2Pct,date:'Apr → Jun 2026',done:n2Pct>=80,active:activePhase==='n2',
+       detail:n2Pct>=80?'<b>N2 Ready!</b> Focus on mock exams and timed practice.'
+             :`<b>Target.</b> ~6,000 words, ~1,000 kanji, 200+ grammar points. Use JLPT bank + generated N2 packs. ${daysLeft} days until exam.`},
+      {key:'mext',icon:'🎯',label:'MEXT',sub:'Exam pass',pct:mextPct,date:'Summer 2026',done:mextPct>=100,active:activePhase==='mext',
+       detail:mextPct>=100?'<b>Exam passed!</b> 🏆 Congratulations!'
+             :`<b>Final goal.</b> Pass all 3 MEXT exam levels (A/B/C). Currently ${mextDone}/3 passed. ${daysLeft} days remaining.`},
+    ];
+
+    // Build progress line fill width
+    const totalPct=Math.round((n4Pct+n3Pct+n2Pct+mextPct)/4);
+    const fillWidth=totalPct;
+
+    const stepsHTML=phases.map(p=>`
+      <div class="phase-step ${p.done?'done':p.active?'active':'locked'}" onclick="C.haptic('light')">
+        <div class="phase-step-dot">${p.icon}</div>
+        <div class="phase-step-label">${p.label}</div>
+        <div class="phase-step-date">${p.date}</div>
+        <div class="phase-step-pct">${p.pct}%</div>
+      </div>`).join('');
+
+    const activeDetail=phases.find(p=>p.active)||phases[0];
+
+    slot.innerHTML=`
+      <div class="sect" style="margin-top:1.1rem;display:flex;justify-content:space-between;align-items:center">
+        <span>🎯 目標 — JLPT N2 + MEXT Roadmap</span>
+      </div>
+      <div class="phase-roadmap">
+        <div class="phase-rm-head">
+          <div class="phase-rm-title">N4 → N3 → N2 → MEXT</div>
+          <div class="phase-rm-sub">${daysLeft} days to exam</div>
+        </div>
+        <div class="phase-rm-track">
+          <div class="phase-rm-line"><div class="fill" style="width:${fillWidth}%"></div></div>
+          <div class="phase-rm-steps">${stepsHTML}</div>
+        </div>
+        <div class="phase-rm-detail">
+          <span class="prd-icon">${activeDetail.icon}</span>
+          <span>${activeDetail.detail}</span>
+        </div>
+      </div>`;
+  }
+
   function renderJourney(){
-    const START=25, END=50;
+    const START=25, END=60;
     const have=new Set(C.lessonNums());
     const slot=document.getElementById('journey-slot');
 
@@ -1483,7 +1715,7 @@ const App = (function(){
         + (done?'<span class="cor">✓</span>':`<span class="dot" style="background:${dot}"></span>`) + `</div>`;
     };
     // grouped sections so the whole path to 50 scans cleanly
-    const sections=[[25,35],[36,45],[46,50]];
+    const sections=[[25,35],[36,45],[46,50],[51,55],[56,60]];
     const secHtml=sections.map(([a,b])=>{
       let nodes='',done=0,total=0;
       for(let n=a;n<=b;n++){ if(have.has(n)){ total++; if(C.isLessonComplete(n)) done++; } nodes+=jnode(n); }
@@ -1503,7 +1735,7 @@ const App = (function(){
         <a class="j-more" href="/roadmap.html">詳しく見る →</a>
       </div>
       <div class="journey">
-        <div class="j-head"><span class="j-now">Lessons 25 → 50</span><span class="j-count">${doneCount} / ${total} done · ${pct}%</span></div>
+        <div class="j-head"><span class="j-now">Lessons 25 → 60 · N4 + N3</span><span class="j-count">${doneCount} / ${total} done · ${pct}%</span></div>
         <div class="j-bar"><div class="f" style="width:${pct}%"></div></div>
         ${secHtml}
         <div class="j-legend">
@@ -1644,8 +1876,9 @@ const App = (function(){
     const cueLabel = reading            ? 'Recall the reading (kana)'
                    : it.dim==='grammar' ? "Recall what it means & how it's formed"
                    : it.dim==='kanji'   ? 'Recall the reading & meaning'
-                   :                      'Recall the Japanese word';
-    const cue = reading ? it.word : it.dim==='grammar' ? it.point : it.dim==='kanji' ? it.char : it.meaning;
+                   :                      'What does this mean?';
+    // JP first: show Japanese, recall the meaning/translation
+    const cue = reading ? it.word : it.dim==='grammar' ? it.point : it.dim==='kanji' ? it.char : it.word;
     const diff=C.difficultyOf(it);
     // Memory strength bar
     const itemState=C.itemState(it.id);
@@ -1681,11 +1914,11 @@ const App = (function(){
       html = reading
         ? `<div class="recall-main">${it.reading||''}</div><div class="recall-reading">${it.word} · ${it.meaning||''}</div>
            <div class="recall-ex">${it.example||''}</div><div class="recall-exm">${it.exampleMeaning||''}</div>`
-        : `<div class="recall-main">${it.word}</div><div class="recall-reading">${it.reading||''}</div>
+        : `<div class="recall-main">${it.meaning||''}</div><div class="recall-reading">${it.word} · ${it.reading||''}</div>
            <div class="recall-ex">${it.example||''}</div><div class="recall-exm">${it.exampleMeaning||''}</div>`;
     } else if(it.dim==='kanji'){
       say=it.exampleWord||it.char;
-      html=`<div class="recall-main">${it.char}</div><div class="recall-reading">${it.reading||''} · ${it.meaning||''}</div>
+      html=`<div class="recall-main">${it.meaning||''}</div><div class="recall-reading">${it.char} · ${it.reading||''}</div>
         <div class="recall-ex">${it.exampleWord||''}</div>`;
     } else {
       say=it.listening||(it.examples&&it.examples[0])||it.point;
@@ -1696,7 +1929,6 @@ const App = (function(){
     const a=document.getElementById('recall-answer'); a.innerHTML=html; a.style.display='block';
     document.getElementById('reveal-btn').style.display='none';
     document.getElementById('recall-grade').style.display='grid';
-    speak(say);
   }
   function gradeRecall(g){
     C.haptic(g>=3?'success':'error');
@@ -1774,7 +2006,7 @@ const App = (function(){
             <span class="vocab-jp">${v.word}</span> <span class="vocab-rd">${v.reading||''}</span>
             <div class="vocab-mn">${v.meaning||''}</div>
             ${v.example?`<div class="vocab-ex">${v.example}${v.exampleMeaning?` — <span style="color:var(--ink3)">${v.exampleMeaning}</span>`:''}</div>`:''}
-          </div><button class="mini-listen" onclick="sayNow('${sayRef(v.example||v.word)}')">▶</button></div>`).join('')}
+          </div><div style="display:flex;gap:4px"><button class="mini-listen" onclick="sayNow('${sayRef(v.example||v.word)}')">▶</button>${window.SpeechRecognition||window.webkitSpeechRecognition?`<button class="mini-listen" style="background:var(--green-soft);color:var(--green)" onclick="checkPronunciation('${sayRef(v.word)}',this)">🎤</button>`:''}</div></div>`).join('')}
       </div>` : '';
     const gramBlock = g.length ? `
       <div class="learn-block">
@@ -1923,12 +2155,144 @@ const App = (function(){
       showRewardScreen({icon:'🔁',title:'Review done!',sub:`${r.good}/${r.n} solid · Momentum ${mom}`,xp:r.good*12,correct:r.good,total:r.n,celebrate:r.good>=Math.ceil(r.n*0.7)});
     });
   }
+  let _fhFilter='all'; // all, vocab, kanji, grammar
+  let _fhLevel='all';  // all, N5, N4, N3... or L25, L26...
   function startFlashcards(){
     curLesson=null;
-    const all=allStudyCards();
-    if(!all.length) return home();
-    const cards=C.shuffle(all).slice(0,20);
-    runRecall(cards,'Flashcards',r=>{ C.logActivity(r.n,Math.max(1,Math.round(r.n/4)));C.snapshotToday();C.bumpMomentum(6);
+    showView('view-flashhub');
+    renderFlashHub();
+  }
+  function renderFlashHub(){
+    const body=document.getElementById('flashhub-body');
+    const vocab=C.ITEMS.vocab||[];
+    const kanji=C.ITEMS.kanji||[];
+    const grammar=C.ITEMS.grammar||[];
+    const srs=C.getSRS();
+
+    // Get unique lessons and levels
+    const lessons=[...new Set([...vocab,...kanji,...grammar].map(it=>it.lessonNum).filter(Boolean))].sort((a,b)=>a-b);
+    const levels=[...new Set([...vocab,...kanji,...grammar].map(it=>it.level).filter(Boolean))].sort();
+
+    // Filter items
+    function filterItems(arr){
+      let r=arr;
+      if(_fhFilter==='vocab')r=r.filter(it=>it.dim==='vocab');
+      else if(_fhFilter==='kanji')r=r.filter(it=>it.dim==='kanji');
+      else if(_fhFilter==='grammar')r=r.filter(it=>it.dim==='grammar');
+      if(_fhLevel && _fhLevel!=='all'){
+        if(_fhLevel.startsWith('L')){ const ln=parseInt(_fhLevel.slice(1)); r=r.filter(it=>it.lessonNum===ln); }
+        else r=r.filter(it=>it.level===_fhLevel);
+      }
+      return r;
+    }
+
+    const allItems=filterItems([...vocab,...kanji,...grammar]);
+
+    // Build chart data by lesson
+    const byLesson={};
+    allItems.forEach(it=>{
+      const ln=it.lessonNum||'?';
+      if(!byLesson[ln])byLesson[ln]={total:0,learned:0,mastered:0};
+      byLesson[ln].total++;
+      const st=srs[it.id];
+      if(st&&st.reps>0)byLesson[ln].learned++;
+      if(st&&C.itemMastery(it.id)>=80)byLesson[ln].mastered++;
+    });
+
+    // Tabs: dimension filters
+    const dimTabs=[['all','🌐 All'],['vocab','📖 Vocabulary'],['kanji','漢 Kanji'],['grammar','✍ Grammar']];
+    let tabsHTML='<div class="fh-tabs">';
+    dimTabs.forEach(([key,label])=>{
+      tabsHTML+=`<button class="fh-tab ${_fhFilter===key?'active':''}" onclick="_fhFilter='${key}';App.renderFlashHub()">${label}</button>`;
+    });
+    tabsHTML+='</div>';
+
+    // Level/lesson filter chips
+    let levelChips='<div class="fh-tabs" style="top:auto">';
+    levelChips+=`<button class="fh-tab ${_fhLevel==='all'?'active':''}" onclick="_fhLevel='all';App.renderFlashHub()">All Levels</button>`;
+    levels.forEach(lv=>{
+      levelChips+=`<button class="fh-tab ${_fhLevel===lv?'active':''}" onclick="_fhLevel='${lv}';App.renderFlashHub()">${lv}</button>`;
+    });
+    lessons.forEach(ln=>{
+      const lk='L'+ln;
+      levelChips+=`<button class="fh-tab ${_fhLevel===lk?'active':''}" onclick="_fhLevel='${lk}';App.renderFlashHub()">${lk}</button>`;
+    });
+    levelChips+='</div>';
+
+    // Progress chart
+    const maxTotal=Math.max(...Object.values(byLesson).map(d=>d.total),1);
+    let chartHTML='<div class="fh-chart">';
+    Object.keys(byLesson).sort((a,b)=>a-b).forEach(ln=>{
+      const d=byLesson[ln];
+      const learnedPct=Math.round(d.learned/d.total*100);
+      const masteredPct=Math.round(d.mastered/d.total*100);
+      chartHTML+=`<div class="fh-chart-row">
+        <span class="fh-chart-label">L${ln}</span>
+        <div class="fh-chart-bar"><div class="fh-chart-fill" style="width:${learnedPct}%;background:linear-gradient(90deg,var(--blue),var(--green))"></div></div>
+        <span class="fh-chart-val">${d.learned}/${d.total}</span>
+      </div>`;
+    });
+    chartHTML+='</div>';
+
+    // Section counts
+    const vCount=filterItems(vocab).length;
+    const kCount=filterItems(kanji).length;
+    const gCount=filterItems(grammar).length;
+    const totalCount=allItems.length;
+
+    // Learned counts
+    const vLearned=filterItems(vocab).filter(it=>{const st=srs[it.id];return st&&st.reps>0}).length;
+    const kLearned=filterItems(kanji).filter(it=>{const st=srs[it.id];return st&&st.reps>0}).length;
+    const gLearned=filterItems(grammar).filter(it=>{const st=srs[it.id];return st&&st.reps>0}).length;
+
+    body.innerHTML=`
+      ${tabsHTML}
+      ${levelChips}
+      <div style="font-size:13px;font-weight:800;color:var(--ink3);margin:6px 0 10px;padding:0 4px">📊 Progress by Lesson</div>
+      ${chartHTML}
+      <div style="font-size:13px;font-weight:800;color:var(--ink3);margin:10px 0 6px;padding:0 4px">🃏 Flashcard Decks</div>
+      ${_fhFilter==='all'||_fhFilter==='vocab'?`
+        <div class="fh-section">
+          <div class="fh-section-head"><span class="fh-section-title">📖 Vocabulary</span><span class="fh-section-count">${vLearned}/${vCount} learned</span></div>
+          <div style="font-size:12px;color:var(--ink3);margin-bottom:8px">Japanese → Meaning · recall from memory</div>
+          <button class="fh-start-btn" onclick="App.startFlashDeck('vocab')">Start Vocabulary (${Math.min(vCount,30)} cards) →</button>
+        </div>`:''}
+      ${_fhFilter==='all'||_fhFilter==='kanji'?`
+        <div class="fh-section">
+          <div class="fh-section-head"><span class="fh-section-title">漢 Kanji</span><span class="fh-section-count">${kLearned}/${kCount} learned</span></div>
+          <div style="font-size:12px;color:var(--ink3);margin-bottom:8px">Kanji → Reading & Meaning</div>
+          <button class="fh-start-btn green" onclick="App.startFlashDeck('kanji')">Start Kanji (${Math.min(kCount,30)} cards) →</button>
+        </div>`:''}
+      ${_fhFilter==='all'||_fhFilter==='grammar'?`
+        <div class="fh-section">
+          <div class="fh-section-head"><span class="fh-section-title">✍ Grammar</span><span class="fh-section-count">${gLearned}/${gCount} learned</span></div>
+          <div style="font-size:12px;color:var(--ink3);margin-bottom:8px">Grammar point → Explanation & Examples</div>
+          <button class="fh-start-btn purple" onclick="App.startFlashDeck('grammar')">Start Grammar (${Math.min(gCount,30)} cards) →</button>
+        </div>`:''}
+      ${totalCount===0?'<div class="gr-empty"><div class="es-icon">🃏</div><div class="es-title">No cards match this filter</div></div>':''}
+    `;
+  }
+  function startFlashDeck(dim){
+    let items;
+    const srs=C.getSRS();
+    if(_fhLevel&&_fhLevel!=='all'){
+      let filtered;
+      if(_fhLevel.startsWith('L')){const ln=parseInt(_fhLevel.slice(1));filtered=C.ITEMS[dim].filter(it=>it.lessonNum===ln);}
+      else filtered=C.ITEMS[dim].filter(it=>it.level===_fhLevel);
+      items=filtered;
+    } else {
+      items=C.ITEMS[dim]||[];
+    }
+    if(!items.length)return;
+    // Sort: unlearned first, then by lesson, shuffle within
+    const unlearned=items.filter(it=>{const st=srs[it.id];return !st||st.reps===0});
+    const learned=items.filter(it=>{const st=srs[it.id];return st&&st.reps>0});
+    const cards=[...C.shuffle(unlearned),...C.shuffle(learned)].slice(0,30);
+    // Mark cards with mode: JP→meaning for vocab/kanji
+    cards.forEach(c=>{c._mode='meaning';c._dim=dim});
+    const titles={vocab:'Vocabulary Flashcards',kanji:'Kanji Flashcards',grammar:'Grammar Flashcards'};
+    runRecall(cards,titles[dim]||'Flashcards',r=>{
+      C.logActivity(r.n,Math.max(1,Math.round(r.n/4)));C.snapshotToday();C.bumpMomentum(6);
       report('flashcards',{good:r.good,total:r.n,overall:C.overallMastery(),momentum:C.getMomentum().value});
       showRewardScreen({icon:'🃏',title:'Flashcards done!',sub:`${r.good}/${r.n} known · nice work`,xp:r.good*8,correct:r.good,total:r.n,celebrate:r.good>=Math.ceil(r.n*0.7)});
     });
@@ -2215,14 +2579,16 @@ const App = (function(){
       if(p.length<n) p=p.concat(sh(qPool.filter(q=>q.dim===dim&&C.difficultyOf(q)!==diff)));
       return p.slice(0,n); };
     const screens=[]; const sec=[];
-    const addSec=(key,label,desc,items,pts,passage,ptitle)=>{
+    const addSec=(key,label,desc,items,pts,passage,ptitle,passageAll)=>{
       if(!items.length) return;
       sec.push({key,label,pts:0,poss:0});
-      items.forEach((it,idx)=>screens.push({
+      items.forEach((it,idx)=>{
+        const showP=passageAll||idx===0;
+        screens.push({
         section:key, secLabel:label, secDesc:desc, secFirst:idx===0,
         q:it.q, o:it.o, c:it.c, exp:it.exp, pts,
-        passage:idx===0?passage:null, passageTitle:idx===0?ptitle:null
-      }));
+        passage:showP?passage:null, passageTitle:showP?ptitle:null
+      })});
     };
     // I 文法 (grammar MCQ) · II 語彙 (vocab MCQ) · III 漢字語彙 (kanji MCQ)
     addSec('I','文法 Grammar','Choose the most appropriate option for each blank.',
@@ -2253,7 +2619,7 @@ const App = (function(){
     if(cand.length){ const p=cand[0];
       addSec('V','読解 Reading comprehension','Read the passage, then answer.',
         p.reading.questions.slice(0,3).map(rq=>({q:rq.q,o:rq.o,c:rq.c,exp:rq.exp})),6,
-        p.reading.passage, p.reading.title); }
+        p.reading.passage, p.reading.title, true); }
     return {level, screens, sec, time:EXAM_TIME[level]};
   }
 
@@ -2276,6 +2642,8 @@ const App = (function(){
     if(EX.left<=0){ clearInterval(examTimer); finishExam(true); }
   }
 
+  let examGuard=false;
+  function escHTML(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
   function renderExamScreen(){
     const s=EX.screens[EX.i], n=EX.screens.length;
     document.getElementById('exam-top').innerHTML=`
@@ -2287,13 +2655,22 @@ const App = (function(){
       <div class="exam-prog"><div class="f" style="width:${Math.round((EX.i+1)/n*100)}%"></div></div>`;
     let h='';
     if(s.secFirst) h+=`<div class="exam-sec-head">Section ${s.section} · ${s.secLabel}</div><div class="exam-sec-desc">${s.secDesc}</div>`;
-    if(s.passage) h+=`<div class="exam-passage"><strong>${s.passageTitle||''}</strong>\n\n${s.passage}</div>`;
-    h+=`<div class="exam-q">${(EX.i+1)}. ${s.q}</div><div class="opts">`;
+    if(s.passage) h+=`<div class="exam-passage"><strong>${escHTML(s.passageTitle)||''}</strong>\n\n${escHTML(s.passage)}</div>`;
+    h+=`<div class="exam-q">${(EX.i+1)}. ${s.q}</div><div class="opts exam-opts">`;
     s.o.forEach((o,idx)=>h+=`<button class="opt${EX.answers[EX.i]===idx?' sel':''}" onclick="App.examPick(${idx})">${o}</button>`);
-    h+=`</div><button class="exam-next" id="exam-next" ${EX.answers[EX.i]==null?'disabled':''} onclick="App.examNext()">${EX.i===n-1?'Finish ▸':'Next ▸'}</button>`;
-    const body=document.getElementById('exam-body'); body.innerHTML=h; scrollTo(0,0);
+    h+=`</div><div class="exam-nav-row">`;
+    h+=`<button class="exam-prev" ${EX.i===0?'disabled':''} onclick="App.examPrev()">◂ Back</button>`;
+    h+=`<button class="exam-next" id="exam-next" ${EX.answers[EX.i]==null?'disabled':''} onclick="App.examNext()">${EX.i===n-1?'Finish ▸':'Next ▸'}</button></div>`;
+    const body=document.getElementById('exam-body'); body.innerHTML=h;
+    // Click guard: prevent accidental option selection for 300ms after render
+    examGuard=true;
+    const optsEl=body.querySelector('.exam-opts');
+    if(optsEl) optsEl.classList.add('exam-click-guard');
+    setTimeout(()=>{ examGuard=false; if(optsEl) optsEl.classList.remove('exam-click-guard'); },300);
+    scrollTo(0,0);
   }
   function examPick(i){
+    if(examGuard) return;
     C.haptic('light'); EX.answers[EX.i]=i;
     SFX.flip();
     document.querySelectorAll('#exam-body .opt').forEach((b,idx)=>b.classList.toggle('sel',idx===i));
@@ -2302,6 +2679,9 @@ const App = (function(){
   function examNext(){
     if(EX.answers[EX.i]==null) return;
     if(EX.i<EX.screens.length-1){ EX.i++; renderExamScreen(); } else finishExam(false);
+  }
+  function examPrev(){
+    if(EX.i>0){ EX.i--; renderExamScreen(); }
   }
   function examQuit(){
     if(!confirm('Quit this exam? Your progress in this attempt will be lost.')) return;
@@ -2488,7 +2868,7 @@ const App = (function(){
     if(cand.length){ const p=cand[0];
       p.reading.questions.slice(0,4).forEach((rq,i)=>{
         readingQs.push({q:rq.q,o:rq.o,c:rq.c,exp:rq.exp,section:'reading',secLabel:'読解 Reading',pts:15,
-          passage:i===0?p.reading.passage:null,passageTitle:i===0?p.reading.title:null,secFirst:i===0});
+          passage:p.reading.passage,passageTitle:p.reading.title,secFirst:i===0});
       });
     }
     // If not enough reading questions, generate from vocab context
@@ -2556,16 +2936,25 @@ const App = (function(){
       <div class="exam-prog"><div class="f" style="width:${Math.round((JL.i+1)/n*100)}%"></div></div>`;
     let h='';
     if(s.secFirst) h+=`<div class="exam-sec-head">${s.secLabel}</div><div class="exam-sec-desc">Section ${s.section==='vocab_grammar'?'1':s.section==='reading'?'2':'3'} of 3 · ${s.pts} pts each</div>`;
-    if(s.passage) h+=`<div class="exam-passage"><strong>${s.passageTitle||''}</strong>\n\n${s.passage}</div>`;
+    if(s.passage) h+=`<div class="exam-passage"><strong>${escHTML(s.passageTitle)||''}</strong>\n\n${escHTML(s.passage)}</div>`;
     if(s.audioText){ h+=`<div style="text-align:center;margin-bottom:14px"><button class="listen-btn" onclick="sayNow('${sayRef(s.audioText)}')">▶ 聞く Listen</button></div>`; }
-    h+=`<div class="exam-q">${(JL.i+1)}. ${s.q}</div><div class="opts">`;
+    h+=`<div class="exam-q">${(JL.i+1)}. ${s.q}</div><div class="opts exam-opts">`;
     s.o.forEach((o,idx)=>h+=`<button class="opt${JL.answers[JL.i]===idx?' sel':''}" onclick="App.jlptPick(${idx})">${o}</button>`);
-    h+=`</div><button class="exam-next" id="exam-next" ${JL.answers[JL.i]==null?'disabled':''} onclick="App.jlptNext()">${JL.i===n-1?'Finish ▸':'Next ▸'}</button>`;
-    const body=document.getElementById('exam-body'); body.innerHTML=h; scrollTo(0,0);
+    h+=`</div><div class="exam-nav-row">`;
+    h+=`<button class="exam-prev" ${JL.i===0?'disabled':''} onclick="App.jlptPrev()">◂ Back</button>`;
+    h+=`<button class="exam-next" id="exam-next" ${JL.answers[JL.i]==null?'disabled':''} onclick="App.jlptNext()">${JL.i===n-1?'Finish ▸':'Next ▸'}</button></div>`;
+    const body=document.getElementById('exam-body'); body.innerHTML=h;
+    // Click guard
+    examGuard=true;
+    const optsEl=body.querySelector('.exam-opts');
+    if(optsEl) optsEl.classList.add('exam-click-guard');
+    setTimeout(()=>{ examGuard=false; if(optsEl) optsEl.classList.remove('exam-click-guard'); },300);
+    scrollTo(0,0);
     if(s.audioText) setTimeout(()=>speak(s.audioText),400);
   }
 
   function jlptPick(i){
+    if(examGuard) return;
     C.haptic('light'); JL.answers[JL.i]=i;
     SFX.flip();
     document.querySelectorAll('#exam-body .opt').forEach((b,idx)=>b.classList.toggle('sel',idx===i));
@@ -2574,6 +2963,9 @@ const App = (function(){
   function jlptNext(){
     if(JL.answers[JL.i]==null) return;
     if(JL.i<JL.screens.length-1){ JL.i++; renderJlptScreen(); } else finishJlpt(false);
+  }
+  function jlptPrev(){
+    if(JL.i>0){ JL.i--; renderJlptScreen(); }
   }
   function jlptQuit(){
     if(!confirm('Quit this JLPT test? Your progress in this attempt will be lost.')) return;
@@ -2746,7 +3138,7 @@ const App = (function(){
 
     // Update header subtitle
     if (remaining > 0) {
-      sub.textContent = `${remaining} thread${remaining > 1 ? 's' : ''} left today · fresh Japanese discoveries`;
+      sub.textContent = `あと${remaining}スレッド · 日本語を読もう`;
     } else {
       // Calculate time until midnight
       const now = new Date();
@@ -2754,12 +3146,12 @@ const App = (function(){
       tomorrow.setHours(24, 0, 0, 0);
       const hours = Math.floor((tomorrow - now) / 3600000);
       const mins = Math.floor(((tomorrow - now) % 3600000) / 60000);
-      sub.textContent = `All threads read · come back in ${hours}h ${mins}m for more`;
+      sub.textContent = `今日のスレッドは全部読みました · あと${hours}時間${mins}分`;
     }
 
     if (s.threads.length === 0 && remaining > 0) {
       // Show loading + auto-fetch first thread
-      body.innerHTML = `<div class="feed-loading"><div class="fl-spinner"></div><div class="fl-text">Loading your thread…</div></div>`;
+      body.innerHTML = `<div class="feed-loading"><div class="fl-spinner"></div><div class="fl-text">スレッドを読み込んでいます…</div></div>`;
       await fetchAndAddThread();
     }
 
@@ -2828,37 +3220,65 @@ const App = (function(){
     dotsEl.innerHTML = dotsHTML;
 
     if (remaining > 0) {
-      sub.textContent = `${remaining} thread${remaining > 1 ? 's' : ''} left today · fresh Japanese discoveries`;
+      sub.textContent = `あと${remaining}スレッド · 日本語を読もう`;
     } else {
       const now = new Date();
       const tomorrow = new Date(now);
       tomorrow.setHours(24, 0, 0, 0);
       const hours = Math.floor((tomorrow - now) / 3600000);
       const mins = Math.floor(((tomorrow - now) % 3600000) / 60000);
-      sub.textContent = `All threads read · come back in ${hours}h ${mins}m for more`;
+      sub.textContent = `今日のスレッドは全部読みました · あと${hours}時間${mins}分`;
     }
+
+    // Tag class mapping for Japanese tags
+    const tagClassMap = { '日常':'t-Culture', '文化':'t-Culture', '自然':'t-Reading', '仕事':'t-Grammar', '料理':'t-Vocabulary', '勉強':'t-Kanji', '旅行':'t-Reading', '健康':'t-Vocabulary' };
+    const diffLabel = { easy:'初級', medium:'中級', hard:'上級' };
+    const diffIcon = { easy:'🟢', medium:'🟡', hard:'🔴' };
 
     let html = '';
     s.threads.forEach((t, idx) => {
       const diff = t.difficulty || 'easy';
-      const diffLabel = { easy:'Easy', medium:'Medium', hard:'Hard' }[diff] || 'Easy';
-      const diffIcon = { easy:'🟢', medium:'🟡', hard:'🔴' }[diff] || '🟢';
-      const postsHTML = t.posts.map((p, i) =>
-        `<div class="thread-post"><span class="tp-num">${i + 1}/${t.posts.length}</span>${p}</div>`
-      ).join('');
-      const tagClass = 't-' + (t.tag || 'Kanji');
+      const tagClass = tagClassMap[t.tag] || 't-Culture';
+      const levelBadge = t.level || 'N4';
+      const threadLikes = C.DB.get('feed_likes_' + t.id) || 0;
+
+      const postsHTML = t.posts.map((p, i) => {
+        const isLast = i === t.posts.length - 1;
+        const postLikeKey = 'feed_like_' + t.id + '_' + i;
+        const liked = C.DB.get(postLikeKey);
+        const likeCount = C.DB.get(postLikeKey + '_count') || Math.floor(Math.random() * 20) + 1;
+        return `<div class="thread-post-line">
+          <div class="thread-post-row">
+            <div class="thread-post-avatar">${t.emoji}</div>
+            <div class="thread-post-content">
+              <div class="thread-post-name"><span>${t.title}</span><span class="tpn-level">${levelBadge}</span></div>
+              <div class="thread-post-text" style="animation-delay:${.15 * i}s">${p}</div>
+              <div class="thread-post-actions">
+                <div class="tp-action ${liked === 'like' ? 'liked' : ''}" onclick="App.toggleFeedLike('${t.id}',${i},'like')">
+                  <span class="tp-icon">${liked === 'like' ? '❤️' : '🤍'}</span>
+                  <span class="tp-count">${likeCount + (liked === 'like' ? 1 : 0)}</span>
+                </div>
+                <div class="tp-action ${liked === 'dislike' ? 'disliked' : ''}" onclick="App.toggleFeedLike('${t.id}',${i},'dislike')">
+                  <span class="tp-icon">${liked === 'dislike' ? '👎' : '👎🏻'}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+
       html += `<div class="thread-card unread">
         <div class="thread-head">
           <div class="thread-emoji">${t.emoji}</div>
-          <div class="thread-title">${t.title}<span class="thread-tag ${tagClass}">${t.tag}</span><span class="thread-diff thread-diff-${diff}">${diffIcon} ${diffLabel}</span></div>
+          <div class="thread-title">${t.title}<span class="thread-tag ${tagClass}">${t.tag}</span><span class="thread-diff thread-diff-${diff}">${diffIcon[diff]} ${diffLabel[diff]}</span></div>
         </div>
-        <div class="thread-posts">${postsHTML}</div>
+        <div class="thread-posts" style="padding-top:4px">${postsHTML}</div>
         <a class="thread-cta" href="javascript:void(0)" onclick="App.goPractice()"><span>${t.cta}</span><span class="cta-arrow">→</span></a>
       </div>`;
     });
 
     if (remaining > 0) {
-      html += `<button class="feed-more" onclick="App.loadNextThread()">🌸 Read next thread <span style="opacity:.7">(${remaining} left)</span></button>`;
+      html += `<button class="feed-more" onclick="App.loadNextThread()">🌸 次のスレッドを読む <span style="opacity:.7">(あと${remaining})</span></button>`;
     } else {
       const now = new Date();
       const tomorrow = new Date(now);
@@ -2867,13 +3287,25 @@ const App = (function(){
       const mins = Math.floor(((tomorrow - now) % 3600000) / 60000);
       html += `<div class="feed-empty">
         <div class="feed-empty-icon">🌸</div>
-        <div class="feed-empty-title">That's all for today!</div>
-        <div class="feed-empty-sub">You've read all ${FEED_DAILY_LIMIT} threads. Come back tomorrow for more discoveries.</div>
-        <div class="feed-timer">⏰ Next threads in ${hours}h ${mins}m</div>
+        <div class="feed-empty-title">今日は全部読みました！</div>
+        <div class="feed-empty-sub">${FEED_DAILY_LIMIT}スレッド全部読みました。明日も新しいスレッドが待っています。</div>
+        <div class="feed-timer">⏰ あと${hours}時間${mins}分</div>
       </div>`;
     }
 
     body.innerHTML = html;
+  }
+
+  function toggleFeedLike(threadId, postIdx, type) {
+    const key = 'feed_like_' + threadId + '_' + postIdx;
+    const current = C.DB.get(key);
+    if (current === type) {
+      C.DB.set(key, null);
+    } else {
+      C.DB.set(key, type);
+      C.haptic('light');
+    }
+    renderFeedThreads();
   }
 
   async function loadNextThread() {
@@ -2881,7 +3313,7 @@ const App = (function(){
     // Append loading at the bottom
     const loadingEl = document.createElement('div');
     loadingEl.className = 'feed-loading';
-    loadingEl.innerHTML = '<div class="fl-spinner"></div><div class="fl-text">Loading thread…</div>';
+    loadingEl.innerHTML = '<div class="fl-spinner"></div><div class="fl-text">スレッドを読み込んでいます…</div>';
     body.appendChild(loadingEl);
 
     const ok = await fetchAndAddThread();
@@ -2900,19 +3332,20 @@ const App = (function(){
   }
 
   return {renderHome,reloadContent,openLesson,lessonTab,markLearned,revealRecall,gradeRecall,answer,nextQ,
-          startReview,startGlobalReview,startFlashcards,backToLesson,lessonReadingQuiz,
+          startReview,startGlobalReview,startFlashcards,renderFlashHub,startFlashDeck,backToLesson,lessonReadingQuiz,
           practiceVocab,practiceReadingDrill,practiceGrammar,practiceKanji,
           practiceListening,practiceReading,practiceMixed,practiceWrite,
-          setExamDate,openExamHub,startExam,examPick,examNext,examQuit,
+          setExamDate,openExamHub,startExam,examPick,examNext,examPrev,examQuit,
           exitSession,home,
           toggleSound,toggleDark,toggleFurigana,startStrengthen,
-          goHome,goPractice,goBadges,goFeed,loadNextThread,showRewardScreen,reviewMistakes,
-          openJlptHub,startJlpt,jlptPick,jlptNext,jlptQuit,toggleSettings,
+          goHome,goPractice,goBadges,goFeed,loadNextThread,toggleFeedLike,showRewardScreen,reviewMistakes,
+          openJlptHub,startJlpt,jlptPick,jlptNext,jlptPrev,jlptQuit,toggleSettings,
           toggleNotif,setNotifTime};
 })();
 
 /* ── INIT ── */
 (async function(){
+  flushReportQueue();
   C.loadContent(()=>{
     App.renderHome();
     // Handle PWA shortcut actions

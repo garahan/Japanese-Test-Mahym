@@ -28,21 +28,22 @@ function buildSummary(logs) {
 
   const examLogs = logs.filter(l => l.type === 'exam');
   const jlptLogs = logs.filter(l => l.type === 'jlpt');
-  const studyLogs = logs.filter(l => ['lesson-quiz', 'lesson-write', 'review', 'flashcards', 'practice', 'mission', 'reading', 'drill', 'listening', 'mistakes'].includes(l.type));
+  const studyLogs = logs.filter(l => ['lesson-quiz', 'lesson-write', 'review', 'flashcards', 'practice', 'mission', 'reading', 'drill', 'listening', 'mistakes', 'test'].includes(l.type));
 
   const avgPct = (arr) => {
     const vals = arr.map(l => l.pct).filter(v => v != null);
     return vals.length ? Math.round(vals.reduce((a, b) => a + b, 0) / vals.length) : null;
   };
 
-  // Build streak: consecutive days with at least one log entry
+  // Build streak: consecutive days with at least one log entry (local dates)
+  const localKey = d => d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
   const days = new Set();
-  logs.forEach(l => { days.add(new Date(l.timestamp).toISOString().slice(0, 10)); });
+  logs.forEach(l => { const d=new Date(l.timestamp); days.add(localKey(d)); });
   let streak = 0;
-  const today = new Date().toISOString().slice(0, 10);
+  const today = localKey(new Date());
   let cursor = new Date();
   for (let i = 0; i < 365; i++) {
-    const ds = cursor.toISOString().slice(0, 10);
+    const ds = localKey(cursor);
     if (days.has(ds)) { streak++; cursor.setDate(cursor.getDate() - 1); }
     else if (ds === today) { cursor.setDate(cursor.getDate() - 1); } // today not yet active
     else break;

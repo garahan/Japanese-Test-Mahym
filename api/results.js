@@ -98,6 +98,11 @@ function buildMessage(b) {
   } else if (b.type === 'mistakes') {
     head = `🔧 <b>${name} reviewed mistakes</b>`;
     if (score) lines.push(`✅ ${score}`);
+  } else if (b.type === 'test') {
+    head = `🧪 <b>${name} took a weakness test</b>`;
+    if (score) lines.push(`✅ ${score}`);
+    if (b.time) lines.push(`⏱ ${Math.floor(b.time/60)}m ${b.time%60}s`);
+    if (b.weakIds && b.weakIds.length) lines.push(`⚠️ ${b.weakIds.length} items still weak`);
   } else {
     head = `📚 <b>${name} studied</b>`;
     if (score) lines.push(`✅ ${score}`);
