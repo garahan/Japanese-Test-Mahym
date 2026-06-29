@@ -79,7 +79,7 @@
     for (const k in BY_ID) delete BY_ID[k];
 
     for (const p of PACKS) {
-      const meta = { level: p.level, module: p.module, moduleLabel: p.moduleLabel, lesson: p.lesson, lessonLabel: p.lessonLabel };
+      const meta = { level: p.level, module: p.module, moduleLabel: p.moduleLabel, lesson: p.lesson, lessonLabel: p.lessonLabel, lessonNum: p.lessonNum };
       (p.vocabulary || []).forEach(v => add({ ...v, dim: 'vocab', ...meta }));
       (p.grammar || []).forEach(g => add({ ...g, dim: 'grammar', ...meta }));
       (p.kanji || []).forEach(k => add({ ...k, dim: 'kanji', ...meta }));
@@ -104,10 +104,12 @@
   }
 
   // load order: instant from cache → fallback seed → background API refresh
+  const CACHE_VER = 3; // bump when seed structure changes to force cache refresh
   async function loadContent(onReady) {
     const cached = DB.get('cache_packs');
-    if (cached && cached.length) { indexContent(cached); if (onReady) onReady('cache'); }
-    else if (root.SEED_CONTENT) { indexContent(root.SEED_CONTENT); if (onReady) onReady('seed'); }
+    const cachedVer = DB.get('cache_ver');
+    if (cached && cached.length && cachedVer === CACHE_VER) { indexContent(cached); if (onReady) onReady('cache'); }
+    else if (root.SEED_CONTENT) { indexContent(root.SEED_CONTENT); DB.set('cache_packs', root.SEED_CONTENT); DB.set('cache_ver', CACHE_VER); if (onReady) onReady('seed'); }
 
     try {
       const r = await fetch('/api/content?type=lessons');
@@ -115,18 +117,17 @@
       const packs = (j && j.data) || [];
       if (packs.length) {
         indexContent(packs);
-        // If the server content has no readable lessons but the bundled seed does,
-        // keep the seed so the lesson screen is never empty.
         if (!lessonNums().length && root.SEED_CONTENT) {
           indexContent(root.SEED_CONTENT);
-          DB.set('cache_packs', root.SEED_CONTENT);
+          DB.set('cache_packs', root.SEED_CONTENT); DB.set('cache_ver', CACHE_VER);
         } else {
-          DB.set('cache_packs', packs);
+          DB.set('cache_packs', packs); DB.set('cache_ver', CACHE_VER);
         }
         if (onReady) onReady('api');
-      }
+      } else { throw new Error('empty response'); }
     } catch (e) {
-      if (!PACKS.length && root.SEED_CONTENT) { indexContent(root.SEED_CONTENT); DB.set('cache_packs', root.SEED_CONTENT); if (onReady) onReady('seed'); }
+      // API unavailable — always re-index with the latest bundled seed (includes N5+N3)
+      if (root.SEED_CONTENT) { indexContent(root.SEED_CONTENT); DB.set('cache_packs', root.SEED_CONTENT); DB.set('cache_ver', CACHE_VER); if (onReady) onReady('seed'); }
     }
   }
 

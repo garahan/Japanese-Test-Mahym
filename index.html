@@ -299,36 +299,33 @@ body.dark .sback{background:var(--bg)}
 .fc-scene{perspective:1000px;margin-bottom:1.4rem;cursor:pointer}
 
 /* Flashcard Hub */
-.fh-section{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:1.1rem 1.2rem;margin-bottom:.8rem;box-shadow:var(--shadow);transition:border-color .2s}
-.fh-section:hover{border-color:var(--blue)}
-.fh-section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-.fh-section-title{font-size:16px;font-weight:900;font-family:'Noto Sans JP'}
-.fh-section-count{font-size:12px;font-weight:800;color:var(--ink3);background:var(--bg);padding:3px 10px;border-radius:20px}
-.fh-tabs{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:8px 0 10px;position:sticky;top:calc(env(safe-area-inset-top) + 52px);z-index:8;background:var(--bg)}
-.fh-tab{white-space:nowrap;padding:7px 14px;border-radius:20px;background:var(--card);border:1.5px solid var(--border);color:var(--ink3);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s}
+.fh-section{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1rem 1.1rem;margin-bottom:.7rem;box-shadow:var(--shadow)}
+.fh-section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.fh-section-title{font-size:15px;font-weight:900;font-family:'Noto Sans JP'}
+.fh-section-count{font-size:11px;font-weight:800;color:var(--ink3);background:var(--bg);padding:3px 9px;border-radius:20px}
+.fh-tabs{display:flex;gap:5px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:6px 0 8px;position:sticky;top:calc(env(safe-area-inset-top) + 52px);z-index:8;background:var(--bg)}
+.fh-tab{white-space:nowrap;padding:6px 13px;border-radius:18px;background:var(--card);border:1.5px solid var(--border);color:var(--ink3);font-size:12.5px;font-weight:700;cursor:pointer;transition:all .2s;flex-shrink:0}
+.fh-tab:active{transform:scale(.94)}
 .fh-tab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
 .fh-tab.active.n5{background:var(--green);border-color:var(--green)}
 .fh-tab.active.n4{background:var(--blue);border-color:var(--blue)}
 .fh-tab.active.n3{background:var(--purple);border-color:var(--purple)}
-.fh-filter-row{display:flex;align-items:center;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:4px 0 8px}
-.fh-filter-label{font-size:11px;font-weight:800;color:var(--ink3);white-space:nowrap;flex-shrink:0;min-width:44px}
-.fh-chart{background:var(--bg);border-radius:14px;padding:12px;margin-bottom:.8rem}
-.fh-chart-row{display:flex;align-items:center;gap:10px;margin-bottom:6px}
-.fh-chart-row:last-child{margin-bottom:0}
-.fh-chart-label{font-size:12px;font-weight:800;min-width:70px;flex-shrink:0}
-.fh-chart-bar{flex:1;height:18px;background:var(--card);border-radius:9px;overflow:hidden;position:relative}
-.fh-chart-fill{height:100%;border-radius:9px;transition:width .8s var(--spring)}
-.fh-chart-val{font-size:11px;font-weight:800;min-width:40px;text-align:right;flex-shrink:0;color:var(--ink3)}
-.fh-summary{display:flex;gap:8px;margin-bottom:10px}
-.fh-stat{flex:1;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:8px 10px;text-align:center}
-.fh-stat-num{font-size:20px;font-weight:900;color:var(--ink)}
-.fh-stat-label{font-size:10px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px}
-.fh-start-btn{width:100%;padding:13px;background:var(--blue);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:900;cursor:pointer;margin-top:8px;box-shadow:0 4px 0 #1565c0;transition:transform .15s var(--spring)}
+.fh-filter-row{display:flex;align-items:center;gap:5px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:3px 0 6px}
+.fh-filter-label{font-size:10px;font-weight:800;color:var(--ink3);white-space:nowrap;flex-shrink:0;min-width:38px;text-transform:uppercase;letter-spacing:.3px}
+.fh-summary{display:flex;gap:6px;margin:8px 0}
+.fh-stat{flex:1;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:7px 8px;text-align:center}
+.fh-stat-num{font-size:18px;font-weight:900;color:var(--ink)}
+.fh-stat-label{font-size:9px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px}
+.fh-start-btn{width:100%;padding:12px;background:var(--blue);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:900;cursor:pointer;margin-top:6px;box-shadow:0 3px 0 #1565c0;transition:transform .15s var(--spring)}
 .fh-start-btn:active{transform:translateY(3px);box-shadow:0 1px 0 #1565c0}
-.fh-start-btn.green{background:var(--green);box-shadow:0 4px 0 #00a344}
+.fh-start-btn.green{background:var(--green);box-shadow:0 3px 0 #00a344}
 .fh-start-btn.green:active{box-shadow:0 1px 0 #00a344}
-.fh-start-btn.purple{background:var(--purple);box-shadow:0 4px 0 #6a1b9a}
+.fh-start-btn.purple{background:var(--purple);box-shadow:0 3px 0 #6a1b9a}
 .fh-start-btn.purple:active{box-shadow:0 1px 0 #6a1b9a}
+.fh-progress-mini{display:flex;gap:3px;flex-wrap:wrap;margin:6px 0 8px}
+.fh-pm-dot{width:8px;height:8px;border-radius:50%;background:var(--border);flex-shrink:0}
+.fh-pm-dot.learned{background:var(--blue)}
+.fh-pm-dot.mastered{background:var(--green)}
 .fc-inner{position:relative;width:100%;min-height:320px;transition:transform .6s var(--spring);transform-style:preserve-3d}
 .fc-inner.flip{transform:rotateY(180deg)}
 .fc-face{position:absolute;inset:0;background:var(--card);border:2px solid var(--border);border-radius:24px;padding:2rem;display:flex;flex-direction:column;align-items:center;justify-content:center;backface-visibility:hidden;box-shadow:var(--shadow);text-align:center}
@@ -2182,14 +2179,17 @@ const App = (function(){
       showRewardScreen({icon:'🔁',title:'Review done!',sub:`${r.good}/${r.n} solid · Momentum ${mom}`,xp:r.good*12,correct:r.good,total:r.n,celebrate:r.good>=Math.ceil(r.n*0.7)});
     });
   }
-  let _fhFilter='all'; // all, vocab, kanji, grammar
-  let _fhLevel='all';  // all, N5, N4, N3
-  let _fhLesson='all'; // all, L1, L2, ... L50, L51...
+  let _fhFilter='all';
+  let _fhLevel='all';
+  let _fhLesson='all';
   function startFlashcards(){
     curLesson=null;
     showView('view-flashhub');
     renderFlashHub();
   }
+  function setFhFilter(v){_fhFilter=v;renderFlashHub();}
+  function setFhLevel(v){_fhLevel=v;_fhLesson='all';renderFlashHub();}
+  function setFhLesson(v){_fhLesson=v;renderFlashHub();}
   function _fhLevelClass(lv){return lv==='N5'?'n5':lv==='N4'?'n4':lv==='N3'?'n3':'';}
   function renderFlashHub(){
     const body=document.getElementById('flashhub-body');
@@ -2198,12 +2198,10 @@ const App = (function(){
     const grammar=C.ITEMS.grammar||[];
     const srs=C.getSRS();
 
-    // Get unique lessons and levels
     const allFlat=[...vocab,...kanji,...grammar];
     const lessons=[...new Set(allFlat.map(it=>it.lessonNum).filter(Boolean))].sort((a,b)=>a-b);
     const levels=['N5','N4','N3'].filter(lv=>allFlat.some(it=>it.level===lv));
 
-    // Filter items — applies both level and lesson filters
     function filterItems(arr){
       let r=arr;
       if(_fhFilter==='vocab')r=r.filter(it=>it.dim==='vocab');
@@ -2216,61 +2214,6 @@ const App = (function(){
 
     const allItems=filterItems(allFlat);
 
-    // Build chart data by lesson
-    const byLesson={};
-    allItems.forEach(it=>{
-      const ln=it.lessonNum||'?';
-      if(!byLesson[ln])byLesson[ln]={total:0,learned:0,mastered:0};
-      byLesson[ln].total++;
-      const st=srs[it.id];
-      if(st&&st.reps>0)byLesson[ln].learned++;
-      if(st&&C.itemMastery(it.id)>=80)byLesson[ln].mastered++;
-    });
-
-    // Tabs: dimension filters (sticky)
-    const dimTabs=[['all','🌐 All'],['vocab','📖 Vocab'],['kanji','漢 Kanji'],['grammar','✍ Grammar']];
-    let tabsHTML='<div class="fh-tabs">';
-    dimTabs.forEach(([key,label])=>{
-      tabsHTML+=`<button class="fh-tab ${_fhFilter===key?'active':''}" onclick="_fhFilter='${key}';App.renderFlashHub()">${label}</button>`;
-    });
-    tabsHTML+='</div>';
-
-    // Level filter row
-    let levelHTML='<div class="fh-filter-row">';
-    levelHTML+='<span class="fh-filter-label">Level</span>';
-    levelHTML+=`<button class="fh-tab ${_fhLevel==='all'?'active':''}" onclick="_fhLevel='all';App.renderFlashHub()">All</button>`;
-    levels.forEach(lv=>{
-      const cls=_fhLevelClass(lv);
-      levelHTML+=`<button class="fh-tab ${_fhLevel===lv?'active '+cls:''}" onclick="_fhLevel='${lv}';App.renderFlashHub()">${lv}</button>`;
-    });
-    levelHTML+='</div>';
-
-    // Lesson filter row — only show lessons matching current level filter
-    const visibleLessons=_fhLevel!=='all'?lessons.filter(ln=>{const p=C.PACKS().find(p=>p.lessonNum===ln);return p&&p.level===_fhLevel;}):lessons;
-    let lessonHTML='<div class="fh-filter-row">';
-    lessonHTML+='<span class="fh-filter-label">Lesson</span>';
-    lessonHTML+=`<button class="fh-tab ${_fhLesson==='all'?'active':''}" onclick="_fhLesson='all';App.renderFlashHub()">All</button>`;
-    visibleLessons.forEach(ln=>{
-      const lk='L'+ln;
-      lessonHTML+=`<button class="fh-tab ${_fhLesson===lk?'active':''}" onclick="_fhLesson='${lk}';App.renderFlashHub()">${lk}</button>`;
-    });
-    lessonHTML+='</div>';
-
-    // Progress chart
-    let chartHTML='<div class="fh-chart">';
-    const chartKeys=Object.keys(byLesson).sort((a,b)=>a-b);
-    if(chartKeys.length===0){chartHTML+='<div style="text-align:center;color:var(--ink3);font-size:12px;padding:8px">No data for this filter</div>';}
-    chartKeys.forEach(ln=>{
-      const d=byLesson[ln];
-      const learnedPct=Math.round(d.learned/d.total*100);
-      chartHTML+=`<div class="fh-chart-row">
-        <span class="fh-chart-label">L${ln}</span>
-        <div class="fh-chart-bar"><div class="fh-chart-fill" style="width:${learnedPct}%;background:linear-gradient(90deg,var(--blue),var(--green))"></div></div>
-        <span class="fh-chart-val">${d.learned}/${d.total}</span>
-      </div>`;
-    });
-    chartHTML+='</div>';
-
     // Section counts
     const vCount=filterItems(vocab).length;
     const kCount=filterItems(kanji).length;
@@ -2278,11 +2221,38 @@ const App = (function(){
     const totalCount=allItems.length;
     const totalLearned=allItems.filter(it=>{const st=srs[it.id];return st&&st.reps>0}).length;
     const totalMastered=allItems.filter(it=>C.itemMastery(it.id)>=80).length;
-
-    // Learned counts
     const vLearned=filterItems(vocab).filter(it=>{const st=srs[it.id];return st&&st.reps>0}).length;
     const kLearned=filterItems(kanji).filter(it=>{const st=srs[it.id];return st&&st.reps>0}).length;
     const gLearned=filterItems(grammar).filter(it=>{const st=srs[it.id];return st&&st.reps>0}).length;
+
+    // Dimension tabs (sticky)
+    const dimTabs=[['all','🌐 All'],['vocab','📖 Vocab'],['kanji','漢 Kanji'],['grammar','✍ Grammar']];
+    let tabsHTML='<div class="fh-tabs">';
+    dimTabs.forEach(([key,label])=>{
+      tabsHTML+=`<button class="fh-tab ${_fhFilter===key?'active':''}" onclick="App.setFhFilter('${key}')">${label}</button>`;
+    });
+    tabsHTML+='</div>';
+
+    // Level filter row
+    let levelHTML='<div class="fh-filter-row">';
+    levelHTML+='<span class="fh-filter-label">Level</span>';
+    levelHTML+=`<button class="fh-tab ${_fhLevel==='all'?'active':''}" onclick="App.setFhLevel('all')">All</button>`;
+    levels.forEach(lv=>{
+      const cls=_fhLevelClass(lv);
+      levelHTML+=`<button class="fh-tab ${_fhLevel===lv?'active '+cls:''}" onclick="App.setFhLevel('${lv}')">${lv}</button>`;
+    });
+    levelHTML+='</div>';
+
+    // Lesson filter row
+    const visibleLessons=_fhLevel!=='all'?lessons.filter(ln=>{const p=C.PACKS().find(p=>p.lessonNum===ln);return p&&p.level===_fhLevel;}):lessons;
+    let lessonHTML='<div class="fh-filter-row">';
+    lessonHTML+='<span class="fh-filter-label">Lesson</span>';
+    lessonHTML+=`<button class="fh-tab ${_fhLesson==='all'?'active':''}" onclick="App.setFhLesson('all')">All</button>`;
+    visibleLessons.forEach(ln=>{
+      const lk='L'+ln;
+      lessonHTML+=`<button class="fh-tab ${_fhLesson===lk?'active':''}" onclick="App.setFhLesson('${lk}')">${lk}</button>`;
+    });
+    lessonHTML+='</div>';
 
     // Summary stats
     const summaryHTML=`<div class="fh-summary">
@@ -2302,26 +2272,24 @@ const App = (function(){
       ${levelHTML}
       ${lessonHTML}
       ${summaryHTML}
-      <div style="font-size:12px;font-weight:700;color:var(--ink3);margin:4px 0 8px;padding:0 4px">📋 ${filterDesc}</div>
-      <div style="font-size:13px;font-weight:800;color:var(--ink3);margin:6px 0 6px;padding:0 4px">📊 Progress by Lesson</div>
-      ${chartHTML}
-      <div style="font-size:13px;font-weight:800;color:var(--ink3);margin:10px 0 6px;padding:0 4px">🃏 Flashcard Decks</div>
+      <div style="font-size:11px;font-weight:700;color:var(--ink3);margin:2px 0 8px;padding:0 4px">📋 ${filterDesc}</div>
+      <div style="font-size:13px;font-weight:800;color:var(--ink3);margin:8px 0 4px;padding:0 4px">🃏 Flashcard Decks</div>
       ${_fhFilter==='all'||_fhFilter==='vocab'?`
         <div class="fh-section">
           <div class="fh-section-head"><span class="fh-section-title">📖 Vocabulary</span><span class="fh-section-count">${vLearned}/${vCount} learned</span></div>
-          <div style="font-size:12px;color:var(--ink3);margin-bottom:8px">Japanese → Meaning · recall from memory</div>
+          <div style="font-size:11px;color:var(--ink3);margin-bottom:6px">Japanese → Meaning · recall from memory</div>
           <button class="fh-start-btn" onclick="App.startFlashDeck('vocab')">Start Vocabulary (${Math.min(vCount,30)} cards) →</button>
         </div>`:''}
       ${_fhFilter==='all'||_fhFilter==='kanji'?`
         <div class="fh-section">
           <div class="fh-section-head"><span class="fh-section-title">漢 Kanji</span><span class="fh-section-count">${kLearned}/${kCount} learned</span></div>
-          <div style="font-size:12px;color:var(--ink3);margin-bottom:8px">Kanji → Reading & Meaning</div>
+          <div style="font-size:11px;color:var(--ink3);margin-bottom:6px">Kanji → Reading & Meaning</div>
           <button class="fh-start-btn green" onclick="App.startFlashDeck('kanji')">Start Kanji (${Math.min(kCount,30)} cards) →</button>
         </div>`:''}
       ${_fhFilter==='all'||_fhFilter==='grammar'?`
         <div class="fh-section">
           <div class="fh-section-head"><span class="fh-section-title">✍ Grammar</span><span class="fh-section-count">${gLearned}/${gCount} learned</span></div>
-          <div style="font-size:12px;color:var(--ink3);margin-bottom:8px">Grammar point → Explanation & Examples</div>
+          <div style="font-size:11px;color:var(--ink3);margin-bottom:6px">Grammar point → Explanation & Examples</div>
           <button class="fh-start-btn purple" onclick="App.startFlashDeck('grammar')">Start Grammar (${Math.min(gCount,30)} cards) →</button>
         </div>`:''}
       ${totalCount===0?'<div class="gr-empty"><div class="es-icon">🃏</div><div class="es-title">No cards match this filter</div></div>':''}
@@ -3390,7 +3358,7 @@ const App = (function(){
   }
 
   return {renderHome,reloadContent,openLesson,lessonTab,markLearned,revealRecall,gradeRecall,answer,nextQ,
-          startReview,startGlobalReview,startFlashcards,renderFlashHub,startFlashDeck,backToLesson,lessonReadingQuiz,
+          startReview,startGlobalReview,startFlashcards,renderFlashHub,startFlashDeck,setFhFilter,setFhLevel,setFhLesson,backToLesson,lessonReadingQuiz,
           practiceVocab,practiceReadingDrill,practiceGrammar,practiceKanji,
           practiceListening,practiceReading,practiceMixed,practiceWrite,
           setExamDate,openExamHub,startExam,examPick,examNext,examPrev,examQuit,
