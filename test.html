@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>弱点テスト — Weakness Test</title>
+<title>Japanese Challenge — Test</title>
 <link rel="icon" href="/favicon.png">
 <style>
 :root{
@@ -80,6 +80,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .q-nav button{flex:1;padding:10px;border:none;border-radius:10px;font-weight:800;font-size:14px;cursor:pointer;font-family:inherit}
 .q-nav .prev{background:var(--bg);color:var(--ink2);border:1px solid var(--border)}
 .q-nav .next{background:var(--blue);color:#fff}
+.q-nav .next:disabled{opacity:.4;cursor:not-allowed}
 
 /* Results screen */
 .results-screen{text-align:center;padding:1.5rem 1rem}
@@ -117,8 +118,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <body>
 <div class="container" id="app" role="main">
   <div class="test-header">
-    <h1>弱点テスト — Weakness Test</h1>
-    <p id="test-subtitle">Targeted practice for your weak points</p>
+    <h1 id="test-title">💪 Strength Check</h1>
+    <p id="test-subtitle">Turn your weak points into strong points!</p>
   </div>
   <div id="content" aria-live="polite"></div>
 </div>
@@ -134,6 +135,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   let startTime=0;
   let endTime=0;
   let timerInterval=null;
+  let testGuard=false;
 
   // Parse test data from URL hash
   function loadTest(){
@@ -143,26 +145,62 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
       return false;
     }
     try{
+      // Try short ID format first (localStorage)
+      if(hash.length<=12 && !hash.startsWith('ey')){
+        const stored=localStorage.getItem('mnn_test_'+hash);
+        if(stored){
+          testData=JSON.parse(stored);
+          testData.questions=testData.q||testData.questions;
+          if(!testData.questions||!testData.questions.length)throw new Error('No questions');
+          applyCustomTitle();
+          return true;
+        }
+      }
+      // Fall back to old base64 format
       const decoded=decodeURIComponent(atob(hash));
       testData=JSON.parse(decoded);
       testData.questions=testData.q||testData.questions;
       if(!testData.questions||!testData.questions.length)throw new Error('No questions');
+      applyCustomTitle();
       return true;
     }catch(e){
-      app.innerHTML='<div class="empty-state"><div class="es-icon">⚠️</div><h2>Invalid test link</h2><p>The test link appears to be corrupted. Please ask for a new one.</p></div>';
+      app.innerHTML='<div class="empty-state"><div class="es-icon">⚠️</div><h2>Test not found</h2><p>This test link may have expired or was generated on another device. Ask your instructor for a new link.</p></div>';
       return false;
+    }
+  }
+
+  function applyCustomTitle(){
+    const label=testData.label||'';
+    const isCustom=label && label!=='Weakness Test';
+    if(isCustom){
+      const titleEl=document.getElementById('test-title');
+      const subEl=document.getElementById('test-subtitle');
+      if(titleEl) titleEl.textContent='🎯 Japanese Challenge';
+      if(subEl) subEl.textContent='Show what you know — you\'ve got this!';
+    } else if(!label){
+      // Default weakness test — use motivating title
+      const titleEl=document.getElementById('test-title');
+      const subEl=document.getElementById('test-subtitle');
+      if(titleEl) titleEl.textContent='💪 Strength Check';
+      if(subEl) subEl.textContent='Turn your weak points into strong points!';
     }
   }
 
   function renderStart(){
     const q=testData.questions;
     const mins=Math.max(5,Math.ceil(q.length*1.5));
+    const label=testData.label||'';
+    const isCustom=label && label!=='Weakness Test';
+    const title=isCustom?'🎯 Japanese Challenge':'💪 Strength Check';
+    const subtitle=isCustom
+      ?'You\'ve been studying hard — now show what you know! Every question is a chance to prove your progress. 頑張って！'
+      :'Turn your weak points into strong points! Every mistake here makes you better. できる！';
     app.innerHTML=`
       <div class="start-screen">
         <div class="start-card">
-          <div class="sc-icon">🧪</div>
-          <h2>Weakness Test Ready</h2>
-          <div class="sc-info">This test targets the items you've been struggling with. Take your time and do your best — every mistake here helps your instructor help you.</div>
+          <div class="sc-icon">${isCustom?'🎯':'💪'}</div>
+          <h2>${title}</h2>
+          <div class="sc-info">${subtitle}</div>
           <div class="sc-stats">
             <span><span class="v">${q.length}</span><span class="l">Questions</span></span>
             <span><span class="v">${mins}</span><span class="l">Minutes</span></span>
@@ -177,8 +215,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
     currentQ=0;
     answers=new Array(testData.questions.length).fill(null);
     startTime=Date.now();
-    renderQuestion();
+    // Remove any old timer bar from a previous attempt
+    const oldBar=document.querySelector('.timer-bar'); if(oldBar) oldBar.remove();
+    if(timerInterval){ clearInterval(timerInterval); timerInterval=null; }
+    // Create timer bar BEFORE renderQuestion (renderQuestion updates q-counter)
     startTimer();
+    renderQuestion();
   }
   window.startTest=startTest;
 
@@ -218,8 +260,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 
   function renderQuestion(){
     const q=testData.questions[currentQ];
-    const answered=answers.filter(a=>a!==null).length;
-    document.getElementById('q-counter').textContent=(currentQ+1)+'/'+testData.questions.length;
+    const answeredCount=answers.filter(a=>a!==null).length;
+    const qcEl=document.getElementById('q-counter'); if(qcEl) qcEl.textContent=(currentQ+1)+'/'+testData.questions.length;
 
     // Progress dots
     let dots='';
@@ -230,17 +272,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
       dots+=`<div class="pd ${cls}"></div>`;
     }
 
+    const answered=answers[currentQ]!==null;
     const optsHTML=q.o.map((opt,i)=>{
       let cls='q-option';
-      if(answers[currentQ]!==null){
+      if(answered){
         cls+=' disabled';
         if(i===q.c)cls+=' correct';
         if(i===answers[currentQ]&&i!==q.c)cls+=' wrong';
       }
-      return `<button class="${cls}" onclick="selectAnswer(${i})">${opt}</button>`;
+      return `<button class="${cls}" onclick="selectAnswer(${i})"${answered?' disabled':''}>${opt}</button>`;
     }).join('');
 
-    const expHTML=answers[currentQ]!==null?`<div class="q-explanation show"><b>Correct answer:</b> ${q.o[q.c]}</div>`:'';
+    const expHTML=answered?`<div class="q-explanation show"><b>Correct answer:</b> ${q.o[q.c]}</div>`:'';
 
     app.innerHTML=`
       <div class="progress-dots">${dots}</div>
@@ -251,12 +294,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
         ${expHTML}
         <div class="q-nav">
           ${currentQ>0?'<button class="prev" onclick="prevQ()">← Previous</button>':''}
-          ${currentQ<testData.questions.length-1?'<button class="next" onclick="nextQ()">Next →</button>':'<button class="next" onclick="submitTest()">Finish ✓</button>'}
+          ${currentQ<testData.questions.length-1?'<button class="next" onclick="nextQ()"'+(answered?'':' disabled')+'>Next →</button>':'<button class="next" onclick="submitTest()"'+(answered?'':' disabled')+'>Finish ✓</button>'}
         </div>
       </div>`;
+    // Click guard: prevent accidental selection for 300ms after render
+    testGuard=true;
+    setTimeout(function(){ testGuard=false; },300);
   }
 
   function selectAnswer(i){
+    if(testGuard)return;
     if(answers[currentQ]!==null)return;
     answers[currentQ]=i;
     renderQuestion();
@@ -265,7 +312,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 
   function prevQ(){ if(currentQ>0){currentQ--;renderQuestion()} }
   window.prevQ=prevQ;
-  function nextQ(){ if(currentQ<testData.questions.length-1){currentQ++;renderQuestion()} }
+  function nextQ(){ if(answers[currentQ]===null)return; if(currentQ<testData.questions.length-1){currentQ++;renderQuestion()} }
   window.nextQ=nextQ;
 
   function submitTest(){

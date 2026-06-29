@@ -299,13 +299,19 @@ body.dark .sback{background:var(--bg)}
 .fc-scene{perspective:1000px;margin-bottom:1.4rem;cursor:pointer}
 
 /* Flashcard Hub */
-.fh-section{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:1.1rem 1.2rem;margin-bottom:.8rem;box-shadow:var(--shadow)}
+.fh-section{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:1.1rem 1.2rem;margin-bottom:.8rem;box-shadow:var(--shadow);transition:border-color .2s}
+.fh-section:hover{border-color:var(--blue)}
 .fh-section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
 .fh-section-title{font-size:16px;font-weight:900;font-family:'Noto Sans JP'}
 .fh-section-count{font-size:12px;font-weight:800;color:var(--ink3);background:var(--bg);padding:3px 10px;border-radius:20px}
-.fh-tabs{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:0 0 10px;position:sticky;top:calc(env(safe-area-inset-top) + 52px);z-index:8;background:var(--bg);padding-top:8px}
+.fh-tabs{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:8px 0 10px;position:sticky;top:calc(env(safe-area-inset-top) + 52px);z-index:8;background:var(--bg)}
 .fh-tab{white-space:nowrap;padding:7px 14px;border-radius:20px;background:var(--card);border:1.5px solid var(--border);color:var(--ink3);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s}
 .fh-tab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.fh-tab.active.n5{background:var(--green);border-color:var(--green)}
+.fh-tab.active.n4{background:var(--blue);border-color:var(--blue)}
+.fh-tab.active.n3{background:var(--purple);border-color:var(--purple)}
+.fh-filter-row{display:flex;align-items:center;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:4px 0 8px}
+.fh-filter-label{font-size:11px;font-weight:800;color:var(--ink3);white-space:nowrap;flex-shrink:0;min-width:44px}
 .fh-chart{background:var(--bg);border-radius:14px;padding:12px;margin-bottom:.8rem}
 .fh-chart-row{display:flex;align-items:center;gap:10px;margin-bottom:6px}
 .fh-chart-row:last-child{margin-bottom:0}
@@ -313,6 +319,10 @@ body.dark .sback{background:var(--bg)}
 .fh-chart-bar{flex:1;height:18px;background:var(--card);border-radius:9px;overflow:hidden;position:relative}
 .fh-chart-fill{height:100%;border-radius:9px;transition:width .8s var(--spring)}
 .fh-chart-val{font-size:11px;font-weight:800;min-width:40px;text-align:right;flex-shrink:0;color:var(--ink3)}
+.fh-summary{display:flex;gap:8px;margin-bottom:10px}
+.fh-stat{flex:1;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:8px 10px;text-align:center}
+.fh-stat-num{font-size:20px;font-weight:900;color:var(--ink)}
+.fh-stat-label{font-size:10px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px}
 .fh-start-btn{width:100%;padding:13px;background:var(--blue);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:900;cursor:pointer;margin-top:8px;box-shadow:0 4px 0 #1565c0;transition:transform .15s var(--spring)}
 .fh-start-btn:active{transform:translateY(3px);box-shadow:0 1px 0 #1565c0}
 .fh-start-btn.green{background:var(--green);box-shadow:0 4px 0 #00a344}
@@ -333,9 +343,10 @@ body.dark .sback{background:var(--bg)}
 .recall-eyebrow{text-align:center;font-size:12px;font-weight:800;color:var(--ink3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:1rem}
 .recall-cuelabel{font-size:12px;font-weight:800;color:var(--ink3);text-transform:uppercase;letter-spacing:.08em;text-align:center;margin-bottom:12px}
 .recall-cue{font-family:'Noto Sans JP';font-size:32px;font-weight:900;text-align:center;line-height:1.45;margin-bottom:8px;letter-spacing:.01em}
+.recall-direction{font-size:11px;font-weight:800;color:var(--blue);text-align:center;margin-bottom:6px;letter-spacing:.05em}
 .recall-answer{border-top:1px dashed var(--border);margin-top:18px;padding-top:18px;text-align:center;animation:revealAnswer .4s var(--spring)}
 @keyframes revealAnswer{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
-.recall-main{font-family:'Noto Sans JP';font-size:44px;font-weight:900;margin-bottom:6px;letter-spacing:.01em}
+.recall-main{font-family:'Inter','Noto Sans JP',sans-serif;font-size:36px;font-weight:900;margin-bottom:6px;letter-spacing:-.01em}
 .recall-reading{font-size:19px;color:var(--ink2);font-weight:700;line-height:1.6}
 .recall-ex{font-family:'Noto Sans JP';font-size:17px;background:var(--bg);border-radius:14px;padding:14px 16px;line-height:1.7;text-align:left;margin-top:14px}
 .recall-exm{font-size:13px;color:var(--ink3);margin-top:8px;text-align:left}
@@ -1018,10 +1029,14 @@ body.dark .feed-timer{background:linear-gradient(135deg,rgba(67,97,238,.1),rgba(
   <button class="bn-item" id="bn-badges" onclick="App.goBadges()"><span class="bn-ico">🏆</span>Badges</button>
 </div>
 
+<script src="/n5-content.js"></script>
 <script src="/n3-content.js"></script>
 <script src="/seed-data.js"></script>
 <script>
-// Merge N3 content into SEED_CONTENT for unified indexing
+// Merge N5 and N3 content into SEED_CONTENT for unified indexing
+if (window.N5_CONTENT && window.SEED_CONTENT) {
+  window.SEED_CONTENT = window.N5_CONTENT.concat(window.SEED_CONTENT);
+}
 if (window.N3_CONTENT && window.SEED_CONTENT) {
   window.SEED_CONTENT = window.SEED_CONTENT.concat(window.N3_CONTENT);
 }
@@ -1762,6 +1777,7 @@ const App = (function(){
 
   /* ---------- generic quiz runner (mission recall, practice, reading Qs, listening) ---------- */
   let quiz=null;
+  let quizGuard=false;
   function runQuiz(questions,title,onDone){
     C.startFlowSession();
     quiz={questions,i:0,combo:0,correct:0,onDone,title,sessionXP:0,_goalDoneShown:false,answers:new Array(questions.length).fill(null),_qStart:0,_perfectStreak:0,_sessionStart:Date.now()};
@@ -1793,9 +1809,15 @@ const App = (function(){
     q.o.forEach((o,idx)=>html+=`<button class="opt" id="o${idx}" onclick="App.answer(event,${idx})">${o}</button>`);
     html+=`</div><div id="fb"></div>${memBarHTML}<button class="next-btn" id="next" onclick="App.nextQ()">Next →</button></div>`;
     document.getElementById('session-body').innerHTML=html;
+    // Click guard: prevent accidental option selection for 300ms after render
+    quizGuard=true;
+    const optsEl=document.querySelector('#session-body .opts');
+    if(optsEl) optsEl.classList.add('exam-click-guard');
+    setTimeout(()=>{ quizGuard=false; if(optsEl) optsEl.classList.remove('exam-click-guard'); },300);
     if(isListen) setTimeout(()=>speak(q.audioText),350);
   }
   function answer(e,sel){
+    if(quizGuard) return;
     const q=quiz.questions[quiz.i];const ok=sel===q.c;
     quiz.answers[quiz.i]=sel;
     const respTime=Date.now()-quiz._qStart;
@@ -1857,7 +1879,7 @@ const App = (function(){
   let recall=null;
   function runRecall(cards,title,onDone,opts){
     C.startFlowSession();
-    recall={cards,i:0,good:0,onDone,title,mode:(opts&&opts.mode)||'meaning',_qStart:0,_perfect:0,_sessionStart:Date.now()};
+    recall={cards,i:0,good:0,onDone,title,mode:(opts&&opts.mode)||'meaning',_qStart:0,_perfect:0,_sessionStart:Date.now(),_bestCombo:0,_combo:0};
     showView('view-session');
     document.getElementById('s-meta').textContent='';
     document.getElementById('shead').classList.add('focus');
@@ -1892,6 +1914,7 @@ const App = (function(){
       <div class="q-card" id="rc"><span class="diff-badge diff-${diff} q-diff"><span class="diff-dot"></span>${({easy:'Easy',medium:'Medium',hard:'Hard'})[diff]||'Medium'}</span>
         <div class="recall-cuelabel">${cueLabel}</div>
         <div class="recall-cue">${cue}</div>
+        <div class="recall-direction">日本語 → English</div>
         <div id="recall-answer" class="recall-answer" style="display:none"></div>
         <button class="reveal-btn" id="reveal-btn" onclick="App.revealRecall()">Show answer</button>
         <div id="recall-grade" class="rate-row" style="display:none">
@@ -1941,6 +1964,8 @@ const App = (function(){
     if(g>=3) C.clearWeak(it.id); else C.logWrong(it.id, it.dim, {lesson:it.lesson||it.module||null, type:it._mode||null});
     if(g>=3){
       recall.good++;
+      recall._combo++;
+      if(recall._combo>recall._bestCombo) recall._bestCombo=recall._combo;
       SFX.correct();
       // XP for recall (more for easy, less for hard)
       const xpGain=g===4?15:g===3?10:5;
@@ -1948,6 +1973,7 @@ const App = (function(){
       C.progressDailyGoal(1);
       if(xpResult.leveledUp){ SFX.levelup(); confetti(); showAchievement('⬆️',`Level ${xpResult.level}!`,'You\'re getting stronger!',3000); }
     } else {
+      recall._combo=0;
       SFX.wrong();
     }
     recall.i++; renderRecall();
@@ -2073,10 +2099,10 @@ const App = (function(){
     if(rstat&&rstat.n) report('drill',{lesson:n,good:rstat.good,total:rstat.n,overall:C.overallMastery(),momentum:C.getMomentum().value});
     if(rstat&&rstat.n&&rstat.good>=Math.ceil(rstat.n*0.7)) confetti(); backToLesson(n); }
 
-  function practiceVocab(n){ const c=C.shuffle(lessonItems(n,'vocab')); if(!c.length)return; runRecall(c,'Vocabulary',r=>afterDrill(n,r),{mode:'meaning'}); }
-  function practiceReadingDrill(n){ const c=C.shuffle(lessonItems(n,'vocab')); if(!c.length)return; runRecall(c,'Reading',r=>afterDrill(n,r),{mode:'reading'}); }
-  function practiceGrammar(n){ const c=C.shuffle(lessonItems(n,'grammar')); if(!c.length)return; runRecall(c,'Grammar',r=>afterDrill(n,r)); }
-  function practiceKanji(n){ const c=C.shuffle(lessonItems(n,'kanji')); if(!c.length)return; runRecall(c,'Kanji',r=>afterDrill(n,r)); }
+  function practiceVocab(n){ const c=C.shuffle(lessonItems(n,'vocab')).map(it=>({...it,_mode:'meaning'})); if(!c.length)return; runRecall(c,'Vocabulary',r=>afterDrill(n,r),{mode:'meaning'}); }
+  function practiceReadingDrill(n){ const c=C.shuffle(lessonItems(n,'vocab')).map(it=>({...it,_mode:'reading'})); if(!c.length)return; runRecall(c,'Reading',r=>afterDrill(n,r),{mode:'reading'}); }
+  function practiceGrammar(n){ const c=C.shuffle(lessonItems(n,'grammar')).map(it=>({...it,_mode:'meaning'})); if(!c.length)return; runRecall(c,'Grammar',r=>afterDrill(n,r)); }
+  function practiceKanji(n){ const c=C.shuffle(lessonItems(n,'kanji')).map(it=>({...it,_mode:'meaning'})); if(!c.length)return; runRecall(c,'Kanji',r=>afterDrill(n,r)); }
 
   function practiceListening(n){
     const qs=C.shuffle(lessonListening(n)); if(!qs.length)return;
@@ -2119,7 +2145,7 @@ const App = (function(){
     });
   }
   function practiceWrite(n){
-    const cards=C.shuffle([...lessonItems(n,'vocab'),...lessonItems(n,'grammar'),...lessonItems(n,'kanji')]);
+    const cards=C.shuffle([...lessonItems(n,'vocab'),...lessonItems(n,'grammar'),...lessonItems(n,'kanji')]).map(it=>({...it,_mode:'meaning'}));
     if(!cards.length){ C.markLessonStep(n,'write'); renderLessonHead(n); return backToLesson(n); }
     runRecall(cards,'Production',r=>{ C.markLessonStep(n,'write'); C.logActivity(r.n,3);C.snapshotToday();const mom=C.bumpMomentum(12);
       report('lesson-write',{lesson:n,good:r.good,total:r.n,overall:C.overallMastery(),momentum:mom});
@@ -2150,18 +2176,21 @@ const App = (function(){
     const dueNew=all.filter(it=>C.itemState(it.id).attempts===0);
     let cards=[...dueAttempted, ...C.shuffle(dueNew)].slice(0,25);
     if(!cards.length) cards=C.shuffle(all).slice(0,20);   // nothing strictly due → quick mixed session
+    cards=cards.map(c=>({...c,_mode:'meaning'}));
     runRecall(C.shuffle(cards),'Review',r=>{ C.logActivity(r.n,Math.max(1,Math.round(r.n/4)));C.snapshotToday();const mom=C.bumpMomentum(8);
       report('review',{good:r.good,total:r.n,overall:C.overallMastery(),momentum:mom});
       showRewardScreen({icon:'🔁',title:'Review done!',sub:`${r.good}/${r.n} solid · Momentum ${mom}`,xp:r.good*12,correct:r.good,total:r.n,celebrate:r.good>=Math.ceil(r.n*0.7)});
     });
   }
   let _fhFilter='all'; // all, vocab, kanji, grammar
-  let _fhLevel='all';  // all, N5, N4, N3... or L25, L26...
+  let _fhLevel='all';  // all, N5, N4, N3
+  let _fhLesson='all'; // all, L1, L2, ... L50, L51...
   function startFlashcards(){
     curLesson=null;
     showView('view-flashhub');
     renderFlashHub();
   }
+  function _fhLevelClass(lv){return lv==='N5'?'n5':lv==='N4'?'n4':lv==='N3'?'n3':'';}
   function renderFlashHub(){
     const body=document.getElementById('flashhub-body');
     const vocab=C.ITEMS.vocab||[];
@@ -2170,23 +2199,22 @@ const App = (function(){
     const srs=C.getSRS();
 
     // Get unique lessons and levels
-    const lessons=[...new Set([...vocab,...kanji,...grammar].map(it=>it.lessonNum).filter(Boolean))].sort((a,b)=>a-b);
-    const levels=[...new Set([...vocab,...kanji,...grammar].map(it=>it.level).filter(Boolean))].sort();
+    const allFlat=[...vocab,...kanji,...grammar];
+    const lessons=[...new Set(allFlat.map(it=>it.lessonNum).filter(Boolean))].sort((a,b)=>a-b);
+    const levels=['N5','N4','N3'].filter(lv=>allFlat.some(it=>it.level===lv));
 
-    // Filter items
+    // Filter items — applies both level and lesson filters
     function filterItems(arr){
       let r=arr;
       if(_fhFilter==='vocab')r=r.filter(it=>it.dim==='vocab');
       else if(_fhFilter==='kanji')r=r.filter(it=>it.dim==='kanji');
       else if(_fhFilter==='grammar')r=r.filter(it=>it.dim==='grammar');
-      if(_fhLevel && _fhLevel!=='all'){
-        if(_fhLevel.startsWith('L')){ const ln=parseInt(_fhLevel.slice(1)); r=r.filter(it=>it.lessonNum===ln); }
-        else r=r.filter(it=>it.level===_fhLevel);
-      }
+      if(_fhLevel&&_fhLevel!=='all') r=r.filter(it=>it.level===_fhLevel);
+      if(_fhLesson&&_fhLesson!=='all'){ const ln=parseInt(_fhLesson.slice(1)); r=r.filter(it=>it.lessonNum===ln); }
       return r;
     }
 
-    const allItems=filterItems([...vocab,...kanji,...grammar]);
+    const allItems=filterItems(allFlat);
 
     // Build chart data by lesson
     const byLesson={};
@@ -2199,33 +2227,42 @@ const App = (function(){
       if(st&&C.itemMastery(it.id)>=80)byLesson[ln].mastered++;
     });
 
-    // Tabs: dimension filters
-    const dimTabs=[['all','🌐 All'],['vocab','📖 Vocabulary'],['kanji','漢 Kanji'],['grammar','✍ Grammar']];
+    // Tabs: dimension filters (sticky)
+    const dimTabs=[['all','🌐 All'],['vocab','📖 Vocab'],['kanji','漢 Kanji'],['grammar','✍ Grammar']];
     let tabsHTML='<div class="fh-tabs">';
     dimTabs.forEach(([key,label])=>{
       tabsHTML+=`<button class="fh-tab ${_fhFilter===key?'active':''}" onclick="_fhFilter='${key}';App.renderFlashHub()">${label}</button>`;
     });
     tabsHTML+='</div>';
 
-    // Level/lesson filter chips
-    let levelChips='<div class="fh-tabs" style="top:auto">';
-    levelChips+=`<button class="fh-tab ${_fhLevel==='all'?'active':''}" onclick="_fhLevel='all';App.renderFlashHub()">All Levels</button>`;
+    // Level filter row
+    let levelHTML='<div class="fh-filter-row">';
+    levelHTML+='<span class="fh-filter-label">Level</span>';
+    levelHTML+=`<button class="fh-tab ${_fhLevel==='all'?'active':''}" onclick="_fhLevel='all';App.renderFlashHub()">All</button>`;
     levels.forEach(lv=>{
-      levelChips+=`<button class="fh-tab ${_fhLevel===lv?'active':''}" onclick="_fhLevel='${lv}';App.renderFlashHub()">${lv}</button>`;
+      const cls=_fhLevelClass(lv);
+      levelHTML+=`<button class="fh-tab ${_fhLevel===lv?'active '+cls:''}" onclick="_fhLevel='${lv}';App.renderFlashHub()">${lv}</button>`;
     });
-    lessons.forEach(ln=>{
+    levelHTML+='</div>';
+
+    // Lesson filter row — only show lessons matching current level filter
+    const visibleLessons=_fhLevel!=='all'?lessons.filter(ln=>{const p=C.PACKS().find(p=>p.lessonNum===ln);return p&&p.level===_fhLevel;}):lessons;
+    let lessonHTML='<div class="fh-filter-row">';
+    lessonHTML+='<span class="fh-filter-label">Lesson</span>';
+    lessonHTML+=`<button class="fh-tab ${_fhLesson==='all'?'active':''}" onclick="_fhLesson='all';App.renderFlashHub()">All</button>`;
+    visibleLessons.forEach(ln=>{
       const lk='L'+ln;
-      levelChips+=`<button class="fh-tab ${_fhLevel===lk?'active':''}" onclick="_fhLevel='${lk}';App.renderFlashHub()">${lk}</button>`;
+      lessonHTML+=`<button class="fh-tab ${_fhLesson===lk?'active':''}" onclick="_fhLesson='${lk}';App.renderFlashHub()">${lk}</button>`;
     });
-    levelChips+='</div>';
+    lessonHTML+='</div>';
 
     // Progress chart
-    const maxTotal=Math.max(...Object.values(byLesson).map(d=>d.total),1);
     let chartHTML='<div class="fh-chart">';
-    Object.keys(byLesson).sort((a,b)=>a-b).forEach(ln=>{
+    const chartKeys=Object.keys(byLesson).sort((a,b)=>a-b);
+    if(chartKeys.length===0){chartHTML+='<div style="text-align:center;color:var(--ink3);font-size:12px;padding:8px">No data for this filter</div>';}
+    chartKeys.forEach(ln=>{
       const d=byLesson[ln];
       const learnedPct=Math.round(d.learned/d.total*100);
-      const masteredPct=Math.round(d.mastered/d.total*100);
       chartHTML+=`<div class="fh-chart-row">
         <span class="fh-chart-label">L${ln}</span>
         <div class="fh-chart-bar"><div class="fh-chart-fill" style="width:${learnedPct}%;background:linear-gradient(90deg,var(--blue),var(--green))"></div></div>
@@ -2239,16 +2276,34 @@ const App = (function(){
     const kCount=filterItems(kanji).length;
     const gCount=filterItems(grammar).length;
     const totalCount=allItems.length;
+    const totalLearned=allItems.filter(it=>{const st=srs[it.id];return st&&st.reps>0}).length;
+    const totalMastered=allItems.filter(it=>C.itemMastery(it.id)>=80).length;
 
     // Learned counts
     const vLearned=filterItems(vocab).filter(it=>{const st=srs[it.id];return st&&st.reps>0}).length;
     const kLearned=filterItems(kanji).filter(it=>{const st=srs[it.id];return st&&st.reps>0}).length;
     const gLearned=filterItems(grammar).filter(it=>{const st=srs[it.id];return st&&st.reps>0}).length;
 
+    // Summary stats
+    const summaryHTML=`<div class="fh-summary">
+      <div class="fh-stat"><div class="fh-stat-num">${totalCount}</div><div class="fh-stat-label">Cards</div></div>
+      <div class="fh-stat"><div class="fh-stat-num">${totalLearned}</div><div class="fh-stat-label">Learned</div></div>
+      <div class="fh-stat"><div class="fh-stat-num">${totalMastered}</div><div class="fh-stat-label">Mastered</div></div>
+    </div>`;
+
+    // Active filter label
+    let filterDesc='All levels · All lessons';
+    if(_fhLevel!=='all')filterDesc=_fhLevel;
+    if(_fhLesson!=='all')filterDesc+=` · ${_fhLesson}`;
+    if(_fhFilter!=='all')filterDesc+=` · ${_fhFilter}`;
+
     body.innerHTML=`
       ${tabsHTML}
-      ${levelChips}
-      <div style="font-size:13px;font-weight:800;color:var(--ink3);margin:6px 0 10px;padding:0 4px">📊 Progress by Lesson</div>
+      ${levelHTML}
+      ${lessonHTML}
+      ${summaryHTML}
+      <div style="font-size:12px;font-weight:700;color:var(--ink3);margin:4px 0 8px;padding:0 4px">📋 ${filterDesc}</div>
+      <div style="font-size:13px;font-weight:800;color:var(--ink3);margin:6px 0 6px;padding:0 4px">📊 Progress by Lesson</div>
       ${chartHTML}
       <div style="font-size:13px;font-weight:800;color:var(--ink3);margin:10px 0 6px;padding:0 4px">🃏 Flashcard Decks</div>
       ${_fhFilter==='all'||_fhFilter==='vocab'?`
@@ -2275,21 +2330,17 @@ const App = (function(){
   function startFlashDeck(dim){
     let items;
     const srs=C.getSRS();
-    if(_fhLevel&&_fhLevel!=='all'){
-      let filtered;
-      if(_fhLevel.startsWith('L')){const ln=parseInt(_fhLevel.slice(1));filtered=C.ITEMS[dim].filter(it=>it.lessonNum===ln);}
-      else filtered=C.ITEMS[dim].filter(it=>it.level===_fhLevel);
-      items=filtered;
-    } else {
-      items=C.ITEMS[dim]||[];
-    }
+    let pool=C.ITEMS[dim]||[];
+    // Apply level filter
+    if(_fhLevel&&_fhLevel!=='all') pool=pool.filter(it=>it.level===_fhLevel);
+    // Apply lesson filter
+    if(_fhLesson&&_fhLesson!=='all'){ const ln=parseInt(_fhLesson.slice(1)); pool=pool.filter(it=>it.lessonNum===ln); }
+    items=pool;
     if(!items.length)return;
-    // Sort: unlearned first, then by lesson, shuffle within
+    // Sort: unlearned first, then shuffle within
     const unlearned=items.filter(it=>{const st=srs[it.id];return !st||st.reps===0});
     const learned=items.filter(it=>{const st=srs[it.id];return st&&st.reps>0});
-    const cards=[...C.shuffle(unlearned),...C.shuffle(learned)].slice(0,30);
-    // Mark cards with mode: JP→meaning for vocab/kanji
-    cards.forEach(c=>{c._mode='meaning';c._dim=dim});
+    const cards=[...C.shuffle(unlearned),...C.shuffle(learned)].slice(0,30).map(c=>({...c,_mode:'meaning',_dim:dim}));
     const titles={vocab:'Vocabulary Flashcards',kanji:'Kanji Flashcards',grammar:'Grammar Flashcards'};
     runRecall(cards,titles[dim]||'Flashcards',r=>{
       C.logActivity(r.n,Math.max(1,Math.round(r.n/4)));C.snapshotToday();C.bumpMomentum(6);
@@ -2301,11 +2352,15 @@ const App = (function(){
     if(!ids||!ids.length) return home();
     const items=ids.map(id=>C.BY_ID[id]).filter(Boolean);
     if(!items.length) return home();
-    runQuiz(items.map(it=>({
-      id:it.id,linksTo:it.id,s:it.example||it.word||it.point||'',a:it.dim==='grammar'?'Grammar':'Vocabulary',
-      o:C.shuffle([it.word||it.reading||it.point||'',...(C.ITEMS[it.dim]||[]).filter(x=>x.id!==it.id).slice(0,3).map(x=>x.word||x.reading||x.point||'')]).slice(0,4),
-      c:0,exp:it.meaning||it.pointEn||'',dim:it.dim,type:'mcq',module:it.module||'',lesson:it.lesson||''
-    })),'Review mistakes',q=>{ C.logActivity(q.questions.length,2);C.snapshotToday();C.bumpMomentum(5);
+    runQuiz(items.map(it=>{
+      const correctAns=it.word||it.reading||it.point||'';
+      const distractors=(C.ITEMS[it.dim]||[]).filter(x=>x.id!==it.id).slice(0,3).map(x=>x.word||x.reading||x.point||'').filter(v=>v&&v!==correctAns);
+      const o=C.shuffle([correctAns,...distractors]).slice(0,4);
+      return {
+        id:it.id,linksTo:it.id,s:it.example||it.word||it.point||'',a:it.dim==='grammar'?'Grammar':'Vocabulary',
+        o, c:o.indexOf(correctAns), exp:it.meaning||it.pointEn||'', dim:it.dim, type:'mcq', module:it.module||'', lesson:it.lesson||''
+      };
+    }),'Review mistakes',q=>{ C.logActivity(q.questions.length,2);C.snapshotToday();C.bumpMomentum(5);
       report('mistakes',{correct:q.correct,total:q.questions.length,overall:C.overallMastery(),momentum:C.getMomentum().value});
       showRewardScreen({icon:'✅',title:'Mistakes reviewed!',sub:`${q.correct}/${q.questions.length} correct now`,xp:q.correct*12,correct:q.correct,total:q.questions.length,celebrate:q.correct===q.questions.length});
     });
@@ -2314,6 +2369,7 @@ const App = (function(){
     hideCombo();
     document.getElementById('shead').classList.remove('focus');
     document.getElementById('s-focus').classList.remove('active');
+    quiz=null; recall=null;
     if(curLesson!=null) backToLesson(curLesson); else home(); }
   function home(){curLesson=null;renderHome();showView('view-dash');setActiveNav('bn-home')}
 
@@ -2421,7 +2477,7 @@ const App = (function(){
       if(ringEl) ringEl.style.strokeDashoffset=ringCirc-(ringCirc*accuracy/100);
       // Best combo
       const comboEl=document.getElementById('rs-combo');
-      if(comboEl) comboEl.textContent=quiz?quiz.combo:0;
+      if(comboEl) comboEl.textContent=(quiz?quiz.combo:0)||(recall&&recall._bestCombo?recall._bestCombo:0);
     },100);
   }
 
@@ -3246,7 +3302,9 @@ const App = (function(){
         const isLast = i === t.posts.length - 1;
         const postLikeKey = 'feed_like_' + t.id + '_' + i;
         const liked = C.DB.get(postLikeKey);
-        const likeCount = C.DB.get(postLikeKey + '_count') || Math.floor(Math.random() * 20) + 1;
+        const countKey = 'feed_like_count_' + t.id + '_' + i;
+        let likeCount = C.DB.get(countKey);
+        if(!likeCount){ likeCount = Math.floor(Math.random() * 20) + 1; C.DB.set(countKey, likeCount); }
         return `<div class="thread-post-line">
           <div class="thread-post-row">
             <div class="thread-post-avatar">${t.emoji}</div>

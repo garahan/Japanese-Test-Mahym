@@ -902,10 +902,11 @@ function generateLessonTest(){
     const shuffled=C.shuffle(questions);
     const finalQs=maxQ>0?shuffled.slice(0,maxQ):shuffled;
 
-    // Encode into URL (same format as test.html expects)
+    // Store in localStorage with a short key, use short ID in URL
+    const testId=Math.random().toString(36).slice(2,8);
     const testData={q:finalQs,t:Date.now(),w:0,label:'Custom Test'};
-    const encoded=btoa(encodeURIComponent(JSON.stringify(testData)));
-    currentLessonTestLink=location.origin+'/test.html#'+encoded;
+    try{localStorage.setItem('mnn_test_'+testId,JSON.stringify(testData));}catch(e){}
+    currentLessonTestLink=location.origin+'/test.html#'+testId;
 
     document.getElementById('lesson-test-link-url').textContent=currentLessonTestLink;
     document.getElementById('lesson-test-link-box').classList.add('show');
@@ -981,10 +982,11 @@ function generateWeaknessTest(){
       return;
     }
 
-    // Encode test data into URL (compact format)
+    // Store in localStorage with short ID
+    const testId=Math.random().toString(36).slice(2,8);
     const testData={q:questions.slice(0,30),t:Date.now(),w:C.weakCount()};
-    const encoded=btoa(encodeURIComponent(JSON.stringify(testData)));
-    currentTestLink=location.origin+'/test.html#'+encoded;
+    try{localStorage.setItem('mnn_test_'+testId,JSON.stringify(testData));}catch(e){}
+    currentTestLink=location.origin+'/test.html#'+testId;
 
     document.getElementById('test-link-url').textContent=currentTestLink;
     document.getElementById('test-link-box').classList.add('show');
