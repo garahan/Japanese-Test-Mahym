@@ -104,7 +104,7 @@
   }
 
   // load order: instant from cache → fallback seed → background API refresh
-  const CACHE_VER = 3; // bump when seed structure changes to force cache refresh
+  const CACHE_VER = 4; // bump when seed structure changes to force cache refresh
   async function loadContent(onReady) {
     const cached = DB.get('cache_packs');
     const cachedVer = DB.get('cache_ver');

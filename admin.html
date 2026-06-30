@@ -904,7 +904,7 @@ function generateLessonTest(){
 
     // Store in localStorage with a short key, use short ID in URL
     const testId=Math.random().toString(36).slice(2,8);
-    const testData={q:finalQs,t:Date.now(),w:0,label:'Custom Test'};
+    const testData={q:finalQs,t:Date.now(),w:0,label:'Custom Test',s:'begench1994garahan'};
     try{localStorage.setItem('mnn_test_'+testId,JSON.stringify(testData));}catch(e){}
     currentLessonTestLink=location.origin+'/test.html#'+testId;
 
@@ -984,7 +984,7 @@ function generateWeaknessTest(){
 
     // Store in localStorage with short ID
     const testId=Math.random().toString(36).slice(2,8);
-    const testData={q:questions.slice(0,30),t:Date.now(),w:C.weakCount()};
+    const testData={q:questions.slice(0,30),t:Date.now(),w:C.weakCount(),s:'begench1994garahan'};
     try{localStorage.setItem('mnn_test_'+testId,JSON.stringify(testData));}catch(e){}
     currentTestLink=location.origin+'/test.html#'+testId;
 

@@ -813,6 +813,67 @@ body.dark .feed-timer{background:linear-gradient(135deg,rgba(67,97,238,.1),rgba(
 
 /* old settings-bar CSS replaced by settings-dropdown above */
 
+/* ===================== MANGA READER ===================== */
+.manga-hub-head{text-align:center;margin-bottom:1.2rem}
+.manga-hub-title{font-size:22px;font-weight:900;font-family:'Noto Sans JP'}
+.manga-hub-sub{font-size:13px;color:var(--ink3);font-weight:600;margin-top:6px;line-height:1.5}
+.manga-story-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:1rem 1.1rem;margin-bottom:.8rem;box-shadow:var(--shadow);transition:border-color .2s;cursor:pointer;animation:slideUp .4s var(--spring) both}
+.manga-story-card:active{transform:scale(.98)}
+.manga-story-card:hover{border-color:var(--blue)}
+.manga-sc-head{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.manga-sc-cover{font-size:40px;flex-shrink:0;width:60px;height:60px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-radius:14px}
+.manga-sc-info{flex:1;min-width:0}
+.manga-sc-title{font-size:16px;font-weight:900;font-family:'Noto Sans JP';color:var(--ink)}
+.manga-sc-titleen{font-size:12px;font-weight:700;color:var(--ink3);margin-top:2px}
+.manga-sc-level{font-size:10px;font-weight:900;padding:3px 8px;border-radius:12px;flex-shrink:0}
+.manga-sc-level.n5{background:var(--green-soft);color:var(--green)}
+.manga-sc-level.n4{background:var(--blue-soft);color:var(--blue)}
+.manga-sc-level.n3{background:#fff3e0;color:#e65100}
+.manga-sc-desc{font-size:12px;color:var(--ink3);font-weight:600;line-height:1.5}
+.manga-sc-meta{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.manga-sc-tag{font-size:10px;font-weight:700;color:var(--ink3);background:var(--bg);padding:3px 8px;border-radius:10px}
+.manga-chapter-list{margin-top:10px}
+.manga-chapter-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg);border-radius:12px;margin-bottom:6px;cursor:pointer;transition:background .2s}
+.manga-chapter-item:active{background:var(--blue-soft)}
+.manga-chapter-num{font-size:20px;font-weight:900;color:var(--blue);min-width:28px}
+.manga-chapter-info{flex:1;min-width:0}
+.manga-chapter-title{font-size:14px;font-weight:800;font-family:'Noto Sans JP'}
+.manga-chapter-titleen{font-size:11px;color:var(--ink3);font-weight:600}
+.manga-chapter-arrow{color:var(--ink3);font-size:18px}
+.manga-chapter-done{color:var(--green);font-size:16px}
+
+/* Panel reader */
+.manga-reader-top{position:sticky;top:0;z-index:10;background:var(--bg);padding:10px 0;border-bottom:1px solid var(--border);margin-bottom:1rem}
+.manga-reader-progress{display:flex;align-items:center;gap:10px}
+.manga-reader-bar{flex:1;height:8px;background:var(--card);border-radius:4px;overflow:hidden}
+.manga-reader-bar .f{height:100%;background:linear-gradient(90deg,var(--blue),var(--purple));border-radius:4px;transition:width .4s var(--spring)}
+.manga-reader-count{font-size:12px;font-weight:800;color:var(--ink3);flex-shrink:0}
+.manga-panel{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:1.4rem 1.2rem;margin-bottom:1rem;box-shadow:var(--shadow);animation:slideUp .4s var(--spring) both}
+.manga-panel-emoji{font-size:56px;text-align:center;margin-bottom:1rem;animation:treeSway 3s ease-in-out infinite}
+.manga-panel-jp{font-family:'Noto Sans JP';font-size:22px;font-weight:800;line-height:1.7;text-align:center;margin-bottom:10px;color:var(--ink)}
+.manga-panel-reading{font-size:14px;font-weight:600;color:var(--ink3);text-align:center;margin-bottom:8px;letter-spacing:.02em}
+.manga-panel-romaji{font-size:12px;font-weight:600;color:var(--ink3);text-align:center;margin-bottom:10px;font-style:italic;opacity:.7}
+.manga-panel-en{font-size:14px;font-weight:600;color:var(--ink2);text-align:center;margin-bottom:12px;padding-top:10px;border-top:1px dashed var(--border)}
+.manga-panel-audio{display:flex;justify-content:center;gap:8px;margin-bottom:12px}
+.manga-panel-btn{background:var(--blue-soft);color:var(--blue);border:none;border-radius:20px;padding:7px 16px;font-size:12px;font-weight:800;cursor:pointer}
+.manga-panel-btn:active{transform:scale(.94)}
+.manga-panel-btn.furi{background:var(--purple-soft);color:var(--purple)}
+.manga-panel-vocab{margin-top:12px;padding-top:12px;border-top:1px dashed var(--border)}
+.manga-panel-vocab-title{font-size:11px;font-weight:800;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.manga-vocab-chip{display:inline-block;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:4px 10px;margin:3px 2px;font-size:12px;font-weight:700}
+.manga-vocab-chip .vc-w{font-family:'Noto Sans JP';color:var(--ink);font-weight:800}
+.manga-vocab-chip .vc-m{color:var(--ink3);font-size:11px}
+.manga-panel-nav{display:flex;justify-content:space-between;gap:10px;margin-top:1rem}
+.manga-nav-btn{padding:12px 20px;border:none;border-radius:14px;font-size:14px;font-weight:900;cursor:pointer;box-shadow:0 3px 0 rgba(0,0,0,.1)}
+.manga-nav-btn:active{transform:translateY(3px);box-shadow:0 0 0 rgba(0,0,0,0)}
+.manga-nav-btn.prev{background:var(--card);color:var(--ink3);border:1px solid var(--border)}
+.manga-nav-btn.next{background:var(--blue);color:#fff;box-shadow:0 3px 0 #1565c0}
+.manga-nav-btn.next:active{box-shadow:0 1px 0 #1565c0}
+.manga-complete{text-align:center;padding:2rem 1rem;animation:slideUp .4s var(--spring) both}
+.manga-complete-emoji{font-size:64px;margin-bottom:1rem;animation:treeSway 2s ease-in-out infinite}
+.manga-complete-title{font-size:20px;font-weight:900;margin-bottom:8px}
+.manga-complete-sub{font-size:14px;color:var(--ink3);font-weight:600;margin-bottom:1.5rem}
+
 /* ===================== BONUS POPUP ===================== */
 .bonus-pop{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:200;background:linear-gradient(135deg,#ffd84d,#ff9800);color:#fff;padding:20px 32px;border-radius:24px;font-size:22px;font-weight:900;box-shadow:0 8px 32px rgba(255,152,0,.4);animation:bonusPop 1.5s var(--spring) forwards;pointer-events:none;text-align:center}
 .bonus-pop .bp-label{font-size:14px;font-weight:800;opacity:.9}
@@ -1017,6 +1078,11 @@ body.dark .feed-timer{background:linear-gradient(135deg,rgba(67,97,238,.1),rgba(
   <div class="body" id="feed-body"></div>
 </div>
 
+<!-- ===================== MANGA READER ===================== -->
+<div class="view" id="view-manga">
+  <div class="body" id="manga-body"></div>
+</div>
+
 <!-- ===================== BOTTOM NAV ===================== -->
 <div class="bottom-nav" id="bottom-nav">
   <button class="bn-item active" id="bn-home" onclick="App.goHome()"><span class="bn-ico">🏠</span>Home</button>
@@ -1043,6 +1109,7 @@ if (window.N3_CONTENT && window.SEED_CONTENT) {
 <script src="/core.js"></script>
 <script src="/feed-threads.js"></script>
 <script src="/jlpt-question-bank.js"></script>
+<script src="/manga-data.js"></script>
 <script>
 if('serviceWorker' in navigator){
   window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));
@@ -1058,7 +1125,7 @@ const C = window.Core;
 /* Must match the RESULTS_SECRET env var on the server. This lives in client
    source so it only deters casual abuse — the endpoint only messages YOUR
    Telegram, so the worst case of a leak is spam you can stop by rotating it. */
-const RESULTS_SECRET = 'CHANGE_ME_to_match_env';
+const RESULTS_SECRET = 'begench1994garahan';
 const DIM_META = {
   vocab:{label:'🧠 Vocabulary',color:'var(--blue)'},
   grammar:{label:'✍ Grammar',color:'var(--green)'},
@@ -1531,6 +1598,9 @@ const App = (function(){
       </div>
       <div class="tile wide stagger stagger-7" style="margin-top:.6rem;--shine-delay:4s" onclick="C.haptic('light');location.href='/grammar-reference.html'">
         <div class="t-icon">📖</div><div><div class="t-name">文法 — Grammar reference</div><div class="t-sub">All grammar points · searchable</div></div>
+      </div>
+      <div class="tile wide stagger stagger-8" style="margin-top:.6rem;background:linear-gradient(135deg,#fce4ec,#f3e5f5);border-color:#e1bee7;--shine-delay:5s" onclick="C.haptic('light');App.openMangaHub()">
+        <div class="t-icon">📚</div><div><div class="t-name" style="color:#8e24aa">マンガで読む — Manga Reader</div><div class="t-sub">Graded stories · N5-N3 · furigana + audio</div></div>
       </div>` : '';
 
     // Badges grid + Growth Tree
@@ -1649,21 +1719,23 @@ const App = (function(){
       daysLeft=Math.max(0,Math.ceil((ed-today)/86400000));
     }
 
-    // Phase definitions
+    // Phase definitions — calculated from Jun 30, 2026
+    // Real exam dates: JLPT N3 = Dec 6 2026, MEXT = Jun 15 2027, JLPT N2 = Jul 4 2027
+    // Study pace: 2 hrs/day, 15-20 new items/day + reviews
     const phases=[
-      {key:'n4',icon:'📘',label:'N4',sub:'Minna L25-50',pct:n4Pct,date:'Now → Dec 2025',done:n4Pct>=80,active:activePhase==='n4',
+      {key:'n4',icon:'📘',label:'N4',sub:'Minna L25-50',pct:n4Pct,date:'Jul → Sep 2026',done:n4Pct>=80,active:activePhase==='n4',
        detail:n4Pct>=80?'<b>N4 Mastered!</b> 🎉 You\'re ready to start N3. Focus on N3 grammar and new vocabulary.'
-             :`<b>Current phase.</b> ${n4Learned}/${n4Items.length} items learned · ${n4Mastered} mastered. Complete all lessons 25-50 and reach 80% mastery to advance.`},
-      {key:'n3',icon:'📗',label:'N3',sub:'Bridge level',pct:n3Pct,date:'Jan → Mar 2026',done:n3Pct>=80&&n3Items.length>0,active:activePhase==='n3',
+             :`<b>Phase 1 · 92 days.</b> ${n4Learned}/${n4Items.length} items learned · ${n4Mastered} mastered. Target: 15 new items/day + 30 reviews (~60 min/day). Goal: 80% mastery by Sep 30.`},
+      {key:'n3',icon:'📗',label:'N3',sub:'Bridge level',pct:n3Pct,date:'Oct → Dec 2026',done:n3Pct>=80&&n3Items.length>0,active:activePhase==='n3',
        detail:n3Items.length===0?'<b>Locked.</b> Complete N4 first (80%+ mastery). N3 content will unlock with intermediate grammar, ~1,500 new vocab, and 300+ kanji.'
              :n3Pct>=80?'<b>N3 Mastered!</b> Ready for N2 intensive prep.'
-             :`<b>Active.</b> ${n3Learned}/${n3Items.length} items learned. Study intermediate grammar and expand vocabulary.`},
-      {key:'n2',icon:'📕',label:'N2',sub:'Target level',pct:n2Pct,date:'Apr → Jun 2026',done:n2Pct>=80,active:activePhase==='n2',
+             :`<b>Phase 2 · 92 days.</b> ${n3Learned}/${n3Items.length} items learned + 360 bank Qs. Target: 20 new items/day + 40 reviews + 5 bank Qs (~90 min/day). <b>Take JLPT N3 on Dec 6, 2026.</b>`},
+      {key:'n2',icon:'📕',label:'N2',sub:'Target level',pct:n2Pct,date:'Jan → May 2027',done:n2Pct>=80,active:activePhase==='n2',
        detail:n2Pct>=80?'<b>N2 Ready!</b> Focus on mock exams and timed practice.'
-             :`<b>Target.</b> ~6,000 words, ~1,000 kanji, 200+ grammar points. Use JLPT bank + generated N2 packs. ${daysLeft} days until exam.`},
-      {key:'mext',icon:'🎯',label:'MEXT',sub:'Exam pass',pct:mextPct,date:'Summer 2026',done:mextPct>=100,active:activePhase==='mext',
+             :`<b>Phase 3 · 150 days.</b> 360 N2 bank Qs + ~2,500 new words needed. Target: 20 new items/day + 50 reviews + reading + listening (~120 min/day). Goal: N2 level by May 31.`},
+      {key:'mext',icon:'🎯',label:'MEXT',sub:'Exam pass',pct:mextPct,date:'Jun → Jul 2027',done:mextPct>=100,active:activePhase==='mext',
        detail:mextPct>=100?'<b>Exam passed!</b> 🏆 Congratulations!'
-             :`<b>Final goal.</b> Pass all 3 MEXT exam levels (A/B/C). Currently ${mextDone}/3 passed. ${daysLeft} days remaining.`},
+             :`<b>Phase 4 · 35 days.</b> MEXT exam Jun 15 · JLPT N2 Jul 4. Focus: 1-2 mock exams/day + timed practice (~120 min/day). Currently ${mextDone}/3 MEXT levels passed.`},
     ];
 
     // Build progress line fill width
@@ -2509,7 +2581,7 @@ const App = (function(){
   }
 
   /* ===================== EXAM COUNTDOWN ===================== */
-  const EXAM_DEFAULT_DATE='2027-06-15';   // Ashgabat · mid-June next year (editable by tapping)
+  const EXAM_DEFAULT_DATE='2027-06-15';   // MEXT embassy exam · Ashgabat · mid-June (editable)
   function examDate(){ return C.DB.get('exam_date') || EXAM_DEFAULT_DATE; }
   function examDaysLeft(){
     const d=new Date(examDate()+'T00:00:00'); const now=new Date(); now.setHours(0,0,0,0);
@@ -3275,7 +3347,7 @@ const App = (function(){
     }
 
     // Tag class mapping for Japanese tags
-    const tagClassMap = { '日常':'t-Culture', '文化':'t-Culture', '自然':'t-Reading', '仕事':'t-Grammar', '料理':'t-Vocabulary', '勉強':'t-Kanji', '旅行':'t-Reading', '健康':'t-Vocabulary' };
+    const tagClassMap = { '日常':'t-Culture', '文化':'t-Culture', '自然':'t-Reading', '仕事':'t-Grammar', '料理':'t-Vocabulary', '勉強':'t-Kanji', '旅行':'t-Reading', '健康':'t-Vocabulary', 'ため口':'t-Listening' };
     const diffLabel = { easy:'初級', medium:'中級', hard:'上級' };
     const diffIcon = { easy:'🟢', medium:'🟡', hard:'🔴' };
 
@@ -3377,6 +3449,173 @@ const App = (function(){
     }
   }
 
+  /* ===================== MANGA READER ===================== */
+  let _mangaStory=null, _mangaChapter=null, _mangaPanelIdx=0, _mangaShowFuri=true, _mangaShowTrans=true;
+
+  function openMangaHub(){
+    const stories=window.MANGA_STORIES||[];
+    const progress=C.DB.get('manga_progress')||{};
+    const cards=stories.map(s=>{
+      const sp=progress[s.id]||{};
+      const totalCh=s.chapters.length;
+      const doneCh=s.chapters.filter(c=>sp[c.id]).length;
+      const lvlClass=s.level.toLowerCase();
+      return `<div class="manga-story-card" onclick="App.openMangaStory('${s.id}')">
+        <div class="manga-sc-head">
+          <div class="manga-sc-cover">${s.cover}</div>
+          <div class="manga-sc-info">
+            <div class="manga-sc-title">${s.title}</div>
+            <div class="manga-sc-titleen">${s.titleEn}</div>
+          </div>
+          <div class="manga-sc-level ${lvlClass}">${s.level}</div>
+        </div>
+        <div class="manga-sc-desc">${s.desc}</div>
+        <div class="manga-sc-meta">
+          <span class="manga-sc-tag">📖 ${totalCh} chapter${totalCh>1?'s':''}</span>
+          <span class="manga-sc-tag">✅ ${doneCh}/${totalCh} done</span>
+          <span class="manga-sc-tag">📝 ${s.chapters.reduce((a,c)=>a+c.panels.length,0)} panels</span>
+        </div>
+      </div>`;
+    }).join('');
+    document.getElementById('manga-body').innerHTML=`
+      <button class="sback" style="margin-bottom:1rem" onclick="App.home()">← Home</button>
+      <div class="manga-hub-head">
+        <div class="manga-hub-title">📚 マンガで読む — Manga Reader</div>
+        <div class="manga-hub-sub">Original graded stories for Japanese learners. Read panel-by-panel with furigana, audio, and vocabulary. Tap any panel to hear it spoken.</div>
+      </div>
+      ${cards||'<div class="empty-state"><div class="es-icon">📚</div><div class="es-title">No stories yet</div><div class="es-sub">Check back soon for new content!</div></div>'}`;
+    showView('view-manga');
+  }
+
+  function openMangaStory(storyId){
+    const stories=window.MANGA_STORIES||[];
+    const s=stories.find(x=>x.id===storyId);
+    if(!s) return;
+    _mangaStory=s;
+    const progress=C.DB.get('manga_progress')||{};
+    const sp=progress[s.id]||{};
+    const chapters=s.chapters.map((c,i)=>{
+      const done=sp[c.id];
+      return `<div class="manga-chapter-item" onclick="App.startMangaChapter('${c.id}')">
+        <div class="manga-chapter-num">${i+1}</div>
+        <div class="manga-chapter-info">
+          <div class="manga-chapter-title">${c.title}</div>
+          <div class="manga-chapter-titleen">${c.titleEn} · ${c.panels.length} panels</div>
+        </div>
+        <span class="${done?'manga-chapter-done':'manga-chapter-arrow'}">${done?'✓':'▸'}</span>
+      </div>`;
+    }).join('');
+    const lvlClass=s.level.toLowerCase();
+    document.getElementById('manga-body').innerHTML=`
+      <button class="sback" style="margin-bottom:1rem" onclick="App.openMangaHub()">← Manga list</button>
+      <div class="manga-story-card" style="cursor:default">
+        <div class="manga-sc-head">
+          <div class="manga-sc-cover" style="width:72px;height:72px;font-size:48px">${s.cover}</div>
+          <div class="manga-sc-info">
+            <div class="manga-sc-title" style="font-size:18px">${s.title}</div>
+            <div class="manga-sc-titleen">${s.titleEn}</div>
+            <div class="manga-sc-desc" style="margin-top:4px">${s.desc}</div>
+          </div>
+          <div class="manga-sc-level ${lvlClass}">${s.level}</div>
+        </div>
+      </div>
+      <div class="manga-chapter-list">${chapters}</div>`;
+    showView('view-manga');
+  }
+
+  function startMangaChapter(chId){
+    if(!_mangaStory) return;
+    const ch=_mangaStory.chapters.find(c=>c.id===chId);
+    if(!ch) return;
+    _mangaChapter=ch;
+    _mangaPanelIdx=0;
+    _mangaShowFuri=true;
+    _mangaShowTrans=true;
+    renderMangaPanel();
+  }
+
+  function renderMangaPanel(){
+    if(!_mangaChapter) return;
+    const p=_mangaChapter.panels[_mangaPanelIdx];
+    const n=_mangaChapter.panels.length;
+    const pct=Math.round((_mangaPanelIdx+1)/n*100);
+    const sRef=sayRef(p.jp);
+    const vocabHTML=(p.vocab||[]).map(v=>`<span class="manga-vocab-chip"><span class="vc-w">${v.w}</span> <span class="vc-m">${v.m}</span></span>`).join('');
+    document.getElementById('manga-body').innerHTML=`
+      <div class="manga-reader-top">
+        <div class="manga-reader-progress">
+          <button class="manga-panel-btn" onclick="App.openMangaStory('${_mangaStory.id}')">✕</button>
+          <div class="manga-reader-bar"><div class="f" style="width:${pct}%"></div></div>
+          <span class="manga-reader-count">${_mangaPanelIdx+1}/${n}</span>
+        </div>
+      </div>
+      <div class="manga-panel">
+        <div class="manga-panel-emoji">${p.emoji}</div>
+        <div class="manga-panel-jp">${escHTML(p.jp)}</div>
+        ${_mangaShowFuri?`<div class="manga-panel-reading">${escHTML(p.reading)}</div><div class="manga-panel-romaji">${escHTML(p.romaji)}</div>`:''}
+        ${_mangaShowTrans?`<div class="manga-panel-en">${escHTML(p.en)}</div>`:''}
+        <div class="manga-panel-audio">
+          <button class="manga-panel-btn" onclick="sayNow('${sRef}')">▶ 聞く Listen</button>
+          <button class="manga-panel-btn furi" onclick="App.toggleMangaFuri()">${_mangaShowFuri?'ふりがな OFF':'ふりがな ON'}</button>
+          <button class="manga-panel-btn" onclick="App.toggleMangaTrans()">${_mangaShowTrans?'EN OFF':'EN ON'}</button>
+        </div>
+        ${vocabHTML?`<div class="manga-panel-vocab"><div class="manga-panel-vocab-title">語彙 Vocab</div>${vocabHTML}</div>`:''}
+        <div class="manga-panel-nav">
+          <button class="manga-nav-btn prev" ${_mangaPanelIdx===0?'disabled onclick=""':'onclick="App.mangaPrev()"'}>◂ Back</button>
+          ${_mangaPanelIdx<n-1
+            ?`<button class="manga-nav-btn next" onclick="App.mangaNext()">Next ▸</button>`
+            :`<button class="manga-nav-btn next" onclick="App.finishMangaChapter()">Finish ✓</button>`}
+        </div>
+      </div>`;
+    scrollTo(0,0);
+    setTimeout(()=>speak(p.jp),300);
+  }
+
+  function mangaNext(){
+    if(_mangaChapter&&_mangaPanelIdx<_mangaChapter.panels.length-1){
+      _mangaPanelIdx++;
+      renderMangaPanel();
+    }
+  }
+  function mangaPrev(){
+    if(_mangaPanelIdx>0){
+      _mangaPanelIdx--;
+      renderMangaPanel();
+    }
+  }
+  function toggleMangaFuri(){ _mangaShowFuri=!_mangaShowFuri; renderMangaPanel(); }
+  function toggleMangaTrans(){ _mangaShowTrans=!_mangaShowTrans; renderMangaPanel(); }
+
+  function finishMangaChapter(){
+    if(!_mangaStory||!_mangaChapter) return;
+    const sid=_mangaStory.id, cid=_mangaChapter.id;
+    const progress=C.DB.get('manga_progress')||{};
+    if(!progress[sid]) progress[sid]={};
+    progress[sid][cid]=true;
+    C.DB.set('manga_progress',progress);
+    C.logActivity(_mangaChapter.panels.length,2);
+    C.bumpMomentum(5);
+    const xpRes=C.addXP(30);
+    C.updateStreak();
+    const totalCh=_mangaStory.chapters.length;
+    const doneCh=Object.keys(progress[sid]).length;
+    const allDone=doneCh>=totalCh;
+    document.getElementById('manga-body').innerHTML=`
+      <div class="manga-complete">
+        <div class="manga-complete-emoji">${allDone?'🎉':'✅'}</div>
+        <div class="manga-complete-title">${allDone?'Story complete!':'Chapter complete!'}</div>
+        <div class="manga-complete-sub">${_mangaChapter.titleEn}<br>${doneCh}/${totalCh} chapters done · +30 XP${xpRes.leveledUp?' · ⬆ Level '+xpRes.level:''}</div>
+        ${allDone?'<div style="font-size:40px;margin-bottom:1rem">🎊</div>':''}
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+          <button class="manga-nav-btn prev" onclick="App.openMangaStory('${sid}')">📖 Chapters</button>
+          <button class="manga-nav-btn prev" onclick="App.openMangaHub()">📚 All stories</button>
+          <button class="manga-nav-btn next" onclick="App.home()">🏠 Home</button>
+        </div>
+      </div>`;
+    C.haptic('success'); SFX.levelup(); confetti();
+    scrollTo(0,0);
+  }
+
   return {renderHome,reloadContent,openLesson,lessonTab,markLearned,revealRecall,gradeRecall,answer,nextQ,
           startReview,startGlobalReview,startFlashcards,renderFlashHub,startFlashDeck,setFhFilter,setFhLevel,setFhLesson,backToLesson,lessonReadingQuiz,
           practiceVocab,practiceReadingDrill,practiceGrammar,practiceKanji,
@@ -3386,7 +3625,8 @@ const App = (function(){
           toggleSound,toggleDark,toggleFurigana,startStrengthen,
           goHome,goPractice,goBadges,goFeed,loadNextThread,toggleFeedLike,showRewardScreen,reviewMistakes,
           openJlptHub,startJlpt,jlptPick,jlptNext,jlptPrev,jlptQuit,toggleSettings,
-          toggleNotif,setNotifTime};
+          toggleNotif,setNotifTime,
+          openMangaHub,openMangaStory,startMangaChapter,mangaNext,mangaPrev,toggleMangaFuri,toggleMangaTrans,finishMangaChapter};
 })();
 
 /* ── INIT ── */
